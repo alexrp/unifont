@@ -1,0 +1,363 @@
+\hypertarget{unigenwidth_8c_source}{}\doxysection{unigenwidth.\+c}
+\label{unigenwidth_8c_source}\index{src/unigenwidth.c@{src/unigenwidth.c}}
+\mbox{\hyperlink{unigenwidth_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00001}00001\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00002}00002\ \textcolor{comment}{\ \ \ @file\ unigenwidth.c}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00003}00003\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00004}00004\ \textcolor{comment}{\ \ \ @brief\ unigenwidth\ -\/\ IEEE\ 1003.1-\/2008\ setup\ to\ calculate}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00005}00005\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ wchar\_t\ string\ widths}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00006}00006\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00007}00007\ \textcolor{comment}{\ \ \ @author\ Paul\ Hardy.}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00008}00008\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00009}00009\ \textcolor{comment}{\ \ \ @copyright\ Copyright\ (C)\ 2013,\ 2017\ Paul\ Hardy.}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00010}00010\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00011}00011\ \textcolor{comment}{\ \ \ All\ glyphs\ are\ treated\ as\ 16\ pixels\ high,\ and\ can\ be}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00012}00012\ \textcolor{comment}{\ \ \ 8,\ 16,\ 24,\ or\ 32\ pixels\ wide\ (resulting\ in\ widths\ of}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00013}00013\ \textcolor{comment}{\ \ \ 1,\ 2,\ 3,\ or\ 4,\ respectively).}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00014}00014\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00015}00015\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00016}00016\ \textcolor{comment}{\ \ \ LICENSE:}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00017}00017\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00018}00018\ \textcolor{comment}{\ \ \ \ \ \ This\ program\ is\ free\ software:\ you\ can\ redistribute\ it\ and/or\ modify}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00019}00019\ \textcolor{comment}{\ \ \ \ \ \ it\ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00020}00020\ \textcolor{comment}{\ \ \ \ \ \ the\ Free\ Software\ Foundation,\ either\ version\ 2\ of\ the\ License,\ or}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00021}00021\ \textcolor{comment}{\ \ \ \ \ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00022}00022\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00023}00023\ \textcolor{comment}{\ \ \ \ \ \ This\ program\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00024}00024\ \textcolor{comment}{\ \ \ \ \ \ but\ WITHOUT\ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00025}00025\ \textcolor{comment}{\ \ \ \ \ \ MERCHANTABILITY\ or\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00026}00026\ \textcolor{comment}{\ \ \ \ \ \ GNU\ General\ Public\ License\ for\ more\ details.}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00027}00027\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00028}00028\ \textcolor{comment}{\ \ \ \ \ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00029}00029\ \textcolor{comment}{\ \ \ \ \ \ along\ with\ this\ program.\ \ If\ not,\ see\ <http://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00030}00030\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00032}00032\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00033}00033\ \textcolor{comment}{\ \ \ 20\ June\ 2017\ [Paul\ Hardy]:}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00034}00034\ \textcolor{comment}{\ \ \ \ \ \ -\/\ Now\ handles\ glyphs\ that\ are\ 24\ or\ 32\ pixels\ wide.}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00035}00035\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00036}00036\ \textcolor{comment}{\ \ \ 8\ July\ 2017\ [Paul\ Hardy]:}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00037}00037\ \textcolor{comment}{\ \ \ \ \ \ -\/\ Modifies\ sscanf\ format\ strings\ to\ ignore\ second\ field\ after}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00038}00038\ \textcolor{comment}{\ \ \ \ \ \ \ \ the\ "{}:"{}\ field\ separator,\ newly\ added\ to\ "{}*combining.txt"{}\ files}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00039}00039\ \textcolor{comment}{\ \ \ \ \ \ \ \ and\ already\ present\ in\ "{}*.hex"{}\ files.}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00040}00040\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00042}00042\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00043}00043\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00044}00044\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00046}\mbox{\hyperlink{unigenwidth_8c_a2ff420a6c6a2d1effc47a81e37327985}{00046}}\ \textcolor{preprocessor}{\#define\ MAXSTRING\ \ \ 256\ \ \ }\textcolor{comment}{///<\ Maximum\ input\ line\ length\ -\/\ 1.}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00048}00048\ \textcolor{comment}{/*\ Definitions\ for\ Pikto\ in\ Plane\ 15\ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00049}\mbox{\hyperlink{unigenwidth_8c_a9f55227949663244f18644f19a579d73}{00049}}\ \textcolor{preprocessor}{\#define\ PIKTO\_START\ 0x0F0E70\ \ \ }\textcolor{comment}{///<\ Start\ of\ Pikto\ code\ point\ range.}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00050}\mbox{\hyperlink{unigenwidth_8c_ad8d1b3891a7a6b0f5562df91eb07b772}{00050}}\ \textcolor{preprocessor}{\#define\ PIKTO\_END\ \ \ 0x0F11EF\ \ \ }\textcolor{comment}{///<\ End\ of\ Pikto\ code\ point\ range.}\textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00051}00051\ \textcolor{comment}{/**\ Number\ of\ code\ points\ in\ Pikto\ range.\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00052}\mbox{\hyperlink{unigenwidth_8c_ab75ee2d70f889fe3e3a9c50cc78d7edd}{00052}}\ \textcolor{preprocessor}{\#define\ PIKTO\_SIZE\ \ (PIKTO\_END\ -\/\ PIKTO\_START\ +\ 1)}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00054}00054\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00055}00055\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00056}00056\ \textcolor{comment}{\ \ \ @brief\ The\ main\ function.}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00057}00057\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00058}00058\ \textcolor{comment}{\ \ \ @param[in]\ argc\ The\ count\ of\ command\ line\ arguments.}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00059}00059\ \textcolor{comment}{\ \ \ @param[in]\ argv\ Pointer\ to\ array\ of\ command\ line\ arguments.}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00060}00060\ \textcolor{comment}{\ \ \ @return\ This\ program\ exits\ with\ status\ EXIT\_SUCCESS.}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00061}00061\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00062}00062\ \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00063}\mbox{\hyperlink{unigenwidth_8c_a3c04138a5bfe5d72780bb7e82a18e627}{00063}}\ \mbox{\hyperlink{unibdf2hex_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}}\ (\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}\ **argv)}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00064}00064\ \{}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00066}00066\ \ \ \ \textcolor{keywordtype}{int}\ i;\ \textcolor{comment}{/*\ loop\ variable\ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00068}00068\ \ \ \ \textcolor{keywordtype}{char}\ teststring[\mbox{\hyperlink{unigenwidth_8c_a2ff420a6c6a2d1effc47a81e37327985}{MAXSTRING}}];}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00069}00069\ \ \ \ \textcolor{keywordtype}{int}\ \ loc;}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00070}00070\ \ \ \ \textcolor{keywordtype}{char}\ *gstart;}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00072}00072\ \ \ \ \textcolor{keywordtype}{char}\ glyph\_width[0x20000];}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00073}00073\ \ \ \ \textcolor{keywordtype}{char}\ pikto\_width[\mbox{\hyperlink{unigenwidth_8c_ab75ee2d70f889fe3e3a9c50cc78d7edd}{PIKTO\_SIZE}}];}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00075}00075\ \ \ \ FILE\ *infilefp;}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00076}00076\ }
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00077}00077\ \ \ \ \textcolor{keywordflow}{if}\ (argc\ !=\ 3)\ \{}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00078}00078\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)nUsage:\ \%s\ <unifont.hex>\ <combining.txt>\(\backslash\)n\(\backslash\)n"{}},\ argv[0]);}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00079}00079\ \ \ \ \ \ \ exit\ (EXIT\_FAILURE);}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00080}00080\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00082}00082\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00083}00083\ \textcolor{comment}{\ \ \ \ \ \ Read\ the\ collection\ of\ hex\ glyphs.}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00084}00084\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00085}00085\ \ \ \ \textcolor{keywordflow}{if}\ ((infilefp\ =\ fopen\ (argv[1],\textcolor{stringliteral}{"{}r"{}}))\ ==\ NULL)\ \{}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00086}00086\ \ \ \ \ \ \ fprintf\ (stderr,\textcolor{stringliteral}{"{}ERROR\ -\/\ hex\ input\ file\ \%s\ not\ found.\(\backslash\)n\(\backslash\)n"{}},\ argv[1]);}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00087}00087\ \ \ \ \ \ \ exit\ (EXIT\_FAILURE);}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00088}00088\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00089}00089\ }
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00090}00090\ \ \ \ \textcolor{comment}{/*\ Flag\ glyph\ as\ non-\/existent\ until\ found.\ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00091}00091\ \ \ \ memset\ (glyph\_width,\ -\/1,\ 0x20000\ *\ \textcolor{keyword}{sizeof}\ (\textcolor{keywordtype}{char}));}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00092}00092\ \ \ \ memset\ (pikto\_width,\ -\/1,\ (\mbox{\hyperlink{unigenwidth_8c_ab75ee2d70f889fe3e3a9c50cc78d7edd}{PIKTO\_SIZE}})\ *\ \textcolor{keyword}{sizeof}\ (\textcolor{keywordtype}{char}));}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00094}00094\ \ \ \ teststring[\mbox{\hyperlink{unigenwidth_8c_a2ff420a6c6a2d1effc47a81e37327985}{MAXSTRING}}-\/1]\ =\ \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00095}00095\ \ \ \ \textcolor{keywordflow}{while}\ (fgets\ (teststring,\ \mbox{\hyperlink{unigenwidth_8c_a2ff420a6c6a2d1effc47a81e37327985}{MAXSTRING}}-\/1,\ infilefp)\ !=\ NULL)\ \{}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00096}00096\ \ \ \ \ \ \ sscanf\ (teststring,\ \textcolor{stringliteral}{"{}\%X:\%*s"{}},\ \&loc);}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00097}00097\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (loc\ <\ 0x20000)\ \{}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00098}00098\ \ \ \ \ \ \ \ \ \ gstart\ =\ strchr\ (teststring,\textcolor{charliteral}{':'})\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00100}00100\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ 16\ rows\ per\ glyph,\ 2\ ASCII\ hexadecimal\ digits\ per\ byte,}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00101}00101\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ so\ divide\ number\ of\ digits\ by\ 32\ (shift\ right\ 5\ bits).}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00102}00102\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00103}00103\ \ \ \ \ \ \ \ \ \ glyph\_width[loc]\ =\ (strlen\ (gstart)\ -\/\ 1)\ >>\ 5;}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00104}00104\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00105}00105\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ ((loc\ >=\ \mbox{\hyperlink{unigenwidth_8c_a9f55227949663244f18644f19a579d73}{PIKTO\_START}})\ \&\&\ (loc\ <=\ \mbox{\hyperlink{unigenwidth_8c_ad8d1b3891a7a6b0f5562df91eb07b772}{PIKTO\_END}}))\ \{}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00106}00106\ \ \ \ \ \ \ \ \ \ gstart\ =\ strchr\ (teststring,\textcolor{charliteral}{':'})\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00107}00107\ \ \ \ \ \ \ \ \ \ pikto\_width[loc\ -\/\ \mbox{\hyperlink{unigenwidth_8c_a9f55227949663244f18644f19a579d73}{PIKTO\_START}}]\ =\ strlen\ (gstart)\ <=\ 34\ ?\ 1\ :\ 2;}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00108}00108\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00109}00109\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00110}00110\ }
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00111}00111\ \ \ \ fclose\ (infilefp);}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00112}00112\ }
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00113}00113\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00114}00114\ \textcolor{comment}{\ \ \ \ \ \ Now\ read\ the\ combining\ character\ code\ points.\ \ These\ have\ width\ of\ 0.}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00115}00115\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00116}00116\ \ \ \ \textcolor{keywordflow}{if}\ ((infilefp\ =\ fopen\ (argv[2],\textcolor{stringliteral}{"{}r"{}}))\ ==\ NULL)\ \{}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00117}00117\ \ \ \ \ \ \ fprintf\ (stderr,\textcolor{stringliteral}{"{}ERROR\ -\/\ combining\ characters\ file\ \%s\ not\ found.\(\backslash\)n\(\backslash\)n"{}},\ argv[2]);}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00118}00118\ \ \ \ \ \ \ exit\ (EXIT\_FAILURE);}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00119}00119\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00120}00120\ }
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00121}00121\ \ \ \ \textcolor{keywordflow}{while}\ (fgets\ (teststring,\ \mbox{\hyperlink{unigenwidth_8c_a2ff420a6c6a2d1effc47a81e37327985}{MAXSTRING}}-\/1,\ infilefp)\ !=\ NULL)\ \{}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00122}00122\ \ \ \ \ \ \ sscanf\ (teststring,\ \textcolor{stringliteral}{"{}\%X:\%*s"{}},\ \&loc);}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00123}00123\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (loc\ <\ 0x20000)\ glyph\_width[loc]\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00124}00124\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00125}00125\ }
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00126}00126\ \ \ \ fclose\ (infilefp);}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00127}00127\ }
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00128}00128\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00129}00129\ \textcolor{comment}{\ \ \ \ \ \ Code\ Points\ with\ Unusual\ Properties\ (Unicode\ Standard,\ Chapter\ 4).}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00130}00130\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00131}00131\ \textcolor{comment}{\ \ \ \ \ \ As\ of\ Unifont\ 10.0.04,\ use\ the\ widths\ in\ the\ "{}*-\/nonprinting.hex"{}}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00132}00132\ \textcolor{comment}{\ \ \ \ \ \ files.\ \ If\ an\ application\ is\ smart\ enough\ to\ know\ how\ to\ handle}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00133}00133\ \textcolor{comment}{\ \ \ \ \ \ these\ special\ cases,\ it\ will\ not\ render\ the\ "{}nonprinting"{}\ glyph}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00134}00134\ \textcolor{comment}{\ \ \ \ \ \ and\ will\ treat\ the\ code\ point\ as\ being\ zero-\/width.}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00135}00135\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00136}00136\ \textcolor{comment}{//\ glyph\_width[0]=0;\ /*\ NULL\ character\ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00137}00137\ \textcolor{comment}{//\ for\ (i\ =\ 0x0001;\ i\ <=\ 0x001F;\ i++)\ glyph\_width[i]=-\/1;\ /*\ Control\ Characters\ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00138}00138\ \textcolor{comment}{//\ for\ (i\ =\ 0x007F;\ i\ <=\ 0x009F;\ i++)\ glyph\_width[i]=-\/1;\ /*\ Control\ Characters\ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00139}00139\ }
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00140}00140\ \textcolor{comment}{//\ glyph\_width[0x034F]=0;\ /*\ combining\ grapheme\ joiner\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00141}00141\ \textcolor{comment}{//\ glyph\_width[0x180B]=0;\ /*\ Mongolian\ free\ variation\ selector\ one\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00142}00142\ \textcolor{comment}{//\ glyph\_width[0x180C]=0;\ /*\ Mongolian\ free\ variation\ selector\ two\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00143}00143\ \textcolor{comment}{//\ glyph\_width[0x180D]=0;\ /*\ Mongolian\ free\ variation\ selector\ three\ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00144}00144\ \textcolor{comment}{//\ glyph\_width[0x180E]=0;\ /*\ Mongolian\ vowel\ separator\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00145}00145\ \textcolor{comment}{//\ glyph\_width[0x200B]=0;\ /*\ zero\ width\ space\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00146}00146\ \textcolor{comment}{//\ glyph\_width[0x200C]=0;\ /*\ zero\ width\ non-\/joiner\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00147}00147\ \textcolor{comment}{//\ glyph\_width[0x200D]=0;\ /*\ zero\ width\ joiner\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00148}00148\ \textcolor{comment}{//\ glyph\_width[0x200E]=0;\ /*\ left-\/to-\/right\ mark\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00149}00149\ \textcolor{comment}{//\ glyph\_width[0x200F]=0;\ /*\ right-\/to-\/left\ mark\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00150}00150\ \textcolor{comment}{//\ glyph\_width[0x202A]=0;\ /*\ left-\/to-\/right\ embedding\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00151}00151\ \textcolor{comment}{//\ glyph\_width[0x202B]=0;\ /*\ right-\/to-\/left\ embedding\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00152}00152\ \textcolor{comment}{//\ glyph\_width[0x202C]=0;\ /*\ pop\ directional\ formatting\ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00153}00153\ \textcolor{comment}{//\ glyph\_width[0x202D]=0;\ /*\ left-\/to-\/right\ override\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00154}00154\ \textcolor{comment}{//\ glyph\_width[0x202E]=0;\ /*\ right-\/to-\/left\ override\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00155}00155\ \textcolor{comment}{//\ glyph\_width[0x2060]=0;\ /*\ word\ joiner\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00156}00156\ \textcolor{comment}{//\ glyph\_width[0x2061]=0;\ /*\ function\ application\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00157}00157\ \textcolor{comment}{//\ glyph\_width[0x2062]=0;\ /*\ invisible\ times\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00158}00158\ \textcolor{comment}{//\ glyph\_width[0x2063]=0;\ /*\ invisible\ separator\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00159}00159\ \textcolor{comment}{//\ glyph\_width[0x2064]=0;\ /*\ invisible\ plus\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00160}00160\ \textcolor{comment}{//\ glyph\_width[0x206A]=0;\ /*\ inhibit\ symmetric\ swapping\ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00161}00161\ \textcolor{comment}{//\ glyph\_width[0x206B]=0;\ /*\ activate\ symmetric\ swapping\ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00162}00162\ \textcolor{comment}{//\ glyph\_width[0x206C]=0;\ /*\ inhibit\ arabic\ form\ shaping\ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00163}00163\ \textcolor{comment}{//\ glyph\_width[0x206D]=0;\ /*\ activate\ arabic\ form\ shaping\ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00164}00164\ \textcolor{comment}{//\ glyph\_width[0x206E]=0;\ /*\ national\ digit\ shapes\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00165}00165\ \textcolor{comment}{//\ glyph\_width[0x206F]=0;\ /*\ nominal\ digit\ shapes\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00166}00166\ }
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00167}00167\ \textcolor{comment}{//\ /*\ Variation\ Selector-\/1\ to\ Variation\ Selector-\/16\ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00168}00168\ \textcolor{comment}{//\ for\ (i\ =\ 0xFE00;\ i\ <=\ 0xFE0F;\ i++)\ glyph\_width[i]\ =\ 0;}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00169}00169\ }
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00170}00170\ \textcolor{comment}{//\ glyph\_width[0xFEFF]=0;\ /*\ zero\ width\ no-\/break\ space\ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00171}00171\ \textcolor{comment}{//\ glyph\_width[0xFFF9]=0;\ /*\ interlinear\ annotation\ anchor\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00172}00172\ \textcolor{comment}{//\ glyph\_width[0xFFFA]=0;\ /*\ interlinear\ annotation\ separator\ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00173}00173\ \textcolor{comment}{//\ glyph\_width[0xFFFB]=0;\ /*\ interlinear\ annotation\ terminator\ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00174}00174\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00175}00175\ \textcolor{comment}{\ \ \ \ \ \ Let\ glyph\ widths\ represent\ 0xFFFC\ (object\ replacement\ character)}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00176}00176\ \textcolor{comment}{\ \ \ \ \ \ and\ 0xFFFD\ (replacement\ character).}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00177}00177\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00178}00178\ }
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00179}00179\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00180}00180\ \textcolor{comment}{\ \ \ \ \ \ Hangul\ Jamo:}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00181}00181\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00182}00182\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ Leading\ Consonant\ (Choseong):\ leave\ spacing\ as\ is.}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00183}00183\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00184}00184\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ Hangul\ Choseong\ Filler\ (U+115F):\ set\ width\ to\ 2.}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00185}00185\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00186}00186\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ Hangul\ Jungseong\ Filler,\ Hangul\ Vowel\ (Jungseong),\ and}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00187}00187\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ Final\ Consonant\ (Jongseong):\ set\ width\ to\ 0,\ because\ these}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00188}00188\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ combine\ with\ the\ leading\ consonant\ as\ one\ composite\ syllabic}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00189}00189\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ glyph.\ \ As\ of\ Unicode\ 5.2,\ the\ Hangul\ Jamo\ block\ (U+1100..U+11FF)}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00190}00190\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ is\ completely\ filled.}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00191}00191\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00192}00192\ \ \ \ \textcolor{comment}{//\ for\ (i\ =\ 0x1160;\ i\ <=\ 0x11FF;\ i++)\ glyph\_width[i]=0;\ /*\ Vowels\ \&\ Final\ Consonants\ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00193}00193\ }
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00194}00194\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00195}00195\ \textcolor{comment}{\ \ \ \ \ \ Private\ Use\ Area\ -\/-\/\ the\ width\ is\ undefined,\ but\ likely}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00196}00196\ \textcolor{comment}{\ \ \ \ \ \ to\ be\ 2\ charcells\ wide\ either\ from\ a\ graphic\ glyph\ or}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00197}00197\ \textcolor{comment}{\ \ \ \ \ \ from\ a\ four-\/digit\ hexadecimal\ glyph\ representing\ the}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00198}00198\ \textcolor{comment}{\ \ \ \ \ \ code\ point.\ \ Therefore\ if\ any\ PUA\ glyph\ does\ not\ have}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00199}00199\ \textcolor{comment}{\ \ \ \ \ \ a\ non-\/zero\ width\ yet,\ assign\ it\ a\ default\ width\ of\ 2.}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00200}00200\ \textcolor{comment}{\ \ \ \ \ \ The\ Unicode\ Standard\ allows\ giving\ PUA\ characters}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00201}00201\ \textcolor{comment}{\ \ \ \ \ \ default\ property\ values;\ see\ for\ example\ The\ Unicode}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00202}00202\ \textcolor{comment}{\ \ \ \ \ \ Standard\ Version\ 5.0,\ p.\ 91.\ \ This\ same\ default\ is}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00203}00203\ \textcolor{comment}{\ \ \ \ \ \ used\ for\ higher\ plane\ PUA\ code\ points\ below.}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00204}00204\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00205}00205\ \ \ \ \textcolor{comment}{//\ for\ (i\ =\ 0xE000;\ i\ <=\ 0xF8FF;\ i++)\ \{}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00206}00206\ \ \ \ \textcolor{comment}{//\ \ \ \ if\ (glyph\_width[i]\ ==\ 0)\ glyph\_width[i]=2;}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00207}00207\ \ \ \ \textcolor{comment}{//\ \}}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00208}00208\ }
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00209}00209\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00210}00210\ \textcolor{comment}{\ \ \ \ \ \ <not\ a\ character>}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00211}00211\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00212}00212\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0xFDD0;\ i\ <=\ 0xFDEF;\ i++)\ glyph\_width[i]\ =\ -\/1;}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00213}00213\ \ \ \ glyph\_width[0xFFFE]\ =\ -\/1;\ \textcolor{comment}{/*\ Byte\ Order\ Mark\ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00214}00214\ \ \ \ glyph\_width[0xFFFF]\ =\ -\/1;\ \textcolor{comment}{/*\ Byte\ Order\ Mark\ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00215}00215\ }
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00216}00216\ \ \ \ \textcolor{comment}{/*\ Surrogate\ Code\ Points\ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00217}00217\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0xD800;\ i\ <=\ 0xDFFF;\ i++)\ glyph\_width[i]=-\/1;}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00218}00218\ }
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00219}00219\ \ \ \ \textcolor{comment}{/*\ CJK\ Code\ Points\ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00220}00220\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x4E00;\ i\ <=\ 0x9FFF;\ i++)\ \textcolor{keywordflow}{if}\ (glyph\_width[i]\ <\ 0)\ glyph\_width[i]\ =\ 2;}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00221}00221\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x3400;\ i\ <=\ 0x4DBF;\ i++)\ \textcolor{keywordflow}{if}\ (glyph\_width[i]\ <\ 0)\ glyph\_width[i]\ =\ 2;}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00222}00222\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0xF900;\ i\ <=\ 0xFAFF;\ i++)\ \textcolor{keywordflow}{if}\ (glyph\_width[i]\ <\ 0)\ glyph\_width[i]\ =\ 2;}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00223}00223\ }
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00224}00224\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00225}00225\ \textcolor{comment}{\ \ \ \ \ \ Now\ generate\ the\ output\ file.}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00226}00226\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00227}00227\ \ \ \ printf\ (\textcolor{stringliteral}{"{}/*\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00228}00228\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ wcwidth\ and\ wcswidth\ functions,\ as\ per\ IEEE\ 1003.1-\/2008\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00229}00229\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ System\ Interfaces,\ pp.\ 2241\ and\ 2251.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00230}00230\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ Author:\ Paul\ Hardy,\ 2013\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00231}00231\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ Copyright\ (c)\ 2013\ Paul\ Hardy\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00232}00232\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ LICENSE:\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00233}00233\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00234}00234\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ This\ program\ is\ free\ software:\ you\ can\ redistribute\ it\ and/or\ modify\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00235}00235\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ it\ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00236}00236\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ the\ Free\ Software\ Foundation,\ either\ version\ 2\ of\ the\ License,\ or\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00237}00237\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ (at\ your\ option)\ any\ later\ version.\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00238}00238\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00239}00239\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ This\ program\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00240}00240\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ but\ WITHOUT\ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00241}00241\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ MERCHANTABILITY\ or\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00242}00242\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ GNU\ General\ Public\ License\ for\ more\ details.\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00243}00243\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00244}00244\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00245}00245\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ along\ with\ this\ program.\ \ If\ not,\ see\ <http://www.gnu.org/licenses/>.\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00246}00246\ \ \ \ printf\ (\textcolor{stringliteral}{"{}*/\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00247}00247\ }
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00248}00248\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\#include\ <wchar.h>\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00249}00249\ \ \ \ printf\ (\textcolor{stringliteral}{"{}/*\ Definitions\ for\ Pikto\ CSUR\ Private\ Use\ Area\ glyphs\ */\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00250}00250\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\#define\ PIKTO\_START\(\backslash\)t0x\%06X\(\backslash\)n"{}},\ \mbox{\hyperlink{unigenwidth_8c_a9f55227949663244f18644f19a579d73}{PIKTO\_START}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00251}00251\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\#define\ PIKTO\_END\(\backslash\)t0x\%06X\(\backslash\)n"{}},\ \mbox{\hyperlink{unigenwidth_8c_ad8d1b3891a7a6b0f5562df91eb07b772}{PIKTO\_END}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00252}00252\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\#define\ PIKTO\_SIZE\(\backslash\)t(PIKTO\_END\ -\/\ PIKTO\_START\ +\ 1)\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00253}00253\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00254}00254\ \ \ \ printf\ (\textcolor{stringliteral}{"{}/*\ wcwidth\ -\/-\/\ return\ charcell\ positions\ of\ one\ code\ point\ */\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00255}00255\ \ \ \ printf\ (\textcolor{stringliteral}{"{}inline\ int\(\backslash\)nwcwidth\ (wchar\_t\ wc)\(\backslash\)n\{\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00256}00256\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ return\ (wcswidth\ (\&wc,\ 1));\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00257}00257\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\}\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00258}00258\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00259}00259\ \ \ \ printf\ (\textcolor{stringliteral}{"{}int\(\backslash\)nwcswidth\ (const\ wchar\_t\ *pwcs,\ size\_t\ n)\(\backslash\)n\{\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00260}00260\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ int\ i;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ /*\ loop\ variable\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00261}00261\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ unsigned\ codept;\ \ \ \ \ \ \ \ \ \ /*\ Unicode\ code\ point\ of\ current\ character\ \ \ \ \ \ \ \ \ \ \ \ */\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00262}00262\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ unsigned\ plane;\ \ \ \ \ \ \ \ \ \ \ /*\ Unicode\ plane,\ 0x00..0x10\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00263}00263\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ unsigned\ lower17;\ \ \ \ \ \ \ \ \ /*\ lower\ 17\ bits\ of\ Unicode\ code\ point\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00264}00264\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ unsigned\ lower16;\ \ \ \ \ \ \ \ \ /*\ lower\ 16\ bits\ of\ Unicode\ code\ point\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00265}00265\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ int\ lowpt,\ midpt,\ highpt;\ /*\ for\ binary\ searching\ in\ plane1zeroes[]\ \ \ \ \ \ \ \ \ \ \ \ \ */\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00266}00266\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ int\ found;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ /*\ for\ binary\ searching\ in\ plane1zeroes[]\ \ \ \ \ \ \ \ \ \ \ \ \ */\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00267}00267\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ int\ totalwidth;\ \ \ \ \ \ \ \ \ \ \ /*\ total\ width\ of\ string,\ in\ charcells\ (1\ or\ 2/glyph)\ */\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00268}00268\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ int\ illegalchar;\ \ \ \ \ \ \ \ \ \ /*\ Whether\ or\ not\ this\ code\ point\ is\ illegal\ \ \ \ \ \ \ \ \ \ */\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00269}00269\ \ \ \ putchar\ (\textcolor{charliteral}{'\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00270}00270\ }
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00271}00271\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00272}00272\ \textcolor{comment}{\ \ \ \ \ \ Print\ the\ glyph\_width[]\ array\ for\ glyphs\ widths\ in\ the}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00273}00273\ \textcolor{comment}{\ \ \ \ \ \ Basic\ Multilingual\ Plane\ (Plane\ 0).}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00274}00274\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00275}00275\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ char\ glyph\_width[0x20000]\ =\ \{"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00276}00276\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 0x10000;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00277}00277\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((i\ \&\ 0x1F)\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00278}00278\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\(\backslash\)n\ \ \ \ \ \ /*\ U+\%04X\ */\ "{}},\ i);}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00279}00279\ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\%d,"{}},\ glyph\_width[i]);}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00280}00280\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00281}00281\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x10000;\ i\ <\ 0x20000;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00282}00282\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((i\ \&\ 0x1F)\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00283}00283\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\(\backslash\)n\ \ \ \ \ \ /*\ U+\%06X\ */\ "{}},\ i);}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00284}00284\ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\%d"{}},\ glyph\_width[i]);}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00285}00285\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (i\ <\ 0x1FFFF)\ putchar\ (\textcolor{charliteral}{','});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00286}00286\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00287}00287\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\(\backslash\)n\ \ \ \};\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00288}00288\ }
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00289}00289\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00290}00290\ \textcolor{comment}{\ \ \ \ \ \ Print\ the\ pikto\_width[]\ array\ for\ Pikto\ glyph\ widths.}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00291}00291\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00292}00292\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ char\ pikto\_width[PIKTO\_SIZE]\ =\ \{"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00293}00293\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ \mbox{\hyperlink{unigenwidth_8c_ab75ee2d70f889fe3e3a9c50cc78d7edd}{PIKTO\_SIZE}};\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00294}00294\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((i\ \&\ 0x1F)\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00295}00295\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\(\backslash\)n\ \ \ \ \ \ /*\ U+\%06X\ */\ "{}},\ \mbox{\hyperlink{unigenwidth_8c_a9f55227949663244f18644f19a579d73}{PIKTO\_START}}\ +\ i);}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00296}00296\ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\%d"{}},\ pikto\_width[i]);}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00297}00297\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((\mbox{\hyperlink{unigenwidth_8c_a9f55227949663244f18644f19a579d73}{PIKTO\_START}}\ +\ i)\ <\ \mbox{\hyperlink{unigenwidth_8c_ad8d1b3891a7a6b0f5562df91eb07b772}{PIKTO\_END}})\ putchar\ (\textcolor{charliteral}{','});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00298}00298\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00299}00299\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\(\backslash\)n\ \ \ \};\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00300}00300\ }
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00301}00301\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00302}00302\ \textcolor{comment}{\ \ \ \ \ \ Execution\ part\ of\ wcswidth.}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00303}00303\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00304}00304\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00305}00305\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ illegalchar\ =\ totalwidth\ =\ 0;\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00306}00306\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ for\ (i\ =\ 0;\ !illegalchar\ \&\&\ i\ <\ n;\ i++)\ \{\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00307}00307\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ codept\ \ =\ pwcs[i];\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00308}00308\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ plane\ \ \ =\ codept\ >>\ 16;\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00309}00309\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ lower17\ =\ codept\ \&\ 0x1FFFF;\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00310}00310\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ lower16\ =\ codept\ \&\ 0xFFFF;\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00311}00311\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ if\ (plane\ <\ 2)\ \{\ /*\ the\ most\ common\ case\ */\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00312}00312\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ if\ (glyph\_width[lower17]\ <\ 0)\ illegalchar\ =\ 1;\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00313}00313\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ else\ totalwidth\ +=\ glyph\_width[lower17];\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00314}00314\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \}\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00315}00315\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ else\ \{\ /*\ a\ higher\ plane\ or\ beyond\ Unicode\ range\ */\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00316}00316\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ if\ \ ((lower16\ ==\ 0xFFFE)\ ||\ (lower16\ ==\ 0xFFFF))\ \{\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00317}00317\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ illegalchar\ =\ 1;\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00318}00318\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \}\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00319}00319\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ else\ if\ (plane\ <\ 4)\ \{\ \ /*\ Ideographic\ Plane\ */\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00320}00320\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ totalwidth\ +=\ 2;\ /*\ Default\ ideographic\ width\ */\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00321}00321\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \}\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00322}00322\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ else\ if\ (plane\ ==\ 0x0F)\ \{\ \ /*\ CSUR\ Private\ Use\ Area\ */\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00323}00323\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ if\ (lower16\ <=\ 0x0E6F)\ \{\ /*\ Kinya\ */\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00324}00324\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ totalwidth++;\ /*\ all\ Kinya\ syllables\ have\ width\ 1\ */\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00325}00325\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \}\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00326}00326\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ else\ if\ (lower16\ <=\ (PIKTO\_END\ \&\ 0xFFFF))\ \{\ /*\ Pikto\ */\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00327}00327\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ (pikto\_width[lower16\ -\/\ (PIKTO\_START\ \&\ 0xFFFF)]\ <\ 0)\ illegalchar\ =\ 1;\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00328}00328\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ else\ totalwidth\ +=\ pikto\_width[lower16\ -\/\ (PIKTO\_START\ \&\ 0xFFFF)];\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00329}00329\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \}\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00330}00330\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \}\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00331}00331\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ else\ if\ (plane\ >\ 0x10)\ \{\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00332}00332\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ illegalchar\ =\ 1;\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00333}00333\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \}\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00334}00334\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ /*\ Other\ non-\/printing\ in\ higher\ planes;\ return\ -\/1\ as\ per\ IEEE\ 1003.1-\/2008.\ */\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00335}00335\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ else\ if\ (/*\ language\ tags\ */\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00336}00336\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ codept\ ==\ 0x0E0001\ ||\ (codept\ >=\ 0x0E0020\ \&\&\ codept\ <=\ 0x0E007F)\ ||\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00337}00337\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ /*\ variation\ selectors,\ 0x0E0100..0x0E01EF\ */\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00338}00338\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (codept\ >=\ 0x0E0100\ \&\&\ codept\ <=\ 0x0E01EF))\ \{\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00339}00339\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ illegalchar\ =\ 1;\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00340}00340\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \}\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00341}00341\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ /*\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00342}00342\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ Unicode\ plane\ 0x02..0x10\ printing\ character\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00343}00343\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ */\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00344}00344\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ else\ \{\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00345}00345\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ illegalchar\ =\ 1;\ /*\ code\ is\ not\ in\ font\ */\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00346}00346\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \}\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00347}00347\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00348}00348\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \}\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00349}00349\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \}\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00350}00350\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ if\ (illegalchar)\ totalwidth\ =\ -\/1;\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00351}00351\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00352}00352\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ return\ (totalwidth);\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00353}00353\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00354}00354\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\}\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00355}00355\ }
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00356}00356\ \ \ \ exit\ (EXIT\_SUCCESS);}
+\DoxyCodeLine{\Hypertarget{unigenwidth_8c_source_l00357}00357\ \}}
+
+\end{DoxyCode}

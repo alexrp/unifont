@@ -1,0 +1,5 @@
+<map id="readGlyphs" name="readGlyphs">
+<area shape="rect" id="node1" title="Read glyph definitions from a Unifont .hex format file." alt="" coords="5,5,101,31"/>
+<area shape="rect" id="node2" href="$hex2otf_8c.html#a2f5976201b1e630a94045f04a0348572" title="Print an error message on stderr, then exit." alt="" coords="315,5,357,31"/>
+<area shape="rect" id="node3" href="$hex2otf_8c.html#ae28f2f636e4d3dd3b5784a3bc3f92b58" title="Read up to 6 hexadecimal digits and a colon from file." alt="" coords="149,31,267,56"/>
+</map>

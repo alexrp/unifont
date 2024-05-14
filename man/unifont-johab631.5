@@ -1,0 +1,206 @@
+.TH UNIFONT-JOHAB631 5 "30 July 2023"
+.SH NAME
+unifont-johab631 \- Unifont Johab 6/3/1 file format
+.SH SYNOPSIS
+\fBhangul-base.hex\fP
+.SH DESCRIPTION
+This document describes the structure of the Unifont Johab 6/3/1
+file format used as input to Hangul syllable generation programs.
+Currently, three programs in the Unifont package utilize files in
+this format:
+.BR unigen-hangul (1),
+.BR johab2html (1),
+and
+.BR johab2syllabes (1).
+The easiest way to visualize the two-dimensional organization
+of all these Hangul letter variations is by examining the
+HTML output of
+.BR johab2html (1)
+in a web browser.
+.BR 
+.PP
+The "hangul-base.hex" file distributed with Unifont begins at
+hexadecimal code point 0xE000, which is the start of the Uniocde
+Plane 0 Private Use Area (PUA).
+.PP
+The Johab 6/3/1 file format is divided into these ranges, in
+hexadecimal:
+.RS
+.IP \fBRange\fP 12
+\fBHangul\fP
+.TP
+.BR E000
+Blank (filler) glyph.
+.TP
+.BR E001\-E2FA
+Initial consonants (choseong), 6 variations each for the Unicode
+Hangul Jamo choseong range of U+1100..U+115E and then the Unicode
+Jamo Extended-A choseong range of U+A960..U+A97C.
+.TP
+.BR E2FB\-E420
+Vowels and diphthongs (jungseong), 3 variations each for the Unicode
+Hangul Jamo jungseong range of U+1161..U+11A7 and then the Unicode
+Jamo Extended-B jungseong range of U+D7B0..U+D7C6.
+.TP
+.BR E421\-E479
+Final consonants (jongseong), 1 variation each for the Unicode
+Hangul Jamo jongseong range of U+11A8..U+11FF and then the Unicode
+Jamo Extended-B jongseong range of U+D7CB..U+D7FB.
+.TP
+.BR E500\-E5FF
+Individual Hangul Jamo letters, 1 variation each for the
+Unicode Hangul Jamo range of U+1100..U+11FF.
+.TP
+.BR E600\-E61F
+Individual Hangul Jamo Extended-A letters, 1 variation each for the
+Unicode Hangul Jamo Extended-A range of U+A960..U+A97F.
+.TP
+.BR E620\-E66F
+Individual Hangul Jamo Extended-B letters, 1 variation each for the
+Unicode Hangul Jamo Extended-B range of U+D7B0..D7FF.
+.RE
+.PP
+This johab scheme is much easier to use than the original Unifont
+10/3 or 4/4 johab encoding.  That original format was adopted from Hanterm.
+.SS "FILLER GLYPH"
+The first glyph in the file is a filler, with hexadecimal
+values of 64 zeroes.  This is used as a filler for Hangul syllable
+combinations that do not contain one or two of the three parts of
+a Hangul syllable.
+.SS CHOSEONG
+These are the initial consonants in a syllable.
+Each choseong has six variations:
+.PP
+.RS
+.TP 2
+\(bu
+Combination with a vertical vowel
+.TP
+\(bu
+Combination with a horizontal vowel
+.TP
+\(bu
+Combination with a vertical plus horizontal diphthong
+.TP
+\(bu
+Combination with a vertical vowel and final consonant
+.TP
+\(bu
+Combination with a horizontal vowel and final consonant
+.TP
+\(bu
+Combination with a vertical plus horizontal diphthong,
+and a final consonant.
+.RE
+.PP
+All six variations are created in order for the first consonant
+(U+1100, HANGUL CHOSEONG KIYEOK) in the file entries E001\-E006,
+then all six for the second consonant (U+1101, HANGUL CHOSEONG
+SSANGKIYEOK) in the file entries E007\-E00C, etc.
+.SS JUNGSEONG
+These are the medial vowels and diphthongs in a syllable.
+Each jungseong has three variations:
+.PP
+.RS
+.TP 2
+\(bu
+With initial consonant but no final consonant
+.TP
+\(bu
+With initial consonant and final consonant, except final consonant neiun
+.TP
+\(bu
+With intial consonant, and with final consonant nieun.
+.RE
+.PP
+Similarly as with choseong, all three variations are created in order
+for the first vowel (U+1161, HANGUL JUNGSEONG A) in the file entries
+E2FB\-E2FD, then all three for the second vowel (U+1162, HANGUL
+JUNGSEONG AE), etc.
+.SS JONGSEONG
+These are the final consonants.  Each has only one variation.  The program
+.BR unigen-hangul (1)
+additionally shifts these final consonants one column to the right
+when the vowel in the syllable has two long vertical strokes along
+the right edge, as in U+1162 (HANGUL JUNGSEONG AE).
+The other two programs in the Unifont package that form syllables,
+.BR johab2syllables (1)
+and
+.BR unijohab2html (1),
+overlay all jongseong exactly as they are encoded, with no shifting
+or extending.
+.SS "HANGUL JAMO"
+The entire Unicode Hangul Jamo range, U+1100..U+11FF,
+appears in entries E500\-E5FF.
+.SS "HANGUL EXTENDED-A JAMO"
+The Hangul Jamo Extended-A range, U+A960..U+A97F in E600\-E61F.
+.SS "HANGUL EXTENDED-B JAMO"
+The Hangul Jamo Extended-B range, U+D7B0..U+D7FF in E620\-E66F.
+.SH FILES
+Unifont .hex files in Johab 6/3/1 encoding.
+Programs wishing to interact with this johab encoding can
+use functions contained in the file unihangul-support.c.
+The programs
+.BR johab2syllables (1),
+.BR unigen-hangul (1),
+and
+.BR unijohab2html (1)
+all use various functions in unihangul-support.c to generate
+their output.
+.SH SEE ALSO
+.BR bdfimplode (1),
+.BR hex2bdf (1),
+.BR hex2otf (1),
+.BR hex2sfd (1),
+.BR hexbraille (1),
+.BR hexdraw (1),
+.BR hexkinya (1),
+.BR hexmerge (1),
+.BR johab2syllables (1),
+.BR johab2ucs2 (1),
+.BR unibdf2hex (1),
+.BR unibmp2hex (1),
+.BR unibmpbump (1),
+.BR unicoverage (1),
+.BR unidup (1),
+.BR unifont (5),
+.BR unifont-viewer (1),
+.BR unifont1per (1),
+.BR unifontchojung (1),
+.BR unifontksx (1),
+.BR unifontpic (1),
+.BR unigen-hangul (1),
+.BR unigencircles (1),
+.BR unigenwidth (1),
+.BR unihex2bmp (1),
+.BR unihex2png (1),
+.BR unihexfill (1),
+.BR unihexgen (1),
+.BR unihexpose (1),
+.BR unihexrotate (1),
+.BR unijohab2html (1),
+.BR unipagecount (1),
+.BR unipng2hex (1)
+.SH AUTHOR
+.B Ho-Seok Ee
+created the original Johab 6/2/1 format and drew the modern Hangul
+letters.
+.B Paul Hardy
+drew the ancient vowels and suggested adding a third vowel variation,
+for combining with final consonant (jongseong) niuen, resulting in a
+Johab 6/3/1 encoding.  Ho-Seok Ee suggested shifting final consonants
+one position to the right for combination with vowels having two long
+vertical strokes on the right edge of a syllable.
+.B Minseo Lee
+provided feedback on letter design details.
+.SH LICENSE
+The hangul-base.hex johab glyphs are Copyright \(co 2023 Ho-Seok Ee
+and Paul Hardy.  Some Hangul Jamo ancient glyphs are Copyright \(co 2023
+Minseo Lee.
+.PP
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+.SH BUGS
+No known bugs exist.

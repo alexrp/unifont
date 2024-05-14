@@ -1,0 +1,16 @@
+<map id="ensureBuffer" name="ensureBuffer">
+<area shape="rect" id="node1" title="Ensure that the buffer has at least the specified minimum size." alt="" coords="607,156,712,181"/>
+<area shape="rect" id="node2" href="$hex2otf_8c.html#a560637130747e543118ff304389fd18f" title="Append bytes of a table to a byte buffer." alt="" coords="291,5,389,31"/>
+<area shape="rect" id="node7" href="$hex2otf_8c.html#a927c31a7e187d15a70667ce6b0ef296a" title="Append a string of bytes to a buffer." alt="" coords="461,156,559,181"/>
+<area shape="rect" id="node12" href="$hex2otf_8c.html#a0d4560c5d562d31a33f092bb579f8397" title="Append 1 to 4 bytes of zeroes to a buffer, for padding." alt="" coords="291,307,389,332"/>
+<area shape="rect" id="node3" href="$hex2otf_8c.html#a3d62aa29f94c3fa78ca4438739d64a62" title="Add a CFF table to a font." alt="" coords="132,104,195,129"/>
+<area shape="rect" id="node5" href="$hex2otf_8c.html#a79d8a322be9d9131b684a9ea67abe05e" title="Fill a &quot;name&quot; font table." alt="" coords="108,5,219,31"/>
+<area shape="rect" id="node6" href="$hex2otf_8c.html#a326e4fa86eb32bb18e37eab8f495bd2f" title="Add a TrueType table to a font." alt="" coords="116,55,211,80"/>
+<area shape="rect" id="node4" href="$hex2otf_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="The main function." alt="" coords="5,180,60,205"/>
+<area shape="rect" id="node8" href="$hex2otf_8c.html#afd499a24ff34cb5c19b52df795422c12" title="Fill OpenType bitmap data and location tables." alt="" coords="121,205,206,231"/>
+<area shape="rect" id="node9" href="$hex2otf_8c.html#a06b8121dea15c8117b7c951ffb22fb7e" title="Fill a &quot;GSUB&quot; font table." alt="" coords="287,257,393,283"/>
+<area shape="rect" id="node10" href="$hex2otf_8c.html#ab6e3bb110dc3e55193c344cb7b56e328" title="Fill an &quot;OS/2&quot; font table." alt="" coords="291,156,389,181"/>
+<area shape="rect" id="node11" href="$hex2otf_8c.html#aa52cd46a50cdc2040a72e5c7ecfa944b" title="Prepare a font name string index." alt="" coords="267,107,413,132"/>
+<area shape="rect" id="node13" href="$hex2otf_8c.html#a4ac0c02117b703a71bee3dd34e2eb306" title="Fill a &quot;head&quot; font table." alt="" coords="110,307,217,332"/>
+<area shape="rect" id="node14" href="$hex2otf_8c.html#a074562f0527ff6db8b1b956b9356a315" title="Write OpenType font to output file." alt="" coords="122,356,205,381"/>
+</map>

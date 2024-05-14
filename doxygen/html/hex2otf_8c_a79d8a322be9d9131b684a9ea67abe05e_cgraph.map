@@ -1,0 +1,11 @@
+<map id="fillNameTable" name="fillNameTable">
+<area shape="rect" id="node1" title="Fill a &quot;name&quot; font table." alt="" coords="5,156,116,181"/>
+<area shape="rect" id="node2" href="$hex2otf_8c.html#a1fab24bb2d2b38b68a38ec871afc3f9c" title="Add a TrueType or OpenType table to the font." alt="" coords="211,5,291,31"/>
+<area shape="rect" id="node3" href="$hex2otf_8c.html#a560637130747e543118ff304389fd18f" title="Append bytes of a table to a byte buffer." alt="" coords="201,55,300,80"/>
+<area shape="rect" id="node5" href="$hex2otf_8c.html#a2f5976201b1e630a94045f04a0348572" title="Print an error message on stderr, then exit." alt="" coords="539,131,581,156"/>
+<area shape="rect" id="node6" href="$hex2otf_8c.html#a199befd98ef9ec0ee659d82609abded4" title="Cache a string as a big&#45;ending UTF&#45;16 surrogate pair." alt="" coords="164,156,337,181"/>
+<area shape="rect" id="node7" href="$hex2otf_8c.html#a07b29528c561e5852a228c98391225f7" title="Append two unsigned bytes to the end of a byte array." alt="" coords="395,207,481,232"/>
+<area shape="rect" id="node8" href="$hex2otf_8c.html#ac928f7761fc187ff86f33805309bec21" title="Free the memory previously allocated for a buffer." alt="" coords="207,257,294,283"/>
+<area shape="rect" id="node9" href="$hex2otf_8c.html#ae8310060f5a9b7cefb84d0bb1b459b64" title="Create a new buffer." alt="" coords="394,281,482,307"/>
+<area shape="rect" id="node4" href="$hex2otf_8c.html#ae32c0f82cbb6a4d8ece0559f1c7b74f4" title="Ensure that the buffer has at least the specified minimum size." alt="" coords="385,55,491,80"/>
+</map>

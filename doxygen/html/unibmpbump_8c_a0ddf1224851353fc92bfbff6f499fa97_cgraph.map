@@ -1,0 +1,5 @@
+<map id="main" name="main">
+<area shape="rect" id="node1" title="The main function." alt="" coords="5,31,60,56"/>
+<area shape="rect" id="node2" href="$unibmpbump_8c.html#ace9584f7b69b95621366833332b30465" title="Get from 1 to 4 bytes, inclusive, from input file." alt="" coords="108,5,195,31"/>
+<area shape="rect" id="node3" href="$unibmpbump_8c.html#a58f734bf43b58f0f2c28fd4a0582c0f4" title="After reading in the image, shift it." alt="" coords="121,55,181,80"/>
+</map>

@@ -1,0 +1,4 @@
+<map id="initBuffers" name="initBuffers">
+<area shape="rect" id="node1" title="Initialize an array of buffer pointers to all zeroes." alt="" coords="5,5,95,31"/>
+<area shape="rect" id="node2" href="$hex2otf_8c.html#a2f5976201b1e630a94045f04a0348572" title="Print an error message on stderr, then exit." alt="" coords="143,5,185,31"/>
+</map>

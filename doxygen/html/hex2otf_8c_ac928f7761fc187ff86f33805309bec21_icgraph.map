@@ -1,0 +1,10 @@
+<map id="freeBuffer" name="freeBuffer">
+<area shape="rect" id="node1" title="Free the memory previously allocated for a buffer." alt="" coords="267,129,353,155"/>
+<area shape="rect" id="node2" href="$hex2otf_8c.html#afd499a24ff34cb5c19b52df795422c12" title="Fill OpenType bitmap data and location tables." alt="" coords="121,5,206,31"/>
+<area shape="rect" id="node4" href="$hex2otf_8c.html#a3d62aa29f94c3fa78ca4438739d64a62" title="Add a CFF table to a font." alt="" coords="132,55,195,80"/>
+<area shape="rect" id="node5" href="$hex2otf_8c.html#a6362601eb41d051a103a1d9edcd4f284" title="Fill a &quot;cmap&quot; font table." alt="" coords="108,104,219,129"/>
+<area shape="rect" id="node6" href="$hex2otf_8c.html#a79d8a322be9d9131b684a9ea67abe05e" title="Fill a &quot;name&quot; font table." alt="" coords="108,153,219,179"/>
+<area shape="rect" id="node7" href="$hex2otf_8c.html#a326e4fa86eb32bb18e37eab8f495bd2f" title="Add a TrueType table to a font." alt="" coords="116,203,211,228"/>
+<area shape="rect" id="node8" href="$hex2otf_8c.html#a074562f0527ff6db8b1b956b9356a315" title="Write OpenType font to output file." alt="" coords="122,252,205,277"/>
+<area shape="rect" id="node3" href="$hex2otf_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="The main function." alt="" coords="5,129,60,155"/>
+</map>

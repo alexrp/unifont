@@ -1,0 +1,5 @@
+<map id="is_wide_vowel" name="is_wide_vowel">
+<area shape="rect" id="node1" title="Whether vowel has rightmost vertical stroke to the right." alt="" coords="283,5,400,31"/>
+<area shape="rect" id="node2" href="$unihangul-support_8c.html#a07b8c0163dd9e9b6f2560f09e0f3e570" title="Convert Hangul Jamo choseong, jungseong, and jongseong into a glyph." alt="" coords="108,5,235,31"/>
+<area shape="rect" id="node3" href="$unigen-hangul_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="Program entry point." alt="" coords="5,5,60,31"/>
+</map>

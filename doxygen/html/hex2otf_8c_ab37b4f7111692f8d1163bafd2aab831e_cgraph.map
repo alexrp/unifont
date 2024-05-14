@@ -1,0 +1,7 @@
+<map id="fillBlankOutline" name="fillBlankOutline">
+<area shape="rect" id="node1" title="Create a dummy blank outline in a font table." alt="" coords="5,55,128,80"/>
+<area shape="rect" id="node2" href="$hex2otf_8c.html#a1fab24bb2d2b38b68a38ec871afc3f9c" title="Add a TrueType or OpenType table to the font." alt="" coords="180,5,260,31"/>
+<area shape="rect" id="node3" href="$hex2otf_8c.html#a07b29528c561e5852a228c98391225f7" title="Append two unsigned bytes to the end of a byte array." alt="" coords="177,55,263,80"/>
+<area shape="rect" id="node4" href="$hex2otf_8c.html#ae8310060f5a9b7cefb84d0bb1b459b64" title="Create a new buffer." alt="" coords="176,104,264,129"/>
+<area shape="rect" id="node5" href="$hex2otf_8c.html#a2f5976201b1e630a94045f04a0348572" title="Print an error message on stderr, then exit." alt="" coords="312,104,355,129"/>
+</map>

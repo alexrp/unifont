@@ -1,0 +1,10 @@
+<map id="fillHeadTable" name="fillHeadTable">
+<area shape="rect" id="node1" title="Fill a &quot;head&quot; font table." alt="" coords="5,104,112,129"/>
+<area shape="rect" id="node2" href="$hex2otf_8c.html#a1fab24bb2d2b38b68a38ec871afc3f9c" title="Add a TrueType or OpenType table to the font." alt="" coords="169,5,249,31"/>
+<area shape="rect" id="node3" href="$hex2otf_8c.html#a07b29528c561e5852a228c98391225f7" title="Append two unsigned bytes to the end of a byte array." alt="" coords="165,55,252,80"/>
+<area shape="rect" id="node4" href="$hex2otf_8c.html#a051a88b0ac4eb063945b84e2242408ea" title="Append four unsigned bytes to the end of a byte array." alt="" coords="165,104,252,129"/>
+<area shape="rect" id="node5" href="$hex2otf_8c.html#a0d4560c5d562d31a33f092bb579f8397" title="Append 1 to 4 bytes of zeroes to a buffer, for padding." alt="" coords="160,153,257,179"/>
+<area shape="rect" id="node8" href="$hex2otf_8c.html#ae8310060f5a9b7cefb84d0bb1b459b64" title="Create a new buffer." alt="" coords="314,204,402,229"/>
+<area shape="rect" id="node6" href="$hex2otf_8c.html#ae32c0f82cbb6a4d8ece0559f1c7b74f4" title="Ensure that the buffer has at least the specified minimum size." alt="" coords="305,155,411,180"/>
+<area shape="rect" id="node7" href="$hex2otf_8c.html#a2f5976201b1e630a94045f04a0348572" title="Print an error message on stderr, then exit." alt="" coords="459,180,501,205"/>
+</map>

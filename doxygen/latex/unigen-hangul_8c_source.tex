@@ -1,0 +1,379 @@
+\hypertarget{unigen-hangul_8c_source}{}\doxysection{unigen-\/hangul.c}
+\label{unigen-hangul_8c_source}\index{src/unigen-\/hangul.c@{src/unigen-\/hangul.c}}
+\mbox{\hyperlink{unigen-hangul_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00001}00001\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00002}00002\ \textcolor{comment}{\ \ \ @file\ unigen-\/hangul.c}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00003}00003\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00004}00004\ \textcolor{comment}{\ \ \ @brief\ Generate\ arbitrary\ hangul\ syllables.}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00005}00005\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00006}00006\ \textcolor{comment}{\ \ \ Input\ is\ a\ Unifont\ .hex\ file\ such\ as\ the\ "{}hangul-\/base.hex"{}\ file\ that}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00007}00007\ \textcolor{comment}{\ \ \ is\ included\ in\ the\ Unifont\ package.}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00008}00008\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00009}00009\ \textcolor{comment}{\ \ \ The\ default\ program\ parameters\ will\ generate\ the\ Unicode}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00010}00010\ \textcolor{comment}{\ \ \ Hangul\ Syllables\ range\ of\ U+AC00..U+D7A3.\ \ The\ syllables}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00011}00011\ \textcolor{comment}{\ \ \ will\ appear\ in\ this\ order:}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00012}00012\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00013}00013\ \textcolor{comment}{\ \ \ \ \ \ \ \ For\ each\ modern\ choseong\ \{}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00014}00014\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ For\ each\ modern\ jungseong\ \{}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00015}00015\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ Output\ syllable\ of\ choseong\ and\ jungseong}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00016}00016\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ For\ each\ modern\ jongseong\ \{}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00017}00017\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Output\ syllable\ of\ choseong\ +\ jungseong\ +\ jongseong}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00018}00018\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00019}00019\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00020}00020\ \textcolor{comment}{\ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00021}00021\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00022}00022\ \textcolor{comment}{\ \ \ By\ starting\ the\ jongseong\ code\ point\ at\ one\ before\ the\ first}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00023}00023\ \textcolor{comment}{\ \ \ valid\ jongseong,\ the\ first\ inner\ loop\ iteration\ will\ add\ a}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00024}00024\ \textcolor{comment}{\ \ \ blank\ glyph\ for\ the\ jongseong\ portion\ of\ the\ syllable,\ so}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00025}00025\ \textcolor{comment}{\ \ \ only\ the\ current\ choseong\ and\ jungseong\ will\ be\ output\ first.}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00026}00026\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00027}00027\ \textcolor{comment}{\ \ \ @author\ Paul\ Hardy}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00028}00028\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00029}00029\ \textcolor{comment}{\ \ \ @copyright\ Copyright\ ©\ 2023\ Paul\ Hardy}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00030}00030\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00031}00031\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00032}00032\ \textcolor{comment}{\ \ \ LICENSE:}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00033}00033\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00034}00034\ \textcolor{comment}{\ \ \ \ \ \ This\ program\ is\ free\ software:\ you\ can\ redistribute\ it\ and/or\ modify}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00035}00035\ \textcolor{comment}{\ \ \ \ \ \ it\ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00036}00036\ \textcolor{comment}{\ \ \ \ \ \ the\ Free\ Software\ Foundation,\ either\ version\ 2\ of\ the\ License,\ or}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00037}00037\ \textcolor{comment}{\ \ \ \ \ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00038}00038\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00039}00039\ \textcolor{comment}{\ \ \ \ \ \ This\ program\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00040}00040\ \textcolor{comment}{\ \ \ \ \ \ but\ WITHOUT\ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00041}00041\ \textcolor{comment}{\ \ \ \ \ \ MERCHANTABILITY\ or\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00042}00042\ \textcolor{comment}{\ \ \ \ \ \ GNU\ General\ Public\ License\ for\ more\ details.}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00043}00043\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00044}00044\ \textcolor{comment}{\ \ \ \ \ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00045}00045\ \textcolor{comment}{\ \ \ \ \ \ along\ with\ this\ program.\ \ If\ not,\ see\ <http://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00046}00046\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00048}00048\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00049}00049\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00050}00050\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{hangul_8h}{hangul.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00052}00052\ \textcolor{comment}{//\ \#define\ DEBUG}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00055}\mbox{\hyperlink{structPARAMS}{00055}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structPARAMS}{PARAMS}}\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00056}00056\ \ \ \ \textcolor{keywordtype}{unsigned}\ starting\_codept;\ \ \ \ \ \ \textcolor{comment}{/*\ First\ output\ Unicode\ code\ point.\ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00057}00057\ \ \ \ \textcolor{keywordtype}{unsigned}\ cho\_start,\ \ cho\_end;\ \ \textcolor{comment}{/*\ Choseong\ \ start\ and\ end\ code\ points.\ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00058}00058\ \ \ \ \textcolor{keywordtype}{unsigned}\ jung\_start,\ jung\_end;\ \textcolor{comment}{/*\ Jungseong\ start\ and\ end\ code\ points.\ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00059}00059\ \ \ \ \textcolor{keywordtype}{unsigned}\ jong\_start,\ jong\_end;\ \textcolor{comment}{/*\ Jongseong\ start\ and\ end\ code\ points.\ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00060}00060\ \ \ \ FILE\ *infp;}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00061}00061\ \ \ \ FILE\ *outfp;}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00062}00062\ \};}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00063}00063\ }
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00064}00064\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00065}00065\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00066}00066\ \textcolor{comment}{\ \ \ @brief\ Program\ entry\ point.}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00067}00067\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00068}00068\ \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00069}\mbox{\hyperlink{unigen-hangul_8c_a0ddf1224851353fc92bfbff6f499fa97}{00069}}\ \mbox{\hyperlink{unibdf2hex_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}}\ (\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}\ *argv[])\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00071}00071\ \ \ \ \textcolor{keywordtype}{int}\ i;\ \ \textcolor{comment}{/*\ loop\ variable\ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00072}00072\ \ \ \ \textcolor{keywordtype}{unsigned}\ codept;}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00073}00073\ \ \ \ \textcolor{keywordtype}{unsigned}\ max\_codept;}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00074}00074\ \ \ \ \textcolor{keywordtype}{unsigned}\ glyph[MAX\_GLYPHS][16];}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00075}00075\ \ \ \ \textcolor{keywordtype}{unsigned}\ tmp\_glyph\ [16];\ \ \textcolor{comment}{/*\ To\ build\ one\ combined\ glyph\ at\ a\ time.\ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00076}00076\ \ \ \ \textcolor{keywordtype}{int}\ cho,\ jung,\ jong;\ \ \ \ \ \ \textcolor{comment}{/*\ The\ 3\ components\ in\ a\ Hangul\ syllable.\ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00077}00077\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00078}00078\ \textcolor{comment}{\ \ \ ///\ Default\ parameters\ for\ Hangul\ syllable\ generation.}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00079}00079\ \textcolor{comment}{}\ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structPARAMS}{PARAMS}}\ params\ =\ \{\ 0xAC00,\ \ \textcolor{comment}{/*\ Starting\ output\ Unicode\ code\ point\ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x1100,\ \ \textcolor{comment}{/*\ First\ modern\ choseong\ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x1112,\ \ \textcolor{comment}{/*\ Last\ modern\ choseong\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x1161,\ \ \textcolor{comment}{/*\ First\ modern\ jungseong\ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x1175,\ \ \textcolor{comment}{/*\ Last\ modern\ jungseong\ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x11A7,\ \ \textcolor{comment}{/*\ One\ before\ first\ modern\ jongseong\ \ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x11C2,\ \ \textcolor{comment}{/*\ Last\ modern\ jongseong\ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ stdin,\ \ \ \textcolor{comment}{/*\ Default\ input\ file\ pointer\ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ stdout\ \ \ \textcolor{comment}{/*\ Default\ output\ file\ pointer\ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00089}00089\ }
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00090}00090\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{unigen-hangul_8c_af21f77b695eb80e4d88265be6647978e}{parse\_args}}\ (\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}\ *argv[],\ \textcolor{keyword}{struct}\ \mbox{\hyperlink{structPARAMS}{PARAMS}}\ *params);}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00091}00091\ }
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00092}00092\ \ \ \ \textcolor{keywordtype}{unsigned}\ \mbox{\hyperlink{hangul_8h_afd372e1a400e28d1b61410187f038eec}{hangul\_read\_base16}}\ (FILE\ *infp,\ \textcolor{keywordtype}{unsigned}\ glyph[][16]);}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00094}00094\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{hangul_8h_a056fdfdb02eeccd48026c05ccb200435}{print\_glyph\_hex}}\ (FILE\ *fp,\ \textcolor{keywordtype}{unsigned}\ codept,\ \textcolor{keywordtype}{unsigned}\ *this\_glyph);}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00096}00096\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{hangul_8h_a07b8c0163dd9e9b6f2560f09e0f3e570}{combined\_jamo}}\ (\textcolor{keywordtype}{unsigned}\ glyph\ [MAX\_GLYPHS][16],}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ cho,\ \textcolor{keywordtype}{unsigned}\ jung,\ \textcolor{keywordtype}{unsigned}\ jong,}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ *combined\_glyph);}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00100}00100\ }
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00101}00101\ \ \ \ \textcolor{keywordflow}{if}\ (argc\ >\ 1)\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00102}00102\ \ \ \ \ \ \ \mbox{\hyperlink{unigen-hangul_8c_af21f77b695eb80e4d88265be6647978e}{parse\_args}}\ (argc,\ argv,\ \&params);}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00103}00103\ }
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00104}00104\ \textcolor{preprocessor}{\#ifdef\ DEBUG}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00105}00105\ \ \ \ \ \ \ fprintf\ (stderr,}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Range:\ (U+\%04X,\ U+\%04X,\ U+\%04X)\ to\ (U+\%04X,\ U+\%04X,\ U+\%04X)\(\backslash\)n"{}},}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ params.cho\_start,\ params.jung\_start,\ params.jong\_start,}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ params.cho\_end,\ \ \ params.jung\_end,\ \ \ params.jong\_end);}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00109}00109\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00110}00110\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00111}00111\ }
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00112}00112\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00113}00113\ \textcolor{comment}{\ \ \ \ \ \ Initialize\ glyph\ array\ to\ all\ zeroes.}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00114}00114\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00115}00115\ \ \ \ \textcolor{keywordflow}{for}\ (codept\ =\ 0;\ codept\ <\ MAX\_GLYPHS;\ codept++)\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00116}00116\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 16;\ i++)\ glyph[codept][i]\ =\ 0x0000;}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00117}00117\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00118}00118\ }
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00119}00119\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00120}00120\ \textcolor{comment}{\ \ \ \ \ \ Read\ Hangul\ base\ glyph\ file.}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00121}00121\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00122}00122\ \ \ \ max\_codept\ =\ \mbox{\hyperlink{hangul_8h_afd372e1a400e28d1b61410187f038eec}{hangul\_read\_base16}}\ (params.infp,\ glyph);}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00123}00123\ \ \ \ \textcolor{keywordflow}{if}\ (max\_codept\ >\ 0x8FF)\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00124}00124\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)nWARNING:\ Hangul\ glyph\ range\ exceeds\ PUA\ space.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00125}00125\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00126}00126\ }
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00127}00127\ \ \ \ codept\ =\ params.starting\_codept;\ \ \textcolor{comment}{/*\ First\ code\ point\ to\ output\ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00128}00128\ }
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00129}00129\ \ \ \ \textcolor{keywordflow}{for}\ (cho\ =\ params.cho\_start;\ cho\ <=\ params.cho\_end;\ cho++)\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00130}00130\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (jung\ =\ params.jung\_start;\ jung\ <=\ params.jung\_end;\ jung++)\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (jong\ =\ params.jong\_start;\ jong\ <=\ params.jong\_end;\ jong++)\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00132}00132\ }
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00133}00133\ \textcolor{preprocessor}{\#ifdef\ DEBUG}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (params.outfp,}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}(U+\%04X,\ U+\%04X,\ U+\%04X)\(\backslash\)n"{}},}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cho,\ jung,\ jong);}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00137}00137\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{hangul_8h_a07b8c0163dd9e9b6f2560f09e0f3e570}{combined\_jamo}}\ (glyph,\ cho,\ jung,\ jong,\ tmp\_glyph);}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{hangul_8h_a056fdfdb02eeccd48026c05ccb200435}{print\_glyph\_hex}}\ (params.outfp,\ codept,\ tmp\_glyph);}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ codept++;}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (jong\ ==\ \mbox{\hyperlink{hangul_8h_a15a192336db645af3e42a330bc5758c8}{JONG\_UNICODE\_END}})}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ jong\ =\ \mbox{\hyperlink{hangul_8h_abc5d018ac60a7dff7dd90ed98a738089}{JONG\_EXTB\_UNICODE\_START}}\ -\/\ 1;\ \textcolor{comment}{/*\ Start\ Extended-\/B\ range\ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (jung\ ==\ \mbox{\hyperlink{hangul_8h_ac5e9b3d850d9664e702e8cd330cbfa4b}{JUNG\_UNICODE\_END}})}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ jung\ =\ \mbox{\hyperlink{hangul_8h_a204baf063de1c6418bcf31a3834fe16a}{JUNG\_EXTB\_UNICODE\_START}}\ -\/\ 1;\ \ \textcolor{comment}{/*\ Start\ Extended-\/B\ range\ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00146}00146\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00147}00147\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (cho\ ==\ \mbox{\hyperlink{hangul_8h_a616c08a55df29fe0956c66c15705bc5f}{CHO\_UNICODE\_END}})}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00148}00148\ \ \ \ \ \ \ \ \ \ cho\ =\ \mbox{\hyperlink{hangul_8h_a4153618c22f94f11eeb75834a5c0729d}{CHO\_EXTA\_UNICODE\_START}}\ -\/\ 1;\ \ \textcolor{comment}{/*\ Start\ Extended-\/A\ range\ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00149}00149\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00150}00150\ }
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00151}00151\ \ \ \ \textcolor{keywordflow}{if}\ (params.infp\ \ !=\ stdin)\ \ fclose\ (params.infp);}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00152}00152\ \ \ \ \textcolor{keywordflow}{if}\ (params.outfp\ !=\ stdout)\ fclose\ (params.outfp);}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00153}00153\ }
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00154}00154\ \ \ \ exit\ (EXIT\_SUCCESS);}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00155}00155\ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00156}00156\ }
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00157}00157\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00158}00158\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00159}00159\ \textcolor{comment}{\ \ \ @brief\ Parse\ command\ line\ arguments.}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00160}00160\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00161}00161\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00162}00162\ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00163}\mbox{\hyperlink{unigen-hangul_8c_af21f77b695eb80e4d88265be6647978e}{00163}}\ \mbox{\hyperlink{unigen-hangul_8c_af21f77b695eb80e4d88265be6647978e}{parse\_args}}\ (\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}\ *argv[],\ \textcolor{keyword}{struct}\ \mbox{\hyperlink{structPARAMS}{PARAMS}}\ *params)\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00164}00164\ \ \ \ \textcolor{keywordtype}{int}\ arg\_count;\ \ \textcolor{comment}{/*\ Current\ index\ into\ argv[].\ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00165}00165\ }
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00166}00166\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{unigen-hangul_8c_a97cb9bdd18abd681712b192f5729ad56}{get\_hex\_range}}\ (\textcolor{keywordtype}{char}\ *instring,\ \textcolor{keywordtype}{unsigned}\ *start,\ \textcolor{keywordtype}{unsigned}\ *end);}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00167}00167\ }
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00168}00168\ \ \ \ \textcolor{keywordtype}{int}\ strncmp\ (\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *s1,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *s2,\ \textcolor{keywordtype}{size\_t}\ n);}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00169}00169\ }
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00170}00170\ }
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00171}00171\ \ \ \ arg\_count\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00172}00172\ }
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00173}00173\ \ \ \ \textcolor{keywordflow}{while}\ (arg\_count\ <\ argc)\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00174}00174\ \ \ \ \ \ \ \textcolor{comment}{/*\ If\ all\ 600,000+\ Hangul\ syllables\ are\ requested.\ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00175}00175\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (strncmp\ (argv\ [arg\_count],\ \textcolor{stringliteral}{"{}-\/all"{}},\ 4)\ ==\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00176}00176\ \ \ \ \ \ \ \ \ \ params-\/>starting\_codept\ =\ 0x0001;}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00177}00177\ \ \ \ \ \ \ \ \ \ params-\/>cho\_start\ \ =\ \mbox{\hyperlink{hangul_8h_a136faa4688a685967fd5d7924a0d1881}{CHO\_UNICODE\_START}};\ \ \ \ \ \ \ \textcolor{comment}{/*\ \ \ \ \ \ \ \ \ \ \ \ First\ modern\ choseong\ \ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00178}00178\ \ \ \ \ \ \ \ \ \ params-\/>cho\_end\ \ \ \ =\ \mbox{\hyperlink{hangul_8h_a75ce785d49a097dbbe179d8ebe671c5f}{CHO\_EXTA\_UNICODE\_END}};\ \ \ \ \textcolor{comment}{/*\ \ \ \ \ \ \ \ \ \ \ \ Last\ ancient\ choseong\ \ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00179}00179\ \ \ \ \ \ \ \ \ \ params-\/>jung\_start\ =\ \mbox{\hyperlink{hangul_8h_a84565f505a6cf9584179d595c1dbd331}{JUNG\_UNICODE\_START}};\ \ \ \ \ \ \textcolor{comment}{/*\ \ \ \ \ \ \ \ \ \ \ \ First\ modern\ jungseong\ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00180}00180\ \ \ \ \ \ \ \ \ \ params-\/>jung\_end\ \ \ =\ \mbox{\hyperlink{hangul_8h_afe4411910308475bdd7e13687987cfc5}{JUNG\_EXTB\_UNICODE\_END}};\ \ \ \textcolor{comment}{/*\ \ \ \ \ \ \ \ \ \ \ \ Last\ ancient\ jungseong\ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00181}00181\ \ \ \ \ \ \ \ \ \ params-\/>jong\_start\ =\ \mbox{\hyperlink{hangul_8h_a5c2ef68c3129eab97f29ac76d6061d9e}{JONG\_UNICODE\_START}}\ -\/\ 1;\ \ \textcolor{comment}{/*\ One\ before\ first\ modern\ jongseong\ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00182}00182\ \ \ \ \ \ \ \ \ \ params-\/>jong\_end\ \ \ =\ \mbox{\hyperlink{hangul_8h_a22bcb32ef304949469d73470b0211262}{JONG\_EXTB\_UNICODE\_END}};\ \ \ \textcolor{comment}{/*\ \ \ \ \ \ \ \ \ \ \ \ Last\ andient\ jongseong\ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00183}00183\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00184}00184\ \ \ \ \ \ \ \textcolor{comment}{/*\ If\ starting\ code\ point\ for\ output\ Unifont\ hex\ file\ is\ specified.\ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00185}00185\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (strncmp\ (argv\ [arg\_count],\ \textcolor{stringliteral}{"{}-\/c"{}},\ 2)\ ==\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00186}00186\ \ \ \ \ \ \ \ \ \ arg\_count++;}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (arg\_count\ <\ argc)\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ sscanf\ (argv\ [arg\_count],\ \textcolor{stringliteral}{"{}\%X"{}},\ \&params-\/>starting\_codept);}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00190}00190\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00191}00191\ \ \ \ \ \ \ \textcolor{comment}{/*\ If\ initial\ consonant\ (choseong)\ range,\ "{}jamo\ 1"{},\ get\ range.\ \ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00192}00192\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (strncmp\ (argv\ [arg\_count],\ \textcolor{stringliteral}{"{}-\/j1"{}},\ 3)\ ==\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00193}00193\ \ \ \ \ \ \ \ \ \ arg\_count++;}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (arg\_count\ <\ argc)\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unigen-hangul_8c_a97cb9bdd18abd681712b192f5729ad56}{get\_hex\_range}}\ (argv\ [arg\_count],}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \&params-\/>cho\_start,\ \&params-\/>cho\_end);}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00198}00198\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Allow\ one\ initial\ blank\ glyph\ at\ start\ of\ a\ loop,\ none\ at\ end.}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00199}00199\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (params-\/>cho\_start\ <\ \mbox{\hyperlink{hangul_8h_a136faa4688a685967fd5d7924a0d1881}{CHO\_UNICODE\_START}})\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ params-\/>cho\_start\ =\ \mbox{\hyperlink{hangul_8h_a136faa4688a685967fd5d7924a0d1881}{CHO\_UNICODE\_START}}\ -\/\ 1;}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (params-\/>cho\_start\ >\ \mbox{\hyperlink{hangul_8h_a616c08a55df29fe0956c66c15705bc5f}{CHO\_UNICODE\_END}}\ \&\&}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ params-\/>cho\_start\ <\ \mbox{\hyperlink{hangul_8h_a4153618c22f94f11eeb75834a5c0729d}{CHO\_EXTA\_UNICODE\_START}})\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00205}00205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ params-\/>cho\_start\ =\ \mbox{\hyperlink{hangul_8h_a4153618c22f94f11eeb75834a5c0729d}{CHO\_EXTA\_UNICODE\_START}}\ -\/\ 1;}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00207}00207\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00208}00208\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Do\ not\ go\ past\ desired\ Hangul\ choseong\ range,}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00209}00209\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Hangul\ Jamo\ or\ Hangul\ Jamo\ Extended-\/A\ choseong.}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00210}00210\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00211}00211\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (params-\/>cho\_end\ >\ \mbox{\hyperlink{hangul_8h_a75ce785d49a097dbbe179d8ebe671c5f}{CHO\_EXTA\_UNICODE\_END}})\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00212}00212\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ params-\/>cho\_end\ =\ \mbox{\hyperlink{hangul_8h_a75ce785d49a097dbbe179d8ebe671c5f}{CHO\_EXTA\_UNICODE\_END}};}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (params-\/>cho\_end\ >\ \mbox{\hyperlink{hangul_8h_a616c08a55df29fe0956c66c15705bc5f}{CHO\_UNICODE\_END}}\ \&\&}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ params-\/>cho\_end\ <\ \mbox{\hyperlink{hangul_8h_a4153618c22f94f11eeb75834a5c0729d}{CHO\_EXTA\_UNICODE\_START}})\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ params-\/>cho\_end\ =\ \mbox{\hyperlink{hangul_8h_a616c08a55df29fe0956c66c15705bc5f}{CHO\_UNICODE\_END}};}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00217}00217\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00219}00219\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00220}00220\ \ \ \ \ \ \ \textcolor{comment}{/*\ If\ medial\ vowel\ (jungseong)\ range,\ "{}jamo\ 2"{},\ get\ range.\ \ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00221}00221\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (strncmp\ (argv\ [arg\_count],\ \textcolor{stringliteral}{"{}-\/j2"{}},\ 3)\ ==\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00222}00222\ \ \ \ \ \ \ \ \ \ arg\_count++;}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (arg\_count\ <\ argc)\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00224}00224\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unigen-hangul_8c_a97cb9bdd18abd681712b192f5729ad56}{get\_hex\_range}}\ (argv\ [arg\_count],}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \&params-\/>jung\_start,\ \&params-\/>jung\_end);}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00227}00227\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Allow\ one\ initial\ blank\ glyph\ at\ start\ of\ a\ loop,\ none\ at\ end.}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00228}00228\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (params-\/>jung\_start\ <\ \mbox{\hyperlink{hangul_8h_a84565f505a6cf9584179d595c1dbd331}{JUNG\_UNICODE\_START}})\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ params-\/>jung\_start\ =\ \mbox{\hyperlink{hangul_8h_a84565f505a6cf9584179d595c1dbd331}{JUNG\_UNICODE\_START}}\ -\/\ 1;\ }
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (params-\/>jung\_start\ >\ \mbox{\hyperlink{hangul_8h_ac5e9b3d850d9664e702e8cd330cbfa4b}{JUNG\_UNICODE\_END}}\ \&\&}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ params-\/>jung\_start\ <\ \mbox{\hyperlink{hangul_8h_a204baf063de1c6418bcf31a3834fe16a}{JUNG\_EXTB\_UNICODE\_START}})\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ params-\/>jung\_start\ =\ \mbox{\hyperlink{hangul_8h_a204baf063de1c6418bcf31a3834fe16a}{JUNG\_EXTB\_UNICODE\_START}}\ -\/\ 1;}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00237}00237\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Do\ not\ go\ past\ desired\ Hangul\ jungseong\ range,}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00238}00238\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Hangul\ Jamo\ or\ Hangul\ Jamo\ Extended-\/B\ jungseong.}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00239}00239\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (params-\/>jung\_end\ >\ \mbox{\hyperlink{hangul_8h_afe4411910308475bdd7e13687987cfc5}{JUNG\_EXTB\_UNICODE\_END}})\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ params-\/>jung\_end\ =\ \mbox{\hyperlink{hangul_8h_afe4411910308475bdd7e13687987cfc5}{JUNG\_EXTB\_UNICODE\_END}};}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (params-\/>jung\_end\ >\ \mbox{\hyperlink{hangul_8h_ac5e9b3d850d9664e702e8cd330cbfa4b}{JUNG\_UNICODE\_END}}\ \&\&}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ params-\/>jung\_end\ <\ \mbox{\hyperlink{hangul_8h_a204baf063de1c6418bcf31a3834fe16a}{JUNG\_EXTB\_UNICODE\_START}})\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ params-\/>jung\_end\ =\ \mbox{\hyperlink{hangul_8h_ac5e9b3d850d9664e702e8cd330cbfa4b}{JUNG\_UNICODE\_END}};}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00248}00248\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00249}00249\ \ \ \ \ \ \ \textcolor{comment}{/*\ If\ final\ consonant\ (jongseong)\ range,\ "{}jamo\ 3"{},\ get\ range.\ \ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00250}00250\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (strncmp\ (argv\ [arg\_count],\ \textcolor{stringliteral}{"{}-\/j3"{}},\ 3)\ ==\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00251}00251\ \ \ \ \ \ \ \ \ \ arg\_count++;}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00252}00252\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (arg\_count\ <\ argc)\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00253}00253\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unigen-hangul_8c_a97cb9bdd18abd681712b192f5729ad56}{get\_hex\_range}}\ (argv\ [arg\_count],}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00254}00254\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \&params-\/>jong\_start,\ \&params-\/>jong\_end);}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00255}00255\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00256}00256\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Allow\ one\ initial\ blank\ glyph\ at\ start\ of\ a\ loop,\ none\ at\ end.}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00257}00257\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00258}00258\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (params-\/>jong\_start\ <\ \mbox{\hyperlink{hangul_8h_a5c2ef68c3129eab97f29ac76d6061d9e}{JONG\_UNICODE\_START}})\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00259}00259\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ params-\/>jong\_start\ =\ \mbox{\hyperlink{hangul_8h_a5c2ef68c3129eab97f29ac76d6061d9e}{JONG\_UNICODE\_START}}\ -\/\ 1;\ }
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00260}00260\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00261}00261\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (params-\/>jong\_start\ >\ \mbox{\hyperlink{hangul_8h_a15a192336db645af3e42a330bc5758c8}{JONG\_UNICODE\_END}}\ \&\&}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00262}00262\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ params-\/>jong\_start\ <\ \mbox{\hyperlink{hangul_8h_abc5d018ac60a7dff7dd90ed98a738089}{JONG\_EXTB\_UNICODE\_START}})\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00263}00263\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ params-\/>jong\_start\ =\ \mbox{\hyperlink{hangul_8h_abc5d018ac60a7dff7dd90ed98a738089}{JONG\_EXTB\_UNICODE\_START}}\ -\/\ 1;}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00264}00264\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00265}00265\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00266}00266\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Do\ not\ go\ past\ desired\ Hangul\ jongseong\ range,}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00267}00267\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Hangul\ Jamo\ or\ Hangul\ Jamo\ Extended-\/B\ jongseong.}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00268}00268\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (params-\/>jong\_end\ >\ \mbox{\hyperlink{hangul_8h_a22bcb32ef304949469d73470b0211262}{JONG\_EXTB\_UNICODE\_END}})\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00270}00270\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ params-\/>jong\_end\ =\ \mbox{\hyperlink{hangul_8h_a22bcb32ef304949469d73470b0211262}{JONG\_EXTB\_UNICODE\_END}};}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00271}00271\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00272}00272\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (params-\/>jong\_end\ >\ \mbox{\hyperlink{hangul_8h_a15a192336db645af3e42a330bc5758c8}{JONG\_UNICODE\_END}}\ \&\&}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ params-\/>jong\_end\ <\ \mbox{\hyperlink{hangul_8h_abc5d018ac60a7dff7dd90ed98a738089}{JONG\_EXTB\_UNICODE\_START}})\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00274}00274\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ params-\/>jong\_end\ =\ \mbox{\hyperlink{hangul_8h_a15a192336db645af3e42a330bc5758c8}{JONG\_UNICODE\_END}};}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00275}00275\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00276}00276\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00277}00277\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00278}00278\ \ \ \ \ \ \ \textcolor{comment}{/*\ If\ input\ file\ is\ specified,\ open\ it\ for\ read\ access.\ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00279}00279\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (strncmp\ (argv\ [arg\_count],\ \textcolor{stringliteral}{"{}-\/i"{}},\ 2)\ ==\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00280}00280\ \ \ \ \ \ \ \ \ \ arg\_count++;}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00281}00281\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (arg\_count\ <\ argc)\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00282}00282\ \ \ \ \ \ \ \ \ \ \ \ \ params-\/>infp\ =\ fopen\ (argv\ [arg\_count],\ \textcolor{stringliteral}{"{}r"{}});}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00283}00283\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (params-\/>infp\ ==\ NULL)\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00284}00284\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)n***\ ERROR:\ Cannot\ open\ \%s\ for\ input.\(\backslash\)n\(\backslash\)n"{}},}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00285}00285\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ argv\ [arg\_count]);}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00286}00286\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ exit\ (EXIT\_FAILURE);}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00287}00287\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00288}00288\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00289}00289\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00290}00290\ \ \ \ \ \ \ \textcolor{comment}{/*\ If\ output\ file\ is\ specified,\ open\ it\ for\ write\ access.\ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00291}00291\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (strncmp\ (argv\ [arg\_count],\ \textcolor{stringliteral}{"{}-\/o"{}},\ 2)\ ==\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00292}00292\ \ \ \ \ \ \ \ \ \ arg\_count++;}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00293}00293\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (arg\_count\ <\ argc)\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00294}00294\ \ \ \ \ \ \ \ \ \ \ \ \ params-\/>outfp\ =\ fopen\ (argv\ [arg\_count],\ \textcolor{stringliteral}{"{}w"{}});}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00295}00295\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (params-\/>outfp\ ==\ NULL)\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)n***\ ERROR:\ Cannot\ open\ \%s\ for\ output.\(\backslash\)n\(\backslash\)n"{}},}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ argv\ [arg\_count]);}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00298}00298\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ exit\ (EXIT\_FAILURE);}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00299}00299\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00300}00300\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00301}00301\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00302}00302\ \ \ \ \ \ \ \textcolor{comment}{/*\ If\ help\ is\ requested,\ print\ help\ message\ and\ exit.\ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00303}00303\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (strncmp\ (argv\ [arg\_count],\ \textcolor{stringliteral}{"{}-\/h"{}},\ \ \ \ \ 2)\ ==\ 0\ ||}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00304}00304\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ strncmp\ (argv\ [arg\_count],\ \textcolor{stringliteral}{"{}-\/-\/help"{}},\ 6)\ ==\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00305}00305\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\(\backslash\)nunigen-\/hangul\ [options]\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00306}00306\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ Generates\ Hangul\ syllables\ from\ an\ input\ Unifont\ .hex\ file\ encoded\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00307}00307\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ in\ Johab\ 6/3/1\ format.\ \ By\ default,\ the\ output\ is\ the\ Unicode\ Hangul\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00308}00308\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ Syllables\ range,\ U+AC00..U+D7A3.\ \ Options\ allow\ the\ user\ to\ specify\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00309}00309\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ a\ starting\ code\ point\ for\ the\ output\ Unifont\ .hex\ file,\ and\ ranges\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00310}00310\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ in\ hexadecimal\ of\ the\ starting\ and\ ending\ Hangul\ Jamo\ code\ points:\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00311}00311\ }
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00312}00312\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ *\ 1100-\/115E\ Initial\ consonants\ (choseong)\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00313}00313\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ *\ 1161-\/11A7\ Medial\ vowels\ (jungseong)\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00314}00314\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ *\ 11A8-\/11FF\ Final\ consonants\ (jongseong).\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00315}00315\ }
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00316}00316\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ A\ single\ code\ point\ or\ 0\ to\ omit\ can\ be\ specified\ instead\ of\ a\ range.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00317}00317\ }
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00318}00318\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ Option\ \ \ \ Parameters\ \ \ \ Function\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00319}00319\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ -\/-\/-\/-\/-\/-\/\ \ \ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ \ \ \ -\/-\/-\/-\/-\/-\/-\/-\/\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00320}00320\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ -\/h,\ -\/-\/help\ \ \ \ \ \ \ \ \ \ \ \ \ \ Print\ this\ message\ and\ exit.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00321}00321\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ -\/all\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Generate\ all\ Hangul\ syllables,\ using\ all\ modern\ and\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00322}00322\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ancient\ Hangul\ in\ the\ Unicode\ range\ U+1100..U+11FF,\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00323}00323\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U+A960..U+A97C,\ and\ U+D7B0..U+D7FB.\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00324}00324\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ WARNING:\ this\ will\ generate\ over\ 1,600,000\ syllables\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00325}00325\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ in\ a\ 115\ megabyte\ Unifont\ .hex\ format\ file.\ \ The\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00326}00326\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ default\ is\ to\ only\ output\ modern\ Hangul\ syllables.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00327}00327\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ -\/c\ \ \ \ \ \ \ \ code\_point\ \ \ \ Starting\ code\ point\ in\ hexadecimal\ for\ output\ file.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00328}00328\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ -\/j1\ \ \ \ \ \ \ start-\/end\ \ \ \ \ Choseong\ (jamo\ 1)\ start-\/end\ range\ in\ hexadecimal.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00329}00329\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ -\/j2\ \ \ \ \ \ \ start-\/end\ \ \ \ \ Jungseong\ (jamo\ 2)\ start-\/end\ range\ in\ hexadecimal.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00330}00330\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ -\/j3\ \ \ \ \ \ \ start-\/end\ \ \ \ \ Jongseong\ (jamo\ 3)\ start-\/end\ range\ in\ hexadecimal.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00331}00331\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ -\/i\ \ \ \ \ \ \ \ input\_file\ \ \ \ Unifont\ hangul-\/base.hex\ formatted\ input\ file.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00332}00332\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ -\/o\ \ \ \ \ \ \ \ output\_file\ \ \ Unifont\ .hex\ format\ output\ file.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00333}00333\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ Example:\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00334}00334\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ unigen-\/hangul\ -\/c\ 1\ -\/j3\ 11AB-\/11AB\ -\/i\ hangul-\/base.hex\ -\/o\ nieun-\/only.hex\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00335}00335\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ Generates\ Hangul\ syllables\ using\ all\ modern\ choseong\ and\ jungseong,\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00336}00336\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ and\ only\ the\ jongseong\ nieun\ (Unicode\ code\ point\ U+11AB).\ \ The\ output\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00337}00337\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ Unifont\ .hex\ file\ will\ contain\ code\ points\ starting\ at\ 1.\ \ Instead\ of\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00338}00338\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ specifying\ \(\backslash\)"{}-\/j3\ 11AB-\/11AB\(\backslash\)"{},\ simply\ using\ \(\backslash\)"{}-\/j3\ 11AB\(\backslash\)"{}\ will\ also\ suffice.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00339}00339\ }
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00340}00340\ \ \ \ \ \ \ \ \ \ exit\ (EXIT\_SUCCESS);}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00341}00341\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00342}00342\ }
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00343}00343\ \ \ \ \ \ \ arg\_count++;}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00344}00344\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00345}00345\ }
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00346}00346\ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00347}00347\ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00348}00348\ }
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00349}00349\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00350}00350\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00351}00351\ \textcolor{comment}{\ \ \ @brief\ Scan\ a\ hexadecimal\ range\ from\ a\ character\ string.}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00352}00352\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00353}00353\ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00354}\mbox{\hyperlink{unigen-hangul_8c_a97cb9bdd18abd681712b192f5729ad56}{00354}}\ \mbox{\hyperlink{unigen-hangul_8c_a97cb9bdd18abd681712b192f5729ad56}{get\_hex\_range}}\ (\textcolor{keywordtype}{char}\ *instring,\ \textcolor{keywordtype}{unsigned}\ *start,\ \textcolor{keywordtype}{unsigned}\ *end)\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00355}00355\ }
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00356}00356\ \ \ \ \textcolor{keywordtype}{int}\ i;\ \ \textcolor{comment}{/*\ String\ index\ variable.\ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00357}00357\ }
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00358}00358\ \ \ \ \textcolor{comment}{/*\ Get\ first\ number\ in\ range.\ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00359}00359\ \ \ \ sscanf\ (instring,\ \textcolor{stringliteral}{"{}\%X"{}},\ start);}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00360}00360\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00361}00361\ \ \ \ \ \ \ \ \ instring\ [i]\ !=\ \textcolor{charliteral}{'\(\backslash\)0'}\ \&\&\ instring\ [i]\ !=\ \textcolor{charliteral}{'-\/'};}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00362}00362\ \ \ \ \ \ \ \ \ i++);}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00363}00363\ \ \ \ \textcolor{comment}{/*\ Get\ last\ number\ in\ range.\ */}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00364}00364\ \ \ \ \textcolor{keywordflow}{if}\ (instring\ [i]\ ==\ \textcolor{charliteral}{'-\/'})\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00365}00365\ \ \ \ \ \ \ i++;}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00366}00366\ \ \ \ \ \ \ sscanf\ (\&instring\ [i],\ \textcolor{stringliteral}{"{}\%X"{}},\ end);}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00367}00367\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00368}00368\ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00369}00369\ \ \ \ \ \ \ *end\ =\ *start;}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00370}00370\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00371}00371\ }
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00372}00372\ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{unigen-hangul_8c_source_l00373}00373\ \}}
+
+\end{DoxyCode}

@@ -1,0 +1,6 @@
+<map id="hangul_variations" name="hangul_variations">
+<area shape="rect" id="node1" title="Determine the variations of each letter in a Hangul syllable." alt="" coords="479,5,617,31"/>
+<area shape="rect" id="node2" href="$unihangul-support_8c.html#a2f88bf9b2f6d754350f996933a0a9a65" title="Determine index values to the bitmaps for a syllable&#39;s components." alt="" coords="280,5,431,31"/>
+<area shape="rect" id="node3" href="$unihangul-support_8c.html#abb373afe914554ff8443f05d83b69e8e" title="Given letters in a Hangul syllable, return a glyph." alt="" coords="108,5,232,31"/>
+<area shape="rect" id="node4" href="$johab2syllables_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="The main function." alt="" coords="5,5,60,31"/>
+</map>

@@ -1,0 +1,119 @@
+\hypertarget{structGlyph}{}\doxysection{Glyph Struct Reference}
+\label{structGlyph}\index{Glyph@{Glyph}}
+
+
+Data structure to hold data for one bitmap glyph.  
+
+
+\doxysubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint\+\_\+least32\+\_\+t \mbox{\hyperlink{structGlyph_a08ed20f3df1902ce776f6e1fccd089b9}{code\+Point}}
+\begin{DoxyCompactList}\small\item\em undefined for glyph 0 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{hex2otf_8c_a0c8186d9b9b7880309c27230bbb5e69d}{byte}} \mbox{\hyperlink{structGlyph_abbbc1113c6e10dc0fa986abbb7f7665e}{bitmap}} \mbox{[}\mbox{\hyperlink{hex2otf_8c_ad0f95bf4a3a4a28b173b971e246b8745}{GLYPH\+\_\+\+MAX\+\_\+\+BYTE\+\_\+\+COUNT}}\mbox{]}
+\begin{DoxyCompactList}\small\item\em hexadecimal bitmap character array \end{DoxyCompactList}\item 
+uint\+\_\+least8\+\_\+t \mbox{\hyperlink{structGlyph_aa309ceb984d5524ef7dab0e8927fdd64}{byte\+Count}}
+\begin{DoxyCompactList}\small\item\em length of bitmap data \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{structGlyph_ada6b8b4b9419096c413b5a29dbc54aac}{combining}}
+\begin{DoxyCompactList}\small\item\em whether this is a combining glyph \end{DoxyCompactList}\item 
+\mbox{\hyperlink{hex2otf_8c_ab9f46992237e1552d3ae221b2a5e95ff}{pixels\+\_\+t}} \mbox{\hyperlink{structGlyph_ac113da35f4193641855eaf51547f9b43}{pos}}
+\item 
+\mbox{\hyperlink{hex2otf_8c_ab9f46992237e1552d3ae221b2a5e95ff}{pixels\+\_\+t}} \mbox{\hyperlink{structGlyph_a7fb4dc03b71777de880164eee4ffbc51}{lsb}}
+\begin{DoxyCompactList}\small\item\em left side bearing (x position of leftmost contour point) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Data structure to hold data for one bitmap glyph. 
+
+This data structure holds data to represent one Unifont bitmap glyph\+: Unicode code point, number of bytes in its bitmap array, whether or not it is a combining character, and an offset from the glyph origin to the start of the bitmap. 
+
+Definition at line \mbox{\hyperlink{hex2otf_8c_source_l00614}{614}} of file \mbox{\hyperlink{hex2otf_8c_source}{hex2otf.\+c}}.
+
+
+
+\doxysubsection{Field Documentation}
+\mbox{\Hypertarget{structGlyph_abbbc1113c6e10dc0fa986abbb7f7665e}\label{structGlyph_abbbc1113c6e10dc0fa986abbb7f7665e}} 
+\index{Glyph@{Glyph}!bitmap@{bitmap}}
+\index{bitmap@{bitmap}!Glyph@{Glyph}}
+\doxysubsubsection{\texorpdfstring{bitmap}{bitmap}}
+{\footnotesize\ttfamily \mbox{\hyperlink{hex2otf_8c_a0c8186d9b9b7880309c27230bbb5e69d}{byte}} Glyph\+::bitmap\mbox{[}\mbox{\hyperlink{hex2otf_8c_ad0f95bf4a3a4a28b173b971e246b8745}{GLYPH\+\_\+\+MAX\+\_\+\+BYTE\+\_\+\+COUNT}}\mbox{]}}
+
+
+
+hexadecimal bitmap character array 
+
+
+
+Definition at line \mbox{\hyperlink{hex2otf_8c_source_l00617}{617}} of file \mbox{\hyperlink{hex2otf_8c_source}{hex2otf.\+c}}.
+
+\mbox{\Hypertarget{structGlyph_aa309ceb984d5524ef7dab0e8927fdd64}\label{structGlyph_aa309ceb984d5524ef7dab0e8927fdd64}} 
+\index{Glyph@{Glyph}!byteCount@{byteCount}}
+\index{byteCount@{byteCount}!Glyph@{Glyph}}
+\doxysubsubsection{\texorpdfstring{byteCount}{byteCount}}
+{\footnotesize\ttfamily uint\+\_\+least8\+\_\+t Glyph\+::byte\+Count}
+
+
+
+length of bitmap data 
+
+
+
+Definition at line \mbox{\hyperlink{hex2otf_8c_source_l00618}{618}} of file \mbox{\hyperlink{hex2otf_8c_source}{hex2otf.\+c}}.
+
+\mbox{\Hypertarget{structGlyph_a08ed20f3df1902ce776f6e1fccd089b9}\label{structGlyph_a08ed20f3df1902ce776f6e1fccd089b9}} 
+\index{Glyph@{Glyph}!codePoint@{codePoint}}
+\index{codePoint@{codePoint}!Glyph@{Glyph}}
+\doxysubsubsection{\texorpdfstring{codePoint}{codePoint}}
+{\footnotesize\ttfamily uint\+\_\+least32\+\_\+t Glyph\+::code\+Point}
+
+
+
+undefined for glyph 0 
+
+
+
+Definition at line \mbox{\hyperlink{hex2otf_8c_source_l00616}{616}} of file \mbox{\hyperlink{hex2otf_8c_source}{hex2otf.\+c}}.
+
+\mbox{\Hypertarget{structGlyph_ada6b8b4b9419096c413b5a29dbc54aac}\label{structGlyph_ada6b8b4b9419096c413b5a29dbc54aac}} 
+\index{Glyph@{Glyph}!combining@{combining}}
+\index{combining@{combining}!Glyph@{Glyph}}
+\doxysubsubsection{\texorpdfstring{combining}{combining}}
+{\footnotesize\ttfamily bool Glyph\+::combining}
+
+
+
+whether this is a combining glyph 
+
+
+
+Definition at line \mbox{\hyperlink{hex2otf_8c_source_l00619}{619}} of file \mbox{\hyperlink{hex2otf_8c_source}{hex2otf.\+c}}.
+
+\mbox{\Hypertarget{structGlyph_a7fb4dc03b71777de880164eee4ffbc51}\label{structGlyph_a7fb4dc03b71777de880164eee4ffbc51}} 
+\index{Glyph@{Glyph}!lsb@{lsb}}
+\index{lsb@{lsb}!Glyph@{Glyph}}
+\doxysubsubsection{\texorpdfstring{lsb}{lsb}}
+{\footnotesize\ttfamily \mbox{\hyperlink{hex2otf_8c_ab9f46992237e1552d3ae221b2a5e95ff}{pixels\+\_\+t}} Glyph\+::lsb}
+
+
+
+left side bearing (x position of leftmost contour point) 
+
+
+
+Definition at line \mbox{\hyperlink{hex2otf_8c_source_l00622}{622}} of file \mbox{\hyperlink{hex2otf_8c_source}{hex2otf.\+c}}.
+
+\mbox{\Hypertarget{structGlyph_ac113da35f4193641855eaf51547f9b43}\label{structGlyph_ac113da35f4193641855eaf51547f9b43}} 
+\index{Glyph@{Glyph}!pos@{pos}}
+\index{pos@{pos}!Glyph@{Glyph}}
+\doxysubsubsection{\texorpdfstring{pos}{pos}}
+{\footnotesize\ttfamily \mbox{\hyperlink{hex2otf_8c_ab9f46992237e1552d3ae221b2a5e95ff}{pixels\+\_\+t}} Glyph\+::pos}
+
+number of pixels the glyph should be moved to the right (negative number means moving to the left) 
+
+Definition at line \mbox{\hyperlink{hex2otf_8c_source_l00620}{620}} of file \mbox{\hyperlink{hex2otf_8c_source}{hex2otf.\+c}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\mbox{\hyperlink{hex2otf_8c}{hex2otf.\+c}}\end{DoxyCompactItemize}

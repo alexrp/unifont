@@ -1,0 +1,40 @@
+This README file describes the development cycle of Hangul font
+development using the johab 6/3/1 encoding originally proposed
+by Ho-Seok Ee prior to the Unifont 15.1.01 release.
+
+The ordinary development cycle is as follows:
+
+     1) Modify the hangul-base.txt file.
+     2) Type "make" in the hangul directory.  The main actions
+        of this will be:
+
+        a) Regenerate the hangul-base.hex file from the modified
+           hangul-base.txt file.
+        b) Create a new hangul-syllables.hex file, containing
+           the modern Unicode Hangul Syllables block of 11,172
+           glyphs.
+        c) Create the hangul-base.html file, showing how the
+           three components of a Hangul syllable fit with
+           each other in an HTML page viewable with a web
+           browser.  Overlaps between initial consonants
+           (choseong) and medial vowels and diphthongs
+           (jungseong), if any, are listed at the end of the
+           HTML file.  From this, the font designer can see
+           how letters overlap and whether the result is
+           acceptable.
+        d) Run a "make check" command.  This examines the
+           newly-created hangul-base.html file and outputs
+           the number of cells that had overlaps among the
+           input Hangul letters (jamo).  Overlaps are not
+           an error; they are a design tradeoff.  Therefore,
+           this step never causes the make file to fail.
+
+     3) View the hangul-base.html file in a web browser.
+     4) If further changes are desired, go back to Step 1.
+
+     5) When satisfied, type "make clean" or "make distclean"
+        to remove intermediate files created during the source
+        compilation and Hangul glyph build.
+
+Examine the Makefile file for more details on its operation.
+

@@ -1,0 +1,185 @@
+\hypertarget{johab2syllables_8c_source}{}\doxysection{johab2syllables.\+c}
+\label{johab2syllables_8c_source}\index{src/johab2syllables.c@{src/johab2syllables.c}}
+\mbox{\hyperlink{johab2syllables_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00001}00001\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00002}00002\ \textcolor{comment}{\ \ \ @file\ johab2syllables.c}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00003}00003\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00004}00004\ \textcolor{comment}{\ \ \ @brief\ Create\ the\ Unicode\ Hangul\ Syllables\ block\ from\ component\ letters.}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00005}00005\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00006}00006\ \textcolor{comment}{\ \ \ This\ program\ reads\ in\ a\ "{}hangul-\/base.hex"{}\ file\ containing\ Hangul}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00007}00007\ \textcolor{comment}{\ \ \ letters\ in\ Johab\ 6/3/1\ format\ and\ outputs\ a\ Unifont\ .hex\ format}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00008}00008\ \textcolor{comment}{\ \ \ file\ covering\ the\ Unicode\ Hangul\ Syllables\ range\ of\ U+AC00..U+D7A3.}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00009}00009\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00010}00010\ \textcolor{comment}{\ \ \ @author\ Paul\ Hardy}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00011}00011\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00012}00012\ \textcolor{comment}{\ \ \ @copyright\ Copyright\ ©\ 2023\ Paul\ Hardy}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00013}00013\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00014}00014\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00015}00015\ \textcolor{comment}{\ \ \ LICENSE:}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00016}00016\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00017}00017\ \textcolor{comment}{\ \ \ \ \ \ This\ program\ is\ free\ software:\ you\ can\ redistribute\ it\ and/or\ modify}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00018}00018\ \textcolor{comment}{\ \ \ \ \ \ it\ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00019}00019\ \textcolor{comment}{\ \ \ \ \ \ the\ Free\ Software\ Foundation,\ either\ version\ 2\ of\ the\ License,\ or}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00020}00020\ \textcolor{comment}{\ \ \ \ \ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00021}00021\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00022}00022\ \textcolor{comment}{\ \ \ \ \ \ This\ program\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00023}00023\ \textcolor{comment}{\ \ \ \ \ \ but\ WITHOUT\ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00024}00024\ \textcolor{comment}{\ \ \ \ \ \ MERCHANTABILITY\ or\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00025}00025\ \textcolor{comment}{\ \ \ \ \ \ GNU\ General\ Public\ License\ for\ more\ details.}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00026}00026\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00027}00027\ \textcolor{comment}{\ \ \ \ \ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00028}00028\ \textcolor{comment}{\ \ \ \ \ \ along\ with\ this\ program.\ \ If\ not,\ see\ <http://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00029}00029\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00031}00031\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00032}00032\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00033}00033\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00035}00035\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{hangul_8h}{hangul.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00037}00037\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00038}00038\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00039}00039\ \textcolor{comment}{\ \ \ @brief\ The\ main\ function.}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00040}00040\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00041}00041\ \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00042}\mbox{\hyperlink{johab2syllables_8c_a0ddf1224851353fc92bfbff6f499fa97}{00042}}\ \mbox{\hyperlink{unibdf2hex_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}}\ (\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}\ *argv[])\ \{}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00043}00043\ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ i;\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Loop\ variables\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00044}00044\ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ arg\_count;\ \ \textcolor{comment}{/*\ index\ into\ *argv[]\ */}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00045}00045\ \ \ \ \textcolor{keywordtype}{unsigned}\ codept;}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00046}00046\ \ \ \ \textcolor{keywordtype}{unsigned}\ max\_codept;}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00047}00047\ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ \ hangul\_base[MAX\_GLYPHS][32];}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00048}00048\ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ initial,\ medial,\ \textcolor{keyword}{final};\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Base\ glyphs\ for\ a\ syllable.\ */}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00049}00049\ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ \ syllable[32];\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Syllable\ glyph\ built\ for\ output.\ */}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00051}00051\ \ \ \ FILE\ *infp\ \ =\ stdin;\ \ \ \textcolor{comment}{/*\ Input\ Hangul\ Johab\ 6/3/1\ file\ */}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00052}00052\ \ \ \ FILE\ *outfp\ =\ stdout;\ \ \textcolor{comment}{/*\ Output\ Hangul\ Syllables\ file\ \ */}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00054}00054\ \ \ \ \textcolor{comment}{/*\ Print\ a\ help\ message\ */}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00055}00055\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{johab2syllables_8c_a853216ac51aa181669ff4d3de74058a7}{print\_help}}\ ();}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00057}00057\ \ \ \ \textcolor{comment}{/*\ Read\ the\ file\ containing\ Hangul\ base\ glyphs.\ */}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00058}00058\ \ \ \ \textcolor{keywordtype}{unsigned}\ \mbox{\hyperlink{hangul_8h_a0c3abd429f2b52cfa38a22ba6a83eb78}{hangul\_read\_base8}}\ (FILE\ *infp,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ hangul\_base[][32]);}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00060}00060\ \ \ \ \textcolor{comment}{/*\ Given\ a\ Hangul\ Syllables\ code\ point,\ determine\ component\ glyphs.\ */}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00061}00061\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{hangul_8h_a50a8e6626a7e76210784a560e8ac15b5}{hangul\_decompose}}\ (\textcolor{keywordtype}{unsigned}\ codept,\ \textcolor{keywordtype}{int}\ *,\ \textcolor{keywordtype}{int}\ *,\ \textcolor{keywordtype}{int}\ *);}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00063}00063\ \ \ \ \textcolor{comment}{/*\ Given\ letters\ in\ a\ Hangul\ syllable,\ return\ a\ glyph.\ */}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00064}00064\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{hangul_8h_abb373afe914554ff8443f05d83b69e8e}{hangul\_syllable}}\ (\textcolor{keywordtype}{int}\ choseong,\ \textcolor{keywordtype}{int}\ jungseong,\ \textcolor{keywordtype}{int}\ jongseong,}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ hangul\_base[][32],}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ *syllable);}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00069}00069\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00070}00070\ \textcolor{comment}{\ \ \ \ \ \ If\ there\ are\ command\ line\ arguments,\ parse\ them.}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00071}00071\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00072}00072\ \ \ \ arg\_count\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00074}00074\ \ \ \ \textcolor{keywordflow}{while}\ (arg\_count\ <\ argc)\ \{}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00075}00075\ \ \ \ \ \ \ \textcolor{comment}{/*\ If\ input\ file\ is\ specified,\ open\ it\ for\ read\ access.\ */}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00076}00076\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (strncmp\ (argv\ [arg\_count],\ \textcolor{stringliteral}{"{}-\/i"{}},\ 2)\ ==\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00077}00077\ \ \ \ \ \ \ \ \ \ arg\_count++;}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (arg\_count\ <\ argc)\ \{}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ infp\ =\ fopen\ (argv\ [arg\_count],\ \textcolor{stringliteral}{"{}r"{}});}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (infp\ ==\ NULL)\ \{}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)n***\ ERROR:\ Cannot\ open\ \%s\ for\ input.\(\backslash\)n\(\backslash\)n"{}},}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ argv\ [arg\_count]);}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ exit\ (EXIT\_FAILURE);}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00086}00086\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00087}00087\ \ \ \ \ \ \ \textcolor{comment}{/*\ If\ output\ file\ is\ specified,\ open\ it\ for\ write\ access.\ */}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00088}00088\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (strncmp\ (argv\ [arg\_count],\ \textcolor{stringliteral}{"{}-\/o"{}},\ 2)\ ==\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00089}00089\ \ \ \ \ \ \ \ \ \ arg\_count++;}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (arg\_count\ <\ argc)\ \{}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ outfp\ =\ fopen\ (argv\ [arg\_count],\ \textcolor{stringliteral}{"{}w"{}});}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (outfp\ ==\ NULL)\ \{}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)n***\ ERROR:\ Cannot\ open\ \%s\ for\ output.\(\backslash\)n\(\backslash\)n"{}},}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ argv\ [arg\_count]);}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ exit\ (EXIT\_FAILURE);}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00098}00098\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00099}00099\ \ \ \ \ \ \ \textcolor{comment}{/*\ If\ help\ is\ requested,\ print\ help\ message\ and\ exit.\ */}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00100}00100\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (strncmp\ (argv\ [arg\_count],\ \textcolor{stringliteral}{"{}-\/h"{}},\ \ \ \ \ 2)\ ==\ 0\ ||}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ strncmp\ (argv\ [arg\_count],\ \textcolor{stringliteral}{"{}-\/-\/help"{}},\ 6)\ ==\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{johab2syllables_8c_a853216ac51aa181669ff4d3de74058a7}{print\_help}}\ ();}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00103}00103\ \ \ \ \ \ \ \ \ \ exit\ (EXIT\_SUCCESS);}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00104}00104\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00106}00106\ \ \ \ \ \ \ arg\_count++;}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00107}00107\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00108}00108\ }
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00109}00109\ }
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00110}00110\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00111}00111\ \textcolor{comment}{\ \ \ \ \ \ Initialize\ entire\ glyph\ array\ to\ zeroes\ in\ case\ the\ input}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00112}00112\ \textcolor{comment}{\ \ \ \ \ \ file\ skips\ over\ some\ code\ points.}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00113}00113\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00114}00114\ \ \ \ \textcolor{keywordflow}{for}\ (codept\ =\ 0;\ codept\ <\ MAX\_GLYPHS;\ codept++)\ \{}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00115}00115\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 32;\ i++)\ hangul\_base[codept][i]\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00116}00116\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00117}00117\ }
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00118}00118\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00119}00119\ \textcolor{comment}{\ \ \ \ \ \ Read\ the\ entire\ "{}hangul-\/base.hex"{}\ file\ into\ an\ array}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00120}00120\ \textcolor{comment}{\ \ \ \ \ \ organized\ as\ hangul\_base\ [code\_point][glyph\_byte].}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00121}00121\ \textcolor{comment}{\ \ \ \ \ \ The\ Hangul\ glyphs\ are\ 16\ columns\ wide,\ which\ is}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00122}00122\ \textcolor{comment}{\ \ \ \ \ \ two\ bytes,\ by\ 16\ rows,\ for\ a\ total\ of\ 2\ *\ 16\ =\ 32\ bytes.}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00123}00123\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00124}00124\ \ \ \ max\_codept\ =\ \mbox{\hyperlink{hangul_8h_a0c3abd429f2b52cfa38a22ba6a83eb78}{hangul\_read\_base8}}\ (infp,\ hangul\_base);}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00125}00125\ \ \ \ \textcolor{keywordflow}{if}\ (max\_codept\ >\ 0x8FF)\ \{}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00126}00126\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)nWARNING:\ Hangul\ glyph\ range\ exceeds\ PUA\ space.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00127}00127\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00128}00128\ }
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00129}00129\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00130}00130\ \textcolor{comment}{\ \ \ \ \ \ For\ each\ glyph\ in\ the\ Unicode\ Hangul\ Syllables\ block,}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00131}00131\ \textcolor{comment}{\ \ \ \ \ \ form\ a\ composite\ glyph\ of\ choseong\ +\ jungseong\ +}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00132}00132\ \textcolor{comment}{\ \ \ \ \ \ optional\ jongseong\ and\ output\ it\ in\ Unifont\ .hex\ format.}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00133}00133\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00134}00134\ \ \ \ \textcolor{keywordflow}{for}\ (codept\ =\ 0xAC00;\ codept\ <\ 0xAC00\ +\ 19\ *\ 21\ *\ 28;\ codept++)\ \{}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00135}00135\ \ \ \ \ \ \ \mbox{\hyperlink{hangul_8h_a50a8e6626a7e76210784a560e8ac15b5}{hangul\_decompose}}\ (codept,\ \&initial,\ \&medial,\ \&\textcolor{keyword}{final});}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00136}00136\ }
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00137}00137\ \ \ \ \ \ \ \mbox{\hyperlink{hangul_8h_abb373afe914554ff8443f05d83b69e8e}{hangul\_syllable}}\ (initial,\ medial,\ \textcolor{keyword}{final},\ hangul\_base,\ syllable);}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00138}00138\ }
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00139}00139\ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\%04X:"{}},\ codept);}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00140}00140\ }
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00141}00141\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 32;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00142}00142\ \ \ \ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\%02X"{}},\ syllable[i]);}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00143}00143\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00144}00144\ \ \ \ \ \ \ fputc\ (\textcolor{charliteral}{'\(\backslash\)n'},\ outfp);}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00145}00145\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00146}00146\ }
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00147}00147\ \ \ \ exit\ (EXIT\_SUCCESS);}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00148}00148\ \}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00149}00149\ }
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00150}00150\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00151}00151\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00152}00152\ \textcolor{comment}{\ \ \ @brief\ Print\ a\ help\ message.}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00153}00153\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00154}00154\ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00155}\mbox{\hyperlink{johab2syllables_8c_a853216ac51aa181669ff4d3de74058a7}{00155}}\ \mbox{\hyperlink{johab2syllables_8c_a853216ac51aa181669ff4d3de74058a7}{print\_help}}\ ()\ \{}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00156}00156\ }
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00157}00157\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\(\backslash\)ngen-\/hangul\ [options]\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00158}00158\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ Generates\ Hangul\ syllables\ from\ an\ input\ Unifont\ .hex\ file\ encoded\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00159}00159\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ in\ Johab\ 6/3/1\ format.\ \ The\ output\ is\ the\ Unicode\ Hangul\ Syllables\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00160}00160\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ range,\ U+AC00..U+D7A3.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00161}00161\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ This\ program\ demonstrates\ forming\ Hangul\ syllables\ without\ shifting\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00162}00162\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ the\ final\ consonant\ (jongseong)\ when\ combined\ with\ a\ vowel\ having\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00163}00163\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ a\ long\ double\ vertical\ stroke.\ \ For\ a\ program\ that\ demonstrtes\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00164}00164\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ shifting\ jongseong\ in\ those\ cases,\ see\ unigen-\/hangul,\ which\ is\ what\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00165}00165\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ creates\ the\ Unifont\ Hangul\ Syllables\ block.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00166}00166\ }
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00167}00167\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ This\ program\ may\ be\ invoked\ with\ the\ following\ command\ line\ options:\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00168}00168\ }
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00169}00169\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ Option\ \ \ \ Parameters\ \ \ \ Function\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00170}00170\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ -\/-\/-\/-\/-\/-\/\ \ \ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ \ \ \ -\/-\/-\/-\/-\/-\/-\/-\/\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00171}00171\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ -\/h,\ -\/-\/help\ \ \ \ \ \ \ \ \ \ \ \ \ \ Print\ this\ message\ and\ exit.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00172}00172\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ -\/i\ \ \ \ \ \ \ \ input\_file\ \ \ \ Unifont\ hangul-\/base.hex\ formatted\ input\ file.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00173}00173\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ -\/o\ \ \ \ \ \ \ \ output\_file\ \ \ Unifont\ .hex\ format\ output\ file.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00174}00174\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ Example:\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00175}00175\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ johab2syllables\ -\/i\ hangul-\/base.hex\ -\/o\ hangul-\/syllables.hex\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00176}00176\ }
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00177}00177\ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00178}00178\ \}}
+\DoxyCodeLine{\Hypertarget{johab2syllables_8c_source_l00179}00179\ }
+
+\end{DoxyCode}

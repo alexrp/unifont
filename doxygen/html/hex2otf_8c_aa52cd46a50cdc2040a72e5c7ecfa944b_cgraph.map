@@ -1,0 +1,9 @@
+<map id="prepareStringIndex" name="prepareStringIndex">
+<area shape="rect" id="node1" title="Prepare a font name string index." alt="" coords="5,80,152,105"/>
+<area shape="rect" id="node2" href="$hex2otf_8c.html#a927c31a7e187d15a70667ce6b0ef296a" title="Append a string of bytes to a buffer." alt="" coords="200,5,297,31"/>
+<area shape="rect" id="node5" href="$hex2otf_8c.html#a07b29528c561e5852a228c98391225f7" title="Append two unsigned bytes to the end of a byte array." alt="" coords="205,55,292,80"/>
+<area shape="rect" id="node6" href="$hex2otf_8c.html#a84d7310553d31f4ec587dc001f472834" title="Append one unsigned byte to the end of a byte array." alt="" coords="209,104,288,129"/>
+<area shape="rect" id="node7" href="$hex2otf_8c.html#ae8310060f5a9b7cefb84d0bb1b459b64" title="Create a new buffer." alt="" coords="354,105,442,131"/>
+<area shape="rect" id="node3" href="$hex2otf_8c.html#ae32c0f82cbb6a4d8ece0559f1c7b74f4" title="Ensure that the buffer has at least the specified minimum size." alt="" coords="345,31,451,56"/>
+<area shape="rect" id="node4" href="$hex2otf_8c.html#a2f5976201b1e630a94045f04a0348572" title="Print an error message on stderr, then exit." alt="" coords="499,81,541,107"/>
+</map>

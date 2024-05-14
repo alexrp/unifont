@@ -1,0 +1,4 @@
+<map id="hangul_read_base8" name="hangul_read_base8">
+<area shape="rect" id="node1" title="Read hangul&#45;base.hex file into a unsigned char array." alt="" coords="108,5,256,31"/>
+<area shape="rect" id="node2" href="$johab2syllables_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="The main function." alt="" coords="5,5,60,31"/>
+</map>

@@ -1,0 +1,138 @@
+\hypertarget{unifontpic_8h}{}\doxysection{src/unifontpic.h File Reference}
+\label{unifontpic_8h}\index{src/unifontpic.h@{src/unifontpic.h}}
+
+
+\mbox{\hyperlink{unifontpic_8h}{unifontpic.\+h}} -\/ Header file for \mbox{\hyperlink{unifontpic_8c}{unifontpic.\+c}}  
+
+
+This graph shows which files directly or indirectly include this file\+:
+% FIG 0
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{unifontpic_8h_a2ff420a6c6a2d1effc47a81e37327985}{MAXSTRING}}~256
+\begin{DoxyCompactList}\small\item\em Maximum input string allowed. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{unifontpic_8h_a418ed439fafbc678a74cb266ef2919d4}{HEADER\+\_\+\+STRING}}~\char`\"{}GNU Unifont 15.\+1.\+05\char`\"{}
+\begin{DoxyCompactList}\small\item\em To be printed as chart title. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const char $\ast$ \mbox{\hyperlink{unifontpic_8h_ad38c3dd5832ced1dc64c3093f359afcf}{ascii\+\_\+hex}} \mbox{[}128\mbox{]}
+\begin{DoxyCompactList}\small\item\em Array of Unifont ASCII glyphs for chart row \& column headings. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{unifontpic_8h_a593ebc374e9f30c90743f0fd48cc91df}{ascii\+\_\+bits}} \mbox{[}128\mbox{]}\mbox{[}16\mbox{]}
+\begin{DoxyCompactList}\small\item\em Array to hold ASCII bitmaps for chart title. \end{DoxyCompactList}\item 
+char \mbox{\hyperlink{unifontpic_8h_af6ebead7b0a2d2e67e8de1e35d55a866}{hexdigit}} \mbox{[}16\mbox{]}\mbox{[}5\mbox{]}
+\begin{DoxyCompactList}\small\item\em Array of 4x5 hexadecimal digits for legend. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{unifontpic_8h}{unifontpic.\+h}} -\/ Header file for \mbox{\hyperlink{unifontpic_8c}{unifontpic.\+c}} 
+
+\begin{DoxyAuthor}{Author}
+Paul Hardy, July 2017
+\end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+Copyright (C) 2017 Paul Hardy 
+\end{DoxyCopyright}
+
+
+Definition in file \mbox{\hyperlink{unifontpic_8h_source}{unifontpic.\+h}}.
+
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{unifontpic_8h_a418ed439fafbc678a74cb266ef2919d4}\label{unifontpic_8h_a418ed439fafbc678a74cb266ef2919d4}} 
+\index{unifontpic.h@{unifontpic.h}!HEADER\_STRING@{HEADER\_STRING}}
+\index{HEADER\_STRING@{HEADER\_STRING}!unifontpic.h@{unifontpic.h}}
+\doxysubsubsection{\texorpdfstring{HEADER\_STRING}{HEADER\_STRING}}
+{\footnotesize\ttfamily \#define HEADER\+\_\+\+STRING~\char`\"{}GNU Unifont 15.\+1.\+05\char`\"{}}
+
+
+
+To be printed as chart title. 
+
+
+
+Definition at line \mbox{\hyperlink{unifontpic_8h_source_l00032}{32}} of file \mbox{\hyperlink{unifontpic_8h_source}{unifontpic.\+h}}.
+
+\mbox{\Hypertarget{unifontpic_8h_a2ff420a6c6a2d1effc47a81e37327985}\label{unifontpic_8h_a2ff420a6c6a2d1effc47a81e37327985}} 
+\index{unifontpic.h@{unifontpic.h}!MAXSTRING@{MAXSTRING}}
+\index{MAXSTRING@{MAXSTRING}!unifontpic.h@{unifontpic.h}}
+\doxysubsubsection{\texorpdfstring{MAXSTRING}{MAXSTRING}}
+{\footnotesize\ttfamily \#define MAXSTRING~256}
+
+
+
+Maximum input string allowed. 
+
+
+
+Definition at line \mbox{\hyperlink{unifontpic_8h_source_l00030}{30}} of file \mbox{\hyperlink{unifontpic_8h_source}{unifontpic.\+h}}.
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{unifontpic_8h_a593ebc374e9f30c90743f0fd48cc91df}\label{unifontpic_8h_a593ebc374e9f30c90743f0fd48cc91df}} 
+\index{unifontpic.h@{unifontpic.h}!ascii\_bits@{ascii\_bits}}
+\index{ascii\_bits@{ascii\_bits}!unifontpic.h@{unifontpic.h}}
+\doxysubsubsection{\texorpdfstring{ascii\_bits}{ascii\_bits}}
+{\footnotesize\ttfamily int ascii\+\_\+bits\mbox{[}128\mbox{]}\mbox{[}16\mbox{]}}
+
+
+
+Array to hold ASCII bitmaps for chart title. 
+
+This array will be created from the strings in ascii\+\_\+hex\mbox{[}\mbox{]} above. 
+
+Definition at line \mbox{\hyperlink{unifontpic_8h_source_l00179}{179}} of file \mbox{\hyperlink{unifontpic_8h_source}{unifontpic.\+h}}.
+
+\mbox{\Hypertarget{unifontpic_8h_ad38c3dd5832ced1dc64c3093f359afcf}\label{unifontpic_8h_ad38c3dd5832ced1dc64c3093f359afcf}} 
+\index{unifontpic.h@{unifontpic.h}!ascii\_hex@{ascii\_hex}}
+\index{ascii\_hex@{ascii\_hex}!unifontpic.h@{unifontpic.h}}
+\doxysubsubsection{\texorpdfstring{ascii\_hex}{ascii\_hex}}
+{\footnotesize\ttfamily const char$\ast$ ascii\+\_\+hex\mbox{[}128\mbox{]}}
+
+
+
+Array of Unifont ASCII glyphs for chart row \& column headings. 
+
+Define the array of Unifont ASCII glyphs, code points 0 through 127. This allows using unifontpic to print charts of glyphs above Unicode Plane 0. These were copied from font/plane00/unifont-\/base.\+hex, plus U+0020 (ASCII space character). 
+
+Definition at line \mbox{\hyperlink{unifontpic_8h_source_l00042}{42}} of file \mbox{\hyperlink{unifontpic_8h_source}{unifontpic.\+h}}.
+
+\mbox{\Hypertarget{unifontpic_8h_af6ebead7b0a2d2e67e8de1e35d55a866}\label{unifontpic_8h_af6ebead7b0a2d2e67e8de1e35d55a866}} 
+\index{unifontpic.h@{unifontpic.h}!hexdigit@{hexdigit}}
+\index{hexdigit@{hexdigit}!unifontpic.h@{unifontpic.h}}
+\doxysubsubsection{\texorpdfstring{hexdigit}{hexdigit}}
+{\footnotesize\ttfamily char hexdigit\mbox{[}16\mbox{]}\mbox{[}5\mbox{]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ \ \{0x6,0x9,0x9,0x9,0x6\},\ \ }
+\DoxyCodeLine{\ \ \ \{0x2,0x6,0x2,0x2,0x7\},\ \ }
+\DoxyCodeLine{\ \ \ \{0xF,0x1,0xF,0x8,0xF\},\ \ }
+\DoxyCodeLine{\ \ \ \{0xE,0x1,0x7,0x1,0xE\},\ \ }
+\DoxyCodeLine{\ \ \ \{0x9,0x9,0xF,0x1,0x1\},\ \ }
+\DoxyCodeLine{\ \ \ \{0xF,0x8,0xF,0x1,0xF\},\ \ }
+\DoxyCodeLine{\ \ \ \{0x6,0x8,0xE,0x9,0x6\},\ \ }
+\DoxyCodeLine{\ \ \ \{0xF,0x1,0x2,0x4,0x4\},\ \ }
+\DoxyCodeLine{\ \ \ \{0x6,0x9,0x6,0x9,0x6\},\ \ }
+\DoxyCodeLine{\ \ \ \{0x6,0x9,0x7,0x1,0x6\},\ \ }
+\DoxyCodeLine{\ \ \ \{0xF,0x9,0xF,0x9,0x9\},\ \ }
+\DoxyCodeLine{\ \ \ \{0xE,0x9,0xE,0x9,0xE\},\ \ }
+\DoxyCodeLine{\ \ \ \{0x7,0x8,0x8,0x8,0x7\},\ \ }
+\DoxyCodeLine{\ \ \ \{0xE,0x9,0x9,0x9,0xE\},\ \ }
+\DoxyCodeLine{\ \ \ \{0xF,0x8,0xE,0x8,0xF\},\ \ }
+\DoxyCodeLine{\ \ \ \{0xF,0x8,0xE,0x8,0x8\}\ \ \ }
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Array of 4x5 hexadecimal digits for legend. 
+
+hexdigit contains 4x5 pixel arrays of tiny digits for the legend. See \mbox{\hyperlink{unihexgen_8c}{unihexgen.\+c}} for a more detailed description in the comments. 
+
+Definition at line \mbox{\hyperlink{unifontpic_8h_source_l00188}{188}} of file \mbox{\hyperlink{unifontpic_8h_source}{unifontpic.\+h}}.
+

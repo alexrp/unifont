@@ -1,0 +1,315 @@
+\hypertarget{unicoverage_8c}{}\doxysection{src/unicoverage.c File Reference}
+\label{unicoverage_8c}\index{src/unicoverage.c@{src/unicoverage.c}}
+
+
+unicoverage -\/ Show the coverage of Unicode plane scripts for a GNU Unifont hex glyph file  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+Include dependency graph for unicoverage.\+c\+:
+% FIG 0
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{unicoverage_8c_ad7871643c05865c80f5d8050aead2b57}{MAXBUF}}~256
+\begin{DoxyCompactList}\small\item\em Maximum input line length -\/ 1. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{unicoverage_8c_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em The main function. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{unicoverage_8c_aecb35821cec5af4455f392b872cc1dc4}{nextrange}} (FILE $\ast$coveragefp, int $\ast$cstart, int $\ast$cend, char $\ast$coverstring)
+\begin{DoxyCompactList}\small\item\em Get next Unicode range. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{unicoverage_8c_acfeab2c5c5e91c5343674cb7c523911f}{print\+\_\+subtotal}} (FILE $\ast$outfp, int print\+\_\+n, int nglyphs, int cstart, int cend, char $\ast$coverstring)
+\begin{DoxyCompactList}\small\item\em Print the subtotal for one Unicode script range. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+unicoverage -\/ Show the coverage of Unicode plane scripts for a GNU Unifont hex glyph file 
+
+\begin{DoxyAuthor}{Author}
+Paul Hardy, unifoundry $<$at$>$ unifoundry.\+com, 6 January 2008
+\end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+Copyright (C) 2008, 2013 Paul Hardy
+\end{DoxyCopyright}
+Synopsis\+: unicoverage \mbox{[}-\/ifont\+\_\+file.\+hex\mbox{]} \mbox{[}-\/ocoverage\+\_\+file.\+txt\mbox{]}
+
+This program requires the file \char`\"{}coverage.\+dat\char`\"{} to be present in the directory from which it is run. 
+
+Definition in file \mbox{\hyperlink{unicoverage_8c_source}{unicoverage.\+c}}.
+
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{unicoverage_8c_ad7871643c05865c80f5d8050aead2b57}\label{unicoverage_8c_ad7871643c05865c80f5d8050aead2b57}} 
+\index{unicoverage.c@{unicoverage.c}!MAXBUF@{MAXBUF}}
+\index{MAXBUF@{MAXBUF}!unicoverage.c@{unicoverage.c}}
+\doxysubsubsection{\texorpdfstring{MAXBUF}{MAXBUF}}
+{\footnotesize\ttfamily \#define MAXBUF~256}
+
+
+
+Maximum input line length -\/ 1. 
+
+
+
+Definition at line \mbox{\hyperlink{unicoverage_8c_source_l00060}{60}} of file \mbox{\hyperlink{unicoverage_8c_source}{unicoverage.\+c}}.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{unicoverage_8c_a0ddf1224851353fc92bfbff6f499fa97}\label{unicoverage_8c_a0ddf1224851353fc92bfbff6f499fa97}} 
+\index{unicoverage.c@{unicoverage.c}!main@{main}}
+\index{main@{main}!unicoverage.c@{unicoverage.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+The main function. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em argc} & The count of command line arguments. \\
+\hline
+\mbox{\texttt{ in}}  & {\em argv} & Pointer to array of command line arguments. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+This program exits with status 0. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{unicoverage_8c_source_l00071}{71}} of file \mbox{\hyperlink{unicoverage_8c_source}{unicoverage.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00072\ \{}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ print\_n=0;\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ print\ \#\ of\ glyphs,\ not\ percentage\ \ \ */}}
+\DoxyCodeLine{00075\ \ \ \ \textcolor{keywordtype}{unsigned}\ i;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ loop\ variable\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00076\ \ \ \ \textcolor{keywordtype}{unsigned}\ slen;\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ string\ length\ of\ coverage\ file\ line\ */}}
+\DoxyCodeLine{00077\ \ \ \ \textcolor{keywordtype}{char}\ \ \ \ \ inbuf[256];\ \ \ \ \ \ \ \textcolor{comment}{/*\ input\ buffer\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00078\ \ \ \ \textcolor{keywordtype}{unsigned}\ thischar;\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ the\ current\ character\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \ \ \ \textcolor{keywordtype}{char}\ *infile=\textcolor{stringliteral}{"{}"{}},\ *outfile=\textcolor{stringliteral}{"{}"{}};\ \ \textcolor{comment}{/*\ names\ of\ input\ and\ output\ files\ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00081\ \ \ \ FILE\ *infp,\ *outfp;\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ file\ pointers\ of\ input\ and\ output\ files\ \ \ \ */}}
+\DoxyCodeLine{00082\ \ \ \ FILE\ *coveragefp;\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ file\ pointer\ to\ coverage.dat\ file\ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00083\ \ \ \ \textcolor{keywordtype}{int}\ cstart,\ cend;\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ current\ coverage\ start\ and\ end\ code\ points\ */}}
+\DoxyCodeLine{00084\ \ \ \ \textcolor{keywordtype}{char}\ coverstring[\mbox{\hyperlink{unicoverage_8c_ad7871643c05865c80f5d8050aead2b57}{MAXBUF}}];\ \ \textcolor{comment}{/*\ description\ of\ current\ coverage\ range\ \ \ \ \ \ */}}
+\DoxyCodeLine{00085\ \ \ \ \textcolor{keywordtype}{int}\ nglyphs;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ number\ of\ glyphs\ in\ this\ section\ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \ \ \ \textcolor{comment}{/*\ to\ get\ next\ range\ \&\ name\ of\ Unicode\ glyphs\ */}}
+\DoxyCodeLine{00088\ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{unicoverage_8c_aecb35821cec5af4455f392b872cc1dc4}{nextrange}}\ (FILE\ *coveragefp,\ \textcolor{keywordtype}{int}\ *cstart,\ \textcolor{keywordtype}{int}\ *cend,\ \textcolor{keywordtype}{char}\ *coverstring);}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{unicoverage_8c_acfeab2c5c5e91c5343674cb7c523911f}{print\_subtotal}}\ (FILE\ *outfp,\ \textcolor{keywordtype}{int}\ print\_n,\ \textcolor{keywordtype}{int}\ nglyphs,}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ cstart,\ \textcolor{keywordtype}{int}\ cend,\ \textcolor{keywordtype}{char}\ *coverstring);}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ \ \textcolor{keywordflow}{if}\ ((coveragefp\ =\ fopen\ (\textcolor{stringliteral}{"{}coverage.dat"{}},\ \textcolor{stringliteral}{"{}r"{}}))\ ==\ NULL)\ \{}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)nError:\ data\ file\ \(\backslash\)"{}coverage.dat\(\backslash\)"{}\ not\ found.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ exit\ (0);}
+\DoxyCodeLine{00096\ \ \ \ \}}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \ \ \ \textcolor{keywordflow}{if}\ (argc\ >\ 1)\ \{}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 1;\ i\ <\ argc;\ i++)\ \{}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (argv[i][0]\ ==\ \textcolor{charliteral}{'-\/'})\ \{\ \ \textcolor{comment}{/*\ this\ is\ an\ option\ argument\ */}}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (argv[i][1])\ \{}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'i'}:\ \ \textcolor{comment}{/*\ name\ of\ input\ file\ */}}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ infile\ =\ \&argv[i][2];}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'n'}:\ \ \textcolor{comment}{/*\ print\ number\ of\ glyphs\ instead\ of\ percentage\ */}}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print\_n\ =\ 1;}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'o'}:\ \ \textcolor{comment}{/*\ name\ of\ output\ file\ */}}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outfile\ =\ \&argv[i][2];}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:\ \ \ \textcolor{comment}{/*\ if\ unrecognized\ option,\ print\ list\ and\ exit\ */}}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)nSyntax:\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\ \ \ \%s\ -\/p<Unicode\_Page>\ "{}},\ argv[0]);}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}-\/i<Input\_File>\ -\/o<Output\_File>\ -\/w\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ exit\ (1);}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00118\ \ \ \ \}}
+\DoxyCodeLine{00119\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00120\ \textcolor{comment}{\ \ \ \ \ \ Make\ sure\ we\ can\ open\ any\ I/O\ files\ that\ were\ specified\ before}}
+\DoxyCodeLine{00121\ \textcolor{comment}{\ \ \ \ \ \ doing\ anything\ else.}}
+\DoxyCodeLine{00122\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00123\ \ \ \ \textcolor{keywordflow}{if}\ (strlen\ (infile)\ >\ 0)\ \{}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((infp\ =\ fopen\ (infile,\ \textcolor{stringliteral}{"{}r"{}}))\ ==\ NULL)\ \{}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}Error:\ can't\ open\ \%s\ for\ input.\(\backslash\)n"{}},\ infile);}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ exit\ (1);}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00128\ \ \ \ \}}
+\DoxyCodeLine{00129\ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ infp\ =\ stdin;}
+\DoxyCodeLine{00131\ \ \ \ \}}
+\DoxyCodeLine{00132\ \ \ \ \textcolor{keywordflow}{if}\ (strlen\ (outfile)\ >\ 0)\ \{}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((outfp\ =\ fopen\ (outfile,\ \textcolor{stringliteral}{"{}w"{}}))\ ==\ NULL)\ \{}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}Error:\ can't\ open\ \%s\ for\ output.\(\backslash\)n"{}},\ outfile);}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ exit\ (1);}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00137\ \ \ \ \}}
+\DoxyCodeLine{00138\ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ outfp\ =\ stdout;}
+\DoxyCodeLine{00140\ \ \ \ \}}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00142\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00143\ \textcolor{comment}{\ \ \ \ \ \ Print\ header\ row.}}
+\DoxyCodeLine{00144\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00145\ \ \ \ \textcolor{keywordflow}{if}\ (print\_n)\ \{}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\#\ Glyphs\ \ \ \ \ \ Range\ \ \ \ \ \ \ \ Script\(\backslash\)n"{}});}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/-\/\ \ \ \ \ \ -\/-\/-\/-\/-\/\ \ \ \ \ \ \ \ -\/-\/-\/-\/-\/-\/\(\backslash\)n"{}});}
+\DoxyCodeLine{00148\ \ \ \ \}}
+\DoxyCodeLine{00149\ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}Covered\ \ \ \ \ \ Range\ \ \ \ \ \ \ \ Script\(\backslash\)n"{}});}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/\ \ \ \ \ \ -\/-\/-\/-\/-\/\ \ \ \ \ \ \ \ -\/-\/-\/-\/-\/-\/\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{00152\ \ \ \ \}}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00154\ \ \ \ slen\ =\ \mbox{\hyperlink{unicoverage_8c_aecb35821cec5af4455f392b872cc1dc4}{nextrange}}\ (coveragefp,\ \&cstart,\ \&cend,\ coverstring);}
+\DoxyCodeLine{00155\ \ \ \ nglyphs\ =\ 0;}
+\DoxyCodeLine{00156\ }
+\DoxyCodeLine{00157\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00158\ \textcolor{comment}{\ \ \ \ \ \ Read\ in\ the\ glyphs\ in\ the\ file}}
+\DoxyCodeLine{00159\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00160\ \ \ \ \textcolor{keywordflow}{while}\ (slen\ !=\ 0\ \&\&\ fgets\ (inbuf,\ \mbox{\hyperlink{unicoverage_8c_ad7871643c05865c80f5d8050aead2b57}{MAXBUF}}-\/1,\ infp)\ !=\ NULL)\ \{}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ sscanf\ (inbuf,\ \textcolor{stringliteral}{"{}\%x"{}},\ \&thischar);}
+\DoxyCodeLine{00162\ }
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \textcolor{comment}{/*\ Read\ a\ character\ beyond\ end\ of\ current\ script.\ */}}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (cend\ <\ thischar\ \&\&\ slen\ !=\ 0)\ \{}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unicoverage_8c_acfeab2c5c5e91c5343674cb7c523911f}{print\_subtotal}}\ (outfp,\ print\_n,\ nglyphs,\ cstart,\ cend,\ coverstring);}
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ start\ new\ range\ total\ */}}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ slen\ =\ \mbox{\hyperlink{unicoverage_8c_aecb35821cec5af4455f392b872cc1dc4}{nextrange}}\ (coveragefp,\ \&cstart,\ \&cend,\ coverstring);}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ nglyphs\ =\ 0;}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ nglyphs++;}
+\DoxyCodeLine{00172\ \ \ \ \}}
+\DoxyCodeLine{00173\ }
+\DoxyCodeLine{00174\ \ \ \ \mbox{\hyperlink{unicoverage_8c_acfeab2c5c5e91c5343674cb7c523911f}{print\_subtotal}}\ (outfp,\ print\_n,\ nglyphs,\ cstart,\ cend,\ coverstring);}
+\DoxyCodeLine{00175\ }
+\DoxyCodeLine{00176\ \ \ \ exit\ (0);}
+\DoxyCodeLine{00177\ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+% FIG 1
+\mbox{\Hypertarget{unicoverage_8c_aecb35821cec5af4455f392b872cc1dc4}\label{unicoverage_8c_aecb35821cec5af4455f392b872cc1dc4}} 
+\index{unicoverage.c@{unicoverage.c}!nextrange@{nextrange}}
+\index{nextrange@{nextrange}!unicoverage.c@{unicoverage.c}}
+\doxysubsubsection{\texorpdfstring{nextrange()}{nextrange()}}
+{\footnotesize\ttfamily int nextrange (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{coveragefp,  }\item[{int $\ast$}]{cstart,  }\item[{int $\ast$}]{cend,  }\item[{char $\ast$}]{coverstring }\end{DoxyParamCaption})}
+
+
+
+Get next Unicode range. 
+
+This function reads the next Unicode script range to count its glyph coverage.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em coveragefp} & File pointer to Unicode script range data file. \\
+\hline
+\mbox{\texttt{ in}}  & {\em cstart} & Starting code point in current Unicode script range. \\
+\hline
+\mbox{\texttt{ in}}  & {\em cend} & Ending code point in current Unicode script range. \\
+\hline
+\mbox{\texttt{ out}}  & {\em coverstring} & String containing $<$cstart$>$-\/$<$cend$>$ substring. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Length of the last string read, or 0 for end of file. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{unicoverage_8c_source_l00192}{192}} of file \mbox{\hyperlink{unicoverage_8c_source}{unicoverage.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00195\ \{}
+\DoxyCodeLine{00196\ \ \ \ \textcolor{keywordtype}{int}\ i;}
+\DoxyCodeLine{00197\ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{char}\ inbuf[\mbox{\hyperlink{unicoverage_8c_ad7871643c05865c80f5d8050aead2b57}{MAXBUF}}];}
+\DoxyCodeLine{00198\ \ \ \ \textcolor{keywordtype}{int}\ retval;\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ the\ return\ value\ */}}
+\DoxyCodeLine{00199\ }
+\DoxyCodeLine{00200\ \ \ \ retval\ =\ 0;}
+\DoxyCodeLine{00201\ }
+\DoxyCodeLine{00202\ \ \ \ \textcolor{keywordflow}{do}\ \{}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fgets\ (inbuf,\ \mbox{\hyperlink{unicoverage_8c_ad7871643c05865c80f5d8050aead2b57}{MAXBUF}}-\/1,\ coveragefp)\ !=\ NULL)\ \{}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \ retval\ =\ strlen\ (inbuf);}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((inbuf[0]\ >=\ \textcolor{charliteral}{'0'}\ \&\&\ inbuf[0]\ <=\ \textcolor{charliteral}{'9'})\ ||}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \ \ \ \ \ (inbuf[0]\ >=\ \textcolor{charliteral}{'A'}\ \&\&\ inbuf[0]\ <=\ \textcolor{charliteral}{'F'})\ ||}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \ \ \ \ \ (inbuf[0]\ >=\ \textcolor{charliteral}{'a'}\ \&\&\ inbuf[0]\ <=\ \textcolor{charliteral}{'f'}))\ \{}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \ \ \ \ sscanf\ (inbuf,\ \textcolor{stringliteral}{"{}\%x-\/\%x"{}},\ cstart,\ cend);}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \ \ \ \ i\ =\ 0;}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (inbuf[i]\ !=\ \textcolor{charliteral}{'\ '})\ i++;\ \ \textcolor{comment}{/*\ find\ first\ blank\ */}}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (inbuf[i]\ ==\ \textcolor{charliteral}{'\ '})\ i++;\ \ \textcolor{comment}{/*\ find\ next\ non-\/blank\ */}}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \ \ \ \ strncpy\ (coverstring,\ \&inbuf[i],\ \mbox{\hyperlink{unicoverage_8c_ad7871643c05865c80f5d8050aead2b57}{MAXBUF}});}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ retval\ =\ 0;}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ retval\ =\ 0;}
+\DoxyCodeLine{00217\ \ \ \ \}\ \textcolor{keywordflow}{while}\ (retval\ ==\ 0\ \&\&\ !feof\ (coveragefp));}
+\DoxyCodeLine{00218\ }
+\DoxyCodeLine{00219\ \ \ \ \textcolor{keywordflow}{return}\ (retval);}
+\DoxyCodeLine{00220\ \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+% FIG 2
+\mbox{\Hypertarget{unicoverage_8c_acfeab2c5c5e91c5343674cb7c523911f}\label{unicoverage_8c_acfeab2c5c5e91c5343674cb7c523911f}} 
+\index{unicoverage.c@{unicoverage.c}!print\_subtotal@{print\_subtotal}}
+\index{print\_subtotal@{print\_subtotal}!unicoverage.c@{unicoverage.c}}
+\doxysubsubsection{\texorpdfstring{print\_subtotal()}{print\_subtotal()}}
+{\footnotesize\ttfamily void print\+\_\+subtotal (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{outfp,  }\item[{int}]{print\+\_\+n,  }\item[{int}]{nglyphs,  }\item[{int}]{cstart,  }\item[{int}]{cend,  }\item[{char $\ast$}]{coverstring }\end{DoxyParamCaption})}
+
+
+
+Print the subtotal for one Unicode script range. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em outfp} & Pointer to output file. \\
+\hline
+\mbox{\texttt{ in}}  & {\em print\+\_\+n} & 1 = print number of glyphs, 0 = print percentage. \\
+\hline
+\mbox{\texttt{ in}}  & {\em nglyphs} & Number of glyphs in current range. \\
+\hline
+\mbox{\texttt{ in}}  & {\em cstart} & Starting code point for current range. \\
+\hline
+\mbox{\texttt{ in}}  & {\em cend} & Ending code point for current range. \\
+\hline
+\mbox{\texttt{ in}}  & {\em coverstring} & Character string of \char`\"{}$<$cstart$>$-\/$<$cend$>$\char`\"{}. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{unicoverage_8c_source_l00233}{233}} of file \mbox{\hyperlink{unicoverage_8c_source}{unicoverage.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00235\ }
+\DoxyCodeLine{00236\ \ \ \ \textcolor{comment}{/*\ print\ old\ range\ total\ */}}
+\DoxyCodeLine{00237\ \ \ \ \textcolor{keywordflow}{if}\ (print\_n)\ \{\ \ \textcolor{comment}{/*\ Print\ number\ of\ glyphs,\ not\ percentage\ */}}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ \%6d\ "{}},\ nglyphs);}
+\DoxyCodeLine{00239\ \ \ \ \}}
+\DoxyCodeLine{00240\ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ \%5.1f\%\%"{}},\ 100.0*nglyphs/(1+cend-\/cstart));}
+\DoxyCodeLine{00242\ \ \ \ \}}
+\DoxyCodeLine{00243\ }
+\DoxyCodeLine{00244\ \ \ \ \textcolor{keywordflow}{if}\ (cend\ <\ 0x10000)}
+\DoxyCodeLine{00245\ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ \ U+\%04X..U+\%04X\ \ \ \%s"{}},}
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cstart,\ cend,\ coverstring);}
+\DoxyCodeLine{00247\ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00248\ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ U+\%05X..U+\%05X\ \ \%s"{}},}
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cstart,\ cend,\ coverstring);}
+\DoxyCodeLine{00250\ }
+\DoxyCodeLine{00251\ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00252\ \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+% FIG 3

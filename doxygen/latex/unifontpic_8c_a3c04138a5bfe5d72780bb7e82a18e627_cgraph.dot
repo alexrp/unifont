@@ -1,0 +1,21 @@
+digraph "main"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node1 [label="main",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="The main function."];
+  Node1 -> Node2 [color="steelblue1",style="solid"];
+  Node2 [label="genlongbmp",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$unifontpic_8c.html#afd429d88175c59dae5c32e8c9aa7851d",tooltip="Generate the BMP output file in long format."];
+  Node2 -> Node3 [color="steelblue1",style="solid"];
+  Node3 [label="output2",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$unifontpic_8c.html#af1fbb002e4787785de92e073ec46b787",tooltip="Output a 2-byte integer in little-endian order."];
+  Node2 -> Node4 [color="steelblue1",style="solid"];
+  Node4 [label="output4",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$unifontpic_8c.html#ac186155c351c9c3fb9c43acffcbab710",tooltip="Output a 4-byte integer in little-endian order."];
+  Node1 -> Node5 [color="steelblue1",style="solid"];
+  Node5 [label="genwidebmp",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$unifontpic_8c.html#a3931c7b44c00ffdb8925a3c837577677",tooltip="Generate the BMP output file in wide format."];
+  Node5 -> Node3 [color="steelblue1",style="solid"];
+  Node5 -> Node4 [color="steelblue1",style="solid"];
+  Node1 -> Node6 [color="steelblue1",style="solid"];
+  Node6 [label="gethex",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$unifontpic_8c.html#a0a030f2857f0d855b7ab0ccd8e968f1f",tooltip="Read a Unifont .hex-format input file from stdin."];
+}

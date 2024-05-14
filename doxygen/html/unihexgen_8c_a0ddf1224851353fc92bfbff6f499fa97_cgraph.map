@@ -1,0 +1,5 @@
+<map id="main" name="main">
+<area shape="rect" id="node1" title="The main function." alt="" coords="5,31,60,56"/>
+<area shape="rect" id="node2" href="$unihexgen_8c.html#a65e81f32c04621e4a0985e7767223c9b" title="Generate a bitmap containing a 4&#45;digit Unicode code point." alt="" coords="108,5,192,31"/>
+<area shape="rect" id="node3" href="$unihexgen_8c.html#aaa160beefc690fbc75658fa9134d07a2" title="Generate a bitmap containing a 6&#45;digit Unicode code point." alt="" coords="108,55,192,80"/>
+</map>

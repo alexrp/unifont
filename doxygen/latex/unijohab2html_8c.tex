@@ -1,0 +1,792 @@
+\hypertarget{unijohab2html_8c}{}\doxysection{src/unijohab2html.c File Reference}
+\label{unijohab2html_8c}\index{src/unijohab2html.c@{src/unijohab2html.c}}
+
+
+Display overalpped Hangul letter combinations in a grid.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}hangul.\+h\char`\"{}}\newline
+Include dependency graph for unijohab2html.\+c\+:
+% FIG 0
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{unijohab2html_8c_a0947c0a3d28c188caa4497cce08539c9}{MAXFILENAME}}~1024
+\item 
+\#define \mbox{\hyperlink{unijohab2html_8c_a33117bbfbedd06585bc3c4ab55e95b2f}{START\+\_\+\+JUNG}}~0
+\begin{DoxyCompactList}\small\item\em Vowel index of first vowel with which to begin. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{unijohab2html_8c_a8d23feea868a983c8c2b661e1e16972f}{RED}}~0x\+CC0000
+\begin{DoxyCompactList}\small\item\em Color code for slightly unsaturated HTML red. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{unijohab2html_8c_acfbc006ea433ad708fdee3e82996e721}{GREEN}}~0x00\+CC00
+\begin{DoxyCompactList}\small\item\em Color code for slightly unsaturated HTML green. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{unijohab2html_8c_a79d10e672abb49ad63eeaa8aaef57c38}{BLUE}}~0x0000\+CC
+\begin{DoxyCompactList}\small\item\em Color code for slightly unsaturated HTML blue. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{unijohab2html_8c_a7b3b25cba33b07c303f3060fe41887f6}{BLACK}}~0x000000
+\begin{DoxyCompactList}\small\item\em Color code for HTML black. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{unijohab2html_8c_a87b537f5fa5c109d3c05c13d6b18f382}{WHITE}}~0x\+FFFFFF
+\begin{DoxyCompactList}\small\item\em Color code for HTML white. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{unijohab2html_8c_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em The main function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{unijohab2html_8c_af0ae5e62b21f6205cc500a75ec788413}{parse\+\_\+args}} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]}, int $\ast$inindex, int $\ast$outindex, int $\ast$modern\+\_\+only)
+\begin{DoxyCompactList}\small\item\em Parse command line arguments. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Display overalpped Hangul letter combinations in a grid. 
+
+This displays overlapped letters that form Unicode Hangul Syllables combinations, as a tool to determine bounding boxes for all combinations. It works with both modern and archaic Hangul letters.
+
+Input is a Unifont .hex file such as the \char`\"{}hangul-\/base.\+hex\char`\"{} file that is part of the Unifont package. Glyphs are all processed as being 16 pixels wide and 16 pixels tall.
+
+Output is an HTML file containing 16 by 16 pixel grids shwoing overlaps in table format, arranged by variation of the initial consonant (choseong).
+
+Initial consonants (choseong) have 6 variations. In general, the first three are for combining with vowels (jungseong) that are vertical, horizontal, or vertical and horizontal, respectively; the second set of three variations are for combinations with a final consonant.
+
+The output HTML file can be viewed in a web browser.
+
+\begin{DoxyAuthor}{Author}
+Paul Hardy
+\end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+Copyright © 2023 Paul Hardy 
+\end{DoxyCopyright}
+
+
+Definition in file \mbox{\hyperlink{unijohab2html_8c_source}{unijohab2html.\+c}}.
+
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{unijohab2html_8c_a7b3b25cba33b07c303f3060fe41887f6}\label{unijohab2html_8c_a7b3b25cba33b07c303f3060fe41887f6}} 
+\index{unijohab2html.c@{unijohab2html.c}!BLACK@{BLACK}}
+\index{BLACK@{BLACK}!unijohab2html.c@{unijohab2html.c}}
+\doxysubsubsection{\texorpdfstring{BLACK}{BLACK}}
+{\footnotesize\ttfamily \#define BLACK~0x000000}
+
+
+
+Color code for HTML black. 
+
+
+
+Definition at line \mbox{\hyperlink{unijohab2html_8c_source_l00062}{62}} of file \mbox{\hyperlink{unijohab2html_8c_source}{unijohab2html.\+c}}.
+
+\mbox{\Hypertarget{unijohab2html_8c_a79d10e672abb49ad63eeaa8aaef57c38}\label{unijohab2html_8c_a79d10e672abb49ad63eeaa8aaef57c38}} 
+\index{unijohab2html.c@{unijohab2html.c}!BLUE@{BLUE}}
+\index{BLUE@{BLUE}!unijohab2html.c@{unijohab2html.c}}
+\doxysubsubsection{\texorpdfstring{BLUE}{BLUE}}
+{\footnotesize\ttfamily \#define BLUE~0x0000\+CC}
+
+
+
+Color code for slightly unsaturated HTML blue. 
+
+
+
+Definition at line \mbox{\hyperlink{unijohab2html_8c_source_l00061}{61}} of file \mbox{\hyperlink{unijohab2html_8c_source}{unijohab2html.\+c}}.
+
+\mbox{\Hypertarget{unijohab2html_8c_acfbc006ea433ad708fdee3e82996e721}\label{unijohab2html_8c_acfbc006ea433ad708fdee3e82996e721}} 
+\index{unijohab2html.c@{unijohab2html.c}!GREEN@{GREEN}}
+\index{GREEN@{GREEN}!unijohab2html.c@{unijohab2html.c}}
+\doxysubsubsection{\texorpdfstring{GREEN}{GREEN}}
+{\footnotesize\ttfamily \#define GREEN~0x00\+CC00}
+
+
+
+Color code for slightly unsaturated HTML green. 
+
+
+
+Definition at line \mbox{\hyperlink{unijohab2html_8c_source_l00060}{60}} of file \mbox{\hyperlink{unijohab2html_8c_source}{unijohab2html.\+c}}.
+
+\mbox{\Hypertarget{unijohab2html_8c_a0947c0a3d28c188caa4497cce08539c9}\label{unijohab2html_8c_a0947c0a3d28c188caa4497cce08539c9}} 
+\index{unijohab2html.c@{unijohab2html.c}!MAXFILENAME@{MAXFILENAME}}
+\index{MAXFILENAME@{MAXFILENAME}!unijohab2html.c@{unijohab2html.c}}
+\doxysubsubsection{\texorpdfstring{MAXFILENAME}{MAXFILENAME}}
+{\footnotesize\ttfamily \#define MAXFILENAME~1024}
+
+
+
+Definition at line \mbox{\hyperlink{unijohab2html_8c_source_l00052}{52}} of file \mbox{\hyperlink{unijohab2html_8c_source}{unijohab2html.\+c}}.
+
+\mbox{\Hypertarget{unijohab2html_8c_a8d23feea868a983c8c2b661e1e16972f}\label{unijohab2html_8c_a8d23feea868a983c8c2b661e1e16972f}} 
+\index{unijohab2html.c@{unijohab2html.c}!RED@{RED}}
+\index{RED@{RED}!unijohab2html.c@{unijohab2html.c}}
+\doxysubsubsection{\texorpdfstring{RED}{RED}}
+{\footnotesize\ttfamily \#define RED~0x\+CC0000}
+
+
+
+Color code for slightly unsaturated HTML red. 
+
+
+
+Definition at line \mbox{\hyperlink{unijohab2html_8c_source_l00059}{59}} of file \mbox{\hyperlink{unijohab2html_8c_source}{unijohab2html.\+c}}.
+
+\mbox{\Hypertarget{unijohab2html_8c_a33117bbfbedd06585bc3c4ab55e95b2f}\label{unijohab2html_8c_a33117bbfbedd06585bc3c4ab55e95b2f}} 
+\index{unijohab2html.c@{unijohab2html.c}!START\_JUNG@{START\_JUNG}}
+\index{START\_JUNG@{START\_JUNG}!unijohab2html.c@{unijohab2html.c}}
+\doxysubsubsection{\texorpdfstring{START\_JUNG}{START\_JUNG}}
+{\footnotesize\ttfamily \#define START\+\_\+\+JUNG~0}
+
+
+
+Vowel index of first vowel with which to begin. 
+
+
+
+Definition at line \mbox{\hyperlink{unijohab2html_8c_source_l00054}{54}} of file \mbox{\hyperlink{unijohab2html_8c_source}{unijohab2html.\+c}}.
+
+\mbox{\Hypertarget{unijohab2html_8c_a87b537f5fa5c109d3c05c13d6b18f382}\label{unijohab2html_8c_a87b537f5fa5c109d3c05c13d6b18f382}} 
+\index{unijohab2html.c@{unijohab2html.c}!WHITE@{WHITE}}
+\index{WHITE@{WHITE}!unijohab2html.c@{unijohab2html.c}}
+\doxysubsubsection{\texorpdfstring{WHITE}{WHITE}}
+{\footnotesize\ttfamily \#define WHITE~0x\+FFFFFF}
+
+
+
+Color code for HTML white. 
+
+
+
+Definition at line \mbox{\hyperlink{unijohab2html_8c_source_l00063}{63}} of file \mbox{\hyperlink{unijohab2html_8c_source}{unijohab2html.\+c}}.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{unijohab2html_8c_a0ddf1224851353fc92bfbff6f499fa97}\label{unijohab2html_8c_a0ddf1224851353fc92bfbff6f499fa97}} 
+\index{unijohab2html.c@{unijohab2html.c}!main@{main}}
+\index{main@{main}!unijohab2html.c@{unijohab2html.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+The main function. 
+
+
+
+Definition at line \mbox{\hyperlink{unijohab2html_8c_source_l00070}{70}} of file \mbox{\hyperlink{unijohab2html_8c_source}{unijohab2html.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00071\ \ \ \ \textcolor{keywordtype}{int}\ i,\ j;\ \ \textcolor{comment}{/*\ loop\ variables\ */}}
+\DoxyCodeLine{00072\ \ \ \ \textcolor{keywordtype}{unsigned}\ codept;}
+\DoxyCodeLine{00073\ \ \ \ \textcolor{keywordtype}{unsigned}\ max\_codept;}
+\DoxyCodeLine{00074\ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ modern\_only\ =\ 0;\ \ \textcolor{comment}{/*\ To\ just\ use\ modern\ Hangul\ */}}
+\DoxyCodeLine{00075\ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ group,\ consonant1,\ vowel,\ consonant2;}
+\DoxyCodeLine{00076\ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ vowel\_variation;}
+\DoxyCodeLine{00077\ \ \ \ \textcolor{keywordtype}{unsigned}\ glyph[MAX\_GLYPHS][16];}
+\DoxyCodeLine{00078\ \ \ \ \textcolor{keywordtype}{unsigned}\ tmp\_glyph\ [16];\ \ \textcolor{comment}{/*\ To\ build\ one\ combined\ glyph\ at\ a\ time.\ */}}
+\DoxyCodeLine{00079\ \ \ \ \textcolor{keywordtype}{unsigned}\ mask;}
+\DoxyCodeLine{00080\ \ \ \ \textcolor{keywordtype}{unsigned}\ overlapped;\ \ \ \ \ \ \ \textcolor{comment}{/*\ To\ find\ overlaps\ */}}
+\DoxyCodeLine{00081\ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ ancient\_choseong;\ \textcolor{comment}{/*\ Flag\ when\ within\ ancient\ choseong\ range.\ */}}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00084\ \textcolor{comment}{\ \ \ \ \ \ 16x16\ pixel\ grid\ for\ each\ Choseong\ group,\ for:}}
+\DoxyCodeLine{00085\ \textcolor{comment}{}}
+\DoxyCodeLine{00086\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ Group\ 0\ to\ Group\ 5\ with\ no\ Jongseong}}
+\DoxyCodeLine{00087\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ Group\ 3\ to\ Group\ 5\ with\ Jongseong\ except\ Nieun}}
+\DoxyCodeLine{00088\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ Group\ 3\ to\ Group\ 5\ with\ Jongseong\ Nieun}}
+\DoxyCodeLine{00089\ \textcolor{comment}{}}
+\DoxyCodeLine{00090\ \textcolor{comment}{\ \ \ \ \ \ 12\ grids\ total.}}
+\DoxyCodeLine{00091\ \textcolor{comment}{}}
+\DoxyCodeLine{00092\ \textcolor{comment}{\ \ \ \ \ \ Each\ grid\ cell\ will\ hold\ a\ 32-\/bit\ HTML\ RGB\ color.}}
+\DoxyCodeLine{00093\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00094\ \ \ \ \textcolor{keywordtype}{unsigned}\ grid[12][16][16];}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00097\ \textcolor{comment}{\ \ \ \ \ \ Matrices\ to\ detect\ and\ report\ overlaps.\ \ Identify\ vowel}}
+\DoxyCodeLine{00098\ \textcolor{comment}{\ \ \ \ \ \ variations\ where\ an\ overlap\ occurred.\ \ For\ most\ vowel}}
+\DoxyCodeLine{00099\ \textcolor{comment}{\ \ \ \ \ \ variations,\ there\ will\ be\ no\ overlap.\ \ Then\ go\ through}}
+\DoxyCodeLine{00100\ \textcolor{comment}{\ \ \ \ \ \ choseong,\ and\ then\ jongseong\ to\ find\ the\ overlapping}}
+\DoxyCodeLine{00101\ \textcolor{comment}{\ \ \ \ \ \ combinations.\ \ This\ saves\ storage\ space\ as\ an\ alternative}}
+\DoxyCodeLine{00102\ \textcolor{comment}{\ \ \ \ \ \ to\ storing\ large\ 2-\/\ or\ 3-\/dimensional\ overlap\ matrices.}}
+\DoxyCodeLine{00103\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00104\ \ \ \ \textcolor{comment}{//\ jungcho:\ Jungseong\ overlap\ with\ Choseong}}
+\DoxyCodeLine{00105\ \ \ \ \textcolor{keywordtype}{unsigned}\ jungcho\ [TOTAL\_JUNG\ *\ \mbox{\hyperlink{hangul_8h_a8bcda08741a11636e3236f3d34372bcf}{JUNG\_VARIATIONS}}];}
+\DoxyCodeLine{00106\ \ \ \ \textcolor{comment}{//\ jongjung:\ Jongseong\ overlap\ with\ Jungseong\ -\/-\/\ for\ future\ expansion}}
+\DoxyCodeLine{00107\ \ \ \ \textcolor{comment}{//\ unsigned\ jongjung\ [TOTAL\_JUNG\ *\ JUNG\_VARIATIONS];}}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \ \ \ \textcolor{keywordtype}{int}\ glyphs\_overlap;\ \ \ \ \ \textcolor{comment}{/*\ If\ glyph\ pair\ being\ considered\ overlap.\ */}}
+\DoxyCodeLine{00110\ \ \ \ \textcolor{keywordtype}{int}\ cho\_overlaps\ \ =\ 0;\ \ \textcolor{comment}{/*\ Number\ of\ choseong+vowel\ overlaps.\ \ \ \ \ \ */}}
+\DoxyCodeLine{00111\ \ \ \ \textcolor{comment}{//\ int\ jongjung\_overlaps\ =\ 0;\ \ /*\ Number\ of\ vowel+jongseong\ overlaps.\ */}}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \ \ \ \textcolor{keywordtype}{int}\ \ inindex\ =\ 0;}
+\DoxyCodeLine{00114\ \ \ \ \textcolor{keywordtype}{int}\ \ outindex\ =\ 0;}
+\DoxyCodeLine{00115\ \ \ \ FILE\ *infp,\ *outfp;\ \ \ \ \ \textcolor{comment}{/*\ Input\ and\ output\ file\ pointers.\ */}}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ \ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \mbox{\hyperlink{unijohab2html_8c_af0ae5e62b21f6205cc500a75ec788413}{parse\_args}}\ (\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}\ *argv[],\ \textcolor{keywordtype}{int}\ *inindex,\ \textcolor{keywordtype}{int}\ *outindex,}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ *modern\_only);}
+\DoxyCodeLine{00119\ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \mbox{\hyperlink{hangul_8h_ab795ff183c3e429e0eb9257a7737c57f}{cho\_variation}}\ \ \ \ \ \ (\textcolor{keywordtype}{int}\ cho,\ \textcolor{keywordtype}{int}\ jung,\ \textcolor{keywordtype}{int}\ jong);}
+\DoxyCodeLine{00120\ \ \ \ \textcolor{keywordtype}{unsigned}\ \mbox{\hyperlink{hangul_8h_afd372e1a400e28d1b61410187f038eec}{hangul\_read\_base16}}\ (FILE\ *infp,\ \textcolor{keywordtype}{unsigned}\ glyph[][16]);}
+\DoxyCodeLine{00121\ \ \ \ \textcolor{keywordtype}{int}\ \ \mbox{\hyperlink{hangul_8h_a5683e04e68511d40e66dc8fe26a9a934}{glyph\_overlap}}\ (\textcolor{keywordtype}{unsigned}\ *glyph1,\ \textcolor{keywordtype}{unsigned}\ *glyph2);}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{hangul_8h_a9aacff561033067830249796de592258}{combine\_glyphs}}\ (\textcolor{keywordtype}{unsigned}\ *glyph1,\ \textcolor{keywordtype}{unsigned}\ *glyph2,}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ *combined\_glyph);}
+\DoxyCodeLine{00125\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{hangul_8h_a0b8d4a416ad7bb42a332332c7ba86da8}{print\_glyph\_txt}}\ (FILE\ *fp,\ \textcolor{keywordtype}{unsigned}\ codept,\ \textcolor{keywordtype}{unsigned}\ *this\_glyph);}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00128\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00129\ \textcolor{comment}{\ \ \ \ \ \ Parse\ command\ line\ arguments\ to\ open\ input\ \&\ output\ files,\ if\ given.}}
+\DoxyCodeLine{00130\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00131\ \ \ \ \textcolor{keywordflow}{if}\ (argc\ >\ 1)\ \{}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \mbox{\hyperlink{unijohab2html_8c_af0ae5e62b21f6205cc500a75ec788413}{parse\_args}}\ (argc,\ argv,\ \&inindex,\ \&outindex,\ \&modern\_only);}
+\DoxyCodeLine{00133\ \ \ \ \}}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00135\ \ \ \ \textcolor{keywordflow}{if}\ (inindex\ ==\ 0)\ \{}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ infp\ =\ stdin;}
+\DoxyCodeLine{00137\ \ \ \ \}}
+\DoxyCodeLine{00138\ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ infp\ =\ fopen\ (argv[inindex],\ \textcolor{stringliteral}{"{}r"{}});}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (infp\ ==\ NULL)\ \{}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)n***\ ERROR:\ Cannot\ open\ \%s\ for\ input.\(\backslash\)n\(\backslash\)n"{}},}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ argv[inindex]);}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ exit\ (EXIT\_FAILURE);}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00145\ \ \ \ \}}
+\DoxyCodeLine{00146\ \ \ \ \textcolor{keywordflow}{if}\ (outindex\ ==\ 0)\ \{}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ outfp\ =\ stdout;}
+\DoxyCodeLine{00148\ \ \ \ \}}
+\DoxyCodeLine{00149\ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ outfp\ =\ fopen\ (argv[outindex],\ \textcolor{stringliteral}{"{}w"{}});}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (outfp\ ==\ NULL)\ \{}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)n***\ ERROR:\ Cannot\ open\ \%s\ for\ output.\(\backslash\)n\(\backslash\)n"{}},}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ argv[outindex]);}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ exit\ (EXIT\_FAILURE);}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00156\ \ \ \ \}}
+\DoxyCodeLine{00157\ }
+\DoxyCodeLine{00158\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00159\ \textcolor{comment}{\ \ \ \ \ \ Initialize\ glyph\ array\ to\ all\ zeroes.}}
+\DoxyCodeLine{00160\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00161\ \ \ \ \textcolor{keywordflow}{for}\ (codept\ =\ 0;\ codept\ <\ MAX\_GLYPHS;\ codept++)\ \{}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 16;\ i++)\ glyph[codept][i]\ =\ 0x0000;}
+\DoxyCodeLine{00163\ \ \ \ \}}
+\DoxyCodeLine{00164\ }
+\DoxyCodeLine{00165\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00166\ \textcolor{comment}{\ \ \ \ \ \ Initialize\ overlap\ matrices\ to\ all\ zeroes.}}
+\DoxyCodeLine{00167\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00168\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ TOTAL\_JUNG\ *\ \mbox{\hyperlink{hangul_8h_a8bcda08741a11636e3236f3d34372bcf}{JUNG\_VARIATIONS}};\ i++)\ \{}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ jungcho\ \ [i]\ =\ 0;}
+\DoxyCodeLine{00170\ \ \ \ \}}
+\DoxyCodeLine{00171\ \ \ \ \textcolor{comment}{//\ jongjung\ is\ reserved\ for\ expansion.}}
+\DoxyCodeLine{00172\ \ \ \ \textcolor{comment}{//\ for\ (i\ =\ 0;\ i\ <\ TOTAL\_JONG\ *\ JONG\_VARIATIONS;\ i++)\ \{}}
+\DoxyCodeLine{00173\ \ \ \ \textcolor{comment}{//\ \ \ \ jongjung\ [i]\ =\ 0;}}
+\DoxyCodeLine{00174\ \ \ \ \textcolor{comment}{//\ \}}}
+\DoxyCodeLine{00175\ }
+\DoxyCodeLine{00176\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00177\ \textcolor{comment}{\ \ \ \ \ \ Read\ Hangul\ base\ glyph\ file.}}
+\DoxyCodeLine{00178\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00179\ \ \ \ max\_codept\ =\ \mbox{\hyperlink{hangul_8h_afd372e1a400e28d1b61410187f038eec}{hangul\_read\_base16}}\ (infp,\ glyph);}
+\DoxyCodeLine{00180\ \ \ \ \textcolor{keywordflow}{if}\ (max\_codept\ >\ 0x8FF)\ \{}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)nWARNING:\ Hangul\ glyph\ range\ exceeds\ PUA\ space.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{00182\ \ \ \ \}}
+\DoxyCodeLine{00183\ }
+\DoxyCodeLine{00184\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00185\ \textcolor{comment}{\ \ \ \ \ \ If\ only\ examining\ modern\ Hangul,\ fill\ the\ ancient\ glyphs}}
+\DoxyCodeLine{00186\ \textcolor{comment}{\ \ \ \ \ \ with\ blanks\ to\ guarantee\ they\ won't\ overlap.\ \ This\ is}}
+\DoxyCodeLine{00187\ \textcolor{comment}{\ \ \ \ \ \ not\ as\ efficient\ as\ ending\ loops\ sooner,\ but\ is\ easier}}
+\DoxyCodeLine{00188\ \textcolor{comment}{\ \ \ \ \ \ to\ verify\ for\ correctness.}}
+\DoxyCodeLine{00189\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00190\ \ \ \ \textcolor{keywordflow}{if}\ (modern\_only)\ \{}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x0073;\ i\ <\ \mbox{\hyperlink{hangul_8h_a2603eab2f2cae3b60e0f8a76424be923}{JUNG\_HEX}};\ i++)\ \{}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 16;\ j++)\ glyph[i][j]\ =\ 0x0000;}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x027A;\ i\ <\ \mbox{\hyperlink{hangul_8h_ad4e7a6ac8160c8f5576487db53d67925}{JONG\_HEX}};\ i++)\ \{}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 16;\ j++)\ glyph[i][j]\ =\ 0x0000;}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x032B;\ i\ <\ 0x0400;\ i++)\ \{}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 16;\ j++)\ glyph[i][j]\ =\ 0x0000;}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00200\ \ \ \ \}}
+\DoxyCodeLine{00201\ }
+\DoxyCodeLine{00202\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00203\ \textcolor{comment}{\ \ \ \ \ \ Initialize\ grids\ to\ all\ black\ (no\ color)\ for\ each\ of}}
+\DoxyCodeLine{00204\ \textcolor{comment}{\ \ \ \ \ \ the\ 12\ Choseong\ groups.}}
+\DoxyCodeLine{00205\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00206\ \ \ \ \textcolor{keywordflow}{for}\ (group\ =\ 0;\ group\ <\ 12;\ group++)\ \{}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 16;\ i++)\ \{}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 16;\ j++)\ \{}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \ \ \ \ grid[group][i][j]\ =\ \mbox{\hyperlink{unijohab2html_8c_a7b3b25cba33b07c303f3060fe41887f6}{BLACK}};\ \ \textcolor{comment}{/*\ No\ color\ at\ first\ */}}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00212\ \ \ \ \}}
+\DoxyCodeLine{00213\ }
+\DoxyCodeLine{00214\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00215\ \textcolor{comment}{\ \ \ \ \ \ Superimpose\ all\ Choseong\ glyphs\ according\ to\ group.}}
+\DoxyCodeLine{00216\ \textcolor{comment}{\ \ \ \ \ \ Each\ grid\ spot\ with\ choseong\ will\ be\ blue.}}
+\DoxyCodeLine{00217\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00218\ \ \ \ \textcolor{keywordflow}{for}\ (group\ =\ 0;\ group\ <\ 6;\ group++)\ \{}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (consonant1\ =\ \mbox{\hyperlink{hangul_8h_ab1bb63330600aa31b5fba9ac58ce171e}{CHO\_HEX}}\ +\ group;}
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \ \ \ consonant1\ <\ \mbox{\hyperlink{hangul_8h_ab1bb63330600aa31b5fba9ac58ce171e}{CHO\_HEX}}\ +}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{hangul_8h_a0701ea8bfe17f2b3360397b3fa8dad05}{CHO\_VARIATIONS}}\ *\ TOTAL\_CHO;}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \ \ \ consonant1\ +=\ \mbox{\hyperlink{hangul_8h_a0701ea8bfe17f2b3360397b3fa8dad05}{CHO\_VARIATIONS}})\ \{}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 16;\ i++)\ \{\ \textcolor{comment}{/*\ For\ each\ glyph\ row\ */}}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \ \ \ \ mask\ =\ 0x8000;}
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 16;\ j++)\ \{}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (glyph[consonant1][i]\ \&\ mask)\ grid[group][i][j]\ |=\ \mbox{\hyperlink{unijohab2html_8c_a79d10e672abb49ad63eeaa8aaef57c38}{BLUE}};}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mask\ >>=\ 1;\ \ \textcolor{comment}{/*\ Get\ next\ bit\ in\ glyph\ row\ */}}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00231\ \ \ \ \}}
+\DoxyCodeLine{00232\ }
+\DoxyCodeLine{00233\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00234\ \textcolor{comment}{\ \ \ \ \ \ Fill\ with\ Choseong\ (initial\ consonant)\ to\ prepare}}
+\DoxyCodeLine{00235\ \textcolor{comment}{\ \ \ \ \ \ for\ groups\ 3-\/5\ with\ jongseong\ except\ niuen\ (group+3),}}
+\DoxyCodeLine{00236\ \textcolor{comment}{\ \ \ \ \ \ then\ for\ groups\ 3-\/5\ with\ jongseong\ nieun\ (group+6).}}
+\DoxyCodeLine{00237\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00238\ \ \ \ \textcolor{keywordflow}{for}\ (group\ =\ 3;\ group\ <\ 6;\ group++)\ \{}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 16;\ i++)\ \{}
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 16;\ j++)\ \{}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \ \ \ \ grid[group\ +\ 6][i][j]\ =\ grid[group\ +\ 3][i][j]}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ grid[group][i][j];}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00245\ \ \ \ \}}
+\DoxyCodeLine{00246\ }
+\DoxyCodeLine{00247\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00248\ \textcolor{comment}{\ \ \ \ \ \ For\ each\ Jungseong,\ superimpose\ first\ variation\ on}}
+\DoxyCodeLine{00249\ \textcolor{comment}{\ \ \ \ \ \ appropriate\ Choseong\ group\ for\ grids\ 0\ to\ 5.}}
+\DoxyCodeLine{00250\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00251\ \ \ \ \textcolor{keywordflow}{for}\ (vowel\ =\ \mbox{\hyperlink{unijohab2html_8c_a33117bbfbedd06585bc3c4ab55e95b2f}{START\_JUNG}};\ vowel\ <\ TOTAL\_JUNG;\ vowel++)\ \{}
+\DoxyCodeLine{00252\ \ \ \ \ \ \ group\ =\ \mbox{\hyperlink{hangul_8h_ab795ff183c3e429e0eb9257a7737c57f}{cho\_variation}}\ (-\/1,\ vowel,\ -\/1);}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ glyphs\_overlap\ =\ 0;\ \ \textcolor{comment}{/*\ Assume\ the\ 2\ glyphs\ do\ not\ overlap.\ */}}
+\DoxyCodeLine{00254\ }
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 16;\ i++)\ \{\ \textcolor{comment}{/*\ For\ each\ glyph\ row\ */}}
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \ mask\ =\ 0x8000;}
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 16;\ j++)\ \{}
+\DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (glyph[\mbox{\hyperlink{hangul_8h_a2603eab2f2cae3b60e0f8a76424be923}{JUNG\_HEX}}\ +\ \mbox{\hyperlink{hangul_8h_a8bcda08741a11636e3236f3d34372bcf}{JUNG\_VARIATIONS}}\ *\ vowel][i]\ \&\ mask)\ \{}
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00260\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ If\ there\ was\ already\ blue\ in\ this\ grid\ cell,}}
+\DoxyCodeLine{00261\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mark\ this\ vowel\ variation\ as\ having\ overlap}}
+\DoxyCodeLine{00262\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ with\ choseong\ (initial\ consonant)\ letter(s).}}
+\DoxyCodeLine{00263\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (grid[group][i][j]\ \&\ \mbox{\hyperlink{unijohab2html_8c_a79d10e672abb49ad63eeaa8aaef57c38}{BLUE}})\ glyphs\_overlap\ =\ 1;}
+\DoxyCodeLine{00265\ }
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Add\ green\ to\ grid\ cell\ color.\ */}}
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ grid[group][i][j]\ |=\ \mbox{\hyperlink{unijohab2html_8c_acfbc006ea433ad708fdee3e82996e721}{GREEN}};}
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \ \ \ \ mask\ >>=\ 1;\ \ \textcolor{comment}{/*\ Mask\ for\ next\ bit\ in\ glyph\ row\ */}}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \ \}\ \ \textcolor{comment}{/*\ for\ j\ */}}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \}\ \ \textcolor{comment}{/*\ for\ i\ */}}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (glyphs\_overlap)\ \{}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ \ jungcho\ [\mbox{\hyperlink{hangul_8h_a8bcda08741a11636e3236f3d34372bcf}{JUNG\_VARIATIONS}}\ *\ vowel]\ =\ 1;}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ \ cho\_overlaps++;}
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00276\ \ \ \ \}\ \ \textcolor{comment}{/*\ for\ each\ vowel\ */}}
+\DoxyCodeLine{00277\ }
+\DoxyCodeLine{00278\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00279\ \textcolor{comment}{\ \ \ \ \ \ For\ each\ Jungseong,\ superimpose\ second\ variation\ on}}
+\DoxyCodeLine{00280\ \textcolor{comment}{\ \ \ \ \ \ appropriate\ Choseong\ group\ for\ grids\ 6\ to\ 8.}}
+\DoxyCodeLine{00281\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00282\ \ \ \ \textcolor{keywordflow}{for}\ (vowel\ =\ \mbox{\hyperlink{unijohab2html_8c_a33117bbfbedd06585bc3c4ab55e95b2f}{START\_JUNG}};\ vowel\ <\ TOTAL\_JUNG;\ vowel++)\ \{}
+\DoxyCodeLine{00283\ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00284\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ The\ second\ vowel\ variation\ is\ for\ combination\ with}}
+\DoxyCodeLine{00285\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ a\ final\ consonant\ (Jongseong),\ with\ initial\ consonant}}
+\DoxyCodeLine{00286\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ (Choseong)\ variations\ (or\ "{}groups"{})\ 3\ to\ 5.\ \ Thus,}}
+\DoxyCodeLine{00287\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ if\ the\ vowel\ type\ returns\ an\ initial\ Choseong\ group}}
+\DoxyCodeLine{00288\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ of\ 0\ to\ 2,\ add\ 3\ to\ it.}}
+\DoxyCodeLine{00289\ \textcolor{comment}{\ \ \ \ \ \ */}}
+\DoxyCodeLine{00290\ \ \ \ \ \ \ group\ =\ \mbox{\hyperlink{hangul_8h_ab795ff183c3e429e0eb9257a7737c57f}{cho\_variation}}\ (-\/1,\ vowel,\ -\/1);}
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00292\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ Groups\ 0\ to\ 2\ don't\ use\ second\ vowel\ variation,}}
+\DoxyCodeLine{00293\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ so\ increment\ if\ group\ is\ below\ 2.}}
+\DoxyCodeLine{00294\ \textcolor{comment}{\ \ \ \ \ \ */}}
+\DoxyCodeLine{00295\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (group\ <\ 3)\ group\ +=\ 3;}
+\DoxyCodeLine{00296\ \ \ \ \ \ \ glyphs\_overlap\ =\ 0;\ \ \textcolor{comment}{/*\ Assume\ the\ 2\ glyphs\ do\ not\ overlap.\ */}}
+\DoxyCodeLine{00297\ }
+\DoxyCodeLine{00298\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 16;\ i++)\ \{\ \textcolor{comment}{/*\ For\ each\ glyph\ row\ */}}
+\DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ \ mask\ =\ 0x8000;\ \ \textcolor{comment}{/*\ Start\ mask\ at\ leftmost\ glyph\ bit\ */}}
+\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 16;\ j++)\ \{\ \ \textcolor{comment}{/*\ For\ each\ column\ in\ this\ row\ */}}
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ "{}+\ 1"{}\ is\ to\ get\ each\ vowel's\ second\ variation\ */}}
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (glyph\ [\mbox{\hyperlink{hangul_8h_a2603eab2f2cae3b60e0f8a76424be923}{JUNG\_HEX}}\ +}
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{hangul_8h_a8bcda08741a11636e3236f3d34372bcf}{JUNG\_VARIATIONS}}\ *\ vowel\ +\ 1][i]\ \&\ mask)\ \{}
+\DoxyCodeLine{00304\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ If\ this\ cell\ has\ blue\ already,\ mark\ as\ overlapped.\ */}}
+\DoxyCodeLine{00305\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (grid\ [group\ +\ 3][i][j]\ \&\ \mbox{\hyperlink{unijohab2html_8c_a79d10e672abb49ad63eeaa8aaef57c38}{BLUE}})\ glyphs\_overlap\ =\ 1;}
+\DoxyCodeLine{00306\ }
+\DoxyCodeLine{00307\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Superimpose\ green\ on\ current\ cell\ color.\ */}}
+\DoxyCodeLine{00308\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ grid\ [group\ +\ 3][i][j]\ |=\ \mbox{\hyperlink{unijohab2html_8c_acfbc006ea433ad708fdee3e82996e721}{GREEN}};}
+\DoxyCodeLine{00309\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00310\ \ \ \ \ \ \ \ \ \ \ \ \ mask\ >>=\ 1;\ \ \textcolor{comment}{/*\ Get\ next\ bit\ in\ glyph\ row\ */}}
+\DoxyCodeLine{00311\ \ \ \ \ \ \ \ \ \ \}\ \ \textcolor{comment}{/*\ for\ j\ */}}
+\DoxyCodeLine{00312\ \ \ \ \ \ \ \}\ \ \textcolor{comment}{/*\ for\ i\ */}}
+\DoxyCodeLine{00313\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (glyphs\_overlap)\ \{}
+\DoxyCodeLine{00314\ \ \ \ \ \ \ \ \ \ jungcho\ [\mbox{\hyperlink{hangul_8h_a8bcda08741a11636e3236f3d34372bcf}{JUNG\_VARIATIONS}}\ *\ vowel\ +\ 1]\ =\ 1;}
+\DoxyCodeLine{00315\ \ \ \ \ \ \ \ \ \ cho\_overlaps++;}
+\DoxyCodeLine{00316\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00317\ \ \ \ \}\ \ \textcolor{comment}{/*\ for\ each\ vowel\ */}}
+\DoxyCodeLine{00318\ }
+\DoxyCodeLine{00319\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00320\ \textcolor{comment}{\ \ \ \ \ \ For\ each\ Jungseong,\ superimpose\ third\ variation\ on}}
+\DoxyCodeLine{00321\ \textcolor{comment}{\ \ \ \ \ \ appropriate\ Choseong\ group\ for\ grids\ 9\ to\ 11\ for}}
+\DoxyCodeLine{00322\ \textcolor{comment}{\ \ \ \ \ \ final\ consonant\ (Jongseong)\ of\ Nieun.}}
+\DoxyCodeLine{00323\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00324\ \ \ \ \textcolor{keywordflow}{for}\ (vowel\ =\ \mbox{\hyperlink{unijohab2html_8c_a33117bbfbedd06585bc3c4ab55e95b2f}{START\_JUNG}};\ vowel\ <\ TOTAL\_JUNG;\ vowel++)\ \{}
+\DoxyCodeLine{00325\ \ \ \ \ \ \ group\ =\ \mbox{\hyperlink{hangul_8h_ab795ff183c3e429e0eb9257a7737c57f}{cho\_variation}}\ (-\/1,\ vowel,\ -\/1);}
+\DoxyCodeLine{00326\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (group\ <\ 3)\ group\ +=\ 3;}
+\DoxyCodeLine{00327\ \ \ \ \ \ \ glyphs\_overlap\ =\ 0;\ \ \textcolor{comment}{/*\ Assume\ the\ 2\ glyphs\ do\ not\ overlap.\ */}}
+\DoxyCodeLine{00328\ }
+\DoxyCodeLine{00329\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 16;\ i++)\ \{\ \textcolor{comment}{/*\ For\ each\ glyph\ row\ */}}
+\DoxyCodeLine{00330\ \ \ \ \ \ \ \ \ \ mask\ =\ 0x8000;}
+\DoxyCodeLine{00331\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 16;\ j++)\ \{}
+\DoxyCodeLine{00332\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (glyph[\mbox{\hyperlink{hangul_8h_a2603eab2f2cae3b60e0f8a76424be923}{JUNG\_HEX}}\ +}
+\DoxyCodeLine{00333\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{hangul_8h_a8bcda08741a11636e3236f3d34372bcf}{JUNG\_VARIATIONS}}\ *\ vowel\ +\ 2][i]\ \&\ mask)\ \{}
+\DoxyCodeLine{00334\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ If\ this\ cell\ has\ blue\ already,\ mark\ as\ overlapped.\ */}}
+\DoxyCodeLine{00335\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (grid[group\ +\ 6][i][j]\ \&\ \mbox{\hyperlink{unijohab2html_8c_a79d10e672abb49ad63eeaa8aaef57c38}{BLUE}})\ glyphs\_overlap\ =\ 1;}
+\DoxyCodeLine{00336\ }
+\DoxyCodeLine{00337\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ grid[group\ +\ 6][i][j]\ |=\ \mbox{\hyperlink{unijohab2html_8c_acfbc006ea433ad708fdee3e82996e721}{GREEN}};}
+\DoxyCodeLine{00338\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00339\ \ \ \ \ \ \ \ \ \ \ \ \ mask\ >>=\ 1;\ \ \textcolor{comment}{/*\ Get\ next\ bit\ in\ glyph\ row\ */}}
+\DoxyCodeLine{00340\ \ \ \ \ \ \ \ \ \ \}\ \ \textcolor{comment}{/*\ for\ j\ */}}
+\DoxyCodeLine{00341\ \ \ \ \ \ \ \}\ \ \textcolor{comment}{/*\ for\ i\ */}}
+\DoxyCodeLine{00342\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (glyphs\_overlap)\ \{}
+\DoxyCodeLine{00343\ \ \ \ \ \ \ \ \ \ jungcho\ [\mbox{\hyperlink{hangul_8h_a8bcda08741a11636e3236f3d34372bcf}{JUNG\_VARIATIONS}}\ *\ vowel\ +\ 2]\ =\ 1;}
+\DoxyCodeLine{00344\ \ \ \ \ \ \ \ \ \ cho\_overlaps++;}
+\DoxyCodeLine{00345\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00346\ \ \ \ \}\ \ \textcolor{comment}{/*\ for\ each\ vowel\ */}}
+\DoxyCodeLine{00347\ }
+\DoxyCodeLine{00348\ }
+\DoxyCodeLine{00349\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00350\ \textcolor{comment}{\ \ \ \ \ \ Superimpose\ all\ final\ consonants\ except\ nieun\ for\ grids\ 6\ to\ 8.}}
+\DoxyCodeLine{00351\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00352\ \ \ \ \textcolor{keywordflow}{for}\ (consonant2\ =\ 0;\ consonant2\ <\ TOTAL\_JONG;\ consonant2++)\ \{}
+\DoxyCodeLine{00353\ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00354\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ Skip\ over\ Jongseong\ Nieun,\ because\ it\ is\ covered\ in}}
+\DoxyCodeLine{00355\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ grids\ 9\ to\ 11\ after\ this\ loop.}}
+\DoxyCodeLine{00356\ \textcolor{comment}{\ \ \ \ \ \ */}}
+\DoxyCodeLine{00357\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (consonant2\ ==\ 3)\ consonant2++;}
+\DoxyCodeLine{00358\ }
+\DoxyCodeLine{00359\ \ \ \ \ \ \ glyphs\_overlap\ =\ 0;\ \ \textcolor{comment}{/*\ Assume\ the\ 2\ glyphs\ do\ not\ overlap.\ */}}
+\DoxyCodeLine{00360\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 16;\ i++)\ \{\ \textcolor{comment}{/*\ For\ each\ glyph\ row\ */}}
+\DoxyCodeLine{00361\ \ \ \ \ \ \ \ \ \ mask\ =\ 0x8000;}
+\DoxyCodeLine{00362\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 16;\ j++)\ \{}
+\DoxyCodeLine{00363\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (glyph\ [\mbox{\hyperlink{hangul_8h_ad4e7a6ac8160c8f5576487db53d67925}{JONG\_HEX}}\ +}
+\DoxyCodeLine{00364\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{hangul_8h_a072e34c7730814b97335b6b59b69eb41}{JONG\_VARIATIONS}}\ *\ consonant2][i]\ \&\ mask)\ \{}
+\DoxyCodeLine{00365\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (grid[6][i][j]\ \&\ \mbox{\hyperlink{unijohab2html_8c_acfbc006ea433ad708fdee3e82996e721}{GREEN}}\ ||}
+\DoxyCodeLine{00366\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ grid[7][i][j]\ \&\ \mbox{\hyperlink{unijohab2html_8c_acfbc006ea433ad708fdee3e82996e721}{GREEN}}\ ||}
+\DoxyCodeLine{00367\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ grid[8][i][j]\ \&\ \mbox{\hyperlink{unijohab2html_8c_acfbc006ea433ad708fdee3e82996e721}{GREEN}})\ glyphs\_overlap\ =\ 1;}
+\DoxyCodeLine{00368\ }
+\DoxyCodeLine{00369\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ grid[6][i][j]\ |=\ \mbox{\hyperlink{unijohab2html_8c_a8d23feea868a983c8c2b661e1e16972f}{RED}};}
+\DoxyCodeLine{00370\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ grid[7][i][j]\ |=\ \mbox{\hyperlink{unijohab2html_8c_a8d23feea868a983c8c2b661e1e16972f}{RED}};}
+\DoxyCodeLine{00371\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ grid[8][i][j]\ |=\ \mbox{\hyperlink{unijohab2html_8c_a8d23feea868a983c8c2b661e1e16972f}{RED}};}
+\DoxyCodeLine{00372\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00373\ \ \ \ \ \ \ \ \ \ \ \ \ mask\ >>=\ 1;\ \ \textcolor{comment}{/*\ Get\ next\ bit\ in\ glyph\ row\ */}}
+\DoxyCodeLine{00374\ \ \ \ \ \ \ \ \ \ \}\ \ \textcolor{comment}{/*\ for\ j\ */}}
+\DoxyCodeLine{00375\ \ \ \ \ \ \ \}\ \ \textcolor{comment}{/*\ for\ i\ */}}
+\DoxyCodeLine{00376\ \ \ \ \ \ \ \textcolor{comment}{//\ jongjung\ is\ for\ expansion}}
+\DoxyCodeLine{00377\ \ \ \ \ \ \ \textcolor{comment}{//\ if\ (glyphs\_overlap)\ \{}}
+\DoxyCodeLine{00378\ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ jongjung\ [JONG\_VARIATIONS\ *\ consonant2]\ =\ 1;}}
+\DoxyCodeLine{00379\ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ jongjung\_overlaps++;}}
+\DoxyCodeLine{00380\ \ \ \ \ \ \ \textcolor{comment}{//\ \}}}
+\DoxyCodeLine{00381\ \ \ \ \}\ \ \textcolor{comment}{/*\ for\ each\ final\ consonant\ except\ nieun\ */}}
+\DoxyCodeLine{00382\ }
+\DoxyCodeLine{00383\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00384\ \textcolor{comment}{\ \ \ \ \ \ Superimpose\ final\ consonant\ 3\ (Jongseong\ Nieun)\ on}}
+\DoxyCodeLine{00385\ \textcolor{comment}{\ \ \ \ \ \ groups\ 9\ to\ 11.}}
+\DoxyCodeLine{00386\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00387\ \ \ \ codept\ =\ \mbox{\hyperlink{hangul_8h_ad4e7a6ac8160c8f5576487db53d67925}{JONG\_HEX}}\ +\ 3\ *\ \mbox{\hyperlink{hangul_8h_a072e34c7730814b97335b6b59b69eb41}{JONG\_VARIATIONS}};}
+\DoxyCodeLine{00388\ }
+\DoxyCodeLine{00389\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 16;\ i++)\ \{\ \textcolor{comment}{/*\ For\ each\ glyph\ row\ */}}
+\DoxyCodeLine{00390\ \ \ \ \ \ \ mask\ =\ 0x8000;}
+\DoxyCodeLine{00391\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 16;\ j++)\ \{}
+\DoxyCodeLine{00392\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (glyph[codept][i]\ \&\ mask)\ \{}
+\DoxyCodeLine{00393\ \ \ \ \ \ \ \ \ \ \ \ \ grid[\ 9][i][j]\ |=\ \mbox{\hyperlink{unijohab2html_8c_a8d23feea868a983c8c2b661e1e16972f}{RED}};}
+\DoxyCodeLine{00394\ \ \ \ \ \ \ \ \ \ \ \ \ grid[10][i][j]\ |=\ \mbox{\hyperlink{unijohab2html_8c_a8d23feea868a983c8c2b661e1e16972f}{RED}};}
+\DoxyCodeLine{00395\ \ \ \ \ \ \ \ \ \ \ \ \ grid[11][i][j]\ |=\ \mbox{\hyperlink{unijohab2html_8c_a8d23feea868a983c8c2b661e1e16972f}{RED}};}
+\DoxyCodeLine{00396\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00397\ \ \ \ \ \ \ \ \ \ mask\ >>=\ 1;\ \ \textcolor{comment}{/*\ Get\ next\ bit\ in\ glyph\ row\ */}}
+\DoxyCodeLine{00398\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00399\ \ \ \ \}}
+\DoxyCodeLine{00400\ }
+\DoxyCodeLine{00401\ }
+\DoxyCodeLine{00402\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00403\ \textcolor{comment}{\ \ \ \ \ \ Turn\ the\ black\ (uncolored)\ cells\ into\ white\ for\ better}}
+\DoxyCodeLine{00404\ \textcolor{comment}{\ \ \ \ \ \ visibility\ of\ grid\ when\ displayed.}}
+\DoxyCodeLine{00405\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00406\ \ \ \ \textcolor{keywordflow}{for}\ (group\ =\ 0;\ group\ <\ 12;\ group++)\ \{}
+\DoxyCodeLine{00407\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 16;\ i++)\ \{}
+\DoxyCodeLine{00408\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 16;\ j++)\ \{}
+\DoxyCodeLine{00409\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (grid[group][i][j]\ ==\ \mbox{\hyperlink{unijohab2html_8c_a7b3b25cba33b07c303f3060fe41887f6}{BLACK}})\ grid[group][i][j]\ =\ \mbox{\hyperlink{unijohab2html_8c_a87b537f5fa5c109d3c05c13d6b18f382}{WHITE}};}
+\DoxyCodeLine{00410\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00411\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00412\ \ \ \ \}}
+\DoxyCodeLine{00413\ }
+\DoxyCodeLine{00414\ }
+\DoxyCodeLine{00415\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00416\ \textcolor{comment}{\ \ \ \ \ \ Generate\ HTML\ output.}}
+\DoxyCodeLine{00417\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00418\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}<html>\(\backslash\)n"{}});}
+\DoxyCodeLine{00419\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}<head>\(\backslash\)n"{}});}
+\DoxyCodeLine{00420\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ \ <title>Johab\ 6/3/1\ Overlaps</title>\(\backslash\)n"{}});}
+\DoxyCodeLine{00421\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}</head>\(\backslash\)n"{}});}
+\DoxyCodeLine{00422\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}<body\ bgcolor=\(\backslash\)"{}\#FFFFCC\(\backslash\)"{}>\(\backslash\)n"{}});}
+\DoxyCodeLine{00423\ }
+\DoxyCodeLine{00424\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}<center>\(\backslash\)n"{}});}
+\DoxyCodeLine{00425\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ \ <h1>Unifont\ Hangul\ Jamo\ Syllable\ Components</h1>\(\backslash\)n"{}});}
+\DoxyCodeLine{00426\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ \ <h2>Johab\ 6/3/1\ Overlap</h2><br><br>\(\backslash\)n"{}});}
+\DoxyCodeLine{00427\ }
+\DoxyCodeLine{00428\ \ \ \ \textcolor{comment}{/*\ Print\ the\ color\ code\ key\ for\ the\ table.\ */}}
+\DoxyCodeLine{00429\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ \ <table\ border=\(\backslash\)"{}1\(\backslash\)"{}\ cellpadding=\(\backslash\)"{}10\(\backslash\)"{}>\(\backslash\)n"{}});}
+\DoxyCodeLine{00430\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ \ \ \ <tr><th\ colspan=\(\backslash\)"{}2\(\backslash\)"{}\ align=\(\backslash\)"{}center\(\backslash\)"{}\ bgcolor=\(\backslash\)"{}\#FFCC80\(\backslash\)"{}>"{}});}
+\DoxyCodeLine{00431\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}<font\ size=\(\backslash\)"{}+1\(\backslash\)"{}>Key</font></th></tr>\(\backslash\)n"{}});}
+\DoxyCodeLine{00432\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ \ \ \ <tr>\(\backslash\)n"{}});}
+\DoxyCodeLine{00433\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ <th\ align=\(\backslash\)"{}center\(\backslash\)"{}\ bgcolor=\(\backslash\)"{}\#FFFF80\(\backslash\)"{}>Color</th>\(\backslash\)n"{}});}
+\DoxyCodeLine{00434\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ <th\ align=\(\backslash\)"{}center\(\backslash\)"{}\ bgcolor=\(\backslash\)"{}\#FFFF80\(\backslash\)"{}>Letter(s)</th>\(\backslash\)n"{}});}
+\DoxyCodeLine{00435\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ \ \ \ </tr>\(\backslash\)n"{}});}
+\DoxyCodeLine{00436\ }
+\DoxyCodeLine{00437\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ \ \ \ <tr><td\ bgcolor=\(\backslash\)"{}\#\%06X\(\backslash\)"{}>"{}},\ \mbox{\hyperlink{unijohab2html_8c_a79d10e672abb49ad63eeaa8aaef57c38}{BLUE}});}
+\DoxyCodeLine{00438\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\&nbsp;\&nbsp;\&nbsp;\&nbsp;</td>"{}});}
+\DoxyCodeLine{00439\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}<td>Choseong\ (Initial\ Consonant)</td></tr>\(\backslash\)n"{}});}
+\DoxyCodeLine{00440\ }
+\DoxyCodeLine{00441\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ \ \ \ <tr><td\ bgcolor=\(\backslash\)"{}\#\%06X\(\backslash\)"{}>"{}},\ \mbox{\hyperlink{unijohab2html_8c_acfbc006ea433ad708fdee3e82996e721}{GREEN}});}
+\DoxyCodeLine{00442\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\&nbsp;\&nbsp;\&nbsp;\&nbsp;</td>"{}});}
+\DoxyCodeLine{00443\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}<td>Jungseong\ (Medial\ Vowel/Diphthong)</td></tr>\(\backslash\)n"{}});}
+\DoxyCodeLine{00444\ }
+\DoxyCodeLine{00445\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ \ \ \ <tr><td\ bgcolor=\(\backslash\)"{}\#\%06X\(\backslash\)"{}>"{}},\ \mbox{\hyperlink{unijohab2html_8c_a8d23feea868a983c8c2b661e1e16972f}{RED}});}
+\DoxyCodeLine{00446\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\&nbsp;\&nbsp;\&nbsp;\&nbsp;</td>"{}});}
+\DoxyCodeLine{00447\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}<td>Jongseong\ (Final\ Consonant)</td></tr>\(\backslash\)n"{}});}
+\DoxyCodeLine{00448\ }
+\DoxyCodeLine{00449\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ \ \ \ <tr><td\ bgcolor=\(\backslash\)"{}\#\%06X\(\backslash\)"{}>"{}},\ \mbox{\hyperlink{unijohab2html_8c_a79d10e672abb49ad63eeaa8aaef57c38}{BLUE}}\ |\ \mbox{\hyperlink{unijohab2html_8c_acfbc006ea433ad708fdee3e82996e721}{GREEN}});}
+\DoxyCodeLine{00450\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\&nbsp;\&nbsp;\&nbsp;\&nbsp;</td>"{}});}
+\DoxyCodeLine{00451\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}<td>Choseong\ +\ Jungseong\ Overlap</td></tr>\(\backslash\)n"{}});}
+\DoxyCodeLine{00452\ }
+\DoxyCodeLine{00453\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ \ \ \ <tr><td\ bgcolor=\(\backslash\)"{}\#\%06X\(\backslash\)"{}>"{}},\ \mbox{\hyperlink{unijohab2html_8c_acfbc006ea433ad708fdee3e82996e721}{GREEN}}\ |\ \mbox{\hyperlink{unijohab2html_8c_a8d23feea868a983c8c2b661e1e16972f}{RED}});}
+\DoxyCodeLine{00454\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\&nbsp;\&nbsp;\&nbsp;\&nbsp;</td>"{}});}
+\DoxyCodeLine{00455\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}<td>Jungseong\ +\ Jongseong\ Overlap</td></tr>\(\backslash\)n"{}});}
+\DoxyCodeLine{00456\ }
+\DoxyCodeLine{00457\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ \ \ \ <tr><td\ bgcolor=\(\backslash\)"{}\#\%06X\(\backslash\)"{}>"{}},\ \mbox{\hyperlink{unijohab2html_8c_a8d23feea868a983c8c2b661e1e16972f}{RED}}\ |\ \mbox{\hyperlink{unijohab2html_8c_a79d10e672abb49ad63eeaa8aaef57c38}{BLUE}});}
+\DoxyCodeLine{00458\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\&nbsp;\&nbsp;\&nbsp;\&nbsp;</td>"{}});}
+\DoxyCodeLine{00459\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}<td>Choseong\ +\ Jongseong\ Overlap</td></tr>\(\backslash\)n"{}});}
+\DoxyCodeLine{00460\ }
+\DoxyCodeLine{00461\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ \ \ \ <tr><td\ bgcolor=\(\backslash\)"{}\#\%06X\(\backslash\)"{}>"{}},\ \mbox{\hyperlink{unijohab2html_8c_a8d23feea868a983c8c2b661e1e16972f}{RED}}\ |\ \mbox{\hyperlink{unijohab2html_8c_acfbc006ea433ad708fdee3e82996e721}{GREEN}}\ |\ \mbox{\hyperlink{unijohab2html_8c_a79d10e672abb49ad63eeaa8aaef57c38}{BLUE}});}
+\DoxyCodeLine{00462\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\&nbsp;\&nbsp;\&nbsp;\&nbsp;</td>"{}});}
+\DoxyCodeLine{00463\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}<td>Choseong\ +\ Jungseong\ +\ Jongseong\ Overlap</td></tr>\(\backslash\)n"{}});}
+\DoxyCodeLine{00464\ }
+\DoxyCodeLine{00465\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ \ </table>\(\backslash\)n"{}});}
+\DoxyCodeLine{00466\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ \ <br><br>\(\backslash\)n"{}});}
+\DoxyCodeLine{00467\ }
+\DoxyCodeLine{00468\ }
+\DoxyCodeLine{00469\ \ \ \ \textcolor{keywordflow}{for}\ (group\ =\ 0;\ group\ <\ 12;\ group++)\ \{}
+\DoxyCodeLine{00470\ \ \ \ \ \ \ \textcolor{comment}{/*\ Arrange\ tables\ 3\ across,\ 3\ down.\ */}}
+\DoxyCodeLine{00471\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((group\ \%\ 3)\ ==\ 0)\ \{}
+\DoxyCodeLine{00472\ \ \ \ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ \ <table\ border=\(\backslash\)"{}0\(\backslash\)"{}\ cellpadding=\(\backslash\)"{}10\(\backslash\)"{}>\(\backslash\)n"{}});}
+\DoxyCodeLine{00473\ \ \ \ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ \ \ \ <tr>\(\backslash\)n"{}});}
+\DoxyCodeLine{00474\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00475\ }
+\DoxyCodeLine{00476\ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ <td>\(\backslash\)n"{}});}
+\DoxyCodeLine{00477\ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ <table\ border=\(\backslash\)"{}3\(\backslash\)"{}\ cellpadding=\(\backslash\)"{}2\(\backslash\)"{}>\(\backslash\)n"{}});}
+\DoxyCodeLine{00478\ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ <tr><th\ colspan=\(\backslash\)"{}16\(\backslash\)"{}\ bgcolor=\(\backslash\)"{}\#FFFF80\(\backslash\)"{}>"{}});}
+\DoxyCodeLine{00479\ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}Choseong\ Group\ \%d,\ \%s\ \%s</th></tr>\(\backslash\)n"{}},}
+\DoxyCodeLine{00480\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ group\ <\ 6\ ?\ group\ :\ (group\ >\ 8\ ?\ group\ -\/\ 6\ :\ group\ -\/\ 3),}
+\DoxyCodeLine{00481\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ group\ <\ 6\ ?\ (group\ <\ 3\ ?\ \textcolor{stringliteral}{"{}No"{}}\ :\ \textcolor{stringliteral}{"{}Without"{}})\ :\ \textcolor{stringliteral}{"{}With"{}},}
+\DoxyCodeLine{00482\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ group\ <\ 9\ ?\ \textcolor{stringliteral}{"{}Jongseong"{}}\ :\ \textcolor{stringliteral}{"{}Nieun"{}});}
+\DoxyCodeLine{00483\ \ \ \ }
+\DoxyCodeLine{00484\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 16;\ i++)\ \{}
+\DoxyCodeLine{00485\ \ \ \ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ <tr>\(\backslash\)n"{}});}
+\DoxyCodeLine{00486\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 16;\ j++)\ \{}
+\DoxyCodeLine{00487\ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ <td\ bgcolor=\(\backslash\)"{}\#\%06X\(\backslash\)"{}>"{}},}
+\DoxyCodeLine{00488\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ grid[group][i][j]);}
+\DoxyCodeLine{00489\ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\&nbsp;\&nbsp;\&nbsp;\&nbsp;</td>\(\backslash\)n"{}});}
+\DoxyCodeLine{00490\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00491\ \ \ \ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ </tr>\(\backslash\)n"{}});}
+\DoxyCodeLine{00492\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00493\ \ \ \ }
+\DoxyCodeLine{00494\ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ \ \ </td>\(\backslash\)n"{}});}
+\DoxyCodeLine{00495\ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ </tr>\(\backslash\)n"{}});}
+\DoxyCodeLine{00496\ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ </table>\(\backslash\)n"{}});}
+\DoxyCodeLine{00497\ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ </td>\(\backslash\)n"{}});}
+\DoxyCodeLine{00498\ }
+\DoxyCodeLine{00499\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((group\ \%\ 3)\ ==\ 2)\ \{}
+\DoxyCodeLine{00500\ \ \ \ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ \ \ \ </tr>\(\backslash\)n"{}});}
+\DoxyCodeLine{00501\ \ \ \ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ \ </table>\(\backslash\)n\ \ </br>\(\backslash\)n"{}});}
+\DoxyCodeLine{00502\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00503\ \ \ \ \}}
+\DoxyCodeLine{00504\ }
+\DoxyCodeLine{00505\ \ \ \ \textcolor{comment}{/*\ Wrap\ up\ HTML\ table\ output.\ */}}
+\DoxyCodeLine{00506\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}</center>\(\backslash\)n"{}});}
+\DoxyCodeLine{00507\ }
+\DoxyCodeLine{00508\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00509\ \textcolor{comment}{\ \ \ \ \ \ Print\ overlapping\ initial\ consonant\ +\ vowel\ combinations.}}
+\DoxyCodeLine{00510\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00511\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}<h2>\%d\ Vowel\ Overlaps\ with\ Initial\ Consonants\ Found</h2>"{}},}
+\DoxyCodeLine{00512\ \ \ \ \ \ \ \ \ \ \ \ \ cho\_overlaps);}
+\DoxyCodeLine{00513\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}<font\ size=\(\backslash\)"{}+1\(\backslash\)"{}><pre>\(\backslash\)n"{}});}
+\DoxyCodeLine{00514\ }
+\DoxyCodeLine{00515\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ \mbox{\hyperlink{hangul_8h_a2603eab2f2cae3b60e0f8a76424be923}{JUNG\_HEX}};}
+\DoxyCodeLine{00516\ \ \ \ \ \ \ \ \ i\ <\ \mbox{\hyperlink{hangul_8h_a2603eab2f2cae3b60e0f8a76424be923}{JUNG\_HEX}}\ +\ TOTAL\_JUNG\ *\ \mbox{\hyperlink{hangul_8h_a8bcda08741a11636e3236f3d34372bcf}{JUNG\_VARIATIONS}};}
+\DoxyCodeLine{00517\ \ \ \ \ \ \ \ \ i++)\ \{}
+\DoxyCodeLine{00518\ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00519\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ If\ this\ vowel\ variation\ (Jungseong)\ had\ overlaps}}
+\DoxyCodeLine{00520\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ with\ one\ or\ more\ initial\ consonants\ (Choseong),}}
+\DoxyCodeLine{00521\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ find\ and\ print\ them.}}
+\DoxyCodeLine{00522\ \textcolor{comment}{\ \ \ \ \ \ */}}
+\DoxyCodeLine{00523\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (jungcho\ [i\ -\/\ \mbox{\hyperlink{hangul_8h_a2603eab2f2cae3b60e0f8a76424be923}{JUNG\_HEX}}])\ \{}
+\DoxyCodeLine{00524\ \ \ \ \ \ \ \ \ \ ancient\_choseong\ =\ 0;\ \ \textcolor{comment}{/*\ Not\ within\ ancient\ choseong\ range\ yet.\ */}}
+\DoxyCodeLine{00525\ \ \ \ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}<font\ color=\(\backslash\)"{}\#0000FF\(\backslash\)"{}><b>"{}});}
+\DoxyCodeLine{00526\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (i\ >=\ \mbox{\hyperlink{hangul_8h_a70c32b954a83568a41bd21f9a7edee2f}{JUNG\_ANCIENT\_HEX}})\ \{}
+\DoxyCodeLine{00527\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (i\ >=\ \mbox{\hyperlink{hangul_8h_aba5138f283da08eb4b9bd56e2fd56cb9}{JUNG\_EXTB\_HEX}})\ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}Extended-\/B\ "{}});}
+\DoxyCodeLine{00528\ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}Ancient\ "{}});}
+\DoxyCodeLine{00529\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00530\ \ \ \ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}Vowel\ at\ 0x\%04X\ and\&hellip;</b>"{}},\ i\ +\ PUA\_START);}
+\DoxyCodeLine{00531\ \ \ \ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}</font>\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{00532\ }
+\DoxyCodeLine{00533\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00534\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ Get\ current\ vowel\ number,\ 0\ to\ (TOTAL\_JUNG\ -\/\ 1),\ and}}
+\DoxyCodeLine{00535\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ current\ vowel\ variation,\ 0\ or\ 1,\ or\ 2\ for\ final\ nieun.}}
+\DoxyCodeLine{00536\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00537\ \ \ \ \ \ \ \ \ \ vowel\ =\ (i\ -\/\ \mbox{\hyperlink{hangul_8h_a2603eab2f2cae3b60e0f8a76424be923}{JUNG\_HEX}})\ /\ \mbox{\hyperlink{hangul_8h_a8bcda08741a11636e3236f3d34372bcf}{JUNG\_VARIATIONS}};}
+\DoxyCodeLine{00538\ \ \ \ \ \ \ \ \ \ vowel\_variation\ =\ (i\ -\/\ \mbox{\hyperlink{hangul_8h_a2603eab2f2cae3b60e0f8a76424be923}{JUNG\_HEX}})\ \%\ \mbox{\hyperlink{hangul_8h_a8bcda08741a11636e3236f3d34372bcf}{JUNG\_VARIATIONS}};}
+\DoxyCodeLine{00539\ }
+\DoxyCodeLine{00540\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Get\ first\ Choseong\ group\ for\ this\ vowel,\ 0\ to\ 5.\ */}}
+\DoxyCodeLine{00541\ \ \ \ \ \ \ \ \ \ group\ =\ \mbox{\hyperlink{hangul_8h_ab795ff183c3e429e0eb9257a7737c57f}{cho\_variation}}\ (-\/1,\ vowel,\ -\/1);}
+\DoxyCodeLine{00542\ }
+\DoxyCodeLine{00543\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00544\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ If\ this\ vowel\ variation\ is\ used\ with\ a\ final\ consonant}}
+\DoxyCodeLine{00545\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ (Jongseong)\ and\ the\ default\ initial\ consonant\ (Choseong)}}
+\DoxyCodeLine{00546\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ group\ for\ this\ vowel\ is\ <\ 3,\ add\ 3\ to\ current\ Chosenong}}
+\DoxyCodeLine{00547\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ group.}}
+\DoxyCodeLine{00548\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00549\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (vowel\_variation\ >\ 0\ \&\&\ group\ <\ 3)\ group\ +=\ 3;}
+\DoxyCodeLine{00550\ }
+\DoxyCodeLine{00551\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (consonant1\ =\ 0;\ consonant1\ <\ TOTAL\_CHO;\ consonant1++)\ \{}
+\DoxyCodeLine{00552\ \ \ \ \ \ \ \ \ \ \ \ \ overlapped\ =\ \mbox{\hyperlink{hangul_8h_a5683e04e68511d40e66dc8fe26a9a934}{glyph\_overlap}}\ (glyph\ [i],}
+\DoxyCodeLine{00553\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ glyph\ [consonant1\ *\ \mbox{\hyperlink{hangul_8h_a0701ea8bfe17f2b3360397b3fa8dad05}{CHO\_VARIATIONS}}}
+\DoxyCodeLine{00554\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +\ \mbox{\hyperlink{hangul_8h_ab1bb63330600aa31b5fba9ac58ce171e}{CHO\_HEX}}\ +\ group]);}
+\DoxyCodeLine{00555\ }
+\DoxyCodeLine{00556\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00557\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ If\ we\ just\ entered\ ancient\ choseong\ range,\ flag\ it.}}
+\DoxyCodeLine{00558\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00559\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (overlapped\ \&\&\ consonant1\ >=\ 19\ \&\&\ ancient\_choseong\ ==\ 0)\ \{}
+\DoxyCodeLine{00560\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}<font\ color=\(\backslash\)"{}\#0000FF\(\backslash\)"{}><b>"{}});}
+\DoxyCodeLine{00561\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\&hellip;Ancient\ Choseong\&hellip;</b></font>\(\backslash\)n"{}});}
+\DoxyCodeLine{00562\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ancient\_choseong\ =\ 1;}
+\DoxyCodeLine{00563\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00564\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00565\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ If\ overlapping\ choseong\ found,\ print\ combined\ glyph.}}
+\DoxyCodeLine{00566\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00567\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (overlapped\ !=\ 0)\ \{}
+\DoxyCodeLine{00568\ }
+\DoxyCodeLine{00569\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{hangul_8h_a9aacff561033067830249796de592258}{combine\_glyphs}}\ (glyph\ [i],}
+\DoxyCodeLine{00570\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ glyph\ [consonant1\ *\ \mbox{\hyperlink{hangul_8h_a0701ea8bfe17f2b3360397b3fa8dad05}{CHO\_VARIATIONS}}}
+\DoxyCodeLine{00571\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +\ \mbox{\hyperlink{hangul_8h_ab1bb63330600aa31b5fba9ac58ce171e}{CHO\_HEX}}\ +\ group],}
+\DoxyCodeLine{00572\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tmp\_glyph);}
+\DoxyCodeLine{00573\ }
+\DoxyCodeLine{00574\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{hangul_8h_a0b8d4a416ad7bb42a332332c7ba86da8}{print\_glyph\_txt}}\ (outfp,}
+\DoxyCodeLine{00575\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PUA\_START\ +}
+\DoxyCodeLine{00576\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ consonant1\ *\ \mbox{\hyperlink{hangul_8h_a0701ea8bfe17f2b3360397b3fa8dad05}{CHO\_VARIATIONS}}\ +}
+\DoxyCodeLine{00577\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{hangul_8h_ab1bb63330600aa31b5fba9ac58ce171e}{CHO\_HEX}}\ +\ group,}
+\DoxyCodeLine{00578\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tmp\_glyph);}
+\DoxyCodeLine{00579\ }
+\DoxyCodeLine{00580\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \ \textcolor{comment}{/*\ If\ overlapping\ pixels\ found.\ */}}
+\DoxyCodeLine{00581\ \ \ \ \ \ \ \ \ \ \}\ \ \textcolor{comment}{/*\ For\ each\ initial\ consonant\ (Choseong)\ */}}
+\DoxyCodeLine{00582\ \ \ \ \ \ \ \}\ \ \textcolor{comment}{/*\ Find\ the\ initial\ consonant\ that\ overlapped\ this\ vowel\ variation.\ */}}
+\DoxyCodeLine{00583\ \ \ \ \}\ \ \textcolor{comment}{/*\ For\ each\ variation\ of\ each\ vowel\ (Jungseong)\ */}}
+\DoxyCodeLine{00584\ }
+\DoxyCodeLine{00585\ \ \ \ fputc\ (\textcolor{charliteral}{'\(\backslash\)n'},\ outfp);}
+\DoxyCodeLine{00586\ }
+\DoxyCodeLine{00587\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}</pre></font>\(\backslash\)n"{}});}
+\DoxyCodeLine{00588\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}</body>\(\backslash\)n"{}});}
+\DoxyCodeLine{00589\ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}</html>\(\backslash\)n"{}});}
+\DoxyCodeLine{00590\ }
+\DoxyCodeLine{00591\ \ \ \ fclose\ (infp);}
+\DoxyCodeLine{00592\ \ \ \ fclose\ (outfp);}
+\DoxyCodeLine{00593\ }
+\DoxyCodeLine{00594\ }
+\DoxyCodeLine{00595\ \ \ \ exit\ (EXIT\_SUCCESS);}
+\DoxyCodeLine{00596\ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+% FIG 1
+\mbox{\Hypertarget{unijohab2html_8c_af0ae5e62b21f6205cc500a75ec788413}\label{unijohab2html_8c_af0ae5e62b21f6205cc500a75ec788413}} 
+\index{unijohab2html.c@{unijohab2html.c}!parse\_args@{parse\_args}}
+\index{parse\_args@{parse\_args}!unijohab2html.c@{unijohab2html.c}}
+\doxysubsubsection{\texorpdfstring{parse\_args()}{parse\_args()}}
+{\footnotesize\ttfamily void parse\+\_\+args (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]},  }\item[{int $\ast$}]{inindex,  }\item[{int $\ast$}]{outindex,  }\item[{int $\ast$}]{modern\+\_\+only }\end{DoxyParamCaption})}
+
+
+
+Parse command line arguments. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em argc} & The argc parameter to the main function. \\
+\hline
+\mbox{\texttt{ in}}  & {\em argv} & The argv command line arguments to the main function. \\
+\hline
+\mbox{\texttt{ in,out}}  & {\em infile} & The input filename; defaults to NULL. \\
+\hline
+\mbox{\texttt{ in,out}}  & {\em outfile} & The output filename; defaults to NULL. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{unijohab2html_8c_source_l00608}{608}} of file \mbox{\hyperlink{unijohab2html_8c_source}{unijohab2html.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00609\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00610\ \ \ \ \textcolor{keywordtype}{int}\ arg\_count;\ \ \textcolor{comment}{/*\ Current\ index\ into\ argv[].\ */}}
+\DoxyCodeLine{00611\ }
+\DoxyCodeLine{00612\ \ \ \ \textcolor{keywordtype}{int}\ strncmp\ (\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *s1,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *s2,\ \textcolor{keywordtype}{size\_t}\ n);}
+\DoxyCodeLine{00613\ }
+\DoxyCodeLine{00614\ }
+\DoxyCodeLine{00615\ \ \ \ arg\_count\ =\ 1;}
+\DoxyCodeLine{00616\ }
+\DoxyCodeLine{00617\ \ \ \ \textcolor{keywordflow}{while}\ (arg\_count\ <\ argc)\ \{}
+\DoxyCodeLine{00618\ \ \ \ \ \ \ \textcolor{comment}{/*\ If\ input\ file\ is\ specified,\ open\ it\ for\ read\ access.\ */}}
+\DoxyCodeLine{00619\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (strncmp\ (argv\ [arg\_count],\ \textcolor{stringliteral}{"{}-\/i"{}},\ 2)\ ==\ 0)\ \{}
+\DoxyCodeLine{00620\ \ \ \ \ \ \ \ \ \ arg\_count++;}
+\DoxyCodeLine{00621\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (arg\_count\ <\ argc)\ \{}
+\DoxyCodeLine{00622\ \ \ \ \ \ \ \ \ \ \ \ \ *inindex\ =\ arg\_count;}
+\DoxyCodeLine{00623\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00624\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00625\ \ \ \ \ \ \ \textcolor{comment}{/*\ If\ only\ modern\ Hangul\ is\ desired,\ set\ modern\_only\ flag.\ */}}
+\DoxyCodeLine{00626\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (strncmp\ (argv\ [arg\_count],\ \textcolor{stringliteral}{"{}-\/m"{}},\ 2)\ ==\ 0\ ||}
+\DoxyCodeLine{00627\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ strncmp\ (argv\ [arg\_count],\ \textcolor{stringliteral}{"{}-\/-\/modern"{}},\ 8)\ ==\ 0)\ \{}
+\DoxyCodeLine{00628\ \ \ \ \ \ \ \ \ \ *modern\_only\ =\ 1;}
+\DoxyCodeLine{00629\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00630\ \ \ \ \ \ \ \textcolor{comment}{/*\ If\ output\ file\ is\ specified,\ open\ it\ for\ write\ access.\ */}}
+\DoxyCodeLine{00631\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (strncmp\ (argv\ [arg\_count],\ \textcolor{stringliteral}{"{}-\/o"{}},\ 2)\ ==\ 0)\ \{}
+\DoxyCodeLine{00632\ \ \ \ \ \ \ \ \ \ arg\_count++;}
+\DoxyCodeLine{00633\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (arg\_count\ <\ argc)\ \{}
+\DoxyCodeLine{00634\ \ \ \ \ \ \ \ \ \ \ \ \ *outindex\ =\ arg\_count;}
+\DoxyCodeLine{00635\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00636\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00637\ \ \ \ \ \ \ \textcolor{comment}{/*\ If\ help\ is\ requested,\ print\ help\ message\ and\ exit.\ */}}
+\DoxyCodeLine{00638\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (strncmp\ (argv\ [arg\_count],\ \textcolor{stringliteral}{"{}-\/h"{}},\ \ \ \ \ 2)\ ==\ 0\ ||}
+\DoxyCodeLine{00639\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ strncmp\ (argv\ [arg\_count],\ \textcolor{stringliteral}{"{}-\/-\/help"{}},\ 6)\ ==\ 0)\ \{}
+\DoxyCodeLine{00640\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\(\backslash\)nunijohab2html\ [options]\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{00641\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ Generates\ an\ HTML\ page\ of\ overlapping\ Hangul\ letters\ from\ an\ input\(\backslash\)n"{}});}
+\DoxyCodeLine{00642\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ Unifont\ .hex\ file\ encoded\ in\ Johab\ 6/3/1\ format.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{00643\ }
+\DoxyCodeLine{00644\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ Option\ \ \ \ \ \ \ \ Parameters\ \ \ Function\(\backslash\)n"{}});}
+\DoxyCodeLine{00645\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ -\/-\/-\/-\/-\/-\/\ \ \ \ \ \ \ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ \ \ -\/-\/-\/-\/-\/-\/-\/-\/\(\backslash\)n"{}});}
+\DoxyCodeLine{00646\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ -\/h,\ -\/-\/help\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Print\ this\ message\ and\ exit.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{00647\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ -\/i\ \ \ \ \ \ \ \ \ \ \ \ input\_file\ \ \ Unifont\ hangul-\/base.hex\ formatted\ input\ file.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{00648\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ -\/o\ \ \ \ \ \ \ \ \ \ \ \ output\_file\ \ HTML\ output\ file\ showing\ overlapping\ letters.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{00649\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ -\/m,\ -\/-\/modern\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Only\ examine\ modern\ Hangul\ letters.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{00650\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ Example:\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{00651\ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ \ unijohab2html\ -\/i\ hangul-\/base.hex\ -\/o\ hangul-\/syllables.html\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{00652\ }
+\DoxyCodeLine{00653\ \ \ \ \ \ \ \ \ \ exit\ (EXIT\_SUCCESS);}
+\DoxyCodeLine{00654\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00655\ }
+\DoxyCodeLine{00656\ \ \ \ \ \ \ arg\_count++;}
+\DoxyCodeLine{00657\ \ \ \ \}}
+\DoxyCodeLine{00658\ }
+\DoxyCodeLine{00659\ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00660\ \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+% FIG 2

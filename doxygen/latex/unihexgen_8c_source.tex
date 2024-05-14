@@ -1,0 +1,286 @@
+\hypertarget{unihexgen_8c_source}{}\doxysection{unihexgen.\+c}
+\label{unihexgen_8c_source}\index{src/unihexgen.c@{src/unihexgen.c}}
+\mbox{\hyperlink{unihexgen_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00001}00001\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00002}00002\ \textcolor{comment}{\ \ \ @file\ unihexgen.c}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00003}00003\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00004}00004\ \textcolor{comment}{\ \ \ @brief\ unihexgen\ -\/\ Generate\ a\ series\ of\ glyphs\ containing}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00005}00005\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ hexadecimal\ code\ points}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00006}00006\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00007}00007\ \textcolor{comment}{\ \ \ @author\ Paul\ Hardy}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00008}00008\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00009}00009\ \textcolor{comment}{\ \ \ @copyright\ Copyright\ (C)\ 2013\ Paul\ Hardy}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00010}00010\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00011}00011\ \textcolor{comment}{\ \ \ This\ program\ generates\ glyphs\ in\ Unifont\ .hex\ format\ that\ contain}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00012}00012\ \textcolor{comment}{\ \ \ four-\/\ or\ six-\/digit\ hexadecimal\ numbers\ in\ a\ 16x16\ pixel\ area.\ \ These}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00013}00013\ \textcolor{comment}{\ \ \ are\ rendered\ as\ white\ digits\ on\ a\ black\ background.}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00014}00014\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00015}00015\ \textcolor{comment}{\ \ \ argv[1]\ is\ the\ starting\ code\ point\ (as\ a\ hexadecimal}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00016}00016\ \textcolor{comment}{\ \ \ string,\ with\ no\ leading\ "{}0x"{}.}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00017}00017\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00018}00018\ \textcolor{comment}{\ \ \ argv[2]\ is\ the\ ending\ code\ point\ (as\ a\ hexadecimal}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00019}00019\ \textcolor{comment}{\ \ \ string,\ with\ no\ leading\ "{}0x"{}.}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00020}00020\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00021}00021\ \textcolor{comment}{\ \ \ \ \ \ \ For\ example:}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00022}00022\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00023}00023\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ unihexgen\ e000\ f8ff\ >\ pua.hex}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00024}00024\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00025}00025\ \textcolor{comment}{\ \ \ \ \ \ \ This\ generates\ the\ Private\ Use\ Area\ glyph\ file.}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00026}00026\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00027}00027\ \textcolor{comment}{\ \ \ This\ utility\ program\ works\ in\ Roman\ Czyborra's\ unifont.hex\ file}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00028}00028\ \textcolor{comment}{\ \ \ format,\ the\ basis\ of\ the\ GNU\ Unifont\ package.}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00029}00029\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00030}00030\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00031}00031\ \textcolor{comment}{\ \ \ This\ program\ is\ released\ under\ the\ terms\ of\ the\ GNU\ General\ Public}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00032}00032\ \textcolor{comment}{\ \ \ License\ version\ 2,\ or\ (at\ your\ option)\ a\ later\ version.}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00033}00033\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00034}00034\ \textcolor{comment}{\ \ \ LICENSE:}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00035}00035\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00036}00036\ \textcolor{comment}{\ \ \ \ \ \ This\ program\ is\ free\ software:\ you\ can\ redistribute\ it\ and/or\ modify}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00037}00037\ \textcolor{comment}{\ \ \ \ \ \ it\ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00038}00038\ \textcolor{comment}{\ \ \ \ \ \ the\ Free\ Software\ Foundation,\ either\ version\ 2\ of\ the\ License,\ or}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00039}00039\ \textcolor{comment}{\ \ \ \ \ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00040}00040\ \textcolor{comment}{\ \ \ }}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00041}00041\ \textcolor{comment}{\ \ \ \ \ \ This\ program\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00042}00042\ \textcolor{comment}{\ \ \ \ \ \ but\ WITHOUT\ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00043}00043\ \textcolor{comment}{\ \ \ \ \ \ MERCHANTABILITY\ or\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the\ }}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00044}00044\ \textcolor{comment}{\ \ \ \ \ \ GNU\ General\ Public\ License\ for\ more\ details.}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00045}00045\ \textcolor{comment}{\ \ \ }}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00046}00046\ \textcolor{comment}{\ \ \ \ \ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00047}00047\ \textcolor{comment}{\ \ \ \ \ \ along\ with\ this\ program.\ \ If\ not,\ see\ <http://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00048}00048\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00050}00050\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00051}00051\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00053}00053\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00054}00054\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00055}00055\ \textcolor{comment}{\ \ \ @brief\ Bitmap\ pattern\ for\ each\ hexadecimal\ digit.}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00056}00056\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00057}00057\ \textcolor{comment}{\ \ \ hexdigit[][]\ definition:\ the\ bitmap\ pattern\ for}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00058}00058\ \textcolor{comment}{\ \ \ each\ hexadecimal\ digit.}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00059}00059\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00060}00060\ \textcolor{comment}{\ \ \ Each\ digit\ is\ drawn\ as\ a\ 4\ wide\ by\ 5\ high\ bitmap,}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00061}00061\ \textcolor{comment}{\ \ \ so\ each\ digit\ row\ is\ one\ hexadecimal\ digit,\ and}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00062}00062\ \textcolor{comment}{\ \ \ each\ entry\ has\ 5\ rows.}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00063}00063\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00064}00064\ \textcolor{comment}{\ \ \ For\ example,\ the\ entry\ for\ digit\ 1\ is:}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00065}00065\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00066}00066\ \textcolor{comment}{\ \ \ \ \ \ \{0x2,0x6,0x2,0x2,0x7\},}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00067}00067\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00068}00068\ \textcolor{comment}{\ \ \ which\ corresponds\ graphically\ to:}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00069}00069\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00070}00070\ \textcolor{comment}{\ \ \ \ \ \ -\/-\/\#-\/\ \ ==>\ \ 0010\ \ ==>\ \ 0x2}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00071}00071\ \textcolor{comment}{\ \ \ \ \ \ -\/\#\#-\/\ \ ==>\ \ 0110\ \ ==>\ \ 0x6}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00072}00072\ \textcolor{comment}{\ \ \ \ \ \ -\/-\/\#-\/\ \ ==>\ \ 0010\ \ ==>\ \ 0x2}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00073}00073\ \textcolor{comment}{\ \ \ \ \ \ -\/-\/\#-\/\ \ ==>\ \ 0010\ \ ==>\ \ 0x2}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00074}00074\ \textcolor{comment}{\ \ \ \ \ \ -\/\#\#\#\ \ ==>\ \ 0111\ \ ==>\ \ 0x7}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00075}00075\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00076}00076\ \textcolor{comment}{\ \ \ These\ row\ values\ will\ then\ be\ exclusive-\/ORed\ with\ four\ one\ bits}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00077}00077\ \textcolor{comment}{\ \ \ (binary\ 1111,\ or\ 0xF)\ to\ form\ white\ digits\ on\ a\ black\ background.}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00078}00078\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00079}00079\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00080}00080\ \textcolor{comment}{\ \ \ Functions\ hexprint4\ and\ hexprint6\ share\ the\ hexdigit\ array;}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00081}00081\ \textcolor{comment}{\ \ \ they\ print\ four-\/digit\ and\ six-\/digit\ hexadecimal\ code\ points}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00082}00082\ \textcolor{comment}{\ \ \ in\ a\ single\ glyph,\ respectively.}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00083}00083\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00084}\mbox{\hyperlink{unihexgen_8c_af6ebead7b0a2d2e67e8de1e35d55a866}{00084}}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{unihexgen_8c_af6ebead7b0a2d2e67e8de1e35d55a866}{hexdigit}}[16][5]\ =\ \{}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00085}00085\ \ \ \ \{0x6,0x9,0x9,0x9,0x6\},\ \ \textcolor{comment}{/*\ 0x0\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00086}00086\ \ \ \ \{0x2,0x6,0x2,0x2,0x7\},\ \ \textcolor{comment}{/*\ 0x1\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00087}00087\ \ \ \ \{0xF,0x1,0xF,0x8,0xF\},\ \ \textcolor{comment}{/*\ 0x2\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00088}00088\ \ \ \ \{0xE,0x1,0x7,0x1,0xE\},\ \ \textcolor{comment}{/*\ 0x3\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00089}00089\ \ \ \ \{0x9,0x9,0xF,0x1,0x1\},\ \ \textcolor{comment}{/*\ 0x4\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00090}00090\ \ \ \ \{0xF,0x8,0xF,0x1,0xF\},\ \ \textcolor{comment}{/*\ 0x5\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00091}00091\ \ \ \ \{0x6,0x8,0xE,0x9,0x6\},\ \ \textcolor{comment}{/*\ 0x6\ */}\ \textcolor{comment}{//\ \{0x8,0x8,0xF,0x9,0xF\}\ [alternate\ square\ form\ of\ 6]}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00092}00092\ \ \ \ \{0xF,0x1,0x2,0x4,0x4\},\ \ \textcolor{comment}{/*\ 0x7\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00093}00093\ \ \ \ \{0x6,0x9,0x6,0x9,0x6\},\ \ \textcolor{comment}{/*\ 0x8\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00094}00094\ \ \ \ \{0x6,0x9,0x7,0x1,0x6\},\ \ \textcolor{comment}{/*\ 0x9\ */}\ \textcolor{comment}{//\ \{0xF,0x9,0xF,0x1,0x1\}\ [alternate\ square\ form\ of\ 9]}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00095}00095\ \ \ \ \{0xF,0x9,0xF,0x9,0x9\},\ \ \textcolor{comment}{/*\ 0xA\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00096}00096\ \ \ \ \{0xE,0x9,0xE,0x9,0xE\},\ \ \textcolor{comment}{/*\ 0xB\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00097}00097\ \ \ \ \{0x7,0x8,0x8,0x8,0x7\},\ \ \textcolor{comment}{/*\ 0xC\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00098}00098\ \ \ \ \{0xE,0x9,0x9,0x9,0xE\},\ \ \textcolor{comment}{/*\ 0xD\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00099}00099\ \ \ \ \{0xF,0x8,0xE,0x8,0xF\},\ \ \textcolor{comment}{/*\ 0xE\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00100}00100\ \ \ \ \{0xF,0x8,0xE,0x8,0x8\}\ \ \ \textcolor{comment}{/*\ 0xF\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00101}00101\ \};}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00102}00102\ }
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00103}00103\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00104}00104\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00105}00105\ \textcolor{comment}{\ \ \ @brief\ The\ main\ function.}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00106}00106\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00107}00107\ \textcolor{comment}{\ \ \ @param[in]\ argc\ The\ count\ of\ command\ line\ arguments.}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00108}00108\ \textcolor{comment}{\ \ \ @param[in]\ argv\ Pointer\ to\ array\ of\ command\ line\ arguments\ (code\ point\ range).}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00109}00109\ \textcolor{comment}{\ \ \ @return\ This\ program\ exits\ with\ status\ EXIT\_SUCCESS.}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00110}00110\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00111}00111\ \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00112}\mbox{\hyperlink{unihexgen_8c_a0ddf1224851353fc92bfbff6f499fa97}{00112}}\ \mbox{\hyperlink{unibdf2hex_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}}\ (\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}\ *argv[])}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00113}00113\ \{}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00114}00114\ }
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00115}00115\ \ \ \ \textcolor{keywordtype}{int}\ startcp,\ endcp,\ thiscp;}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00116}00116\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{unihexgen_8c_a65e81f32c04621e4a0985e7767223c9b}{hexprint4}}(\textcolor{keywordtype}{int});\ \textcolor{comment}{/*\ function\ to\ print\ one\ 4-\/digit\ unifont.hex\ code\ point\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00117}00117\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{unihexgen_8c_aaa160beefc690fbc75658fa9134d07a2}{hexprint6}}(\textcolor{keywordtype}{int});\ \textcolor{comment}{/*\ function\ to\ print\ one\ 6-\/digit\ unifont.hex\ code\ point\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00118}00118\ }
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00119}00119\ \ \ \ \textcolor{keywordflow}{if}\ (argc\ !=\ 3)\ \{}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00120}00120\ \ \ \ \ \ \ fprintf\ (stderr,\textcolor{stringliteral}{"{}\(\backslash\)n\%s\ -\/\ generate\ unifont.hex\ code\ points\ as\(\backslash\)n"{}},\ argv[0]);}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00121}00121\ \ \ \ \ \ \ fprintf\ (stderr,\textcolor{stringliteral}{"{}four-\/digit\ hexadecimal\ numbers\ in\ a\ 2\ by\ 2\ grid,\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00122}00122\ \ \ \ \ \ \ fprintf\ (stderr,\textcolor{stringliteral}{"{}or\ six-\/digit\ hexadecimal\ numbers\ in\ a\ 3\ by\ 2\ grid.\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00123}00123\ \ \ \ \ \ \ fprintf\ (stderr,\textcolor{stringliteral}{"{}Syntax:\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00124}00124\ \ \ \ \ \ \ fprintf\ (stderr,\textcolor{stringliteral}{"{}\ \ \ \ \ \%s\ first\_code\_point\ last\_code\_point\ >\ glyphs.hex\(\backslash\)n\(\backslash\)n"{}},\ argv[0]);}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00125}00125\ \ \ \ \ \ \ fprintf\ (stderr,\textcolor{stringliteral}{"{}Example\ (to\ generate\ glyphs\ for\ the\ Private\ Use\ Area):\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00126}00126\ \ \ \ \ \ \ fprintf\ (stderr,\textcolor{stringliteral}{"{}\ \ \ \ \ \%s\ e000\ f8ff\ >\ pua.hex\(\backslash\)n\(\backslash\)n"{}},\ argv[0]);}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00127}00127\ \ \ \ \ \ \ exit\ (EXIT\_FAILURE);}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00128}00128\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00129}00129\ }
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00130}00130\ \ \ \ sscanf\ (argv[1],\ \textcolor{stringliteral}{"{}\%x"{}},\ \&startcp);}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00131}00131\ \ \ \ sscanf\ (argv[2],\ \textcolor{stringliteral}{"{}\%x"{}},\ \&endcp);}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00132}00132\ }
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00133}00133\ \ \ \ startcp\ \&=\ 0xFFFFFF;\ \textcolor{comment}{/*\ limit\ to\ 6\ hex\ digits\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00134}00134\ \ \ \ endcp\ \ \ \&=\ 0xFFFFFF;\ \textcolor{comment}{/*\ limit\ to\ 6\ hex\ digits\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00135}00135\ }
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00136}00136\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00137}00137\ \textcolor{comment}{\ \ \ \ \ \ For\ each\ code\ point\ in\ the\ desired\ range,\ generate\ a\ glyph.}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00138}00138\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00139}00139\ \ \ \ \textcolor{keywordflow}{for}\ (thiscp\ =\ startcp;\ thiscp\ <=\ endcp;\ thiscp++)\ \{}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00140}00140\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (thiscp\ <=\ 0xFFFF)\ \{}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unihexgen_8c_a65e81f32c04621e4a0985e7767223c9b}{hexprint4}}\ (thiscp);\ \textcolor{comment}{/*\ print\ digits\ 2/line,\ 2\ lines\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00142}00142\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00143}00143\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unihexgen_8c_aaa160beefc690fbc75658fa9134d07a2}{hexprint6}}\ (thiscp);\ \textcolor{comment}{/*\ print\ digits\ 3/line,\ 2\ lines\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00145}00145\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00146}00146\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00147}00147\ \ \ \ exit\ (EXIT\_SUCCESS);}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00148}00148\ \}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00149}00149\ }
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00150}00150\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00151}00151\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00152}00152\ \textcolor{comment}{\ \ \ @brief\ Generate\ a\ bitmap\ containing\ a\ 4-\/digit\ Unicode\ code\ point.}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00153}00153\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00154}00154\ \textcolor{comment}{\ \ \ Takes\ a\ 4-\/digit\ Unicode\ code\ point\ as\ an\ argument}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00155}00155\ \textcolor{comment}{\ \ \ and\ prints\ a\ unifont.hex\ string\ for\ it\ to\ stdout.}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00156}00156\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00157}00157\ \textcolor{comment}{\ \ \ @param[in]\ thiscp\ The\ current\ code\ point\ for\ which\ to\ generate\ a\ glyph.}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00158}00158\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00159}00159\ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00160}\mbox{\hyperlink{unihexgen_8c_a65e81f32c04621e4a0985e7767223c9b}{00160}}\ \mbox{\hyperlink{unihexgen_8c_a65e81f32c04621e4a0985e7767223c9b}{hexprint4}}\ (\textcolor{keywordtype}{int}\ thiscp)}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00161}00161\ \{}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00162}00162\ }
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00163}00163\ \ \ \ \textcolor{keywordtype}{int}\ grid[16];\ \textcolor{comment}{/*\ the\ glyph\ grid\ we'll\ build\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00164}00164\ }
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00165}00165\ \ \ \ \textcolor{keywordtype}{int}\ row;\ \ \ \ \ \ \textcolor{comment}{/*\ row\ number\ in\ current\ glyph\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00166}00166\ \ \ \ \textcolor{keywordtype}{int}\ digitrow;\ \textcolor{comment}{/*\ row\ number\ in\ current\ hex\ digit\ being\ rendered\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00167}00167\ \ \ \ \textcolor{keywordtype}{int}\ rowbits;\ \ \textcolor{comment}{/*\ 1\ \&\ 0\ bits\ to\ draw\ current\ glyph\ row\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00168}00168\ }
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00169}00169\ \ \ \ \textcolor{keywordtype}{int}\ d1,\ d2,\ d3,\ d4;\ \textcolor{comment}{/*\ four\ hexadecimal\ digits\ of\ each\ code\ point\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00170}00170\ }
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00171}00171\ \ \ \ d1\ =\ (thiscp\ >>\ 12)\ \&\ 0xF;}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00172}00172\ \ \ \ d2\ =\ (thiscp\ >>\ \ 8)\ \&\ 0xF;}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00173}00173\ \ \ \ d3\ =\ (thiscp\ >>\ \ 4)\ \&\ 0xF;}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00174}00174\ \ \ \ d4\ =\ (thiscp\ \ \ \ \ \ )\ \&\ 0xF;}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00175}00175\ }
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00176}00176\ \ \ \ \textcolor{comment}{/*\ top\ and\ bottom\ rows\ are\ white\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00177}00177\ \ \ \ grid[0]\ =\ grid[15]\ =\ 0x0000;}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00178}00178\ }
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00179}00179\ \ \ \ \textcolor{comment}{/*\ 14\ inner\ rows\ are\ 14-\/pixel\ wide\ black\ lines,\ centered\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00180}00180\ \ \ \ \textcolor{keywordflow}{for}\ (row\ =\ 1;\ row\ <\ 15;\ row++)\ grid[row]\ =\ 0x7FFE;}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00181}00181\ }
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00182}00182\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\%04X:"{}},\ thiscp);}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00183}00183\ }
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00184}00184\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00185}00185\ \textcolor{comment}{\ \ \ \ \ \ Render\ the\ first\ row\ of\ 2\ hexadecimal\ digits}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00186}00186\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00187}00187\ \ \ \ digitrow\ =\ 0;\ \textcolor{comment}{/*\ start\ at\ top\ of\ first\ row\ of\ digits\ to\ render\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00188}00188\ \ \ \ \textcolor{keywordflow}{for}\ (row\ =\ 2;\ row\ <\ 7;\ row++)\ \{}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00189}00189\ \ \ \ \ \ \ rowbits\ =\ (\mbox{\hyperlink{unihexgen_8c_af6ebead7b0a2d2e67e8de1e35d55a866}{hexdigit}}[d1][digitrow]\ <<\ 9)\ |}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\mbox{\hyperlink{unihexgen_8c_af6ebead7b0a2d2e67e8de1e35d55a866}{hexdigit}}[d2][digitrow]\ <<\ 3);}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00191}00191\ \ \ \ \ \ \ grid[row]\ \string^=\ rowbits;\ \textcolor{comment}{/*\ digits\ appear\ as\ white\ on\ black\ background\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00192}00192\ \ \ \ \ \ \ digitrow++;}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00193}00193\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00194}00194\ }
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00195}00195\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00196}00196\ \textcolor{comment}{\ \ \ \ \ \ Render\ the\ second\ row\ of\ 2\ hexadecimal\ digits}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00197}00197\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00198}00198\ \ \ \ digitrow\ =\ 0;\ \textcolor{comment}{/*\ start\ at\ top\ of\ first\ row\ of\ digits\ to\ render\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00199}00199\ \ \ \ \textcolor{keywordflow}{for}\ (row\ =\ 9;\ row\ <\ 14;\ row++)\ \{}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00200}00200\ \ \ \ \ \ \ rowbits\ =\ (\mbox{\hyperlink{unihexgen_8c_af6ebead7b0a2d2e67e8de1e35d55a866}{hexdigit}}[d3][digitrow]\ <<\ 9)\ |}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\mbox{\hyperlink{unihexgen_8c_af6ebead7b0a2d2e67e8de1e35d55a866}{hexdigit}}[d4][digitrow]\ <<\ 3);}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00202}00202\ \ \ \ \ \ \ grid[row]\ \string^=\ rowbits;\ \textcolor{comment}{/*\ digits\ appear\ as\ white\ on\ black\ background\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00203}00203\ \ \ \ \ \ \ digitrow++;}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00204}00204\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00205}00205\ }
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00206}00206\ \ \ \ \textcolor{keywordflow}{for}\ (row\ =\ 0;\ row\ <\ 16;\ row++)\ printf\ (\textcolor{stringliteral}{"{}\%04X"{}},\ grid[row]\ \&\ 0xFFFF);}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00207}00207\ }
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00208}00208\ \ \ \ putchar\ (\textcolor{charliteral}{'\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00209}00209\ }
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00210}00210\ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00211}00211\ \}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00212}00212\ }
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00213}00213\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00214}00214\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00215}00215\ \textcolor{comment}{\ \ \ @brief\ Generate\ a\ bitmap\ containing\ a\ 6-\/digit\ Unicode\ code\ point.}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00216}00216\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00217}00217\ \textcolor{comment}{\ \ \ Takes\ a\ 6-\/digit\ Unicode\ code\ point\ as\ an\ argument}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00218}00218\ \textcolor{comment}{\ \ \ and\ prints\ a\ unifont.hex\ string\ for\ it\ to\ stdout.}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00219}00219\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00220}00220\ \textcolor{comment}{\ \ \ @param[in]\ thiscp\ The\ current\ code\ point\ for\ which\ to\ generate\ a\ glyph.}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00221}00221\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00222}00222\ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00223}\mbox{\hyperlink{unihexgen_8c_aaa160beefc690fbc75658fa9134d07a2}{00223}}\ \mbox{\hyperlink{unihexgen_8c_aaa160beefc690fbc75658fa9134d07a2}{hexprint6}}\ (\textcolor{keywordtype}{int}\ thiscp)}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00224}00224\ \{}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00225}00225\ }
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00226}00226\ \ \ \ \textcolor{keywordtype}{int}\ grid[16];\ \textcolor{comment}{/*\ the\ glyph\ grid\ we'll\ build\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00227}00227\ }
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00228}00228\ \ \ \ \textcolor{keywordtype}{int}\ row;\ \ \ \ \ \ \textcolor{comment}{/*\ row\ number\ in\ current\ glyph\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00229}00229\ \ \ \ \textcolor{keywordtype}{int}\ digitrow;\ \textcolor{comment}{/*\ row\ number\ in\ current\ hex\ digit\ being\ rendered\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00230}00230\ \ \ \ \textcolor{keywordtype}{int}\ rowbits;\ \ \textcolor{comment}{/*\ 1\ \&\ 0\ bits\ to\ draw\ current\ glyph\ row\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00231}00231\ }
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00232}00232\ \ \ \ \textcolor{keywordtype}{int}\ d1,\ d2,\ d3,\ d4,\ d5,\ d6;\ \textcolor{comment}{/*\ six\ hexadecimal\ digits\ of\ each\ code\ point\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00233}00233\ }
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00234}00234\ \ \ \ d1\ =\ (thiscp\ >>\ 20)\ \&\ 0xF;}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00235}00235\ \ \ \ d2\ =\ (thiscp\ >>\ 16)\ \&\ 0xF;}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00236}00236\ \ \ \ d3\ =\ (thiscp\ >>\ 12)\ \&\ 0xF;}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00237}00237\ \ \ \ d4\ =\ (thiscp\ >>\ \ 8)\ \&\ 0xF;}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00238}00238\ \ \ \ d5\ =\ (thiscp\ >>\ \ 4)\ \&\ 0xF;}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00239}00239\ \ \ \ d6\ =\ (thiscp\ \ \ \ \ \ )\ \&\ 0xF;}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00240}00240\ }
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00241}00241\ \ \ \ \textcolor{comment}{/*\ top\ and\ bottom\ rows\ are\ white\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00242}00242\ \ \ \ grid[0]\ =\ grid[15]\ =\ 0x0000;}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00243}00243\ }
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00244}00244\ \ \ \ \textcolor{comment}{/*\ 14\ inner\ rows\ are\ 16-\/pixel\ wide\ black\ lines,\ centered\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00245}00245\ \ \ \ \textcolor{keywordflow}{for}\ (row\ =\ 1;\ row\ <\ 15;\ row++)\ grid[row]\ =\ 0xFFFF;}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00246}00246\ }
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00247}00247\ }
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00248}00248\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\%06X:"{}},\ thiscp);}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00249}00249\ }
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00250}00250\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00251}00251\ \textcolor{comment}{\ \ \ \ \ \ Render\ the\ first\ row\ of\ 3\ hexadecimal\ digits}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00252}00252\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00253}00253\ \ \ \ digitrow\ =\ 0;\ \textcolor{comment}{/*\ start\ at\ top\ of\ first\ row\ of\ digits\ to\ render\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00254}00254\ \ \ \ \textcolor{keywordflow}{for}\ (row\ =\ 2;\ row\ <\ 7;\ row++)\ \{}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00255}00255\ \ \ \ \ \ \ rowbits\ =\ (\mbox{\hyperlink{unihexgen_8c_af6ebead7b0a2d2e67e8de1e35d55a866}{hexdigit}}[d1][digitrow]\ <<\ 11)\ |}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\mbox{\hyperlink{unihexgen_8c_af6ebead7b0a2d2e67e8de1e35d55a866}{hexdigit}}[d2][digitrow]\ <<\ \ 6)\ |}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\mbox{\hyperlink{unihexgen_8c_af6ebead7b0a2d2e67e8de1e35d55a866}{hexdigit}}[d3][digitrow]\ <<\ \ 1);}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00258}00258\ \ \ \ \ \ \ grid[row]\ \string^=\ rowbits;\ \textcolor{comment}{/*\ digits\ appear\ as\ white\ on\ black\ background\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00259}00259\ \ \ \ \ \ \ digitrow++;}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00260}00260\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00261}00261\ }
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00262}00262\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00263}00263\ \textcolor{comment}{\ \ \ \ \ \ Render\ the\ second\ row\ of\ 3\ hexadecimal\ digits}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00264}00264\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00265}00265\ \ \ \ digitrow\ =\ 0;\ \textcolor{comment}{/*\ start\ at\ top\ of\ first\ row\ of\ digits\ to\ render\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00266}00266\ \ \ \ \textcolor{keywordflow}{for}\ (row\ =\ 9;\ row\ <\ 14;\ row++)\ \{}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00267}00267\ \ \ \ \ \ \ rowbits\ =\ (\mbox{\hyperlink{unihexgen_8c_af6ebead7b0a2d2e67e8de1e35d55a866}{hexdigit}}[d4][digitrow]\ <<\ 11)\ |}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00268}00268\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\mbox{\hyperlink{unihexgen_8c_af6ebead7b0a2d2e67e8de1e35d55a866}{hexdigit}}[d5][digitrow]\ <<\ \ 6)\ |}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\mbox{\hyperlink{unihexgen_8c_af6ebead7b0a2d2e67e8de1e35d55a866}{hexdigit}}[d6][digitrow]\ <<\ \ 1);}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00270}00270\ \ \ \ \ \ \ grid[row]\ \string^=\ rowbits;\ \textcolor{comment}{/*\ digits\ appear\ as\ white\ on\ black\ background\ */}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00271}00271\ \ \ \ \ \ \ digitrow++;}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00272}00272\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00273}00273\ }
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00274}00274\ \ \ \ \textcolor{keywordflow}{for}\ (row\ =\ 0;\ row\ <\ 16;\ row++)\ printf\ (\textcolor{stringliteral}{"{}\%04X"{}},\ grid[row]\ \&\ 0xFFFF);}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00275}00275\ }
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00276}00276\ \ \ \ putchar\ (\textcolor{charliteral}{'\(\backslash\)n'});}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00277}00277\ }
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00278}00278\ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00279}00279\ \}}
+\DoxyCodeLine{\Hypertarget{unihexgen_8c_source_l00280}00280\ }
+
+\end{DoxyCode}

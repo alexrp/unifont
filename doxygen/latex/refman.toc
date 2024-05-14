@@ -1,0 +1,388 @@
+\@ifundefined {etoctocstyle}{\let \etoc@startlocaltoc \@gobble \let \etoc@settocdepth \@gobble \let \etoc@depthtag \@gobble \let \etoc@setlocaltop \@gobble }{}
+\contentsline {chapter}{\numberline {1}GNU Unifont}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}GNU Unifont C Utilities}{1}{section.1.1}%
+\contentsline {section}{\numberline {1.2}LICENSE}{1}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Introduction}{1}{section.1.3}%
+\contentsline {section}{\numberline {1.4}The C Programs}{2}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Perl Scripts}{3}{section.1.5}%
+\contentsline {chapter}{\numberline {2}Data Structure Index}{5}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Data Structures}{5}{section.2.1}%
+\contentsline {chapter}{\numberline {3}File Index}{7}{chapter.3}%
+\contentsline {section}{\numberline {3.1}File List}{7}{section.3.1}%
+\contentsline {chapter}{\numberline {4}Data Structure Documentation}{9}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Buffer Struct Reference}{9}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Detailed Description}{9}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Field Documentation}{9}{subsection.4.1.2}%
+\contentsline {subsubsection}{\numberline {4.1.2.1}begin}{9}{subsubsection.4.1.2.1}%
+\contentsline {subsubsection}{\numberline {4.1.2.2}capacity}{10}{subsubsection.4.1.2.2}%
+\contentsline {subsubsection}{\numberline {4.1.2.3}end}{10}{subsubsection.4.1.2.3}%
+\contentsline {subsubsection}{\numberline {4.1.2.4}next}{10}{subsubsection.4.1.2.4}%
+\contentsline {section}{\numberline {4.2}Font Struct Reference}{10}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Detailed Description}{10}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Field Documentation}{11}{subsection.4.2.2}%
+\contentsline {subsubsection}{\numberline {4.2.2.1}glyphCount}{11}{subsubsection.4.2.2.1}%
+\contentsline {subsubsection}{\numberline {4.2.2.2}glyphs}{11}{subsubsection.4.2.2.2}%
+\contentsline {subsubsection}{\numberline {4.2.2.3}maxWidth}{11}{subsubsection.4.2.2.3}%
+\contentsline {subsubsection}{\numberline {4.2.2.4}tables}{11}{subsubsection.4.2.2.4}%
+\contentsline {section}{\numberline {4.3}Glyph Struct Reference}{11}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Detailed Description}{12}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Field Documentation}{12}{subsection.4.3.2}%
+\contentsline {subsubsection}{\numberline {4.3.2.1}bitmap}{12}{subsubsection.4.3.2.1}%
+\contentsline {subsubsection}{\numberline {4.3.2.2}byteCount}{12}{subsubsection.4.3.2.2}%
+\contentsline {subsubsection}{\numberline {4.3.2.3}codePoint}{13}{subsubsection.4.3.2.3}%
+\contentsline {subsubsection}{\numberline {4.3.2.4}combining}{13}{subsubsection.4.3.2.4}%
+\contentsline {subsubsection}{\numberline {4.3.2.5}lsb}{13}{subsubsection.4.3.2.5}%
+\contentsline {subsubsection}{\numberline {4.3.2.6}pos}{13}{subsubsection.4.3.2.6}%
+\contentsline {section}{\numberline {4.4}NamePair Struct Reference}{13}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Detailed Description}{14}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Field Documentation}{14}{subsection.4.4.2}%
+\contentsline {subsubsection}{\numberline {4.4.2.1}id}{14}{subsubsection.4.4.2.1}%
+\contentsline {subsubsection}{\numberline {4.4.2.2}str}{14}{subsubsection.4.4.2.2}%
+\contentsline {section}{\numberline {4.5}Options Struct Reference}{14}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Detailed Description}{15}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}Field Documentation}{15}{subsection.4.5.2}%
+\contentsline {subsubsection}{\numberline {4.5.2.1}bitmap}{15}{subsubsection.4.5.2.1}%
+\contentsline {subsubsection}{\numberline {4.5.2.2}blankOutline}{15}{subsubsection.4.5.2.2}%
+\contentsline {subsubsection}{\numberline {4.5.2.3}cff}{16}{subsubsection.4.5.2.3}%
+\contentsline {subsubsection}{\numberline {4.5.2.4}gpos}{16}{subsubsection.4.5.2.4}%
+\contentsline {subsubsection}{\numberline {4.5.2.5}gsub}{16}{subsubsection.4.5.2.5}%
+\contentsline {subsubsection}{\numberline {4.5.2.6}hex}{16}{subsubsection.4.5.2.6}%
+\contentsline {subsubsection}{\numberline {4.5.2.7}nameStrings}{16}{subsubsection.4.5.2.7}%
+\contentsline {subsubsection}{\numberline {4.5.2.8}out}{16}{subsubsection.4.5.2.8}%
+\contentsline {subsubsection}{\numberline {4.5.2.9}pos}{17}{subsubsection.4.5.2.9}%
+\contentsline {subsubsection}{\numberline {4.5.2.10}truetype}{17}{subsubsection.4.5.2.10}%
+\contentsline {section}{\numberline {4.6}PARAMS Struct Reference}{17}{section.4.6}%
+\contentsline {subsection}{\numberline {4.6.1}Detailed Description}{17}{subsection.4.6.1}%
+\contentsline {subsection}{\numberline {4.6.2}Field Documentation}{17}{subsection.4.6.2}%
+\contentsline {subsubsection}{\numberline {4.6.2.1}cho\_end}{18}{subsubsection.4.6.2.1}%
+\contentsline {subsubsection}{\numberline {4.6.2.2}cho\_start}{18}{subsubsection.4.6.2.2}%
+\contentsline {subsubsection}{\numberline {4.6.2.3}infp}{18}{subsubsection.4.6.2.3}%
+\contentsline {subsubsection}{\numberline {4.6.2.4}jong\_end}{18}{subsubsection.4.6.2.4}%
+\contentsline {subsubsection}{\numberline {4.6.2.5}jong\_start}{18}{subsubsection.4.6.2.5}%
+\contentsline {subsubsection}{\numberline {4.6.2.6}jung\_end}{18}{subsubsection.4.6.2.6}%
+\contentsline {subsubsection}{\numberline {4.6.2.7}jung\_start}{19}{subsubsection.4.6.2.7}%
+\contentsline {subsubsection}{\numberline {4.6.2.8}outfp}{19}{subsubsection.4.6.2.8}%
+\contentsline {subsubsection}{\numberline {4.6.2.9}starting\_codept}{19}{subsubsection.4.6.2.9}%
+\contentsline {section}{\numberline {4.7}Table Struct Reference}{19}{section.4.7}%
+\contentsline {subsection}{\numberline {4.7.1}Detailed Description}{19}{subsection.4.7.1}%
+\contentsline {subsection}{\numberline {4.7.2}Field Documentation}{20}{subsection.4.7.2}%
+\contentsline {subsubsection}{\numberline {4.7.2.1}content}{20}{subsubsection.4.7.2.1}%
+\contentsline {subsubsection}{\numberline {4.7.2.2}tag}{20}{subsubsection.4.7.2.2}%
+\contentsline {section}{\numberline {4.8}TableRecord Struct Reference}{20}{section.4.8}%
+\contentsline {subsection}{\numberline {4.8.1}Detailed Description}{20}{subsection.4.8.1}%
+\contentsline {subsection}{\numberline {4.8.2}Field Documentation}{21}{subsection.4.8.2}%
+\contentsline {subsubsection}{\numberline {4.8.2.1}checksum}{21}{subsubsection.4.8.2.1}%
+\contentsline {subsubsection}{\numberline {4.8.2.2}length}{21}{subsubsection.4.8.2.2}%
+\contentsline {subsubsection}{\numberline {4.8.2.3}offset}{21}{subsubsection.4.8.2.3}%
+\contentsline {subsubsection}{\numberline {4.8.2.4}tag}{21}{subsubsection.4.8.2.4}%
+\contentsline {chapter}{\numberline {5}File Documentation}{23}{chapter.5}%
+\contentsline {section}{\numberline {5.1}src/hangul.h File Reference}{23}{section.5.1}%
+\contentsline {section}{\numberline {5.2}hangul.h}{23}{section.5.2}%
+\contentsline {section}{\numberline {5.3}src/hex2otf.c File Reference}{26}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Detailed Description}{30}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Macro Definition Documentation}{31}{subsection.5.3.2}%
+\contentsline {subsubsection}{\numberline {5.3.2.1}addByte}{31}{subsubsection.5.3.2.1}%
+\contentsline {subsubsection}{\numberline {5.3.2.2}ASCENDER}{31}{subsubsection.5.3.2.2}%
+\contentsline {subsubsection}{\numberline {5.3.2.3}B0}{31}{subsubsection.5.3.2.3}%
+\contentsline {subsubsection}{\numberline {5.3.2.4}B1}{31}{subsubsection.5.3.2.4}%
+\contentsline {subsubsection}{\numberline {5.3.2.5}BX}{32}{subsubsection.5.3.2.5}%
+\contentsline {subsubsection}{\numberline {5.3.2.6}defineStore}{32}{subsubsection.5.3.2.6}%
+\contentsline {subsubsection}{\numberline {5.3.2.7}DESCENDER}{32}{subsubsection.5.3.2.7}%
+\contentsline {subsubsection}{\numberline {5.3.2.8}FU}{32}{subsubsection.5.3.2.8}%
+\contentsline {subsubsection}{\numberline {5.3.2.9}FUPEM}{33}{subsubsection.5.3.2.9}%
+\contentsline {subsubsection}{\numberline {5.3.2.10}GLYPH\_HEIGHT}{33}{subsubsection.5.3.2.10}%
+\contentsline {subsubsection}{\numberline {5.3.2.11}GLYPH\_MAX\_BYTE\_COUNT}{33}{subsubsection.5.3.2.11}%
+\contentsline {subsubsection}{\numberline {5.3.2.12}GLYPH\_MAX\_WIDTH}{33}{subsubsection.5.3.2.12}%
+\contentsline {subsubsection}{\numberline {5.3.2.13}MAX\_GLYPHS}{33}{subsubsection.5.3.2.13}%
+\contentsline {subsubsection}{\numberline {5.3.2.14}MAX\_NAME\_IDS}{34}{subsubsection.5.3.2.14}%
+\contentsline {subsubsection}{\numberline {5.3.2.15}PRI\_CP}{34}{subsubsection.5.3.2.15}%
+\contentsline {subsubsection}{\numberline {5.3.2.16}PW}{34}{subsubsection.5.3.2.16}%
+\contentsline {subsubsection}{\numberline {5.3.2.17}static\_assert}{34}{subsubsection.5.3.2.17}%
+\contentsline {subsubsection}{\numberline {5.3.2.18}U16MAX}{34}{subsubsection.5.3.2.18}%
+\contentsline {subsubsection}{\numberline {5.3.2.19}U32MAX}{35}{subsubsection.5.3.2.19}%
+\contentsline {subsubsection}{\numberline {5.3.2.20}VERSION}{35}{subsubsection.5.3.2.20}%
+\contentsline {subsection}{\numberline {5.3.3}Typedef Documentation}{35}{subsection.5.3.3}%
+\contentsline {subsubsection}{\numberline {5.3.3.1}Buffer}{35}{subsubsection.5.3.3.1}%
+\contentsline {subsubsection}{\numberline {5.3.3.2}byte}{35}{subsubsection.5.3.3.2}%
+\contentsline {subsubsection}{\numberline {5.3.3.3}Glyph}{36}{subsubsection.5.3.3.3}%
+\contentsline {subsubsection}{\numberline {5.3.3.4}NameStrings}{36}{subsubsection.5.3.3.4}%
+\contentsline {subsubsection}{\numberline {5.3.3.5}Options}{36}{subsubsection.5.3.3.5}%
+\contentsline {subsubsection}{\numberline {5.3.3.6}pixels\_t}{36}{subsubsection.5.3.3.6}%
+\contentsline {subsubsection}{\numberline {5.3.3.7}Table}{36}{subsubsection.5.3.3.7}%
+\contentsline {subsection}{\numberline {5.3.4}Enumeration Type Documentation}{36}{subsection.5.3.4}%
+\contentsline {subsubsection}{\numberline {5.3.4.1}ContourOp}{36}{subsubsection.5.3.4.1}%
+\contentsline {subsubsection}{\numberline {5.3.4.2}FillSide}{37}{subsubsection.5.3.4.2}%
+\contentsline {subsubsection}{\numberline {5.3.4.3}LocaFormat}{37}{subsubsection.5.3.4.3}%
+\contentsline {subsection}{\numberline {5.3.5}Function Documentation}{38}{subsection.5.3.5}%
+\contentsline {subsubsection}{\numberline {5.3.5.1}addTable()}{38}{subsubsection.5.3.5.1}%
+\contentsline {subsubsection}{\numberline {5.3.5.2}buildOutline()}{38}{subsubsection.5.3.5.2}%
+\contentsline {subsubsection}{\numberline {5.3.5.3}byCodePoint()}{40}{subsubsection.5.3.5.3}%
+\contentsline {subsubsection}{\numberline {5.3.5.4}byTableTag()}{41}{subsubsection.5.3.5.4}%
+\contentsline {subsubsection}{\numberline {5.3.5.5}cacheBuffer()}{41}{subsubsection.5.3.5.5}%
+\contentsline {subsubsection}{\numberline {5.3.5.6}cacheBytes()}{42}{subsubsection.5.3.5.6}%
+\contentsline {subsubsection}{\numberline {5.3.5.7}cacheCFFOperand()}{42}{subsubsection.5.3.5.7}%
+\contentsline {subsubsection}{\numberline {5.3.5.8}cacheStringAsUTF16BE()}{43}{subsubsection.5.3.5.8}%
+\contentsline {subsubsection}{\numberline {5.3.5.9}cacheU16()}{44}{subsubsection.5.3.5.9}%
+\contentsline {subsubsection}{\numberline {5.3.5.10}cacheU32()}{45}{subsubsection.5.3.5.10}%
+\contentsline {subsubsection}{\numberline {5.3.5.11}cacheU8()}{45}{subsubsection.5.3.5.11}%
+\contentsline {subsubsection}{\numberline {5.3.5.12}cacheZeros()}{45}{subsubsection.5.3.5.12}%
+\contentsline {subsubsection}{\numberline {5.3.5.13}cleanBuffers()}{46}{subsubsection.5.3.5.13}%
+\contentsline {subsubsection}{\numberline {5.3.5.14}defineStore()}{46}{subsubsection.5.3.5.14}%
+\contentsline {subsubsection}{\numberline {5.3.5.15}ensureBuffer()}{47}{subsubsection.5.3.5.15}%
+\contentsline {subsubsection}{\numberline {5.3.5.16}fail()}{47}{subsubsection.5.3.5.16}%
+\contentsline {subsubsection}{\numberline {5.3.5.17}fillBitmap()}{48}{subsubsection.5.3.5.17}%
+\contentsline {subsubsection}{\numberline {5.3.5.18}fillBlankOutline()}{50}{subsubsection.5.3.5.18}%
+\contentsline {subsubsection}{\numberline {5.3.5.19}fillCFF()}{50}{subsubsection.5.3.5.19}%
+\contentsline {subsubsection}{\numberline {5.3.5.20}fillCmapTable()}{54}{subsubsection.5.3.5.20}%
+\contentsline {subsubsection}{\numberline {5.3.5.21}fillGposTable()}{55}{subsubsection.5.3.5.21}%
+\contentsline {subsubsection}{\numberline {5.3.5.22}fillGsubTable()}{56}{subsubsection.5.3.5.22}%
+\contentsline {subsubsection}{\numberline {5.3.5.23}fillHeadTable()}{57}{subsubsection.5.3.5.23}%
+\contentsline {subsubsection}{\numberline {5.3.5.24}fillHheaTable()}{58}{subsubsection.5.3.5.24}%
+\contentsline {subsubsection}{\numberline {5.3.5.25}fillHmtxTable()}{59}{subsubsection.5.3.5.25}%
+\contentsline {subsubsection}{\numberline {5.3.5.26}fillMaxpTable()}{59}{subsubsection.5.3.5.26}%
+\contentsline {subsubsection}{\numberline {5.3.5.27}fillNameTable()}{60}{subsubsection.5.3.5.27}%
+\contentsline {subsubsection}{\numberline {5.3.5.28}fillOS2Table()}{61}{subsubsection.5.3.5.28}%
+\contentsline {subsubsection}{\numberline {5.3.5.29}fillPostTable()}{62}{subsubsection.5.3.5.29}%
+\contentsline {subsubsection}{\numberline {5.3.5.30}fillTrueType()}{63}{subsubsection.5.3.5.30}%
+\contentsline {subsubsection}{\numberline {5.3.5.31}freeBuffer()}{64}{subsubsection.5.3.5.31}%
+\contentsline {subsubsection}{\numberline {5.3.5.32}initBuffers()}{65}{subsubsection.5.3.5.32}%
+\contentsline {subsubsection}{\numberline {5.3.5.33}main()}{65}{subsubsection.5.3.5.33}%
+\contentsline {subsubsection}{\numberline {5.3.5.34}matchToken()}{66}{subsubsection.5.3.5.34}%
+\contentsline {subsubsection}{\numberline {5.3.5.35}newBuffer()}{67}{subsubsection.5.3.5.35}%
+\contentsline {subsubsection}{\numberline {5.3.5.36}organizeTables()}{67}{subsubsection.5.3.5.36}%
+\contentsline {subsubsection}{\numberline {5.3.5.37}parseOptions()}{68}{subsubsection.5.3.5.37}%
+\contentsline {subsubsection}{\numberline {5.3.5.38}positionGlyphs()}{70}{subsubsection.5.3.5.38}%
+\contentsline {subsubsection}{\numberline {5.3.5.39}prepareOffsets()}{71}{subsubsection.5.3.5.39}%
+\contentsline {subsubsection}{\numberline {5.3.5.40}prepareStringIndex()}{71}{subsubsection.5.3.5.40}%
+\contentsline {subsubsection}{\numberline {5.3.5.41}printHelp()}{73}{subsubsection.5.3.5.41}%
+\contentsline {subsubsection}{\numberline {5.3.5.42}printVersion()}{74}{subsubsection.5.3.5.42}%
+\contentsline {subsubsection}{\numberline {5.3.5.43}readCodePoint()}{74}{subsubsection.5.3.5.43}%
+\contentsline {subsubsection}{\numberline {5.3.5.44}readGlyphs()}{75}{subsubsection.5.3.5.44}%
+\contentsline {subsubsection}{\numberline {5.3.5.45}sortGlyphs()}{76}{subsubsection.5.3.5.45}%
+\contentsline {subsubsection}{\numberline {5.3.5.46}writeBytes()}{77}{subsubsection.5.3.5.46}%
+\contentsline {subsubsection}{\numberline {5.3.5.47}writeFont()}{77}{subsubsection.5.3.5.47}%
+\contentsline {subsubsection}{\numberline {5.3.5.48}writeU16()}{79}{subsubsection.5.3.5.48}%
+\contentsline {subsubsection}{\numberline {5.3.5.49}writeU32()}{79}{subsubsection.5.3.5.49}%
+\contentsline {subsection}{\numberline {5.3.6}Variable Documentation}{80}{subsection.5.3.6}%
+\contentsline {subsubsection}{\numberline {5.3.6.1}allBuffers}{80}{subsubsection.5.3.6.1}%
+\contentsline {subsubsection}{\numberline {5.3.6.2}bufferCount}{80}{subsubsection.5.3.6.2}%
+\contentsline {subsubsection}{\numberline {5.3.6.3}nextBufferIndex}{80}{subsubsection.5.3.6.3}%
+\contentsline {section}{\numberline {5.4}hex2otf.c}{81}{section.5.4}%
+\contentsline {section}{\numberline {5.5}src/hex2otf.h File Reference}{113}{section.5.5}%
+\contentsline {subsection}{\numberline {5.5.1}Detailed Description}{114}{subsection.5.5.1}%
+\contentsline {subsection}{\numberline {5.5.2}Macro Definition Documentation}{115}{subsection.5.5.2}%
+\contentsline {subsubsection}{\numberline {5.5.2.1}DEFAULT\_ID0}{115}{subsubsection.5.5.2.1}%
+\contentsline {subsubsection}{\numberline {5.5.2.2}DEFAULT\_ID1}{115}{subsubsection.5.5.2.2}%
+\contentsline {subsubsection}{\numberline {5.5.2.3}DEFAULT\_ID11}{115}{subsubsection.5.5.2.3}%
+\contentsline {subsubsection}{\numberline {5.5.2.4}DEFAULT\_ID13}{116}{subsubsection.5.5.2.4}%
+\contentsline {subsubsection}{\numberline {5.5.2.5}DEFAULT\_ID14}{116}{subsubsection.5.5.2.5}%
+\contentsline {subsubsection}{\numberline {5.5.2.6}DEFAULT\_ID2}{116}{subsubsection.5.5.2.6}%
+\contentsline {subsubsection}{\numberline {5.5.2.7}DEFAULT\_ID5}{116}{subsubsection.5.5.2.7}%
+\contentsline {subsubsection}{\numberline {5.5.2.8}NAMEPAIR}{116}{subsubsection.5.5.2.8}%
+\contentsline {subsubsection}{\numberline {5.5.2.9}UNIFONT\_VERSION}{117}{subsubsection.5.5.2.9}%
+\contentsline {subsection}{\numberline {5.5.3}Variable Documentation}{117}{subsection.5.5.3}%
+\contentsline {subsubsection}{\numberline {5.5.3.1}defaultNames}{117}{subsubsection.5.5.3.1}%
+\contentsline {section}{\numberline {5.6}hex2otf.h}{117}{section.5.6}%
+\contentsline {section}{\numberline {5.7}src/johab2syllables.c File Reference}{119}{section.5.7}%
+\contentsline {subsection}{\numberline {5.7.1}Detailed Description}{119}{subsection.5.7.1}%
+\contentsline {subsection}{\numberline {5.7.2}Function Documentation}{119}{subsection.5.7.2}%
+\contentsline {subsubsection}{\numberline {5.7.2.1}main()}{120}{subsubsection.5.7.2.1}%
+\contentsline {subsubsection}{\numberline {5.7.2.2}print\_help()}{121}{subsubsection.5.7.2.2}%
+\contentsline {section}{\numberline {5.8}johab2syllables.c}{122}{section.5.8}%
+\contentsline {section}{\numberline {5.9}src/unibdf2hex.c File Reference}{124}{section.5.9}%
+\contentsline {subsection}{\numberline {5.9.1}Detailed Description}{124}{subsection.5.9.1}%
+\contentsline {subsection}{\numberline {5.9.2}Macro Definition Documentation}{125}{subsection.5.9.2}%
+\contentsline {subsubsection}{\numberline {5.9.2.1}MAXBUF}{125}{subsubsection.5.9.2.1}%
+\contentsline {subsubsection}{\numberline {5.9.2.2}UNISTART}{125}{subsubsection.5.9.2.2}%
+\contentsline {subsubsection}{\numberline {5.9.2.3}UNISTOP}{125}{subsubsection.5.9.2.3}%
+\contentsline {subsection}{\numberline {5.9.3}Function Documentation}{125}{subsection.5.9.3}%
+\contentsline {subsubsection}{\numberline {5.9.3.1}main()}{126}{subsubsection.5.9.3.1}%
+\contentsline {section}{\numberline {5.10}unibdf2hex.c}{127}{section.5.10}%
+\contentsline {section}{\numberline {5.11}src/unibmp2hex.c File Reference}{128}{section.5.11}%
+\contentsline {subsection}{\numberline {5.11.1}Detailed Description}{129}{subsection.5.11.1}%
+\contentsline {subsection}{\numberline {5.11.2}Macro Definition Documentation}{130}{subsection.5.11.2}%
+\contentsline {subsubsection}{\numberline {5.11.2.1}MAXBUF}{130}{subsubsection.5.11.2.1}%
+\contentsline {subsection}{\numberline {5.11.3}Function Documentation}{130}{subsection.5.11.3}%
+\contentsline {subsubsection}{\numberline {5.11.3.1}main()}{130}{subsubsection.5.11.3.1}%
+\contentsline {subsection}{\numberline {5.11.4}Variable Documentation}{137}{subsection.5.11.4}%
+\contentsline {subsubsection}{\numberline {5.11.4.1}bits\_per\_pixel}{138}{subsubsection.5.11.4.1}%
+\contentsline {subsubsection}{\numberline {5.11.4.2}}{138}{subsubsection.5.11.4.2}%
+\contentsline {subsubsection}{\numberline {5.11.4.3}color\_table}{138}{subsubsection.5.11.4.3}%
+\contentsline {subsubsection}{\numberline {5.11.4.4}compression}{138}{subsubsection.5.11.4.4}%
+\contentsline {subsubsection}{\numberline {5.11.4.5}file\_size}{138}{subsubsection.5.11.4.5}%
+\contentsline {subsubsection}{\numberline {5.11.4.6}filetype}{138}{subsubsection.5.11.4.6}%
+\contentsline {subsubsection}{\numberline {5.11.4.7}flip}{139}{subsubsection.5.11.4.7}%
+\contentsline {subsubsection}{\numberline {5.11.4.8}forcewide}{139}{subsubsection.5.11.4.8}%
+\contentsline {subsubsection}{\numberline {5.11.4.9}height}{139}{subsubsection.5.11.4.9}%
+\contentsline {subsubsection}{\numberline {5.11.4.10}hexdigit}{139}{subsubsection.5.11.4.10}%
+\contentsline {subsubsection}{\numberline {5.11.4.11}image\_offset}{139}{subsubsection.5.11.4.11}%
+\contentsline {subsubsection}{\numberline {5.11.4.12}image\_size}{140}{subsubsection.5.11.4.12}%
+\contentsline {subsubsection}{\numberline {5.11.4.13}important\_colors}{140}{subsubsection.5.11.4.13}%
+\contentsline {subsubsection}{\numberline {5.11.4.14}info\_size}{140}{subsubsection.5.11.4.14}%
+\contentsline {subsubsection}{\numberline {5.11.4.15}ncolors}{140}{subsubsection.5.11.4.15}%
+\contentsline {subsubsection}{\numberline {5.11.4.16}nplanes}{140}{subsubsection.5.11.4.16}%
+\contentsline {subsubsection}{\numberline {5.11.4.17}planeset}{140}{subsubsection.5.11.4.17}%
+\contentsline {subsubsection}{\numberline {5.11.4.18}unidigit}{141}{subsubsection.5.11.4.18}%
+\contentsline {subsubsection}{\numberline {5.11.4.19}uniplane}{141}{subsubsection.5.11.4.19}%
+\contentsline {subsubsection}{\numberline {5.11.4.20}width}{141}{subsubsection.5.11.4.20}%
+\contentsline {subsubsection}{\numberline {5.11.4.21}x\_ppm}{141}{subsubsection.5.11.4.21}%
+\contentsline {subsubsection}{\numberline {5.11.4.22}y\_ppm}{141}{subsubsection.5.11.4.22}%
+\contentsline {section}{\numberline {5.12}unibmp2hex.c}{142}{section.5.12}%
+\contentsline {section}{\numberline {5.13}src/unibmpbump.c File Reference}{151}{section.5.13}%
+\contentsline {subsection}{\numberline {5.13.1}Detailed Description}{151}{subsection.5.13.1}%
+\contentsline {subsection}{\numberline {5.13.2}Macro Definition Documentation}{152}{subsection.5.13.2}%
+\contentsline {subsubsection}{\numberline {5.13.2.1}MAX\_COMPRESSION\_METHOD}{152}{subsubsection.5.13.2.1}%
+\contentsline {subsubsection}{\numberline {5.13.2.2}VERSION}{152}{subsubsection.5.13.2.2}%
+\contentsline {subsection}{\numberline {5.13.3}Function Documentation}{152}{subsection.5.13.3}%
+\contentsline {subsubsection}{\numberline {5.13.3.1}get\_bytes()}{152}{subsubsection.5.13.3.1}%
+\contentsline {subsubsection}{\numberline {5.13.3.2}main()}{153}{subsubsection.5.13.3.2}%
+\contentsline {subsubsection}{\numberline {5.13.3.3}regrid()}{159}{subsubsection.5.13.3.3}%
+\contentsline {section}{\numberline {5.14}unibmpbump.c}{160}{section.5.14}%
+\contentsline {section}{\numberline {5.15}src/unicoverage.c File Reference}{167}{section.5.15}%
+\contentsline {subsection}{\numberline {5.15.1}Detailed Description}{168}{subsection.5.15.1}%
+\contentsline {subsection}{\numberline {5.15.2}Macro Definition Documentation}{168}{subsection.5.15.2}%
+\contentsline {subsubsection}{\numberline {5.15.2.1}MAXBUF}{168}{subsubsection.5.15.2.1}%
+\contentsline {subsection}{\numberline {5.15.3}Function Documentation}{168}{subsection.5.15.3}%
+\contentsline {subsubsection}{\numberline {5.15.3.1}main()}{168}{subsubsection.5.15.3.1}%
+\contentsline {subsubsection}{\numberline {5.15.3.2}nextrange()}{170}{subsubsection.5.15.3.2}%
+\contentsline {subsubsection}{\numberline {5.15.3.3}print\_subtotal()}{171}{subsubsection.5.15.3.3}%
+\contentsline {section}{\numberline {5.16}unicoverage.c}{172}{section.5.16}%
+\contentsline {section}{\numberline {5.17}src/unidup.c File Reference}{175}{section.5.17}%
+\contentsline {subsection}{\numberline {5.17.1}Detailed Description}{176}{subsection.5.17.1}%
+\contentsline {subsection}{\numberline {5.17.2}Macro Definition Documentation}{176}{subsection.5.17.2}%
+\contentsline {subsubsection}{\numberline {5.17.2.1}MAXBUF}{176}{subsubsection.5.17.2.1}%
+\contentsline {subsection}{\numberline {5.17.3}Function Documentation}{176}{subsection.5.17.3}%
+\contentsline {subsubsection}{\numberline {5.17.3.1}main()}{176}{subsubsection.5.17.3.1}%
+\contentsline {section}{\numberline {5.18}unidup.c}{177}{section.5.18}%
+\contentsline {section}{\numberline {5.19}src/unifont-\/support.c File Reference}{178}{section.5.19}%
+\contentsline {subsection}{\numberline {5.19.1}Detailed Description}{179}{subsection.5.19.1}%
+\contentsline {subsection}{\numberline {5.19.2}Function Documentation}{179}{subsection.5.19.2}%
+\contentsline {subsubsection}{\numberline {5.19.2.1}glyph2bits()}{179}{subsubsection.5.19.2.1}%
+\contentsline {subsubsection}{\numberline {5.19.2.2}glyph2string()}{180}{subsubsection.5.19.2.2}%
+\contentsline {subsubsection}{\numberline {5.19.2.3}hexpose()}{181}{subsubsection.5.19.2.3}%
+\contentsline {subsubsection}{\numberline {5.19.2.4}parse\_hex()}{182}{subsubsection.5.19.2.4}%
+\contentsline {subsubsection}{\numberline {5.19.2.5}xglyph2string()}{183}{subsubsection.5.19.2.5}%
+\contentsline {section}{\numberline {5.20}unifont-\/support.c}{184}{section.5.20}%
+\contentsline {section}{\numberline {5.21}src/unifont1per.c File Reference}{188}{section.5.21}%
+\contentsline {subsection}{\numberline {5.21.1}Detailed Description}{188}{subsection.5.21.1}%
+\contentsline {subsection}{\numberline {5.21.2}Macro Definition Documentation}{189}{subsection.5.21.2}%
+\contentsline {subsubsection}{\numberline {5.21.2.1}MAXFILENAME}{189}{subsubsection.5.21.2.1}%
+\contentsline {subsubsection}{\numberline {5.21.2.2}MAXSTRING}{189}{subsubsection.5.21.2.2}%
+\contentsline {subsection}{\numberline {5.21.3}Function Documentation}{189}{subsection.5.21.3}%
+\contentsline {subsubsection}{\numberline {5.21.3.1}main()}{190}{subsubsection.5.21.3.1}%
+\contentsline {section}{\numberline {5.22}unifont1per.c}{191}{section.5.22}%
+\contentsline {section}{\numberline {5.23}src/unifontpic.c File Reference}{193}{section.5.23}%
+\contentsline {subsection}{\numberline {5.23.1}Detailed Description}{194}{subsection.5.23.1}%
+\contentsline {subsection}{\numberline {5.23.2}Macro Definition Documentation}{194}{subsection.5.23.2}%
+\contentsline {subsubsection}{\numberline {5.23.2.1}HDR\_LEN}{195}{subsubsection.5.23.2.1}%
+\contentsline {subsection}{\numberline {5.23.3}Function Documentation}{195}{subsection.5.23.3}%
+\contentsline {subsubsection}{\numberline {5.23.3.1}genlongbmp()}{195}{subsubsection.5.23.3.1}%
+\contentsline {subsubsection}{\numberline {5.23.3.2}genwidebmp()}{199}{subsubsection.5.23.3.2}%
+\contentsline {subsubsection}{\numberline {5.23.3.3}gethex()}{203}{subsubsection.5.23.3.3}%
+\contentsline {subsubsection}{\numberline {5.23.3.4}main()}{204}{subsubsection.5.23.3.4}%
+\contentsline {subsubsection}{\numberline {5.23.3.5}output2()}{206}{subsubsection.5.23.3.5}%
+\contentsline {subsubsection}{\numberline {5.23.3.6}output4()}{206}{subsubsection.5.23.3.6}%
+\contentsline {section}{\numberline {5.24}unifontpic.c}{207}{section.5.24}%
+\contentsline {section}{\numberline {5.25}src/unifontpic.h File Reference}{218}{section.5.25}%
+\contentsline {subsection}{\numberline {5.25.1}Detailed Description}{218}{subsection.5.25.1}%
+\contentsline {subsection}{\numberline {5.25.2}Macro Definition Documentation}{219}{subsection.5.25.2}%
+\contentsline {subsubsection}{\numberline {5.25.2.1}HEADER\_STRING}{219}{subsubsection.5.25.2.1}%
+\contentsline {subsubsection}{\numberline {5.25.2.2}MAXSTRING}{219}{subsubsection.5.25.2.2}%
+\contentsline {subsection}{\numberline {5.25.3}Variable Documentation}{219}{subsection.5.25.3}%
+\contentsline {subsubsection}{\numberline {5.25.3.1}ascii\_bits}{219}{subsubsection.5.25.3.1}%
+\contentsline {subsubsection}{\numberline {5.25.3.2}ascii\_hex}{219}{subsubsection.5.25.3.2}%
+\contentsline {subsubsection}{\numberline {5.25.3.3}hexdigit}{220}{subsubsection.5.25.3.3}%
+\contentsline {section}{\numberline {5.26}unifontpic.h}{220}{section.5.26}%
+\contentsline {section}{\numberline {5.27}src/unigen-\/hangul.c File Reference}{223}{section.5.27}%
+\contentsline {subsection}{\numberline {5.27.1}Detailed Description}{223}{subsection.5.27.1}%
+\contentsline {subsection}{\numberline {5.27.2}Function Documentation}{224}{subsection.5.27.2}%
+\contentsline {subsubsection}{\numberline {5.27.2.1}get\_hex\_range()}{224}{subsubsection.5.27.2.1}%
+\contentsline {subsubsection}{\numberline {5.27.2.2}main()}{225}{subsubsection.5.27.2.2}%
+\contentsline {subsubsection}{\numberline {5.27.2.3}parse\_args()}{226}{subsubsection.5.27.2.3}%
+\contentsline {section}{\numberline {5.28}unigen-\/hangul.c}{228}{section.5.28}%
+\contentsline {section}{\numberline {5.29}src/unigencircles.c File Reference}{233}{section.5.29}%
+\contentsline {subsection}{\numberline {5.29.1}Detailed Description}{234}{subsection.5.29.1}%
+\contentsline {subsection}{\numberline {5.29.2}Macro Definition Documentation}{234}{subsection.5.29.2}%
+\contentsline {subsubsection}{\numberline {5.29.2.1}MAXSTRING}{234}{subsubsection.5.29.2.1}%
+\contentsline {subsection}{\numberline {5.29.3}Function Documentation}{234}{subsection.5.29.3}%
+\contentsline {subsubsection}{\numberline {5.29.3.1}add\_double\_circle()}{234}{subsubsection.5.29.3.1}%
+\contentsline {subsubsection}{\numberline {5.29.3.2}add\_single\_circle()}{236}{subsubsection.5.29.3.2}%
+\contentsline {subsubsection}{\numberline {5.29.3.3}main()}{237}{subsubsection.5.29.3.3}%
+\contentsline {section}{\numberline {5.30}unigencircles.c}{238}{section.5.30}%
+\contentsline {section}{\numberline {5.31}src/unigenwidth.c File Reference}{242}{section.5.31}%
+\contentsline {subsection}{\numberline {5.31.1}Detailed Description}{243}{subsection.5.31.1}%
+\contentsline {subsection}{\numberline {5.31.2}Macro Definition Documentation}{243}{subsection.5.31.2}%
+\contentsline {subsubsection}{\numberline {5.31.2.1}MAXSTRING}{243}{subsubsection.5.31.2.1}%
+\contentsline {subsubsection}{\numberline {5.31.2.2}PIKTO\_END}{243}{subsubsection.5.31.2.2}%
+\contentsline {subsubsection}{\numberline {5.31.2.3}PIKTO\_SIZE}{244}{subsubsection.5.31.2.3}%
+\contentsline {subsubsection}{\numberline {5.31.2.4}PIKTO\_START}{244}{subsubsection.5.31.2.4}%
+\contentsline {subsection}{\numberline {5.31.3}Function Documentation}{244}{subsection.5.31.3}%
+\contentsline {subsubsection}{\numberline {5.31.3.1}main()}{244}{subsubsection.5.31.3.1}%
+\contentsline {section}{\numberline {5.32}unigenwidth.c}{248}{section.5.32}%
+\contentsline {section}{\numberline {5.33}src/unihangul-\/support.c File Reference}{253}{section.5.33}%
+\contentsline {subsection}{\numberline {5.33.1}Detailed Description}{254}{subsection.5.33.1}%
+\contentsline {subsection}{\numberline {5.33.2}Function Documentation}{254}{subsection.5.33.2}%
+\contentsline {subsubsection}{\numberline {5.33.2.1}cho\_variation()}{254}{subsubsection.5.33.2.1}%
+\contentsline {subsubsection}{\numberline {5.33.2.2}combine\_glyphs()}{256}{subsubsection.5.33.2.2}%
+\contentsline {subsubsection}{\numberline {5.33.2.3}combined\_jamo()}{256}{subsubsection.5.33.2.3}%
+\contentsline {subsubsection}{\numberline {5.33.2.4}glyph\_overlap()}{259}{subsubsection.5.33.2.4}%
+\contentsline {subsubsection}{\numberline {5.33.2.5}hangul\_compose()}{259}{subsubsection.5.33.2.5}%
+\contentsline {subsubsection}{\numberline {5.33.2.6}hangul\_decompose()}{260}{subsubsection.5.33.2.6}%
+\contentsline {subsubsection}{\numberline {5.33.2.7}hangul\_hex\_indices()}{261}{subsubsection.5.33.2.7}%
+\contentsline {subsubsection}{\numberline {5.33.2.8}hangul\_read\_base16()}{262}{subsubsection.5.33.2.8}%
+\contentsline {subsubsection}{\numberline {5.33.2.9}hangul\_read\_base8()}{263}{subsubsection.5.33.2.9}%
+\contentsline {subsubsection}{\numberline {5.33.2.10}hangul\_syllable()}{264}{subsubsection.5.33.2.10}%
+\contentsline {subsubsection}{\numberline {5.33.2.11}hangul\_variations()}{264}{subsubsection.5.33.2.11}%
+\contentsline {subsubsection}{\numberline {5.33.2.12}is\_wide\_vowel()}{265}{subsubsection.5.33.2.12}%
+\contentsline {subsubsection}{\numberline {5.33.2.13}jong\_variation()}{266}{subsubsection.5.33.2.13}%
+\contentsline {subsubsection}{\numberline {5.33.2.14}jung\_variation()}{267}{subsubsection.5.33.2.14}%
+\contentsline {subsubsection}{\numberline {5.33.2.15}one\_jamo()}{268}{subsubsection.5.33.2.15}%
+\contentsline {subsubsection}{\numberline {5.33.2.16}print\_glyph\_hex()}{268}{subsubsection.5.33.2.16}%
+\contentsline {subsubsection}{\numberline {5.33.2.17}print\_glyph\_txt()}{269}{subsubsection.5.33.2.17}%
+\contentsline {section}{\numberline {5.34}unihangul-\/support.c}{269}{section.5.34}%
+\contentsline {section}{\numberline {5.35}src/unihex2bmp.c File Reference}{281}{section.5.35}%
+\contentsline {subsection}{\numberline {5.35.1}Detailed Description}{282}{subsection.5.35.1}%
+\contentsline {subsection}{\numberline {5.35.2}Macro Definition Documentation}{282}{subsection.5.35.2}%
+\contentsline {subsubsection}{\numberline {5.35.2.1}MAXBUF}{282}{subsubsection.5.35.2.1}%
+\contentsline {subsection}{\numberline {5.35.3}Function Documentation}{282}{subsection.5.35.3}%
+\contentsline {subsubsection}{\numberline {5.35.3.1}hex2bit()}{282}{subsubsection.5.35.3.1}%
+\contentsline {subsubsection}{\numberline {5.35.3.2}init()}{283}{subsubsection.5.35.3.2}%
+\contentsline {subsubsection}{\numberline {5.35.3.3}main()}{285}{subsubsection.5.35.3.3}%
+\contentsline {subsection}{\numberline {5.35.4}Variable Documentation}{288}{subsection.5.35.4}%
+\contentsline {subsubsection}{\numberline {5.35.4.1}flip}{288}{subsubsection.5.35.4.1}%
+\contentsline {subsubsection}{\numberline {5.35.4.2}hex}{289}{subsubsection.5.35.4.2}%
+\contentsline {subsubsection}{\numberline {5.35.4.3}hexbits}{289}{subsubsection.5.35.4.3}%
+\contentsline {subsubsection}{\numberline {5.35.4.4}unipage}{289}{subsubsection.5.35.4.4}%
+\contentsline {section}{\numberline {5.36}unihex2bmp.c}{289}{section.5.36}%
+\contentsline {section}{\numberline {5.37}src/unihexgen.c File Reference}{296}{section.5.37}%
+\contentsline {subsection}{\numberline {5.37.1}Detailed Description}{296}{subsection.5.37.1}%
+\contentsline {subsection}{\numberline {5.37.2}Function Documentation}{297}{subsection.5.37.2}%
+\contentsline {subsubsection}{\numberline {5.37.2.1}hexprint4()}{297}{subsubsection.5.37.2.1}%
+\contentsline {subsubsection}{\numberline {5.37.2.2}hexprint6()}{298}{subsubsection.5.37.2.2}%
+\contentsline {subsubsection}{\numberline {5.37.2.3}main()}{299}{subsubsection.5.37.2.3}%
+\contentsline {subsection}{\numberline {5.37.3}Variable Documentation}{300}{subsection.5.37.3}%
+\contentsline {subsubsection}{\numberline {5.37.3.1}hexdigit}{300}{subsubsection.5.37.3.1}%
+\contentsline {section}{\numberline {5.38}unihexgen.c}{300}{section.5.38}%
+\contentsline {section}{\numberline {5.39}unihexpose.c}{304}{section.5.39}%
+\contentsline {section}{\numberline {5.40}src/unijohab2html.c File Reference}{305}{section.5.40}%
+\contentsline {subsection}{\numberline {5.40.1}Detailed Description}{306}{subsection.5.40.1}%
+\contentsline {subsection}{\numberline {5.40.2}Macro Definition Documentation}{306}{subsection.5.40.2}%
+\contentsline {subsubsection}{\numberline {5.40.2.1}BLACK}{306}{subsubsection.5.40.2.1}%
+\contentsline {subsubsection}{\numberline {5.40.2.2}BLUE}{306}{subsubsection.5.40.2.2}%
+\contentsline {subsubsection}{\numberline {5.40.2.3}GREEN}{306}{subsubsection.5.40.2.3}%
+\contentsline {subsubsection}{\numberline {5.40.2.4}MAXFILENAME}{307}{subsubsection.5.40.2.4}%
+\contentsline {subsubsection}{\numberline {5.40.2.5}RED}{307}{subsubsection.5.40.2.5}%
+\contentsline {subsubsection}{\numberline {5.40.2.6}START\_JUNG}{307}{subsubsection.5.40.2.6}%
+\contentsline {subsubsection}{\numberline {5.40.2.7}WHITE}{307}{subsubsection.5.40.2.7}%
+\contentsline {subsection}{\numberline {5.40.3}Function Documentation}{307}{subsection.5.40.3}%
+\contentsline {subsubsection}{\numberline {5.40.3.1}main()}{307}{subsubsection.5.40.3.1}%
+\contentsline {subsubsection}{\numberline {5.40.3.2}parse\_args()}{314}{subsubsection.5.40.3.2}%
+\contentsline {section}{\numberline {5.41}unijohab2html.c}{315}{section.5.41}%
+\contentsline {section}{\numberline {5.42}src/unipagecount.c File Reference}{323}{section.5.42}%
+\contentsline {subsection}{\numberline {5.42.1}Detailed Description}{323}{subsection.5.42.1}%
+\contentsline {subsection}{\numberline {5.42.2}Macro Definition Documentation}{324}{subsection.5.42.2}%
+\contentsline {subsubsection}{\numberline {5.42.2.1}MAXBUF}{324}{subsubsection.5.42.2.1}%
+\contentsline {subsection}{\numberline {5.42.3}Function Documentation}{324}{subsection.5.42.3}%
+\contentsline {subsubsection}{\numberline {5.42.3.1}main()}{324}{subsubsection.5.42.3.1}%
+\contentsline {subsubsection}{\numberline {5.42.3.2}mkftable()}{326}{subsubsection.5.42.3.2}%
+\contentsline {section}{\numberline {5.43}unipagecount.c}{327}{section.5.43}%

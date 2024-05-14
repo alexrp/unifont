@@ -1,0 +1,228 @@
+\hypertarget{hex2otf_8h}{}\doxysection{src/hex2otf.h File Reference}
+\label{hex2otf_8h}\index{src/hex2otf.h@{src/hex2otf.h}}
+
+
+\mbox{\hyperlink{hex2otf_8h}{hex2otf.\+h}} -\/ Header file for \mbox{\hyperlink{hex2otf_8c}{hex2otf.\+c}}  
+
+
+This graph shows which files directly or indirectly include this file\+:
+% FIG 0
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structNamePair}{Name\+Pair}}
+\begin{DoxyCompactList}\small\item\em Data structure for a font ID number and name character string. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{hex2otf_8h_a62e32863ba84411a48a0049151e68a00}{UNIFONT\+\_\+\+VERSION}}~\char`\"{}15.\+1.\+05\char`\"{}
+\begin{DoxyCompactList}\small\item\em Current Unifont version. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{hex2otf_8h_a59ba14cafe02ba112aa260cb17affc45}{DEFAULT\+\_\+\+ID0}}~\char`\"{}Copyright © 1998-\/2022 Roman Czyborra, Paul Hardy, \textbackslash{}Qianqian Fang, Andrew Miller, Johnnie Weaver, David Corbett, \textbackslash{}Nils Moskopp, Rebecca Bettencourt, et al.\char`\"{}
+\item 
+\#define \mbox{\hyperlink{hex2otf_8h_a80457952fba9de3914d0f44305236ef2}{DEFAULT\+\_\+\+ID1}}~\char`\"{}Unifont\char`\"{}
+\begin{DoxyCompactList}\small\item\em Default Name\+ID 1 string (\mbox{\hyperlink{structFont}{Font}} Family) \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{hex2otf_8h_a02993e3b8886c3fc79e0a862582e5fd3}{DEFAULT\+\_\+\+ID2}}~\char`\"{}Regular\char`\"{}
+\begin{DoxyCompactList}\small\item\em Default Name\+ID 2 string (\mbox{\hyperlink{structFont}{Font}} Subfamily) \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{hex2otf_8h_adb78d0325526094d79149d20028f82d0}{DEFAULT\+\_\+\+ID5}}~\char`\"{}Version \char`\"{}UNIFONT\+\_\+\+VERSION
+\begin{DoxyCompactList}\small\item\em Default Name\+ID 5 string (Version of the Name \mbox{\hyperlink{structTable}{Table}}) \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{hex2otf_8h_af3ad95ac6274edc8333dcbd3706aa603}{DEFAULT\+\_\+\+ID11}}~\char`\"{}https\+://unifoundry.\+com/unifont/\char`\"{}
+\begin{DoxyCompactList}\small\item\em Default Name\+ID 11 string (\mbox{\hyperlink{structFont}{Font}} Vendor URL) \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{hex2otf_8h_a91c55841985cdffac3f8d7d6252749dc}{DEFAULT\+\_\+\+ID13}}~\char`\"{}Dual license\+: SIL Open \mbox{\hyperlink{structFont}{Font}} License version 1.\+1, \textbackslash{}and GNU GPL version 2 or later with the GNU \mbox{\hyperlink{structFont}{Font}} Embedding Exception.\char`\"{}
+\begin{DoxyCompactList}\small\item\em Default Name\+ID 13 string (License Description) \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{hex2otf_8h_a3a8d3619901c1776556d259d0295c6ef}{DEFAULT\+\_\+\+ID14}}~\char`\"{}http\+://unifoundry.\+com/LICENSE.\+txt, \textbackslash{}https\+://scripts.\+sil.\+org/OFL\char`\"{}
+\begin{DoxyCompactList}\small\item\em Default Name\+ID 14 string (License Information URLs) \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{hex2otf_8h_aafa9d4317a3af734d88d6b977de27de9}{NAMEPAIR}}(n)~\{(n), DEFAULT\+\_\+\+ID\#\#n\}
+\begin{DoxyCompactList}\small\item\em Macro to initialize name identifier codes to default values defined above. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{hex2otf_8h_af57a7327559d80dc41d283c61c6e7063}\label{hex2otf_8h_af57a7327559d80dc41d283c61c6e7063}} 
+typedef struct \mbox{\hyperlink{structNamePair}{Name\+Pair}} {\bfseries Name\+Pair}
+\begin{DoxyCompactList}\small\item\em Data structure for a font ID number and name character string. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const \mbox{\hyperlink{structNamePair}{Name\+Pair}} \mbox{\hyperlink{hex2otf_8h_a7932112a8cd522740aa941c15b79bd16}{default\+Names}} \mbox{[}$\,$\mbox{]}
+\begin{DoxyCompactList}\small\item\em Allocate array of Name\+ID codes with default values. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{hex2otf_8h}{hex2otf.\+h}} -\/ Header file for \mbox{\hyperlink{hex2otf_8c}{hex2otf.\+c}} 
+
+\begin{DoxyCopyright}{Copyright}
+Copyright © 2022 何志翔 (He Zhixiang)
+\end{DoxyCopyright}
+\begin{DoxyAuthor}{Author}
+何志翔 (He Zhixiang) 
+\end{DoxyAuthor}
+
+
+Definition in file \mbox{\hyperlink{hex2otf_8h_source}{hex2otf.\+h}}.
+
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{hex2otf_8h_a59ba14cafe02ba112aa260cb17affc45}\label{hex2otf_8h_a59ba14cafe02ba112aa260cb17affc45}} 
+\index{hex2otf.h@{hex2otf.h}!DEFAULT\_ID0@{DEFAULT\_ID0}}
+\index{DEFAULT\_ID0@{DEFAULT\_ID0}!hex2otf.h@{hex2otf.h}}
+\doxysubsubsection{\texorpdfstring{DEFAULT\_ID0}{DEFAULT\_ID0}}
+{\footnotesize\ttfamily \#define DEFAULT\+\_\+\+ID0~\char`\"{}Copyright © 1998-\/2022 Roman Czyborra, Paul Hardy, \textbackslash{}Qianqian Fang, Andrew Miller, Johnnie Weaver, David Corbett, \textbackslash{}Nils Moskopp, Rebecca Bettencourt, et al.\char`\"{}}
+
+Define default strings for some True\+Type font Name\+ID strings. \begin{DoxyVerb}NameID   Description
+------   -----------
+   0     Copyright Notice
+   1     Font Family
+   2     Font Subfamily
+   5     Version of the Name Table
+  11     URL of the Font Vendor
+  13     License Description
+  14     License Information URL
+\end{DoxyVerb}
+ Default Name\+ID 0 string (Copyright Notice) 
+
+Definition at line \mbox{\hyperlink{hex2otf_8h_source_l00053}{53}} of file \mbox{\hyperlink{hex2otf_8h_source}{hex2otf.\+h}}.
+
+\mbox{\Hypertarget{hex2otf_8h_a80457952fba9de3914d0f44305236ef2}\label{hex2otf_8h_a80457952fba9de3914d0f44305236ef2}} 
+\index{hex2otf.h@{hex2otf.h}!DEFAULT\_ID1@{DEFAULT\_ID1}}
+\index{DEFAULT\_ID1@{DEFAULT\_ID1}!hex2otf.h@{hex2otf.h}}
+\doxysubsubsection{\texorpdfstring{DEFAULT\_ID1}{DEFAULT\_ID1}}
+{\footnotesize\ttfamily \#define DEFAULT\+\_\+\+ID1~\char`\"{}Unifont\char`\"{}}
+
+
+
+Default Name\+ID 1 string (\mbox{\hyperlink{structFont}{Font}} Family) 
+
+
+
+Definition at line \mbox{\hyperlink{hex2otf_8h_source_l00057}{57}} of file \mbox{\hyperlink{hex2otf_8h_source}{hex2otf.\+h}}.
+
+\mbox{\Hypertarget{hex2otf_8h_af3ad95ac6274edc8333dcbd3706aa603}\label{hex2otf_8h_af3ad95ac6274edc8333dcbd3706aa603}} 
+\index{hex2otf.h@{hex2otf.h}!DEFAULT\_ID11@{DEFAULT\_ID11}}
+\index{DEFAULT\_ID11@{DEFAULT\_ID11}!hex2otf.h@{hex2otf.h}}
+\doxysubsubsection{\texorpdfstring{DEFAULT\_ID11}{DEFAULT\_ID11}}
+{\footnotesize\ttfamily \#define DEFAULT\+\_\+\+ID11~\char`\"{}https\+://unifoundry.\+com/unifont/\char`\"{}}
+
+
+
+Default Name\+ID 11 string (\mbox{\hyperlink{structFont}{Font}} Vendor URL) 
+
+
+
+Definition at line \mbox{\hyperlink{hex2otf_8h_source_l00064}{64}} of file \mbox{\hyperlink{hex2otf_8h_source}{hex2otf.\+h}}.
+
+\mbox{\Hypertarget{hex2otf_8h_a91c55841985cdffac3f8d7d6252749dc}\label{hex2otf_8h_a91c55841985cdffac3f8d7d6252749dc}} 
+\index{hex2otf.h@{hex2otf.h}!DEFAULT\_ID13@{DEFAULT\_ID13}}
+\index{DEFAULT\_ID13@{DEFAULT\_ID13}!hex2otf.h@{hex2otf.h}}
+\doxysubsubsection{\texorpdfstring{DEFAULT\_ID13}{DEFAULT\_ID13}}
+{\footnotesize\ttfamily \#define DEFAULT\+\_\+\+ID13~\char`\"{}Dual license\+: SIL Open \mbox{\hyperlink{structFont}{Font}} License version 1.\+1, \textbackslash{}and GNU GPL version 2 or later with the GNU \mbox{\hyperlink{structFont}{Font}} Embedding Exception.\char`\"{}}
+
+
+
+Default Name\+ID 13 string (License Description) 
+
+
+
+Definition at line \mbox{\hyperlink{hex2otf_8h_source_l00067}{67}} of file \mbox{\hyperlink{hex2otf_8h_source}{hex2otf.\+h}}.
+
+\mbox{\Hypertarget{hex2otf_8h_a3a8d3619901c1776556d259d0295c6ef}\label{hex2otf_8h_a3a8d3619901c1776556d259d0295c6ef}} 
+\index{hex2otf.h@{hex2otf.h}!DEFAULT\_ID14@{DEFAULT\_ID14}}
+\index{DEFAULT\_ID14@{DEFAULT\_ID14}!hex2otf.h@{hex2otf.h}}
+\doxysubsubsection{\texorpdfstring{DEFAULT\_ID14}{DEFAULT\_ID14}}
+{\footnotesize\ttfamily \#define DEFAULT\+\_\+\+ID14~\char`\"{}http\+://unifoundry.\+com/LICENSE.\+txt, \textbackslash{}https\+://scripts.\+sil.\+org/OFL\char`\"{}}
+
+
+
+Default Name\+ID 14 string (License Information URLs) 
+
+
+
+Definition at line \mbox{\hyperlink{hex2otf_8h_source_l00071}{71}} of file \mbox{\hyperlink{hex2otf_8h_source}{hex2otf.\+h}}.
+
+\mbox{\Hypertarget{hex2otf_8h_a02993e3b8886c3fc79e0a862582e5fd3}\label{hex2otf_8h_a02993e3b8886c3fc79e0a862582e5fd3}} 
+\index{hex2otf.h@{hex2otf.h}!DEFAULT\_ID2@{DEFAULT\_ID2}}
+\index{DEFAULT\_ID2@{DEFAULT\_ID2}!hex2otf.h@{hex2otf.h}}
+\doxysubsubsection{\texorpdfstring{DEFAULT\_ID2}{DEFAULT\_ID2}}
+{\footnotesize\ttfamily \#define DEFAULT\+\_\+\+ID2~\char`\"{}Regular\char`\"{}}
+
+
+
+Default Name\+ID 2 string (\mbox{\hyperlink{structFont}{Font}} Subfamily) 
+
+
+
+Definition at line \mbox{\hyperlink{hex2otf_8h_source_l00058}{58}} of file \mbox{\hyperlink{hex2otf_8h_source}{hex2otf.\+h}}.
+
+\mbox{\Hypertarget{hex2otf_8h_adb78d0325526094d79149d20028f82d0}\label{hex2otf_8h_adb78d0325526094d79149d20028f82d0}} 
+\index{hex2otf.h@{hex2otf.h}!DEFAULT\_ID5@{DEFAULT\_ID5}}
+\index{DEFAULT\_ID5@{DEFAULT\_ID5}!hex2otf.h@{hex2otf.h}}
+\doxysubsubsection{\texorpdfstring{DEFAULT\_ID5}{DEFAULT\_ID5}}
+{\footnotesize\ttfamily \#define DEFAULT\+\_\+\+ID5~\char`\"{}Version \char`\"{}UNIFONT\+\_\+\+VERSION}
+
+
+
+Default Name\+ID 5 string (Version of the Name \mbox{\hyperlink{structTable}{Table}}) 
+
+
+
+Definition at line \mbox{\hyperlink{hex2otf_8h_source_l00061}{61}} of file \mbox{\hyperlink{hex2otf_8h_source}{hex2otf.\+h}}.
+
+\mbox{\Hypertarget{hex2otf_8h_aafa9d4317a3af734d88d6b977de27de9}\label{hex2otf_8h_aafa9d4317a3af734d88d6b977de27de9}} 
+\index{hex2otf.h@{hex2otf.h}!NAMEPAIR@{NAMEPAIR}}
+\index{NAMEPAIR@{NAMEPAIR}!hex2otf.h@{hex2otf.h}}
+\doxysubsubsection{\texorpdfstring{NAMEPAIR}{NAMEPAIR}}
+{\footnotesize\ttfamily \#define NAMEPAIR(\begin{DoxyParamCaption}\item[{}]{n }\end{DoxyParamCaption})~\{(n), DEFAULT\+\_\+\+ID\#\#n\}}
+
+
+
+Macro to initialize name identifier codes to default values defined above. 
+
+
+
+Definition at line \mbox{\hyperlink{hex2otf_8h_source_l00084}{84}} of file \mbox{\hyperlink{hex2otf_8h_source}{hex2otf.\+h}}.
+
+\mbox{\Hypertarget{hex2otf_8h_a62e32863ba84411a48a0049151e68a00}\label{hex2otf_8h_a62e32863ba84411a48a0049151e68a00}} 
+\index{hex2otf.h@{hex2otf.h}!UNIFONT\_VERSION@{UNIFONT\_VERSION}}
+\index{UNIFONT\_VERSION@{UNIFONT\_VERSION}!hex2otf.h@{hex2otf.h}}
+\doxysubsubsection{\texorpdfstring{UNIFONT\_VERSION}{UNIFONT\_VERSION}}
+{\footnotesize\ttfamily \#define UNIFONT\+\_\+\+VERSION~\char`\"{}15.\+1.\+05\char`\"{}}
+
+
+
+Current Unifont version. 
+
+
+
+Definition at line \mbox{\hyperlink{hex2otf_8h_source_l00036}{36}} of file \mbox{\hyperlink{hex2otf_8h_source}{hex2otf.\+h}}.
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{hex2otf_8h_a7932112a8cd522740aa941c15b79bd16}\label{hex2otf_8h_a7932112a8cd522740aa941c15b79bd16}} 
+\index{hex2otf.h@{hex2otf.h}!defaultNames@{defaultNames}}
+\index{defaultNames@{defaultNames}!hex2otf.h@{hex2otf.h}}
+\doxysubsubsection{\texorpdfstring{defaultNames}{defaultNames}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structNamePair}{Name\+Pair}} default\+Names\mbox{[}$\,$\mbox{]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{hex2otf_8h_aafa9d4317a3af734d88d6b977de27de9}{NAMEPAIR}}\ (0),\ \ }
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{hex2otf_8h_aafa9d4317a3af734d88d6b977de27de9}{NAMEPAIR}}\ (1),\ \ }
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{hex2otf_8h_aafa9d4317a3af734d88d6b977de27de9}{NAMEPAIR}}\ (2),\ \ }
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{hex2otf_8h_aafa9d4317a3af734d88d6b977de27de9}{NAMEPAIR}}\ (5),\ \ }
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{hex2otf_8h_aafa9d4317a3af734d88d6b977de27de9}{NAMEPAIR}}\ (11),\ }
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{hex2otf_8h_aafa9d4317a3af734d88d6b977de27de9}{NAMEPAIR}}\ (13),\ }
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{hex2otf_8h_aafa9d4317a3af734d88d6b977de27de9}{NAMEPAIR}}\ (14),\ }
+\DoxyCodeLine{\ \ \ \ \{0,\ NULL\}\ \ \ \ \ \ }
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Allocate array of Name\+ID codes with default values. 
+
+This array contains the default values for several True\+Type Name\+ID strings, as defined above in this file. Strings are assigned using the NAMEPAIR macro defined above. 
+
+Definition at line \mbox{\hyperlink{hex2otf_8h_source_l00093}{93}} of file \mbox{\hyperlink{hex2otf_8h_source}{hex2otf.\+h}}.
+

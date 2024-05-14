@@ -1,0 +1,115 @@
+\hypertarget{unidup_8c}{}\doxysection{src/unidup.c File Reference}
+\label{unidup_8c}\index{src/unidup.c@{src/unidup.c}}
+
+
+unidup -\/ Check for duplicate code points in sorted unifont.\+hex file  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+Include dependency graph for unidup.\+c\+:
+% FIG 0
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{unidup_8c_ad7871643c05865c80f5d8050aead2b57}{MAXBUF}}~256
+\begin{DoxyCompactList}\small\item\em Maximum input line length -\/ 1. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{unidup_8c_a3c04138a5bfe5d72780bb7e82a18e627}{main}} (int argc, char $\ast$$\ast$argv)
+\begin{DoxyCompactList}\small\item\em The main function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+unidup -\/ Check for duplicate code points in sorted unifont.\+hex file 
+
+\begin{DoxyAuthor}{Author}
+Paul Hardy, unifoundry $<$at$>$ unifoundry.\+com, December 2007
+\end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+Copyright (C) 2007, 2008, 2013 Paul Hardy
+\end{DoxyCopyright}
+This program reads a sorted list of glyphs in Unifont .hex format and prints duplicate code points on stderr if any were detected.
+
+Synopsis\+: unidup \texorpdfstring{$<$}{<} unifont\+\_\+file.\+hex \begin{DoxyVerb}      [Hopefully there won't be any output!]
+\end{DoxyVerb}
+ 
+
+Definition in file \mbox{\hyperlink{unidup_8c_source}{unidup.\+c}}.
+
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{unidup_8c_ad7871643c05865c80f5d8050aead2b57}\label{unidup_8c_ad7871643c05865c80f5d8050aead2b57}} 
+\index{unidup.c@{unidup.c}!MAXBUF@{MAXBUF}}
+\index{MAXBUF@{MAXBUF}!unidup.c@{unidup.c}}
+\doxysubsubsection{\texorpdfstring{MAXBUF}{MAXBUF}}
+{\footnotesize\ttfamily \#define MAXBUF~256}
+
+
+
+Maximum input line length -\/ 1. 
+
+
+
+Definition at line \mbox{\hyperlink{unidup_8c_source_l00037}{37}} of file \mbox{\hyperlink{unidup_8c_source}{unidup.\+c}}.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{unidup_8c_a3c04138a5bfe5d72780bb7e82a18e627}\label{unidup_8c_a3c04138a5bfe5d72780bb7e82a18e627}} 
+\index{unidup.c@{unidup.c}!main@{main}}
+\index{main@{main}!unidup.c@{unidup.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$$\ast$}]{argv }\end{DoxyParamCaption})}
+
+
+
+The main function. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em argc} & The count of command line arguments. \\
+\hline
+\mbox{\texttt{ in}}  & {\em argv} & Pointer to array of command line arguments. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+This program exits with status 0. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{unidup_8c_source_l00048}{48}} of file \mbox{\hyperlink{unidup_8c_source}{unidup.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00049\ \{}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \textcolor{keywordtype}{int}\ ix,\ iy;}
+\DoxyCodeLine{00052\ \ \ \ \textcolor{keywordtype}{char}\ inbuf[\mbox{\hyperlink{unidup_8c_ad7871643c05865c80f5d8050aead2b57}{MAXBUF}}];}
+\DoxyCodeLine{00053\ \ \ \ \textcolor{keywordtype}{char}\ *infile;\ \ \ \textcolor{comment}{/*\ the\ input\ file\ name\ */}}
+\DoxyCodeLine{00054\ \ \ \ FILE\ *infilefp;\ \textcolor{comment}{/*\ file\ pointer\ to\ input\ file\ */}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \ \textcolor{keywordflow}{if}\ (argc\ >\ 1)\ \{}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ infile\ =\ argv[1];}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((infilefp\ =\ fopen\ (infile,\ \textcolor{stringliteral}{"{}r"{}}))\ ==\ NULL)\ \{}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)nERROR:\ Can't\ open\ file\ \%s\(\backslash\)n\(\backslash\)n"{}},\ infile);}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ exit\ (EXIT\_FAILURE);}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00062\ \ \ \ \}}
+\DoxyCodeLine{00063\ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ infilefp\ =\ stdin;}
+\DoxyCodeLine{00065\ \ \ \ \}}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \ \ \ ix\ =\ -\/1;}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \ \ \ \textcolor{keywordflow}{while}\ (fgets\ (inbuf,\ \mbox{\hyperlink{unidup_8c_ad7871643c05865c80f5d8050aead2b57}{MAXBUF}}-\/1,\ infilefp)\ !=\ NULL)\ \{}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ sscanf\ (inbuf,\ \textcolor{stringliteral}{"{}\%X"{}},\ \&iy);}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ix\ ==\ iy)\ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}Duplicate\ code\ point:\ \%04X\(\backslash\)n"{}},\ ix);}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ ix\ =\ iy;}
+\DoxyCodeLine{00073\ \ \ \ \}}
+\DoxyCodeLine{00074\ \ \ \ exit\ (0);}
+\DoxyCodeLine{00075\ \}}
+
+\end{DoxyCode}

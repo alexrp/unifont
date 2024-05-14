@@ -1,0 +1,48 @@
+digraph "fillCFF"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node1 [label="fillCFF",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Add a CFF table to a font."];
+  Node1 -> Node2 [color="steelblue1",style="solid"];
+  Node2 [label="addTable",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$hex2otf_8c.html#a1fab24bb2d2b38b68a38ec871afc3f9c",tooltip="Add a TrueType or OpenType table to the font."];
+  Node1 -> Node3 [color="steelblue1",style="solid"];
+  Node3 [label="buildOutline",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$hex2otf_8c.html#a5af7c9bcfd40e5b11f9d12c40966bb65",tooltip="Build a glyph outline."];
+  Node1 -> Node4 [color="steelblue1",style="solid"];
+  Node4 [label="cacheBuffer",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$hex2otf_8c.html#a560637130747e543118ff304389fd18f",tooltip="Append bytes of a table to a byte buffer."];
+  Node4 -> Node5 [color="steelblue1",style="solid"];
+  Node5 [label="ensureBuffer",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$hex2otf_8c.html#ae32c0f82cbb6a4d8ece0559f1c7b74f4",tooltip="Ensure that the buffer has at least the specified minimum size."];
+  Node5 -> Node6 [color="steelblue1",style="solid"];
+  Node6 [label="fail",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$hex2otf_8c.html#a2f5976201b1e630a94045f04a0348572",tooltip="Print an error message on stderr, then exit."];
+  Node1 -> Node7 [color="steelblue1",style="solid"];
+  Node7 [label="cacheBytes",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$hex2otf_8c.html#a927c31a7e187d15a70667ce6b0ef296a",tooltip="Append a string of bytes to a buffer."];
+  Node7 -> Node5 [color="steelblue1",style="solid"];
+  Node1 -> Node8 [color="steelblue1",style="solid"];
+  Node8 [label="cacheCFFOperand",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$hex2otf_8c.html#a51be7f69e0f6053772b3ddacf215df84",tooltip="Cache charstring number encoding in a CFF buffer."];
+  Node8 -> Node9 [color="steelblue1",style="solid"];
+  Node9 [label="cacheU16",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$hex2otf_8c.html#a07b29528c561e5852a228c98391225f7",tooltip="Append two unsigned bytes to the end of a byte array."];
+  Node8 -> Node10 [color="steelblue1",style="solid"];
+  Node10 [label="cacheU32",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$hex2otf_8c.html#a051a88b0ac4eb063945b84e2242408ea",tooltip="Append four unsigned bytes to the end of a byte array."];
+  Node8 -> Node11 [color="steelblue1",style="solid"];
+  Node11 [label="cacheU8",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$hex2otf_8c.html#a84d7310553d31f4ec587dc001f472834",tooltip="Append one unsigned byte to the end of a byte array."];
+  Node1 -> Node9 [color="steelblue1",style="solid"];
+  Node1 -> Node10 [color="steelblue1",style="solid"];
+  Node1 -> Node11 [color="steelblue1",style="solid"];
+  Node1 -> Node6 [color="steelblue1",style="solid"];
+  Node1 -> Node12 [color="steelblue1",style="solid"];
+  Node12 [label="freeBuffer",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$hex2otf_8c.html#ac928f7761fc187ff86f33805309bec21",tooltip="Free the memory previously allocated for a buffer."];
+  Node1 -> Node13 [color="steelblue1",style="solid"];
+  Node13 [label="newBuffer",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$hex2otf_8c.html#ae8310060f5a9b7cefb84d0bb1b459b64",tooltip="Create a new buffer."];
+  Node13 -> Node6 [color="steelblue1",style="solid"];
+  Node1 -> Node14 [color="steelblue1",style="solid"];
+  Node14 [label="prepareOffsets",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$hex2otf_8c.html#a97af00050b8fd6b7e7b81c7027e4c8e6",tooltip="Prepare 32-bit glyph offsets in a font table."];
+  Node14 -> Node6 [color="steelblue1",style="solid"];
+  Node1 -> Node15 [color="steelblue1",style="solid"];
+  Node15 [label="prepareStringIndex",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$hex2otf_8c.html#aa52cd46a50cdc2040a72e5c7ecfa944b",tooltip="Prepare a font name string index."];
+  Node15 -> Node7 [color="steelblue1",style="solid"];
+  Node15 -> Node9 [color="steelblue1",style="solid"];
+  Node15 -> Node11 [color="steelblue1",style="solid"];
+  Node15 -> Node13 [color="steelblue1",style="solid"];
+}

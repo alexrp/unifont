@@ -1,0 +1,7 @@
+<map id="src/hangul.h" name="src/hangul.h">
+<area shape="rect" id="node1" title="Define constants and function prototypes for using Hangul glyphs." alt="" coords="306,5,407,31"/>
+<area shape="rect" id="node2" href="$johab2syllables_8c.html" title="Create the Unicode Hangul Syllables block from component letters." alt="" coords="5,79,164,104"/>
+<area shape="rect" id="node3" href="$unigen-hangul_8c.html" title="Generate arbitrary hangul syllables." alt="" coords="189,79,338,104"/>
+<area shape="rect" id="node4" href="$unihangul-support_8c.html" title="Functions for converting Hangul letters into syllables." alt="" coords="363,79,537,104"/>
+<area shape="rect" id="node5" href="$unijohab2html_8c.html" title="Display overalpped Hangul letter combinations in a grid." alt="" coords="561,79,712,104"/>
+</map>

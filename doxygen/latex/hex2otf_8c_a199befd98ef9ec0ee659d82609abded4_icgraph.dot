@@ -1,0 +1,13 @@
+digraph "cacheStringAsUTF16BE"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="RL";
+  Node1 [label="cacheStringAsUTF16BE",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Cache a string as a big-ending UTF-16 surrogate pair."];
+  Node1 -> Node2 [dir="back",color="steelblue1",style="solid"];
+  Node2 [label="fillNameTable",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$hex2otf_8c.html#a79d8a322be9d9131b684a9ea67abe05e",tooltip="Fill a \"name\" font table."];
+  Node2 -> Node3 [dir="back",color="steelblue1",style="solid"];
+  Node3 [label="main",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$hex2otf_8c.html#a0ddf1224851353fc92bfbff6f499fa97",tooltip="The main function."];
+}

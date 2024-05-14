@@ -1,0 +1,9 @@
+<map id="main" name="main">
+<area shape="rect" id="node1" title="The main function." alt="" coords="5,153,60,179"/>
+<area shape="rect" id="node2" href="$unihangul-support_8c.html#ab795ff183c3e429e0eb9257a7737c57f" title="Return the Johab 6/3/1 choseong variation for a syllable." alt="" coords="131,29,241,55"/>
+<area shape="rect" id="node3" href="$unihangul-support_8c.html#a9aacff561033067830249796de592258" title="Combine two glyphs into one glyph." alt="" coords="122,79,250,104"/>
+<area shape="rect" id="node4" href="$unihangul-support_8c.html#a5683e04e68511d40e66dc8fe26a9a934" title="See if two glyphs overlap." alt="" coords="129,128,243,153"/>
+<area shape="rect" id="node5" href="$unihangul-support_8c.html#afd372e1a400e28d1b61410187f038eec" title="Read hangul&#45;base.hex file into a unsigned array." alt="" coords="108,177,264,203"/>
+<area shape="rect" id="node6" href="$unijohab2html_8c.html#af0ae5e62b21f6205cc500a75ec788413" title="Parse command line arguments." alt="" coords="139,227,233,252"/>
+<area shape="rect" id="node7" href="$unihangul-support_8c.html#a0b8d4a416ad7bb42a332332c7ba86da8" title="Print one glyph in Unifont hexdraw plain text style." alt="" coords="126,276,246,301"/>
+</map>

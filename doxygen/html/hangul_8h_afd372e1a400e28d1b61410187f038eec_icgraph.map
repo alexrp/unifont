@@ -1,0 +1,4 @@
+<map id="hangul_read_base16" name="hangul_read_base16">
+<area shape="rect" id="node1" title="Read hangul&#45;base.hex file into a unsigned array." alt="" coords="108,5,264,31"/>
+<area shape="rect" id="node2" href="$unigen-hangul_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="Program entry point." alt="" coords="5,5,60,31"/>
+</map>

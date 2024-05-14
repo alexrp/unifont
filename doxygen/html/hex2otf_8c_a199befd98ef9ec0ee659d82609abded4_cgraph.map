@@ -1,0 +1,5 @@
+<map id="cacheStringAsUTF16BE" name="cacheStringAsUTF16BE">
+<area shape="rect" id="node1" title="Cache a string as a big&#45;ending UTF&#45;16 surrogate pair." alt="" coords="5,31,179,56"/>
+<area shape="rect" id="node2" href="$hex2otf_8c.html#a07b29528c561e5852a228c98391225f7" title="Append two unsigned bytes to the end of a byte array." alt="" coords="227,5,313,31"/>
+<area shape="rect" id="node3" href="$hex2otf_8c.html#a2f5976201b1e630a94045f04a0348572" title="Print an error message on stderr, then exit." alt="" coords="249,55,291,80"/>
+</map>

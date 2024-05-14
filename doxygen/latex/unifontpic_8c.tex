@@ -1,0 +1,982 @@
+\hypertarget{unifontpic_8c}{}\doxysection{src/unifontpic.c File Reference}
+\label{unifontpic_8c}\index{src/unifontpic.c@{src/unifontpic.c}}
+
+
+unifontpic -\/ See the \char`\"{}\+Big Picture\char`\"{}\+: the entire Unifont in one BMP bitmap  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}unifontpic.\+h\char`\"{}}\newline
+Include dependency graph for unifontpic.\+c\+:
+% FIG 0
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{unifontpic_8c_af314b4eee945c2791f7890f72f0623af}{HDR\+\_\+\+LEN}}~33
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{unifontpic_8c_a3c04138a5bfe5d72780bb7e82a18e627}{main}} (int argc, char $\ast$$\ast$argv)
+\begin{DoxyCompactList}\small\item\em The main function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{unifontpic_8c_ac186155c351c9c3fb9c43acffcbab710}{output4}} (int thisword)
+\begin{DoxyCompactList}\small\item\em Output a 4-\/byte integer in little-\/endian order. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{unifontpic_8c_af1fbb002e4787785de92e073ec46b787}{output2}} (int thisword)
+\begin{DoxyCompactList}\small\item\em Output a 2-\/byte integer in little-\/endian order. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{unifontpic_8c_a0a030f2857f0d855b7ab0ccd8e968f1f}{gethex}} (char $\ast$instring, int plane\+\_\+array\mbox{[}0x10000\mbox{]}\mbox{[}16\mbox{]}, int plane)
+\begin{DoxyCompactList}\small\item\em Read a Unifont .hex-\/format input file from stdin. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{unifontpic_8c_afd429d88175c59dae5c32e8c9aa7851d}{genlongbmp}} (int plane\+\_\+array\mbox{[}0x10000\mbox{]}\mbox{[}16\mbox{]}, int dpi, int tinynum, int plane)
+\begin{DoxyCompactList}\small\item\em Generate the BMP output file in long format. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{unifontpic_8c_a3931c7b44c00ffdb8925a3c837577677}{genwidebmp}} (int plane\+\_\+array\mbox{[}0x10000\mbox{]}\mbox{[}16\mbox{]}, int dpi, int tinynum, int plane)
+\begin{DoxyCompactList}\small\item\em Generate the BMP output file in wide format. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+unifontpic -\/ See the \char`\"{}\+Big Picture\char`\"{}\+: the entire Unifont in one BMP bitmap 
+
+\begin{DoxyAuthor}{Author}
+Paul Hardy, 2013
+\end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+Copyright (C) 2013, 2017 Paul Hardy 
+\end{DoxyCopyright}
+
+
+Definition in file \mbox{\hyperlink{unifontpic_8c_source}{unifontpic.\+c}}.
+
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{unifontpic_8c_af314b4eee945c2791f7890f72f0623af}\label{unifontpic_8c_af314b4eee945c2791f7890f72f0623af}} 
+\index{unifontpic.c@{unifontpic.c}!HDR\_LEN@{HDR\_LEN}}
+\index{HDR\_LEN@{HDR\_LEN}!unifontpic.c@{unifontpic.c}}
+\doxysubsubsection{\texorpdfstring{HDR\_LEN}{HDR\_LEN}}
+{\footnotesize\ttfamily \#define HDR\+\_\+\+LEN~33}
+
+Define length of header string for top of chart. 
+
+Definition at line \mbox{\hyperlink{unifontpic_8c_source_l00073}{73}} of file \mbox{\hyperlink{unifontpic_8c_source}{unifontpic.\+c}}.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{unifontpic_8c_afd429d88175c59dae5c32e8c9aa7851d}\label{unifontpic_8c_afd429d88175c59dae5c32e8c9aa7851d}} 
+\index{unifontpic.c@{unifontpic.c}!genlongbmp@{genlongbmp}}
+\index{genlongbmp@{genlongbmp}!unifontpic.c@{unifontpic.c}}
+\doxysubsubsection{\texorpdfstring{genlongbmp()}{genlongbmp()}}
+{\footnotesize\ttfamily void genlongbmp (\begin{DoxyParamCaption}\item[{int}]{plane\+\_\+array\mbox{[}0x10000\mbox{]}\mbox{[}16\mbox{]},  }\item[{int}]{dpi,  }\item[{int}]{tinynum,  }\item[{int}]{plane }\end{DoxyParamCaption})}
+
+
+
+Generate the BMP output file in long format. 
+
+This function generates the BMP output file from a bitmap parameter. This is a long bitmap, 16 glyphs wide by 4,096 glyphs tall.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em plane\+\_\+array} & The array of glyph bitmaps for a plane. \\
+\hline
+\mbox{\texttt{ in}}  & {\em dpi} & Dots per inch, for encoding in the BMP output file header. \\
+\hline
+\mbox{\texttt{ in}}  & {\em tinynum} & Whether to generate tiny numbers in wide grid (unused). \\
+\hline
+\mbox{\texttt{ in}}  & {\em plane} & The Unicode plane, 0..17. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{unifontpic_8c_source_l00303}{303}} of file \mbox{\hyperlink{unifontpic_8c_source}{unifontpic.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00304\ \{}
+\DoxyCodeLine{00305\ }
+\DoxyCodeLine{00306\ \ \ \ \textcolor{keywordtype}{char}\ header\_string[\mbox{\hyperlink{unifontpic_8c_af314b4eee945c2791f7890f72f0623af}{HDR\_LEN}}];\ \textcolor{comment}{/*\ centered\ header\ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00307\ \ \ \ \textcolor{keywordtype}{char}\ raw\_header[\mbox{\hyperlink{unifontpic_8c_af314b4eee945c2791f7890f72f0623af}{HDR\_LEN}}];\ \ \ \ \textcolor{comment}{/*\ left-\/aligned\ header\ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00308\ \ \ \ \textcolor{keywordtype}{int}\ header[16][16];\ \ \ \ \ \textcolor{comment}{/*\ header\ row,\ for\ chart\ title\ */}}
+\DoxyCodeLine{00309\ \ \ \ \textcolor{keywordtype}{int}\ hdrlen;\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ length\ of\ HEADER\_STRING\ \ \ \ \ */}}
+\DoxyCodeLine{00310\ \ \ \ \textcolor{keywordtype}{int}\ startcol;\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ column\ to\ start\ printing\ header,\ for\ centering\ */}}
+\DoxyCodeLine{00311\ }
+\DoxyCodeLine{00312\ \ \ \ \textcolor{keywordtype}{unsigned}\ leftcol[0x1000][16];\ \textcolor{comment}{/*\ code\ point\ legend\ on\ left\ side\ of\ chart\ */}}
+\DoxyCodeLine{00313\ \ \ \ \textcolor{keywordtype}{int}\ d1,\ d2,\ d3,\ d4;\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ digits\ for\ filling\ leftcol[][]\ legend\ \ \ */}}
+\DoxyCodeLine{00314\ \ \ \ \textcolor{keywordtype}{int}\ codept;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ current\ starting\ code\ point\ for\ legend\ \ */}}
+\DoxyCodeLine{00315\ \ \ \ \textcolor{keywordtype}{int}\ thisrow;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ glyph\ row\ currently\ being\ rendered\ \ \ \ \ \ */}}
+\DoxyCodeLine{00316\ \ \ \ \textcolor{keywordtype}{unsigned}\ toprow[16][16];\ \ \ \ \ \ \textcolor{comment}{/*\ code\ point\ legend\ on\ top\ of\ chart\ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00317\ \ \ \ \textcolor{keywordtype}{int}\ digitrow;\ \ \ \ \ \ \ \textcolor{comment}{/*\ row\ we're\ in\ (0..4)\ for\ the\ above\ hexdigit\ digits\ */}}
+\DoxyCodeLine{00318\ }
+\DoxyCodeLine{00319\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00320\ \textcolor{comment}{\ \ \ \ \ \ DataOffset\ =\ BMP\ Header\ bytes\ +\ InfoHeader\ bytes\ +\ ColorTable\ bytes.}}
+\DoxyCodeLine{00321\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00322\ \ \ \ \textcolor{keywordtype}{int}\ DataOffset\ =\ 14\ +\ 40\ +\ 8;\ \textcolor{comment}{/*\ fixed\ size\ for\ monochrome\ BMP\ */}}
+\DoxyCodeLine{00323\ \ \ \ \textcolor{keywordtype}{int}\ ImageSize;}
+\DoxyCodeLine{00324\ \ \ \ \textcolor{keywordtype}{int}\ FileSize;}
+\DoxyCodeLine{00325\ \ \ \ \textcolor{keywordtype}{int}\ Width,\ Height;\ \textcolor{comment}{/*\ bitmap\ image\ width\ and\ height\ in\ pixels\ */}}
+\DoxyCodeLine{00326\ \ \ \ \textcolor{keywordtype}{int}\ ppm;\ \ \ \ \ \textcolor{comment}{/*\ integer\ pixels\ per\ meter\ */}}
+\DoxyCodeLine{00327\ }
+\DoxyCodeLine{00328\ \ \ \ \textcolor{keywordtype}{int}\ i,\ j,\ k;}
+\DoxyCodeLine{00329\ }
+\DoxyCodeLine{00330\ \ \ \ \textcolor{keywordtype}{unsigned}\ bytesout;}
+\DoxyCodeLine{00331\ }
+\DoxyCodeLine{00332\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{unifontpic_8c_ac186155c351c9c3fb9c43acffcbab710}{output4}}(\textcolor{keywordtype}{int}),\ \mbox{\hyperlink{unifontpic_8c_af1fbb002e4787785de92e073ec46b787}{output2}}(\textcolor{keywordtype}{int});}
+\DoxyCodeLine{00333\ }
+\DoxyCodeLine{00334\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00335\ \textcolor{comment}{\ \ \ \ \ \ Image\ width\ and\ height,\ in\ pixels.}}
+\DoxyCodeLine{00336\ \textcolor{comment}{}}
+\DoxyCodeLine{00337\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ N.B.:\ Width\ must\ be\ an\ even\ multiple\ of\ 32\ pixels,\ or\ 4\ bytes.}}
+\DoxyCodeLine{00338\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00339\ \ \ \ Width\ \ =\ \ \ 18\ *\ 16;\ \ \textcolor{comment}{/*\ (2\ legend\ +\ \ \ 16\ glyphs)\ *\ 16\ pixels/glyph\ */}}
+\DoxyCodeLine{00340\ \ \ \ Height\ =\ 4099\ *\ 16;\ \ \textcolor{comment}{/*\ (1\ header\ +\ 4096\ glyphs)\ *\ 16\ rows/glyph\ \ \ */}}
+\DoxyCodeLine{00341\ }
+\DoxyCodeLine{00342\ \ \ \ ImageSize\ =\ Height\ *\ (Width\ /\ 8);\ \textcolor{comment}{/*\ in\ bytes,\ calculated\ from\ pixels\ */}}
+\DoxyCodeLine{00343\ }
+\DoxyCodeLine{00344\ \ \ \ FileSize\ =\ DataOffset\ +\ ImageSize;}
+\DoxyCodeLine{00345\ }
+\DoxyCodeLine{00346\ \ \ \ \textcolor{comment}{/*\ convert\ dots/inch\ to\ pixels/meter\ */}}
+\DoxyCodeLine{00347\ \ \ \ \textcolor{keywordflow}{if}\ (dpi\ ==\ 0)\ dpi\ =\ 96;}
+\DoxyCodeLine{00348\ \ \ \ ppm\ =\ (int)((\textcolor{keywordtype}{double})dpi\ *\ 100.0\ /\ 2.54\ +\ 0.5);}
+\DoxyCodeLine{00349\ }
+\DoxyCodeLine{00350\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00351\ \textcolor{comment}{\ \ \ \ \ \ Generate\ the\ BMP\ Header}}
+\DoxyCodeLine{00352\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00353\ \ \ \ putchar\ (\textcolor{charliteral}{'B'});}
+\DoxyCodeLine{00354\ \ \ \ putchar\ (\textcolor{charliteral}{'M'});}
+\DoxyCodeLine{00355\ }
+\DoxyCodeLine{00356\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00357\ \textcolor{comment}{\ \ \ \ \ \ Calculate\ file\ size:}}
+\DoxyCodeLine{00358\ \textcolor{comment}{}}
+\DoxyCodeLine{00359\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ BMP\ Header\ +\ InfoHeader\ +\ Color\ Table\ +\ Raster\ Data}}
+\DoxyCodeLine{00360\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00361\ \ \ \ \mbox{\hyperlink{unifontpic_8c_ac186155c351c9c3fb9c43acffcbab710}{output4}}\ (FileSize);\ \ \textcolor{comment}{/*\ FileSize\ */}}
+\DoxyCodeLine{00362\ \ \ \ \mbox{\hyperlink{unifontpic_8c_ac186155c351c9c3fb9c43acffcbab710}{output4}}\ (0x0000);\ \textcolor{comment}{/*\ reserved\ */}}
+\DoxyCodeLine{00363\ }
+\DoxyCodeLine{00364\ \ \ \ \textcolor{comment}{/*\ Calculate\ DataOffset\ */}}
+\DoxyCodeLine{00365\ \ \ \ \mbox{\hyperlink{unifontpic_8c_ac186155c351c9c3fb9c43acffcbab710}{output4}}\ (DataOffset);}
+\DoxyCodeLine{00366\ }
+\DoxyCodeLine{00367\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00368\ \textcolor{comment}{\ \ \ \ \ \ InfoHeader}}
+\DoxyCodeLine{00369\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00370\ \ \ \ \mbox{\hyperlink{unifontpic_8c_ac186155c351c9c3fb9c43acffcbab710}{output4}}\ (40);\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Size\ of\ InfoHeader\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00371\ \ \ \ \mbox{\hyperlink{unifontpic_8c_ac186155c351c9c3fb9c43acffcbab710}{output4}}\ (Width);\ \ \ \ \ \ \textcolor{comment}{/*\ Width\ of\ bitmap\ in\ pixels\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00372\ \ \ \ \mbox{\hyperlink{unifontpic_8c_ac186155c351c9c3fb9c43acffcbab710}{output4}}\ (Height);\ \ \ \ \ \textcolor{comment}{/*\ Height\ of\ bitmap\ in\ pixels\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00373\ \ \ \ \mbox{\hyperlink{unifontpic_8c_af1fbb002e4787785de92e073ec46b787}{output2}}\ (1);\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Planes\ (1\ plane)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00374\ \ \ \ \mbox{\hyperlink{unifontpic_8c_af1fbb002e4787785de92e073ec46b787}{output2}}\ (1);\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ BitCount\ (1\ =\ monochrome)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00375\ \ \ \ \mbox{\hyperlink{unifontpic_8c_ac186155c351c9c3fb9c43acffcbab710}{output4}}\ (0);\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Compression\ (0\ =\ none)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00376\ \ \ \ \mbox{\hyperlink{unifontpic_8c_ac186155c351c9c3fb9c43acffcbab710}{output4}}\ (ImageSize);\ \ \textcolor{comment}{/*\ ImageSize,\ in\ bytes\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00377\ \ \ \ \mbox{\hyperlink{unifontpic_8c_ac186155c351c9c3fb9c43acffcbab710}{output4}}\ (ppm);\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ XpixelsPerM\ (96\ dpi\ =\ 3780\ pixels/meter)\ */}}
+\DoxyCodeLine{00378\ \ \ \ \mbox{\hyperlink{unifontpic_8c_ac186155c351c9c3fb9c43acffcbab710}{output4}}\ (ppm);\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ YpixelsPerM\ (96\ dpi\ =\ 3780\ pixels/meter)\ */}}
+\DoxyCodeLine{00379\ \ \ \ \mbox{\hyperlink{unifontpic_8c_ac186155c351c9c3fb9c43acffcbab710}{output4}}\ (2);\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ ColorsUsed\ (=\ 2)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00380\ \ \ \ \mbox{\hyperlink{unifontpic_8c_ac186155c351c9c3fb9c43acffcbab710}{output4}}\ (2);\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ ColorsImportant\ (=\ 2)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00381\ \ \ \ \mbox{\hyperlink{unifontpic_8c_ac186155c351c9c3fb9c43acffcbab710}{output4}}\ (0x00000000);\ \textcolor{comment}{/*\ black\ (reserved,\ B,\ G,\ R)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00382\ \ \ \ \mbox{\hyperlink{unifontpic_8c_ac186155c351c9c3fb9c43acffcbab710}{output4}}\ (0x00FFFFFF);\ \textcolor{comment}{/*\ white\ (reserved,\ B,\ G,\ R)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00383\ }
+\DoxyCodeLine{00384\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00385\ \textcolor{comment}{\ \ \ \ \ \ Create\ header\ row\ bits.}}
+\DoxyCodeLine{00386\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00387\ \ \ \ snprintf\ (raw\_header,\ \mbox{\hyperlink{unifontpic_8c_af314b4eee945c2791f7890f72f0623af}{HDR\_LEN}},\ \textcolor{stringliteral}{"{}\%s\ Plane\ \%d"{}},\ \mbox{\hyperlink{unifontpic_8h_a418ed439fafbc678a74cb266ef2919d4}{HEADER\_STRING}},\ plane);}
+\DoxyCodeLine{00388\ \ \ \ memset\ ((\textcolor{keywordtype}{void}\ *)header,\ 0,\ 16\ *\ 16\ *\ \textcolor{keyword}{sizeof}\ (\textcolor{keywordtype}{int}));\ \textcolor{comment}{/*\ fill\ with\ white\ */}}
+\DoxyCodeLine{00389\ \ \ \ memset\ ((\textcolor{keywordtype}{void}\ *)header\_string,\ \textcolor{charliteral}{'\ '},\ 32\ *\ \textcolor{keyword}{sizeof}\ (\textcolor{keywordtype}{char}));\ \textcolor{comment}{/*\ 32\ spaces\ */}}
+\DoxyCodeLine{00390\ \ \ \ header\_string[32]\ =\ \textcolor{charliteral}{'\(\backslash\)0'};\ \ \textcolor{comment}{/*\ null-\/terminated\ */}}
+\DoxyCodeLine{00391\ }
+\DoxyCodeLine{00392\ \ \ \ hdrlen\ =\ strlen\ (raw\_header);}
+\DoxyCodeLine{00393\ \ \ \ \textcolor{keywordflow}{if}\ (hdrlen\ >\ 32)\ hdrlen\ =\ 32;\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ only\ 32\ columns\ to\ print\ header\ */}}
+\DoxyCodeLine{00394\ \ \ \ startcol\ =\ 16\ -\/\ ((hdrlen\ +\ 1)\ >>\ 1);\ \textcolor{comment}{/*\ to\ center\ header\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00395\ \ \ \ \textcolor{comment}{/*\ center\ up\ to\ 32\ chars\ */}}
+\DoxyCodeLine{00396\ \ \ \ memcpy\ (\&header\_string[startcol],\ raw\_header,\ hdrlen);}
+\DoxyCodeLine{00397\ }
+\DoxyCodeLine{00398\ \ \ \ \textcolor{comment}{/*\ Copy\ each\ letter's\ bitmap\ from\ the\ plane\_array[][]\ we\ constructed.\ */}}
+\DoxyCodeLine{00399\ \ \ \ \textcolor{comment}{/*\ Each\ glyph\ must\ be\ single-\/width,\ to\ fit\ two\ glyphs\ in\ 16\ pixels\ */}}
+\DoxyCodeLine{00400\ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 16;\ j++)\ \{}
+\DoxyCodeLine{00401\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 16;\ i++)\ \{}
+\DoxyCodeLine{00402\ \ \ \ \ \ \ \ \ \ header[i][j]\ =}
+\DoxyCodeLine{00403\ \ \ \ \ \ \ \ \ \ \ \ \ (\mbox{\hyperlink{unifontpic_8h_a593ebc374e9f30c90743f0fd48cc91df}{ascii\_bits}}[header\_string[j+j\ \ ]\ \&\ 0x7F][i]\ \&\ 0xFF00)\ |}
+\DoxyCodeLine{00404\ \ \ \ \ \ \ \ \ \ \ \ \ (\mbox{\hyperlink{unifontpic_8h_a593ebc374e9f30c90743f0fd48cc91df}{ascii\_bits}}[header\_string[j+j+1]\ \&\ 0x7F][i]\ >>\ 8);}
+\DoxyCodeLine{00405\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00406\ \ \ \ \}}
+\DoxyCodeLine{00407\ }
+\DoxyCodeLine{00408\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00409\ \textcolor{comment}{\ \ \ \ \ \ Create\ the\ left\ column\ legend.}}
+\DoxyCodeLine{00410\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00411\ \ \ \ memset\ ((\textcolor{keywordtype}{void}\ *)leftcol,\ 0,\ 4096\ *\ 16\ *\ \textcolor{keyword}{sizeof}\ (\textcolor{keywordtype}{unsigned}));}
+\DoxyCodeLine{00412\ }
+\DoxyCodeLine{00413\ \ \ \ \textcolor{keywordflow}{for}\ (codept\ =\ 0x0000;\ codept\ <\ 0x10000;\ codept\ +=\ 0x10)\ \{}
+\DoxyCodeLine{00414\ \ \ \ \ \ \ d1\ =\ (codept\ >>\ 12)\ \&\ 0xF;\ \textcolor{comment}{/*\ most\ significant\ hex\ digit\ */}}
+\DoxyCodeLine{00415\ \ \ \ \ \ \ d2\ =\ (codept\ >>\ \ 8)\ \&\ 0xF;}
+\DoxyCodeLine{00416\ \ \ \ \ \ \ d3\ =\ (codept\ >>\ \ 4)\ \&\ 0xF;}
+\DoxyCodeLine{00417\ }
+\DoxyCodeLine{00418\ \ \ \ \ \ \ thisrow\ =\ codept\ >>\ 4;\ \textcolor{comment}{/*\ rows\ of\ 16\ glyphs\ */}}
+\DoxyCodeLine{00419\ }
+\DoxyCodeLine{00420\ \ \ \ \ \ \ \textcolor{comment}{/*\ fill\ in\ first\ and\ second\ digits\ */}}
+\DoxyCodeLine{00421\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (digitrow\ =\ 0;\ digitrow\ <\ 5;\ digitrow++)\ \{}
+\DoxyCodeLine{00422\ \ \ \ \ \ \ \ \ \ leftcol[thisrow][2\ +\ digitrow]\ =}
+\DoxyCodeLine{00423\ \ \ \ \ \ \ \ \ \ \ \ \ (\mbox{\hyperlink{unibmp2hex_8c_a8e50648544568f9274781c2c90acdd78}{hexdigit}}[d1][digitrow]\ <<\ 10)\ |}
+\DoxyCodeLine{00424\ \ \ \ \ \ \ \ \ \ \ \ \ (\mbox{\hyperlink{unibmp2hex_8c_a8e50648544568f9274781c2c90acdd78}{hexdigit}}[d2][digitrow]\ <<\ \ 4);}
+\DoxyCodeLine{00425\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00426\ }
+\DoxyCodeLine{00427\ \ \ \ \ \ \ \textcolor{comment}{/*\ fill\ in\ third\ digit\ */}}
+\DoxyCodeLine{00428\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (digitrow\ =\ 0;\ digitrow\ <\ 5;\ digitrow++)\ \{}
+\DoxyCodeLine{00429\ \ \ \ \ \ \ \ \ \ leftcol[thisrow][9\ +\ digitrow]\ =\ \mbox{\hyperlink{unibmp2hex_8c_a8e50648544568f9274781c2c90acdd78}{hexdigit}}[d3][digitrow]\ <<\ 10;}
+\DoxyCodeLine{00430\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00431\ \ \ \ \ \ \ leftcol[thisrow][9\ +\ 4]\ |=\ 0xF\ <<\ 4;\ \textcolor{comment}{/*\ underscore\ as\ 4th\ digit\ */}}
+\DoxyCodeLine{00432\ }
+\DoxyCodeLine{00433\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 15;\ i\ ++)\ \{}
+\DoxyCodeLine{00434\ \ \ \ \ \ \ \ \ \ leftcol[thisrow][i]\ |=\ 0x00000002;\ \ \ \ \ \ \textcolor{comment}{/*\ right\ border\ */}}
+\DoxyCodeLine{00435\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00436\ }
+\DoxyCodeLine{00437\ \ \ \ \ \ \ leftcol[thisrow][15]\ =\ 0x0000FFFE;\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ bottom\ border\ */}}
+\DoxyCodeLine{00438\ }
+\DoxyCodeLine{00439\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (d3\ ==\ 0xF)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 256-\/point\ boundary\ */}}
+\DoxyCodeLine{00440\ \ \ \ \ \ \ \ \ \ leftcol[thisrow][15]\ |=\ 0x00FF0000;\ \ \textcolor{comment}{/*\ longer\ tic\ mark\ */}}
+\DoxyCodeLine{00441\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00442\ }
+\DoxyCodeLine{00443\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((thisrow\ \%\ 0x40)\ ==\ 0x3F)\ \{\ \ \ \ \textcolor{comment}{/*\ 1024-\/point\ boundary\ */}}
+\DoxyCodeLine{00444\ \ \ \ \ \ \ \ \ \ leftcol[thisrow][15]\ |=\ 0xFFFF0000;\ \textcolor{comment}{/*\ longest\ tic\ mark\ */}}
+\DoxyCodeLine{00445\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00446\ \ \ \ \}}
+\DoxyCodeLine{00447\ }
+\DoxyCodeLine{00448\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00449\ \textcolor{comment}{\ \ \ \ \ \ Create\ the\ top\ row\ legend.}}
+\DoxyCodeLine{00450\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00451\ \ \ \ memset\ ((\textcolor{keywordtype}{void}\ *)toprow,\ 0,\ 16\ *\ 16\ *\ \textcolor{keyword}{sizeof}\ (\textcolor{keywordtype}{unsigned}));}
+\DoxyCodeLine{00452\ }
+\DoxyCodeLine{00453\ \ \ \ \textcolor{keywordflow}{for}\ (codept\ =\ 0x0;\ codept\ <=\ 0xF;\ codept++)\ \{}
+\DoxyCodeLine{00454\ \ \ \ \ \ \ d1\ =\ (codept\ >>\ 12)\ \&\ 0xF;\ \textcolor{comment}{/*\ most\ significant\ hex\ digit\ */}}
+\DoxyCodeLine{00455\ \ \ \ \ \ \ d2\ =\ (codept\ >>\ \ 8)\ \&\ 0xF;}
+\DoxyCodeLine{00456\ \ \ \ \ \ \ d3\ =\ (codept\ >>\ \ 4)\ \&\ 0xF;}
+\DoxyCodeLine{00457\ \ \ \ \ \ \ d4\ =\ \ codept\ \ \ \ \ \ \ \ \&\ 0xF;\ \textcolor{comment}{/*\ least\ significant\ hex\ digit\ */}}
+\DoxyCodeLine{00458\ }
+\DoxyCodeLine{00459\ \ \ \ \ \ \ \textcolor{comment}{/*\ fill\ in\ last\ digit\ */}}
+\DoxyCodeLine{00460\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (digitrow\ =\ 0;\ digitrow\ <\ 5;\ digitrow++)\ \{}
+\DoxyCodeLine{00461\ \ \ \ \ \ \ \ \ \ toprow[6\ +\ digitrow][codept]\ =\ \mbox{\hyperlink{unibmp2hex_8c_a8e50648544568f9274781c2c90acdd78}{hexdigit}}[d4][digitrow]\ <<\ 6;}
+\DoxyCodeLine{00462\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00463\ \ \ \ \}}
+\DoxyCodeLine{00464\ }
+\DoxyCodeLine{00465\ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 16;\ j++)\ \{}
+\DoxyCodeLine{00466\ \ \ \ \ \ \ \textcolor{comment}{/*\ force\ bottom\ pixel\ row\ to\ be\ white,\ for\ separation\ from\ glyphs\ */}}
+\DoxyCodeLine{00467\ \ \ \ \ \ \ toprow[15][j]\ =\ 0x0000;}
+\DoxyCodeLine{00468\ \ \ \ \}}
+\DoxyCodeLine{00469\ }
+\DoxyCodeLine{00470\ \ \ \ \textcolor{comment}{/*\ 1\ pixel\ row\ with\ left-\/hand\ legend\ line\ */}}
+\DoxyCodeLine{00471\ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 16;\ j++)\ \{}
+\DoxyCodeLine{00472\ \ \ \ \ \ \ toprow[14][j]\ |=\ 0xFFFF;}
+\DoxyCodeLine{00473\ \ \ \ \}}
+\DoxyCodeLine{00474\ }
+\DoxyCodeLine{00475\ \ \ \ \textcolor{comment}{/*\ 14\ rows\ with\ line\ on\ left\ to\ fill\ out\ this\ character\ row\ */}}
+\DoxyCodeLine{00476\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 13;\ i\ >=\ 0;\ i-\/-\/)\ \{}
+\DoxyCodeLine{00477\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 16;\ j++)\ \{}
+\DoxyCodeLine{00478\ \ \ \ \ \ \ \ \ \ toprow[i][j]\ |=\ 0x0001;}
+\DoxyCodeLine{00479\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00480\ \ \ \ \}}
+\DoxyCodeLine{00481\ }
+\DoxyCodeLine{00482\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00483\ \textcolor{comment}{\ \ \ \ \ \ Now\ write\ the\ raster\ image.}}
+\DoxyCodeLine{00484\ \textcolor{comment}{}}
+\DoxyCodeLine{00485\ \textcolor{comment}{\ \ \ \ \ \ XOR\ each\ byte\ with\ 0xFF\ because\ black\ =\ 0,\ white\ =\ 1\ in\ BMP.}}
+\DoxyCodeLine{00486\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00487\ }
+\DoxyCodeLine{00488\ \ \ \ \textcolor{comment}{/*\ Write\ the\ glyphs,\ bottom-\/up,\ left-\/to-\/right,\ in\ rows\ of\ 16\ (i.e.,\ 0x10)\ */}}
+\DoxyCodeLine{00489\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0xFFF0;\ i\ >=\ 0;\ i\ -\/=\ 0x10)\ \{}
+\DoxyCodeLine{00490\ \ \ \ \ \ \ thisrow\ =\ i\ >>\ 4;\ \textcolor{comment}{/*\ 16\ glyphs\ per\ row\ */}}
+\DoxyCodeLine{00491\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 15;\ j\ >=\ 0;\ j-\/-\/)\ \{}
+\DoxyCodeLine{00492\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ left-\/hand\ legend\ */}}
+\DoxyCodeLine{00493\ \ \ \ \ \ \ \ \ \ putchar\ ((\string~leftcol[thisrow][j]\ >>\ 24)\ \&\ 0xFF);}
+\DoxyCodeLine{00494\ \ \ \ \ \ \ \ \ \ putchar\ ((\string~leftcol[thisrow][j]\ >>\ 16)\ \&\ 0xFF);}
+\DoxyCodeLine{00495\ \ \ \ \ \ \ \ \ \ putchar\ ((\string~leftcol[thisrow][j]\ >>\ \ 8)\ \&\ 0xFF);}
+\DoxyCodeLine{00496\ \ \ \ \ \ \ \ \ \ putchar\ (\ \string~leftcol[thisrow][j]\ \ \ \ \ \ \ \ \&\ 0xFF);}
+\DoxyCodeLine{00497\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Unifont\ glyph\ */}}
+\DoxyCodeLine{00498\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (k\ =\ 0;\ k\ <\ 16;\ k++)\ \{}
+\DoxyCodeLine{00499\ \ \ \ \ \ \ \ \ \ \ \ \ bytesout\ =\ \string~plane\_array[i+k][j]\ \&\ 0xFFFF;}
+\DoxyCodeLine{00500\ \ \ \ \ \ \ \ \ \ \ \ \ putchar\ ((bytesout\ >>\ 8)\ \&\ 0xFF);}
+\DoxyCodeLine{00501\ \ \ \ \ \ \ \ \ \ \ \ \ putchar\ (\ bytesout\ \ \ \ \ \ \ \&\ 0xFF);}
+\DoxyCodeLine{00502\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00503\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00504\ \ \ \ \}}
+\DoxyCodeLine{00505\ }
+\DoxyCodeLine{00506\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00507\ \textcolor{comment}{\ \ \ \ \ \ Write\ the\ top\ legend.}}
+\DoxyCodeLine{00508\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00509\ \ \ \ \textcolor{comment}{/*\ i\ ==\ 15:\ bottom\ pixel\ row\ of\ header\ is\ output\ here\ */}}
+\DoxyCodeLine{00510\ \ \ \ \textcolor{comment}{/*\ left-\/hand\ legend:\ solid\ black\ line\ except\ for\ right-\/most\ pixel\ */}}
+\DoxyCodeLine{00511\ \ \ \ putchar\ (0x00);}
+\DoxyCodeLine{00512\ \ \ \ putchar\ (0x00);}
+\DoxyCodeLine{00513\ \ \ \ putchar\ (0x00);}
+\DoxyCodeLine{00514\ \ \ \ putchar\ (0x01);}
+\DoxyCodeLine{00515\ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 16;\ j++)\ \{}
+\DoxyCodeLine{00516\ \ \ \ \ \ \ putchar\ ((\string~toprow[15][j]\ >>\ 8)\ \&\ 0xFF);}
+\DoxyCodeLine{00517\ \ \ \ \ \ \ putchar\ (\ \string~toprow[15][j]\ \ \ \ \ \ \ \&\ 0xFF);}
+\DoxyCodeLine{00518\ \ \ \ \}}
+\DoxyCodeLine{00519\ }
+\DoxyCodeLine{00520\ \ \ \ putchar\ (0xFF);}
+\DoxyCodeLine{00521\ \ \ \ putchar\ (0xFF);}
+\DoxyCodeLine{00522\ \ \ \ putchar\ (0xFF);}
+\DoxyCodeLine{00523\ \ \ \ putchar\ (0xFC);}
+\DoxyCodeLine{00524\ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 16;\ j++)\ \{}
+\DoxyCodeLine{00525\ \ \ \ \ \ \ putchar\ ((\string~toprow[14][j]\ >>\ 8)\ \&\ 0xFF);}
+\DoxyCodeLine{00526\ \ \ \ \ \ \ putchar\ (\ \string~toprow[14][j]\ \ \ \ \ \ \ \&\ 0xFF);}
+\DoxyCodeLine{00527\ \ \ \ \}}
+\DoxyCodeLine{00528\ }
+\DoxyCodeLine{00529\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 13;\ i\ >=\ 0;\ i-\/-\/)\ \{}
+\DoxyCodeLine{00530\ \ \ \ \ \ \ putchar\ (0xFF);}
+\DoxyCodeLine{00531\ \ \ \ \ \ \ putchar\ (0xFF);}
+\DoxyCodeLine{00532\ \ \ \ \ \ \ putchar\ (0xFF);}
+\DoxyCodeLine{00533\ \ \ \ \ \ \ putchar\ (0xFD);}
+\DoxyCodeLine{00534\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 16;\ j++)\ \{}
+\DoxyCodeLine{00535\ \ \ \ \ \ \ \ \ \ putchar\ ((\string~toprow[i][j]\ >>\ 8)\ \&\ 0xFF);}
+\DoxyCodeLine{00536\ \ \ \ \ \ \ \ \ \ putchar\ (\ \string~toprow[i][j]\ \ \ \ \ \ \ \&\ 0xFF);}
+\DoxyCodeLine{00537\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00538\ \ \ \ \}}
+\DoxyCodeLine{00539\ }
+\DoxyCodeLine{00540\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00541\ \textcolor{comment}{\ \ \ \ \ \ Write\ the\ header.}}
+\DoxyCodeLine{00542\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00543\ }
+\DoxyCodeLine{00544\ \ \ \ \textcolor{comment}{/*\ 7\ completely\ white\ rows\ */}}
+\DoxyCodeLine{00545\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 7;\ i\ >=\ 0;\ i-\/-\/)\ \{}
+\DoxyCodeLine{00546\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 18;\ j++)\ \{}
+\DoxyCodeLine{00547\ \ \ \ \ \ \ \ \ \ putchar\ (0xFF);}
+\DoxyCodeLine{00548\ \ \ \ \ \ \ \ \ \ putchar\ (0xFF);}
+\DoxyCodeLine{00549\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00550\ \ \ \ \}}
+\DoxyCodeLine{00551\ }
+\DoxyCodeLine{00552\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 15;\ i\ >=\ 0;\ i-\/-\/)\ \{}
+\DoxyCodeLine{00553\ \ \ \ \ \ \ \textcolor{comment}{/*\ left-\/hand\ legend\ */}}
+\DoxyCodeLine{00554\ \ \ \ \ \ \ putchar\ (0xFF);}
+\DoxyCodeLine{00555\ \ \ \ \ \ \ putchar\ (0xFF);}
+\DoxyCodeLine{00556\ \ \ \ \ \ \ putchar\ (0xFF);}
+\DoxyCodeLine{00557\ \ \ \ \ \ \ putchar\ (0xFF);}
+\DoxyCodeLine{00558\ \ \ \ \ \ \ \textcolor{comment}{/*\ header\ glyph\ */}}
+\DoxyCodeLine{00559\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 16;\ j++)\ \{}
+\DoxyCodeLine{00560\ \ \ \ \ \ \ \ \ \ bytesout\ =\ \string~header[i][j]\ \&\ 0xFFFF;}
+\DoxyCodeLine{00561\ \ \ \ \ \ \ \ \ \ putchar\ ((bytesout\ >>\ 8)\ \&\ 0xFF);}
+\DoxyCodeLine{00562\ \ \ \ \ \ \ \ \ \ putchar\ (\ bytesout\ \ \ \ \ \ \ \&\ 0xFF);}
+\DoxyCodeLine{00563\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00564\ \ \ \ \}}
+\DoxyCodeLine{00565\ }
+\DoxyCodeLine{00566\ \ \ \ \textcolor{comment}{/*\ 8\ completely\ white\ rows\ at\ very\ top\ */}}
+\DoxyCodeLine{00567\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 7;\ i\ >=\ 0;\ i-\/-\/)\ \{}
+\DoxyCodeLine{00568\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 18;\ j++)\ \{}
+\DoxyCodeLine{00569\ \ \ \ \ \ \ putchar\ (0xFF);}
+\DoxyCodeLine{00570\ \ \ \ \ \ \ putchar\ (0xFF);}
+\DoxyCodeLine{00571\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00572\ \ \ \ \}}
+\DoxyCodeLine{00573\ }
+\DoxyCodeLine{00574\ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00575\ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+% FIG 1
+Here is the caller graph for this function\+:
+% FIG 2
+\mbox{\Hypertarget{unifontpic_8c_a3931c7b44c00ffdb8925a3c837577677}\label{unifontpic_8c_a3931c7b44c00ffdb8925a3c837577677}} 
+\index{unifontpic.c@{unifontpic.c}!genwidebmp@{genwidebmp}}
+\index{genwidebmp@{genwidebmp}!unifontpic.c@{unifontpic.c}}
+\doxysubsubsection{\texorpdfstring{genwidebmp()}{genwidebmp()}}
+{\footnotesize\ttfamily void genwidebmp (\begin{DoxyParamCaption}\item[{int}]{plane\+\_\+array\mbox{[}0x10000\mbox{]}\mbox{[}16\mbox{]},  }\item[{int}]{dpi,  }\item[{int}]{tinynum,  }\item[{int}]{plane }\end{DoxyParamCaption})}
+
+
+
+Generate the BMP output file in wide format. 
+
+This function generates the BMP output file from a bitmap parameter. This is a wide bitmap, 256 glyphs wide by 256 glyphs tall.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em plane\+\_\+array} & The array of glyph bitmaps for a plane. \\
+\hline
+\mbox{\texttt{ in}}  & {\em dpi} & Dots per inch, for encoding in the BMP output file header. \\
+\hline
+\mbox{\texttt{ in}}  & {\em tinynum} & Whether to generate tiny numbers in 256x256 grid. \\
+\hline
+\mbox{\texttt{ in}}  & {\em plane} & The Unicode plane, 0..17. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{unifontpic_8c_source_l00590}{590}} of file \mbox{\hyperlink{unifontpic_8c_source}{unifontpic.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00591\ \{}
+\DoxyCodeLine{00592\ }
+\DoxyCodeLine{00593\ \ \ \ \textcolor{keywordtype}{char}\ header\_string[257];}
+\DoxyCodeLine{00594\ \ \ \ \textcolor{keywordtype}{char}\ raw\_header[\mbox{\hyperlink{unifontpic_8c_af314b4eee945c2791f7890f72f0623af}{HDR\_LEN}}];}
+\DoxyCodeLine{00595\ \ \ \ \textcolor{keywordtype}{int}\ header[16][256];\ \textcolor{comment}{/*\ header\ row,\ for\ chart\ title\ */}}
+\DoxyCodeLine{00596\ \ \ \ \textcolor{keywordtype}{int}\ hdrlen;\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ length\ of\ HEADER\_STRING\ */}}
+\DoxyCodeLine{00597\ \ \ \ \textcolor{keywordtype}{int}\ startcol;\ \ \ \ \ \ \ \textcolor{comment}{/*\ column\ to\ start\ printing\ header,\ for\ centering\ */}}
+\DoxyCodeLine{00598\ }
+\DoxyCodeLine{00599\ \ \ \ \textcolor{keywordtype}{unsigned}\ leftcol[0x100][16];\ \textcolor{comment}{/*\ code\ point\ legend\ on\ left\ side\ of\ chart\ */}}
+\DoxyCodeLine{00600\ \ \ \ \textcolor{keywordtype}{int}\ d1,\ d2,\ d3,\ d4;\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ digits\ for\ filling\ leftcol[][]\ legend\ \ \ */}}
+\DoxyCodeLine{00601\ \ \ \ \textcolor{keywordtype}{int}\ codept;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ current\ starting\ code\ point\ for\ legend\ \ */}}
+\DoxyCodeLine{00602\ \ \ \ \textcolor{keywordtype}{int}\ thisrow;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ glyph\ row\ currently\ being\ rendered\ \ \ \ \ \ */}}
+\DoxyCodeLine{00603\ \ \ \ \textcolor{keywordtype}{unsigned}\ toprow[32][256];\ \ \ \ \textcolor{comment}{/*\ code\ point\ legend\ on\ top\ of\ chart\ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00604\ \ \ \ \textcolor{keywordtype}{int}\ digitrow;\ \ \ \ \ \ \textcolor{comment}{/*\ row\ we're\ in\ (0..4)\ for\ the\ above\ hexdigit\ digits\ */}}
+\DoxyCodeLine{00605\ \ \ \ \textcolor{keywordtype}{int}\ hexalpha1,\ hexalpha2;\ \ \ \ \textcolor{comment}{/*\ to\ convert\ hex\ digits\ to\ ASCII\ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00606\ }
+\DoxyCodeLine{00607\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00608\ \textcolor{comment}{\ \ \ \ \ \ DataOffset\ =\ BMP\ Header\ bytes\ +\ InfoHeader\ bytes\ +\ ColorTable\ bytes.}}
+\DoxyCodeLine{00609\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00610\ \ \ \ \textcolor{keywordtype}{int}\ DataOffset\ =\ 14\ +\ 40\ +\ 8;\ \textcolor{comment}{/*\ fixed\ size\ for\ monochrome\ BMP\ */}}
+\DoxyCodeLine{00611\ \ \ \ \textcolor{keywordtype}{int}\ ImageSize;}
+\DoxyCodeLine{00612\ \ \ \ \textcolor{keywordtype}{int}\ FileSize;}
+\DoxyCodeLine{00613\ \ \ \ \textcolor{keywordtype}{int}\ Width,\ Height;\ \textcolor{comment}{/*\ bitmap\ image\ width\ and\ height\ in\ pixels\ */}}
+\DoxyCodeLine{00614\ \ \ \ \textcolor{keywordtype}{int}\ ppm;\ \ \ \ \ \textcolor{comment}{/*\ integer\ pixels\ per\ meter\ */}}
+\DoxyCodeLine{00615\ }
+\DoxyCodeLine{00616\ \ \ \ \textcolor{keywordtype}{int}\ i,\ j,\ k;}
+\DoxyCodeLine{00617\ }
+\DoxyCodeLine{00618\ \ \ \ \textcolor{keywordtype}{unsigned}\ bytesout;}
+\DoxyCodeLine{00619\ }
+\DoxyCodeLine{00620\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{unifontpic_8c_ac186155c351c9c3fb9c43acffcbab710}{output4}}(\textcolor{keywordtype}{int}),\ \mbox{\hyperlink{unifontpic_8c_af1fbb002e4787785de92e073ec46b787}{output2}}(\textcolor{keywordtype}{int});}
+\DoxyCodeLine{00621\ }
+\DoxyCodeLine{00622\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00623\ \textcolor{comment}{\ \ \ \ \ \ Image\ width\ and\ height,\ in\ pixels.}}
+\DoxyCodeLine{00624\ \textcolor{comment}{}}
+\DoxyCodeLine{00625\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ N.B.:\ Width\ must\ be\ an\ even\ multiple\ of\ 32\ pixels,\ or\ 4\ bytes.}}
+\DoxyCodeLine{00626\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00627\ \ \ \ Width\ \ =\ 258\ *\ 16;\ \ \textcolor{comment}{/*\ (\ \ \ \ \ \ \ \ \ \ \ 2\ legend\ +\ 256\ glyphs)\ *\ 16\ pixels/glyph\ */}}
+\DoxyCodeLine{00628\ \ \ \ Height\ =\ 260\ *\ 16;\ \ \textcolor{comment}{/*\ (2\ header\ +\ 2\ legend\ +\ 256\ glyphs)\ *\ 16\ rows/glyph\ \ \ */}}
+\DoxyCodeLine{00629\ }
+\DoxyCodeLine{00630\ \ \ \ ImageSize\ =\ Height\ *\ (Width\ /\ 8);\ \textcolor{comment}{/*\ in\ bytes,\ calculated\ from\ pixels\ */}}
+\DoxyCodeLine{00631\ }
+\DoxyCodeLine{00632\ \ \ \ FileSize\ =\ DataOffset\ +\ ImageSize;}
+\DoxyCodeLine{00633\ }
+\DoxyCodeLine{00634\ \ \ \ \textcolor{comment}{/*\ convert\ dots/inch\ to\ pixels/meter\ */}}
+\DoxyCodeLine{00635\ \ \ \ \textcolor{keywordflow}{if}\ (dpi\ ==\ 0)\ dpi\ =\ 96;}
+\DoxyCodeLine{00636\ \ \ \ ppm\ =\ (int)((\textcolor{keywordtype}{double})dpi\ *\ 100.0\ /\ 2.54\ +\ 0.5);}
+\DoxyCodeLine{00637\ }
+\DoxyCodeLine{00638\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00639\ \textcolor{comment}{\ \ \ \ \ \ Generate\ the\ BMP\ Header}}
+\DoxyCodeLine{00640\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00641\ \ \ \ putchar\ (\textcolor{charliteral}{'B'});}
+\DoxyCodeLine{00642\ \ \ \ putchar\ (\textcolor{charliteral}{'M'});}
+\DoxyCodeLine{00643\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00644\ \textcolor{comment}{\ \ \ \ \ \ Calculate\ file\ size:}}
+\DoxyCodeLine{00645\ \textcolor{comment}{}}
+\DoxyCodeLine{00646\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ BMP\ Header\ +\ InfoHeader\ +\ Color\ Table\ +\ Raster\ Data}}
+\DoxyCodeLine{00647\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00648\ \ \ \ \mbox{\hyperlink{unifontpic_8c_ac186155c351c9c3fb9c43acffcbab710}{output4}}\ (FileSize);\ \ \textcolor{comment}{/*\ FileSize\ */}}
+\DoxyCodeLine{00649\ \ \ \ \mbox{\hyperlink{unifontpic_8c_ac186155c351c9c3fb9c43acffcbab710}{output4}}\ (0x0000);\ \textcolor{comment}{/*\ reserved\ */}}
+\DoxyCodeLine{00650\ \ \ \ \textcolor{comment}{/*\ Calculate\ DataOffset\ */}}
+\DoxyCodeLine{00651\ \ \ \ \mbox{\hyperlink{unifontpic_8c_ac186155c351c9c3fb9c43acffcbab710}{output4}}\ (DataOffset);}
+\DoxyCodeLine{00652\ }
+\DoxyCodeLine{00653\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00654\ \textcolor{comment}{\ \ \ \ \ \ InfoHeader}}
+\DoxyCodeLine{00655\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00656\ \ \ \ \mbox{\hyperlink{unifontpic_8c_ac186155c351c9c3fb9c43acffcbab710}{output4}}\ (40);\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Size\ of\ InfoHeader\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00657\ \ \ \ \mbox{\hyperlink{unifontpic_8c_ac186155c351c9c3fb9c43acffcbab710}{output4}}\ (Width);\ \ \ \ \ \ \textcolor{comment}{/*\ Width\ of\ bitmap\ in\ pixels\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00658\ \ \ \ \mbox{\hyperlink{unifontpic_8c_ac186155c351c9c3fb9c43acffcbab710}{output4}}\ (Height);\ \ \ \ \ \textcolor{comment}{/*\ Height\ of\ bitmap\ in\ pixels\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00659\ \ \ \ \mbox{\hyperlink{unifontpic_8c_af1fbb002e4787785de92e073ec46b787}{output2}}\ (1);\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Planes\ (1\ plane)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00660\ \ \ \ \mbox{\hyperlink{unifontpic_8c_af1fbb002e4787785de92e073ec46b787}{output2}}\ (1);\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ BitCount\ (1\ =\ monochrome)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00661\ \ \ \ \mbox{\hyperlink{unifontpic_8c_ac186155c351c9c3fb9c43acffcbab710}{output4}}\ (0);\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Compression\ (0\ =\ none)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00662\ \ \ \ \mbox{\hyperlink{unifontpic_8c_ac186155c351c9c3fb9c43acffcbab710}{output4}}\ (ImageSize);\ \ \textcolor{comment}{/*\ ImageSize,\ in\ bytes\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00663\ \ \ \ \mbox{\hyperlink{unifontpic_8c_ac186155c351c9c3fb9c43acffcbab710}{output4}}\ (ppm);\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ XpixelsPerM\ (96\ dpi\ =\ 3780\ pixels/meter)\ */}}
+\DoxyCodeLine{00664\ \ \ \ \mbox{\hyperlink{unifontpic_8c_ac186155c351c9c3fb9c43acffcbab710}{output4}}\ (ppm);\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ YpixelsPerM\ (96\ dpi\ =\ 3780\ pixels/meter)\ */}}
+\DoxyCodeLine{00665\ \ \ \ \mbox{\hyperlink{unifontpic_8c_ac186155c351c9c3fb9c43acffcbab710}{output4}}\ (2);\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ ColorsUsed\ (=\ 2)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00666\ \ \ \ \mbox{\hyperlink{unifontpic_8c_ac186155c351c9c3fb9c43acffcbab710}{output4}}\ (2);\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ ColorsImportant\ (=\ 2)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00667\ \ \ \ \mbox{\hyperlink{unifontpic_8c_ac186155c351c9c3fb9c43acffcbab710}{output4}}\ (0x00000000);\ \textcolor{comment}{/*\ black\ (reserved,\ B,\ G,\ R)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00668\ \ \ \ \mbox{\hyperlink{unifontpic_8c_ac186155c351c9c3fb9c43acffcbab710}{output4}}\ (0x00FFFFFF);\ \textcolor{comment}{/*\ white\ (reserved,\ B,\ G,\ R)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00669\ }
+\DoxyCodeLine{00670\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00671\ \textcolor{comment}{\ \ \ \ \ \ Create\ header\ row\ bits.}}
+\DoxyCodeLine{00672\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00673\ \ \ \ snprintf\ (raw\_header,\ \mbox{\hyperlink{unifontpic_8c_af314b4eee945c2791f7890f72f0623af}{HDR\_LEN}},\ \textcolor{stringliteral}{"{}\%s\ Plane\ \%d"{}},\ \mbox{\hyperlink{unifontpic_8h_a418ed439fafbc678a74cb266ef2919d4}{HEADER\_STRING}},\ plane);}
+\DoxyCodeLine{00674\ \ \ \ memset\ ((\textcolor{keywordtype}{void}\ *)header,\ 0,\ 256\ *\ 16\ *\ \textcolor{keyword}{sizeof}\ (\textcolor{keywordtype}{int}));\ \textcolor{comment}{/*\ fill\ with\ white\ */}}
+\DoxyCodeLine{00675\ \ \ \ memset\ ((\textcolor{keywordtype}{void}\ *)header\_string,\ \textcolor{charliteral}{'\ '},\ 256\ *\ \textcolor{keyword}{sizeof}\ (\textcolor{keywordtype}{char}));\ \textcolor{comment}{/*\ 256\ spaces\ */}}
+\DoxyCodeLine{00676\ \ \ \ header\_string[256]\ =\ \textcolor{charliteral}{'\(\backslash\)0'};\ \ \textcolor{comment}{/*\ null-\/terminated\ */}}
+\DoxyCodeLine{00677\ }
+\DoxyCodeLine{00678\ \ \ \ hdrlen\ =\ strlen\ (raw\_header);}
+\DoxyCodeLine{00679\ \ \ \ \textcolor{comment}{/*\ Wide\ bitmap\ can\ print\ 256\ columns,\ but\ limit\ to\ 32\ columns\ for\ long\ bitmap.\ */}}
+\DoxyCodeLine{00680\ \ \ \ \textcolor{keywordflow}{if}\ (hdrlen\ >\ 32)\ hdrlen\ =\ 32;}
+\DoxyCodeLine{00681\ \ \ \ startcol\ =\ 127\ -\/\ ((hdrlen\ -\/\ 1)\ >>\ 1);\ \ \textcolor{comment}{/*\ to\ center\ header\ */}}
+\DoxyCodeLine{00682\ \ \ \ \textcolor{comment}{/*\ center\ up\ to\ 32\ chars\ */}}
+\DoxyCodeLine{00683\ \ \ \ memcpy\ (\&header\_string[startcol],\ raw\_header,\ hdrlen);}
+\DoxyCodeLine{00684\ }
+\DoxyCodeLine{00685\ \ \ \ \textcolor{comment}{/*\ Copy\ each\ letter's\ bitmap\ from\ the\ plane\_array[][]\ we\ constructed.\ */}}
+\DoxyCodeLine{00686\ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 256;\ j++)\ \{}
+\DoxyCodeLine{00687\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 16;\ i++)\ \{}
+\DoxyCodeLine{00688\ \ \ \ \ \ \ \ \ \ header[i][j]\ =\ \mbox{\hyperlink{unifontpic_8h_a593ebc374e9f30c90743f0fd48cc91df}{ascii\_bits}}[header\_string[j]\ \&\ 0x7F][i];}
+\DoxyCodeLine{00689\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00690\ \ \ \ \}}
+\DoxyCodeLine{00691\ }
+\DoxyCodeLine{00692\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00693\ \textcolor{comment}{\ \ \ \ \ \ Create\ the\ left\ column\ legend.}}
+\DoxyCodeLine{00694\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00695\ \ \ \ memset\ ((\textcolor{keywordtype}{void}\ *)leftcol,\ 0,\ 256\ *\ 16\ *\ \textcolor{keyword}{sizeof}\ (\textcolor{keywordtype}{unsigned}));}
+\DoxyCodeLine{00696\ }
+\DoxyCodeLine{00697\ \ \ \ \textcolor{keywordflow}{for}\ (codept\ =\ 0x0000;\ codept\ <\ 0x10000;\ codept\ +=\ 0x100)\ \{}
+\DoxyCodeLine{00698\ \ \ \ \ \ \ d1\ =\ (codept\ >>\ 12)\ \&\ 0xF;\ \textcolor{comment}{/*\ most\ significant\ hex\ digit\ */}}
+\DoxyCodeLine{00699\ \ \ \ \ \ \ d2\ =\ (codept\ >>\ \ 8)\ \&\ 0xF;}
+\DoxyCodeLine{00700\ }
+\DoxyCodeLine{00701\ \ \ \ \ \ \ thisrow\ =\ codept\ >>\ 8;\ \textcolor{comment}{/*\ rows\ of\ 256\ glyphs\ */}}
+\DoxyCodeLine{00702\ }
+\DoxyCodeLine{00703\ \ \ \ \ \ \ \textcolor{comment}{/*\ fill\ in\ first\ and\ second\ digits\ */}}
+\DoxyCodeLine{00704\ }
+\DoxyCodeLine{00705\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (tinynum)\ \{\ \textcolor{comment}{/*\ use\ 4x5\ pixel\ glyphs\ */}}
+\DoxyCodeLine{00706\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (digitrow\ =\ 0;\ digitrow\ <\ 5;\ digitrow++)\ \{}
+\DoxyCodeLine{00707\ \ \ \ \ \ \ \ \ \ \ \ \ leftcol[thisrow][6\ +\ digitrow]\ =}
+\DoxyCodeLine{00708\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\mbox{\hyperlink{unibmp2hex_8c_a8e50648544568f9274781c2c90acdd78}{hexdigit}}[d1][digitrow]\ <<\ 10)\ |}
+\DoxyCodeLine{00709\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\mbox{\hyperlink{unibmp2hex_8c_a8e50648544568f9274781c2c90acdd78}{hexdigit}}[d2][digitrow]\ <<\ \ 4);}
+\DoxyCodeLine{00710\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00711\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00712\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{\ \textcolor{comment}{/*\ bigger\ numbers\ -\/-\/\ use\ glyphs\ from\ Unifont\ itself\ */}}
+\DoxyCodeLine{00713\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ convert\ hexadecimal\ digits\ to\ ASCII\ equivalent\ */}}
+\DoxyCodeLine{00714\ \ \ \ \ \ \ \ \ \ hexalpha1\ =\ d1\ <\ 0xA\ ?\ \textcolor{charliteral}{'0'}\ +\ d1\ :\ \textcolor{charliteral}{'A'}\ +\ d1\ -\/\ 0xA;}
+\DoxyCodeLine{00715\ \ \ \ \ \ \ \ \ \ hexalpha2\ =\ d2\ <\ 0xA\ ?\ \textcolor{charliteral}{'0'}\ +\ d2\ :\ \textcolor{charliteral}{'A'}\ +\ d2\ -\/\ 0xA;}
+\DoxyCodeLine{00716\ }
+\DoxyCodeLine{00717\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0\ ;\ i\ <\ 16;\ i++)\ \{}
+\DoxyCodeLine{00718\ \ \ \ \ \ \ \ \ \ \ \ \ leftcol[thisrow][i]\ =}
+\DoxyCodeLine{00719\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\mbox{\hyperlink{unifontpic_8h_a593ebc374e9f30c90743f0fd48cc91df}{ascii\_bits}}[hexalpha1][i]\ <<\ 2)\ |}
+\DoxyCodeLine{00720\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\mbox{\hyperlink{unifontpic_8h_a593ebc374e9f30c90743f0fd48cc91df}{ascii\_bits}}[hexalpha2][i]\ >>\ 6);}
+\DoxyCodeLine{00721\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00722\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00723\ }
+\DoxyCodeLine{00724\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 15;\ i\ ++)\ \{}
+\DoxyCodeLine{00725\ \ \ \ \ \ \ \ \ \ leftcol[thisrow][i]\ |=\ 0x00000002;\ \ \ \ \ \ \textcolor{comment}{/*\ right\ border\ */}}
+\DoxyCodeLine{00726\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00727\ }
+\DoxyCodeLine{00728\ \ \ \ \ \ \ leftcol[thisrow][15]\ =\ 0x0000FFFE;\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ bottom\ border\ */}}
+\DoxyCodeLine{00729\ }
+\DoxyCodeLine{00730\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (d2\ ==\ 0xF)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 4096-\/point\ boundary\ */}}
+\DoxyCodeLine{00731\ \ \ \ \ \ \ \ \ \ leftcol[thisrow][15]\ |=\ 0x00FF0000;\ \ \textcolor{comment}{/*\ longer\ tic\ mark\ */}}
+\DoxyCodeLine{00732\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00733\ }
+\DoxyCodeLine{00734\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((thisrow\ \%\ 0x40)\ ==\ 0x3F)\ \{\ \ \ \ \textcolor{comment}{/*\ 16,384-\/point\ boundary\ */}}
+\DoxyCodeLine{00735\ \ \ \ \ \ \ \ \ \ leftcol[thisrow][15]\ |=\ 0xFFFF0000;\ \textcolor{comment}{/*\ longest\ tic\ mark\ */}}
+\DoxyCodeLine{00736\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00737\ \ \ \ \}}
+\DoxyCodeLine{00738\ }
+\DoxyCodeLine{00739\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00740\ \textcolor{comment}{\ \ \ \ \ \ Create\ the\ top\ row\ legend.}}
+\DoxyCodeLine{00741\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00742\ \ \ \ memset\ ((\textcolor{keywordtype}{void}\ *)toprow,\ 0,\ 32\ *\ 256\ *\ \textcolor{keyword}{sizeof}\ (\textcolor{keywordtype}{unsigned}));}
+\DoxyCodeLine{00743\ }
+\DoxyCodeLine{00744\ \ \ \ \textcolor{keywordflow}{for}\ (codept\ =\ 0x00;\ codept\ <=\ 0xFF;\ codept++)\ \{}
+\DoxyCodeLine{00745\ \ \ \ \ \ \ d3\ =\ (codept\ >>\ \ 4)\ \&\ 0xF;}
+\DoxyCodeLine{00746\ \ \ \ \ \ \ d4\ =\ \ codept\ \ \ \ \ \ \ \ \&\ 0xF;\ \textcolor{comment}{/*\ least\ significant\ hex\ digit\ */}}
+\DoxyCodeLine{00747\ }
+\DoxyCodeLine{00748\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (tinynum)\ \{}
+\DoxyCodeLine{00749\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (digitrow\ =\ 0;\ digitrow\ <\ 5;\ digitrow++)\ \{}
+\DoxyCodeLine{00750\ \ \ \ \ \ \ \ \ \ \ \ \ toprow[16\ +\ 6\ +\ digitrow][codept]\ =}
+\DoxyCodeLine{00751\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\mbox{\hyperlink{unibmp2hex_8c_a8e50648544568f9274781c2c90acdd78}{hexdigit}}[d3][digitrow]\ <<\ 10)\ |}
+\DoxyCodeLine{00752\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\mbox{\hyperlink{unibmp2hex_8c_a8e50648544568f9274781c2c90acdd78}{hexdigit}}[d4][digitrow]\ <<\ \ 4);}
+\DoxyCodeLine{00753\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00754\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00755\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00756\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ convert\ hexadecimal\ digits\ to\ ASCII\ equivalent\ */}}
+\DoxyCodeLine{00757\ \ \ \ \ \ \ \ \ \ hexalpha1\ =\ d3\ <\ 0xA\ ?\ \textcolor{charliteral}{'0'}\ +\ d3\ :\ \textcolor{charliteral}{'A'}\ +\ d3\ -\/\ 0xA;}
+\DoxyCodeLine{00758\ \ \ \ \ \ \ \ \ \ hexalpha2\ =\ d4\ <\ 0xA\ ?\ \textcolor{charliteral}{'0'}\ +\ d4\ :\ \textcolor{charliteral}{'A'}\ +\ d4\ -\/\ 0xA;}
+\DoxyCodeLine{00759\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0\ ;\ i\ <\ 16;\ i++)\ \{}
+\DoxyCodeLine{00760\ \ \ \ \ \ \ \ \ \ \ \ \ toprow[14\ +\ i][codept]\ =}
+\DoxyCodeLine{00761\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\mbox{\hyperlink{unifontpic_8h_a593ebc374e9f30c90743f0fd48cc91df}{ascii\_bits}}[hexalpha1][i]\ \ \ \ \ )\ |}
+\DoxyCodeLine{00762\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\mbox{\hyperlink{unifontpic_8h_a593ebc374e9f30c90743f0fd48cc91df}{ascii\_bits}}[hexalpha2][i]\ >>\ 7);}
+\DoxyCodeLine{00763\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00764\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00765\ \ \ \ \}}
+\DoxyCodeLine{00766\ }
+\DoxyCodeLine{00767\ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 256;\ j++)\ \{}
+\DoxyCodeLine{00768\ \ \ \ \ \ \ \textcolor{comment}{/*\ force\ bottom\ pixel\ row\ to\ be\ white,\ for\ separation\ from\ glyphs\ */}}
+\DoxyCodeLine{00769\ \ \ \ \ \ \ toprow[16\ +\ 15][j]\ =\ 0x0000;}
+\DoxyCodeLine{00770\ \ \ \ \}}
+\DoxyCodeLine{00771\ }
+\DoxyCodeLine{00772\ \ \ \ \textcolor{comment}{/*\ 1\ pixel\ row\ with\ left-\/hand\ legend\ line\ */}}
+\DoxyCodeLine{00773\ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 256;\ j++)\ \{}
+\DoxyCodeLine{00774\ \ \ \ \ \ \ toprow[16\ +\ 14][j]\ |=\ 0xFFFF;}
+\DoxyCodeLine{00775\ \ \ \ \}}
+\DoxyCodeLine{00776\ }
+\DoxyCodeLine{00777\ \ \ \ \textcolor{comment}{/*\ 14\ rows\ with\ line\ on\ left\ to\ fill\ out\ this\ character\ row\ */}}
+\DoxyCodeLine{00778\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 13;\ i\ >=\ 0;\ i-\/-\/)\ \{}
+\DoxyCodeLine{00779\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 256;\ j++)\ \{}
+\DoxyCodeLine{00780\ \ \ \ \ \ \ \ \ \ toprow[16\ +\ i][j]\ |=\ 0x0001;}
+\DoxyCodeLine{00781\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00782\ \ \ \ \}}
+\DoxyCodeLine{00783\ }
+\DoxyCodeLine{00784\ \ \ \ \textcolor{comment}{/*\ Form\ the\ longer\ tic\ marks\ in\ top\ legend\ */}}
+\DoxyCodeLine{00785\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 8;\ i\ <\ 16;\ i++)\ \{}
+\DoxyCodeLine{00786\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0x0F;\ j\ <\ 0x100;\ j\ +=\ 0x10)\ \{}
+\DoxyCodeLine{00787\ \ \ \ \ \ \ \ \ \ toprow[i][j]\ |=\ 0x0001;}
+\DoxyCodeLine{00788\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00789\ \ \ \ \}}
+\DoxyCodeLine{00790\ }
+\DoxyCodeLine{00791\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00792\ \textcolor{comment}{\ \ \ \ \ \ Now\ write\ the\ raster\ image.}}
+\DoxyCodeLine{00793\ \textcolor{comment}{}}
+\DoxyCodeLine{00794\ \textcolor{comment}{\ \ \ \ \ \ XOR\ each\ byte\ with\ 0xFF\ because\ black\ =\ 0,\ white\ =\ 1\ in\ BMP.}}
+\DoxyCodeLine{00795\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00796\ }
+\DoxyCodeLine{00797\ \ \ \ \textcolor{comment}{/*\ Write\ the\ glyphs,\ bottom-\/up,\ left-\/to-\/right,\ in\ rows\ of\ 16\ (i.e.,\ 0x10)\ */}}
+\DoxyCodeLine{00798\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0xFF00;\ i\ >=\ 0;\ i\ -\/=\ 0x100)\ \{}
+\DoxyCodeLine{00799\ \ \ \ \ \ \ thisrow\ =\ i\ >>\ 8;\ \textcolor{comment}{/*\ 256\ glyphs\ per\ row\ */}}
+\DoxyCodeLine{00800\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 15;\ j\ >=\ 0;\ j-\/-\/)\ \{}
+\DoxyCodeLine{00801\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ left-\/hand\ legend\ */}}
+\DoxyCodeLine{00802\ \ \ \ \ \ \ \ \ \ putchar\ ((\string~leftcol[thisrow][j]\ >>\ 24)\ \&\ 0xFF);}
+\DoxyCodeLine{00803\ \ \ \ \ \ \ \ \ \ putchar\ ((\string~leftcol[thisrow][j]\ >>\ 16)\ \&\ 0xFF);}
+\DoxyCodeLine{00804\ \ \ \ \ \ \ \ \ \ putchar\ ((\string~leftcol[thisrow][j]\ >>\ \ 8)\ \&\ 0xFF);}
+\DoxyCodeLine{00805\ \ \ \ \ \ \ \ \ \ putchar\ (\ \string~leftcol[thisrow][j]\ \ \ \ \ \ \ \ \&\ 0xFF);}
+\DoxyCodeLine{00806\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Unifont\ glyph\ */}}
+\DoxyCodeLine{00807\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (k\ =\ 0x00;\ k\ <\ 0x100;\ k++)\ \{}
+\DoxyCodeLine{00808\ \ \ \ \ \ \ \ \ \ \ \ \ bytesout\ =\ \string~plane\_array[i+k][j]\ \&\ 0xFFFF;}
+\DoxyCodeLine{00809\ \ \ \ \ \ \ \ \ \ \ \ \ putchar\ ((bytesout\ >>\ 8)\ \&\ 0xFF);}
+\DoxyCodeLine{00810\ \ \ \ \ \ \ \ \ \ \ \ \ putchar\ (\ bytesout\ \ \ \ \ \ \ \&\ 0xFF);}
+\DoxyCodeLine{00811\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00812\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00813\ \ \ \ \}}
+\DoxyCodeLine{00814\ }
+\DoxyCodeLine{00815\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00816\ \textcolor{comment}{\ \ \ \ \ \ Write\ the\ top\ legend.}}
+\DoxyCodeLine{00817\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00818\ \ \ \ \textcolor{comment}{/*\ i\ ==\ 15:\ bottom\ pixel\ row\ of\ header\ is\ output\ here\ */}}
+\DoxyCodeLine{00819\ \ \ \ \textcolor{comment}{/*\ left-\/hand\ legend:\ solid\ black\ line\ except\ for\ right-\/most\ pixel\ */}}
+\DoxyCodeLine{00820\ \ \ \ putchar\ (0x00);}
+\DoxyCodeLine{00821\ \ \ \ putchar\ (0x00);}
+\DoxyCodeLine{00822\ \ \ \ putchar\ (0x00);}
+\DoxyCodeLine{00823\ \ \ \ putchar\ (0x01);}
+\DoxyCodeLine{00824\ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 256;\ j++)\ \{}
+\DoxyCodeLine{00825\ \ \ \ \ \ \ putchar\ ((\string~toprow[16\ +\ 15][j]\ >>\ 8)\ \&\ 0xFF);}
+\DoxyCodeLine{00826\ \ \ \ \ \ \ putchar\ (\ \string~toprow[16\ +\ 15][j]\ \ \ \ \ \ \ \&\ 0xFF);}
+\DoxyCodeLine{00827\ \ \ \ \}}
+\DoxyCodeLine{00828\ }
+\DoxyCodeLine{00829\ \ \ \ putchar\ (0xFF);}
+\DoxyCodeLine{00830\ \ \ \ putchar\ (0xFF);}
+\DoxyCodeLine{00831\ \ \ \ putchar\ (0xFF);}
+\DoxyCodeLine{00832\ \ \ \ putchar\ (0xFC);}
+\DoxyCodeLine{00833\ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 256;\ j++)\ \{}
+\DoxyCodeLine{00834\ \ \ \ \ \ \ putchar\ ((\string~toprow[16\ +\ 14][j]\ >>\ 8)\ \&\ 0xFF);}
+\DoxyCodeLine{00835\ \ \ \ \ \ \ putchar\ (\ \string~toprow[16\ +\ 14][j]\ \ \ \ \ \ \ \&\ 0xFF);}
+\DoxyCodeLine{00836\ \ \ \ \}}
+\DoxyCodeLine{00837\ }
+\DoxyCodeLine{00838\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 16\ +\ 13;\ i\ >=\ 0;\ i-\/-\/)\ \{}
+\DoxyCodeLine{00839\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (i\ >=\ 8)\ \{\ \textcolor{comment}{/*\ make\ vertical\ stroke\ on\ right\ */}}
+\DoxyCodeLine{00840\ \ \ \ \ \ \ \ \ \ putchar\ (0xFF);}
+\DoxyCodeLine{00841\ \ \ \ \ \ \ \ \ \ putchar\ (0xFF);}
+\DoxyCodeLine{00842\ \ \ \ \ \ \ \ \ \ putchar\ (0xFF);}
+\DoxyCodeLine{00843\ \ \ \ \ \ \ \ \ \ putchar\ (0xFD);}
+\DoxyCodeLine{00844\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00845\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{\ \textcolor{comment}{/*\ all\ white\ */}}
+\DoxyCodeLine{00846\ \ \ \ \ \ \ \ \ \ putchar\ (0xFF);}
+\DoxyCodeLine{00847\ \ \ \ \ \ \ \ \ \ putchar\ (0xFF);}
+\DoxyCodeLine{00848\ \ \ \ \ \ \ \ \ \ putchar\ (0xFF);}
+\DoxyCodeLine{00849\ \ \ \ \ \ \ \ \ \ putchar\ (0xFF);}
+\DoxyCodeLine{00850\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00851\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 256;\ j++)\ \{}
+\DoxyCodeLine{00852\ \ \ \ \ \ \ \ \ \ putchar\ ((\string~toprow[i][j]\ >>\ 8)\ \&\ 0xFF);}
+\DoxyCodeLine{00853\ \ \ \ \ \ \ \ \ \ putchar\ (\ \string~toprow[i][j]\ \ \ \ \ \ \ \&\ 0xFF);}
+\DoxyCodeLine{00854\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00855\ \ \ \ \}}
+\DoxyCodeLine{00856\ }
+\DoxyCodeLine{00857\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00858\ \textcolor{comment}{\ \ \ \ \ \ Write\ the\ header.}}
+\DoxyCodeLine{00859\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00860\ }
+\DoxyCodeLine{00861\ \ \ \ \textcolor{comment}{/*\ 8\ completely\ white\ rows\ */}}
+\DoxyCodeLine{00862\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 7;\ i\ >=\ 0;\ i-\/-\/)\ \{}
+\DoxyCodeLine{00863\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 258;\ j++)\ \{}
+\DoxyCodeLine{00864\ \ \ \ \ \ \ \ \ \ putchar\ (0xFF);}
+\DoxyCodeLine{00865\ \ \ \ \ \ \ \ \ \ putchar\ (0xFF);}
+\DoxyCodeLine{00866\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00867\ \ \ \ \}}
+\DoxyCodeLine{00868\ }
+\DoxyCodeLine{00869\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 15;\ i\ >=\ 0;\ i-\/-\/)\ \{}
+\DoxyCodeLine{00870\ \ \ \ \ \ \ \textcolor{comment}{/*\ left-\/hand\ legend\ */}}
+\DoxyCodeLine{00871\ \ \ \ \ \ \ putchar\ (0xFF);}
+\DoxyCodeLine{00872\ \ \ \ \ \ \ putchar\ (0xFF);}
+\DoxyCodeLine{00873\ \ \ \ \ \ \ putchar\ (0xFF);}
+\DoxyCodeLine{00874\ \ \ \ \ \ \ putchar\ (0xFF);}
+\DoxyCodeLine{00875\ \ \ \ \ \ \ \textcolor{comment}{/*\ header\ glyph\ */}}
+\DoxyCodeLine{00876\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 256;\ j++)\ \{}
+\DoxyCodeLine{00877\ \ \ \ \ \ \ \ \ \ bytesout\ =\ \string~header[i][j]\ \&\ 0xFFFF;}
+\DoxyCodeLine{00878\ \ \ \ \ \ \ \ \ \ putchar\ ((bytesout\ >>\ 8)\ \&\ 0xFF);}
+\DoxyCodeLine{00879\ \ \ \ \ \ \ \ \ \ putchar\ (\ bytesout\ \ \ \ \ \ \ \&\ 0xFF);}
+\DoxyCodeLine{00880\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00881\ \ \ \ \}}
+\DoxyCodeLine{00882\ }
+\DoxyCodeLine{00883\ \ \ \ \textcolor{comment}{/*\ 8\ completely\ white\ rows\ at\ very\ top\ */}}
+\DoxyCodeLine{00884\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 7;\ i\ >=\ 0;\ i-\/-\/)\ \{}
+\DoxyCodeLine{00885\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 258;\ j++)\ \{}
+\DoxyCodeLine{00886\ \ \ \ \ \ \ putchar\ (0xFF);}
+\DoxyCodeLine{00887\ \ \ \ \ \ \ putchar\ (0xFF);}
+\DoxyCodeLine{00888\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00889\ \ \ \ \}}
+\DoxyCodeLine{00890\ }
+\DoxyCodeLine{00891\ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00892\ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+% FIG 3
+Here is the caller graph for this function\+:
+% FIG 4
+\mbox{\Hypertarget{unifontpic_8c_a0a030f2857f0d855b7ab0ccd8e968f1f}\label{unifontpic_8c_a0a030f2857f0d855b7ab0ccd8e968f1f}} 
+\index{unifontpic.c@{unifontpic.c}!gethex@{gethex}}
+\index{gethex@{gethex}!unifontpic.c@{unifontpic.c}}
+\doxysubsubsection{\texorpdfstring{gethex()}{gethex()}}
+{\footnotesize\ttfamily void gethex (\begin{DoxyParamCaption}\item[{char $\ast$}]{instring,  }\item[{int}]{plane\+\_\+array\mbox{[}0x10000\mbox{]}\mbox{[}16\mbox{]},  }\item[{int}]{plane }\end{DoxyParamCaption})}
+
+
+
+Read a Unifont .hex-\/format input file from stdin. 
+
+Each glyph can be 2, 4, 6, or 8 ASCII hexadecimal digits wide. \mbox{\hyperlink{structGlyph}{Glyph}} height is fixed at 16 pixels.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em instring} & One line from a Unifont .hex-\/format file. \\
+\hline
+\mbox{\texttt{ in,out}}  & {\em plane\+\_\+array} & Bitmap for this plane, one bitmap row per element. \\
+\hline
+\mbox{\texttt{ in}}  & {\em plane} & The Unicode plane, 0..17. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{unifontpic_8c_source_l00224}{224}} of file \mbox{\hyperlink{unifontpic_8c_source}{unifontpic.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00225\ \{}
+\DoxyCodeLine{00226\ \ \ \ \textcolor{keywordtype}{char}\ *bitstring;\ \ \textcolor{comment}{/*\ pointer\ into\ instring\ for\ glyph\ bitmap\ */}}
+\DoxyCodeLine{00227\ \ \ \ \textcolor{keywordtype}{int}\ i;\ \ \ \ \ \ \ \textcolor{comment}{/*\ loop\ variable\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00228\ \ \ \ \textcolor{keywordtype}{int}\ codept;\ \ \textcolor{comment}{/*\ the\ Unicode\ code\ point\ of\ the\ current\ glyph\ */}}
+\DoxyCodeLine{00229\ \ \ \ \textcolor{keywordtype}{int}\ glyph\_plane;\ \textcolor{comment}{/*\ Unicode\ plane\ of\ current\ glyph\ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00230\ \ \ \ \textcolor{keywordtype}{int}\ ndigits;\ \textcolor{comment}{/*\ number\ of\ ASCII\ hexadecimal\ digits\ in\ glyph\ */}}
+\DoxyCodeLine{00231\ \ \ \ \textcolor{keywordtype}{int}\ bytespl;\ \textcolor{comment}{/*\ bytes\ per\ line\ of\ pixels\ in\ a\ glyph\ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00232\ \ \ \ \textcolor{keywordtype}{int}\ temprow;\ \textcolor{comment}{/*\ 1\ row\ of\ a\ quadruple-\/width\ glyph\ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00233\ \ \ \ \textcolor{keywordtype}{int}\ newrow;\ \ \textcolor{comment}{/*\ 1\ row\ of\ double-\/width\ output\ pixels\ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00234\ \ \ \ \textcolor{keywordtype}{unsigned}\ bitmask;\ \textcolor{comment}{/*\ to\ mask\ off\ 2\ bits\ of\ long\ width\ glyph\ */}}
+\DoxyCodeLine{00235\ }
+\DoxyCodeLine{00236\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00237\ \textcolor{comment}{\ \ \ \ \ \ Read\ each\ input\ line\ and\ place\ its\ glyph\ into\ the\ bit\ array.}}
+\DoxyCodeLine{00238\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00239\ \ \ \ sscanf\ (instring,\ \textcolor{stringliteral}{"{}\%X"{}},\ \&codept);}
+\DoxyCodeLine{00240\ \ \ \ glyph\_plane\ =\ codept\ >>\ 16;}
+\DoxyCodeLine{00241\ \ \ \ \textcolor{keywordflow}{if}\ (glyph\_plane\ ==\ plane)\ \{}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ codept\ \&=\ 0xFFFF;\ \ \textcolor{comment}{/*\ array\ index\ will\ only\ have\ 16\ bit\ address\ */}}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \textcolor{comment}{/*\ find\ the\ colon\ separator\ */}}
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ (i\ <\ 9)\ \&\&\ (instring[i]\ !=\ \textcolor{charliteral}{':'});\ i++);}
+\DoxyCodeLine{00245\ \ \ \ \ \ \ i++;\ \textcolor{comment}{/*\ position\ past\ it\ */}}
+\DoxyCodeLine{00246\ \ \ \ \ \ \ bitstring\ =\ \&instring[i];}
+\DoxyCodeLine{00247\ \ \ \ \ \ \ ndigits\ =\ strlen\ (bitstring);}
+\DoxyCodeLine{00248\ \ \ \ \ \ \ \textcolor{comment}{/*\ don't\ count\ '\(\backslash\)n'\ at\ end\ of\ line\ if\ present\ */}}
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (bitstring[ndigits\ -\/\ 1]\ ==\ \textcolor{charliteral}{'\(\backslash\)n'})\ ndigits-\/-\/;}
+\DoxyCodeLine{00250\ \ \ \ \ \ \ bytespl\ =\ ndigits\ >>\ 5;\ \ \textcolor{comment}{/*\ 16\ rows\ per\ line,\ 2\ digits\ per\ byte\ */}}
+\DoxyCodeLine{00251\ }
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (bytespl\ >=\ 1\ \&\&\ bytespl\ <=\ 4)\ \{}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 16;\ i++)\ \{\ \textcolor{comment}{/*\ 16\ rows\ per\ glyph\ */}}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Read\ correct\ number\ of\ hexadecimal\ digits\ given\ glyph\ width\ */}}
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (bytespl)\ \{}
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1:\ sscanf\ (bitstring,\ \textcolor{stringliteral}{"{}\%2X"{}},\ \&temprow);}
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bitstring\ +=\ 2;}
+\DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ temprow\ <<=\ 8;\ \textcolor{comment}{/*\ left-\/justify\ single-\/width\ glyph\ */}}
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2:\ sscanf\ (bitstring,\ \textcolor{stringliteral}{"{}\%4X"{}},\ \&temprow);}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bitstring\ +=\ 4;}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ cases\ 3\ and\ 4\ widths\ will\ be\ compressed\ by\ 50\%\ (see\ below)\ */}}
+\DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 3:\ sscanf\ (bitstring,\ \textcolor{stringliteral}{"{}\%6X"{}},\ \&temprow);}
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bitstring\ +=\ 6;}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ temprow\ <<=\ 8;\ \textcolor{comment}{/*\ left-\/justify\ */}}
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 4:\ sscanf\ (bitstring,\ \textcolor{stringliteral}{"{}\%8X"{}},\ \&temprow);}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bitstring\ +=\ 8;}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \ \textcolor{comment}{/*\ switch\ on\ number\ of\ bytes\ per\ row\ */}}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ compress\ glyph\ width\ by\ 50\%\ if\ greater\ than\ double-\/width\ */}}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (bytespl\ >\ 2)\ \{}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ newrow\ =\ 0x0000;}
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ mask\ off\ 2\ bits\ at\ a\ time\ to\ convert\ each\ pair\ to\ 1\ bit\ out\ */}}
+\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (bitmask\ =\ 0xC0000000;\ bitmask\ !=\ 0;\ bitmask\ >>=\ 2)\ \{}
+\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ newrow\ <<=\ 1;}
+\DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((temprow\ \&\ bitmask)\ !=\ 0)\ newrow\ |=\ 1;}
+\DoxyCodeLine{00279\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00280\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ temprow\ =\ newrow;}
+\DoxyCodeLine{00281\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \ \textcolor{comment}{/*\ done\ conditioning\ glyphs\ beyond\ double-\/width\ */}}
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ \ \ \ \ plane\_array[codept][i]\ =\ temprow;\ \ \textcolor{comment}{/*\ store\ glyph\ bitmap\ for\ output\ */}}
+\DoxyCodeLine{00283\ \ \ \ \ \ \ \ \ \ \}\ \ \textcolor{comment}{/*\ for\ each\ row\ */}}
+\DoxyCodeLine{00284\ \ \ \ \ \ \ \}\ \ \textcolor{comment}{/*\ if\ 1\ to\ 4\ bytes\ per\ row/line\ */}}
+\DoxyCodeLine{00285\ \ \ \ \}\ \ \textcolor{comment}{/*\ if\ this\ is\ the\ plane\ we\ are\ seeking\ */}}
+\DoxyCodeLine{00286\ }
+\DoxyCodeLine{00287\ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00288\ \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+% FIG 5
+\mbox{\Hypertarget{unifontpic_8c_a3c04138a5bfe5d72780bb7e82a18e627}\label{unifontpic_8c_a3c04138a5bfe5d72780bb7e82a18e627}} 
+\index{unifontpic.c@{unifontpic.c}!main@{main}}
+\index{main@{main}!unifontpic.c@{unifontpic.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$$\ast$}]{argv }\end{DoxyParamCaption})}
+
+
+
+The main function. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em argc} & The count of command line arguments. \\
+\hline
+\mbox{\texttt{ in}}  & {\em argv} & Pointer to array of command line arguments. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+This program exits with status EXIT\+\_\+\+SUCCESS. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{unifontpic_8c_source_l00093}{93}} of file \mbox{\hyperlink{unifontpic_8c_source}{unifontpic.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00094\ \{}
+\DoxyCodeLine{00095\ \ \ \ \textcolor{comment}{/*\ Input\ line\ buffer\ */}}
+\DoxyCodeLine{00096\ \ \ \ \textcolor{keywordtype}{char}\ instring[\mbox{\hyperlink{unifont1per_8c_a2ff420a6c6a2d1effc47a81e37327985}{MAXSTRING}}];}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \ \ \ \textcolor{comment}{/*\ long\ and\ dpi\ are\ set\ from\ command-\/line\ options\ */}}
+\DoxyCodeLine{00099\ \ \ \ \textcolor{keywordtype}{int}\ wide=1;\ \textcolor{comment}{/*\ =1\ for\ a\ 256x256\ grid,\ =0\ for\ a\ 16x4096\ grid\ */}}
+\DoxyCodeLine{00100\ \ \ \ \textcolor{keywordtype}{int}\ dpi=96;\ \textcolor{comment}{/*\ change\ for\ 256x256\ grid\ to\ fit\ paper\ if\ desired\ */}}
+\DoxyCodeLine{00101\ \ \ \ \textcolor{keywordtype}{int}\ tinynum=0;\ \textcolor{comment}{/*\ whether\ to\ use\ tiny\ labels\ for\ 256x256\ grid\ */}}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \ \ \ \textcolor{keywordtype}{int}\ i,\ j;\ \textcolor{comment}{/*\ loop\ variables\ */}}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ \ \ \ \textcolor{keywordtype}{int}\ plane=0;\ \ \ \ \ \ \textcolor{comment}{/*\ Unicode\ plane,\ 0..17;\ Plane\ 0\ is\ default\ */}}
+\DoxyCodeLine{00106\ \ \ \ \textcolor{comment}{/*\ 16\ pixel\ rows\ for\ each\ of\ 65,536\ glyphs\ in\ a\ Unicode\ plane\ */}}
+\DoxyCodeLine{00107\ \ \ \ \textcolor{keywordtype}{int}\ plane\_array[0x10000][16];}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{unifontpic_8c_a0a030f2857f0d855b7ab0ccd8e968f1f}{gethex}}\ \ \ \ \ (\textcolor{keywordtype}{char}\ *instring,\ \textcolor{keywordtype}{int}\ plane\_array[0x10000][16],\ \textcolor{keywordtype}{int}\ plane);}
+\DoxyCodeLine{00110\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{unifontpic_8c_afd429d88175c59dae5c32e8c9aa7851d}{genlongbmp}}\ (\textcolor{keywordtype}{int}\ plane\_array[0x10000][16],\ \textcolor{keywordtype}{int}\ dpi,\ \textcolor{keywordtype}{int}\ tinynum,}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ plane);}
+\DoxyCodeLine{00112\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{unifontpic_8c_a3931c7b44c00ffdb8925a3c837577677}{genwidebmp}}\ (\textcolor{keywordtype}{int}\ plane\_array[0x10000][16],\ \textcolor{keywordtype}{int}\ dpi,\ \textcolor{keywordtype}{int}\ tinynum,}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ plane);}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \ \ \ \textcolor{keywordflow}{if}\ (argc\ >\ 1)\ \{}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 1;\ i\ <\ argc;\ i++)\ \{}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (strncmp\ (argv[i],\textcolor{stringliteral}{"{}-\/l"{}},2)\ ==\ 0)\ \{\ \textcolor{comment}{/*\ long\ display\ */}}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ wide\ =\ 0;}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (strncmp\ (argv[i],\textcolor{stringliteral}{"{}-\/d"{}},2)\ ==\ 0)\ \{}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ dpi\ =\ atoi\ (\&argv[i][2]);\ \textcolor{comment}{/*\ dots/inch\ specified\ on\ command\ line\ */}}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (strncmp\ (argv[i],\textcolor{stringliteral}{"{}-\/t"{}},2)\ ==\ 0)\ \{}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ tinynum\ =\ 1;}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (strncmp\ (argv[i],\textcolor{stringliteral}{"{}-\/P"{}},2)\ ==\ 0)\ \{}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Get\ Unicode\ plane\ */}}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 2;\ argv[i][j]\ !=\ \textcolor{charliteral}{'\(\backslash\)0'};\ j++)\ \{}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (argv[i][j]\ <\ \textcolor{charliteral}{'0'}\ ||\ argv[i][j]\ >\ \textcolor{charliteral}{'9'})\ \{}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}ERROR:\ Specify\ Unicode\ plane\ as\ decimal\ number.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ exit\ (EXIT\_FAILURE);}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ plane\ =\ atoi\ (\&argv[i][2]);\ \textcolor{comment}{/*\ Unicode\ plane,\ 0..17\ */}}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (plane\ <\ 0\ ||\ plane\ >\ 17)\ \{}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}ERROR:\ Plane\ out\ of\ Unicode\ range\ [0,17].\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ exit\ (EXIT\_FAILURE);}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00143\ \ \ \ \}}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00146\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00147\ \textcolor{comment}{\ \ \ \ \ \ Initialize\ the\ ASCII\ bitmap\ array\ for\ chart\ titles}}
+\DoxyCodeLine{00148\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00149\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 128;\ i++)\ \{}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \textcolor{comment}{/*\ convert\ Unifont\ hexadecimal\ string\ to\ bitmap\ */}}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \mbox{\hyperlink{unifontpic_8c_a0a030f2857f0d855b7ab0ccd8e968f1f}{gethex}}\ ((\textcolor{keywordtype}{char}\ *)\mbox{\hyperlink{unifontpic_8h_ad38c3dd5832ced1dc64c3093f359afcf}{ascii\_hex}}[i],\ plane\_array,\ 0);}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 16;\ j++)\ \mbox{\hyperlink{unifontpic_8h_a593ebc374e9f30c90743f0fd48cc91df}{ascii\_bits}}[i][j]\ =\ plane\_array[i][j];}
+\DoxyCodeLine{00153\ \ \ \ \}}
+\DoxyCodeLine{00154\ }
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00156\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00157\ \textcolor{comment}{\ \ \ \ \ \ Read\ in\ the\ Unifont\ hex\ file\ to\ render\ from\ standard\ input}}
+\DoxyCodeLine{00158\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00159\ \ \ \ memset\ ((\textcolor{keywordtype}{void}\ *)plane\_array,\ 0,\ 0x10000\ *\ 16\ *\ \textcolor{keyword}{sizeof}\ (\textcolor{keywordtype}{int}));}
+\DoxyCodeLine{00160\ \ \ \ \textcolor{keywordflow}{while}\ (fgets\ (instring,\ \mbox{\hyperlink{unifont1per_8c_a2ff420a6c6a2d1effc47a81e37327985}{MAXSTRING}},\ stdin)\ !=\ NULL)\ \{}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \mbox{\hyperlink{unifontpic_8c_a0a030f2857f0d855b7ab0ccd8e968f1f}{gethex}}\ (instring,\ plane\_array,\ plane);\ \textcolor{comment}{/*\ read\ .hex\ input\ file\ and\ fill\ plane\_array\ with\ glyph\ data\ */}}
+\DoxyCodeLine{00162\ \ \ \ \}\ \ \textcolor{comment}{/*\ while\ not\ EOF\ */}}
+\DoxyCodeLine{00163\ }
+\DoxyCodeLine{00164\ }
+\DoxyCodeLine{00165\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00166\ \textcolor{comment}{\ \ \ \ \ \ Write\ plane\_array\ glyph\ data\ to\ BMP\ file\ as\ wide\ or\ long\ bitmap.}}
+\DoxyCodeLine{00167\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00168\ \ \ \ \textcolor{keywordflow}{if}\ (wide)\ \{}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \mbox{\hyperlink{unifontpic_8c_a3931c7b44c00ffdb8925a3c837577677}{genwidebmp}}\ (plane\_array,\ dpi,\ tinynum,\ plane);}
+\DoxyCodeLine{00170\ \ \ \ \}}
+\DoxyCodeLine{00171\ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \mbox{\hyperlink{unifontpic_8c_afd429d88175c59dae5c32e8c9aa7851d}{genlongbmp}}\ (plane\_array,\ dpi,\ tinynum,\ plane);}
+\DoxyCodeLine{00173\ \ \ \ \}}
+\DoxyCodeLine{00174\ }
+\DoxyCodeLine{00175\ \ \ \ exit\ (EXIT\_SUCCESS);}
+\DoxyCodeLine{00176\ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+% FIG 6
+\mbox{\Hypertarget{unifontpic_8c_af1fbb002e4787785de92e073ec46b787}\label{unifontpic_8c_af1fbb002e4787785de92e073ec46b787}} 
+\index{unifontpic.c@{unifontpic.c}!output2@{output2}}
+\index{output2@{output2}!unifontpic.c@{unifontpic.c}}
+\doxysubsubsection{\texorpdfstring{output2()}{output2()}}
+{\footnotesize\ttfamily void output2 (\begin{DoxyParamCaption}\item[{int}]{thisword }\end{DoxyParamCaption})}
+
+
+
+Output a 2-\/byte integer in little-\/endian order. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em thisword} & The 2-\/byte integer to output as binary data. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{unifontpic_8c_source_l00203}{203}} of file \mbox{\hyperlink{unifontpic_8c_source}{unifontpic.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00204\ \{}
+\DoxyCodeLine{00205\ }
+\DoxyCodeLine{00206\ \ \ \ putchar\ (\ thisword\ \ \ \ \ \ \ \&\ 0xFF);}
+\DoxyCodeLine{00207\ \ \ \ putchar\ ((thisword\ >>\ 8)\ \&\ 0xFF);}
+\DoxyCodeLine{00208\ }
+\DoxyCodeLine{00209\ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00210\ \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+% FIG 7
+\mbox{\Hypertarget{unifontpic_8c_ac186155c351c9c3fb9c43acffcbab710}\label{unifontpic_8c_ac186155c351c9c3fb9c43acffcbab710}} 
+\index{unifontpic.c@{unifontpic.c}!output4@{output4}}
+\index{output4@{output4}!unifontpic.c@{unifontpic.c}}
+\doxysubsubsection{\texorpdfstring{output4()}{output4()}}
+{\footnotesize\ttfamily void output4 (\begin{DoxyParamCaption}\item[{int}]{thisword }\end{DoxyParamCaption})}
+
+
+
+Output a 4-\/byte integer in little-\/endian order. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em thisword} & The 4-\/byte integer to output as binary data. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{unifontpic_8c_source_l00185}{185}} of file \mbox{\hyperlink{unifontpic_8c_source}{unifontpic.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00186\ \{}
+\DoxyCodeLine{00187\ }
+\DoxyCodeLine{00188\ \ \ \ putchar\ (\ thisword\ \ \ \ \ \ \ \ \&\ 0xFF);}
+\DoxyCodeLine{00189\ \ \ \ putchar\ ((thisword\ >>\ \ 8)\ \&\ 0xFF);}
+\DoxyCodeLine{00190\ \ \ \ putchar\ ((thisword\ >>\ 16)\ \&\ 0xFF);}
+\DoxyCodeLine{00191\ \ \ \ putchar\ ((thisword\ >>\ 24)\ \&\ 0xFF);}
+\DoxyCodeLine{00192\ }
+\DoxyCodeLine{00193\ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00194\ \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+% FIG 8

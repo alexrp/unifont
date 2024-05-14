@@ -1,0 +1,5 @@
+<map id="genwidebmp" name="genwidebmp">
+<area shape="rect" id="node1" title="Generate the BMP output file in wide format." alt="" coords="5,31,112,56"/>
+<area shape="rect" id="node2" href="$unifontpic_8c.html#af1fbb002e4787785de92e073ec46b787" title="Output a 2&#45;byte integer in little&#45;endian order." alt="" coords="160,5,232,31"/>
+<area shape="rect" id="node3" href="$unifontpic_8c.html#ac186155c351c9c3fb9c43acffcbab710" title="Output a 4&#45;byte integer in little&#45;endian order." alt="" coords="160,55,232,80"/>
+</map>

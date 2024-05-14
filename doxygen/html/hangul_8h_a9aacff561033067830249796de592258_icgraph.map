@@ -1,0 +1,6 @@
+<map id="combine_glyphs" name="combine_glyphs">
+<area shape="rect" id="node1" title="Combine two glyphs into one glyph." alt="" coords="283,31,411,56"/>
+<area shape="rect" id="node2" href="$unihangul-support_8c.html#a07b8c0163dd9e9b6f2560f09e0f3e570" title="Convert Hangul Jamo choseong, jungseong, and jongseong into a glyph." alt="" coords="108,5,235,31"/>
+<area shape="rect" id="node4" href="$unijohab2html_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="The main function." alt="" coords="144,55,199,80"/>
+<area shape="rect" id="node3" href="$unigen-hangul_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="Program entry point." alt="" coords="5,5,60,31"/>
+</map>

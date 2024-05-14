@@ -1,0 +1,12 @@
+<map id="main" name="main">
+<area shape="rect" id="node1" title="The main function." alt="" coords="5,80,60,105"/>
+<area shape="rect" id="node2" href="$unihangul-support_8c.html#a50a8e6626a7e76210784a560e8ac15b5" title="Decompose a Hangul Syllables code point into three letters." alt="" coords="108,5,256,31"/>
+<area shape="rect" id="node3" href="$unihangul-support_8c.html#a0c3abd429f2b52cfa38a22ba6a83eb78" title="Read hangul&#45;base.hex file into a unsigned char array." alt="" coords="108,55,256,80"/>
+<area shape="rect" id="node4" href="$unihangul-support_8c.html#abb373afe914554ff8443f05d83b69e8e" title="Given letters in a Hangul syllable, return a glyph." alt="" coords="120,104,244,129"/>
+<area shape="rect" id="node10" href="$johab2syllables_8c.html#a853216ac51aa181669ff4d3de74058a7" title="Print a help message." alt="" coords="139,153,225,179"/>
+<area shape="rect" id="node5" href="$unihangul-support_8c.html#a2f88bf9b2f6d754350f996933a0a9a65" title="Determine index values to the bitmaps for a syllable&#39;s components." alt="" coords="304,104,455,129"/>
+<area shape="rect" id="node6" href="$unihangul-support_8c.html#ab795ff183c3e429e0eb9257a7737c57f" title="Return the Johab 6/3/1 choseong variation for a syllable." alt="" coords="691,33,802,59"/>
+<area shape="rect" id="node7" href="$unihangul-support_8c.html#a7b8f3653d0dd30a1145be38529370def" title="Determine the variations of each letter in a Hangul syllable." alt="" coords="503,79,641,104"/>
+<area shape="rect" id="node8" href="$unihangul-support_8c.html#aaf73601bfe34292aa58b0d827feb01d8" title="Return the Johab 6/3/1 jongseong variation." alt="" coords="689,87,804,112"/>
+<area shape="rect" id="node9" href="$unihangul-support_8c.html#abaed5273181b15b047e92b3b79f68a4d" title="Return the Johab 6/3/1 jungseong variation." alt="" coords="689,167,804,192"/>
+</map>

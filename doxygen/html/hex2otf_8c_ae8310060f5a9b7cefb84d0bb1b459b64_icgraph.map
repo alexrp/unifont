@@ -1,0 +1,20 @@
+<map id="newBuffer" name="newBuffer">
+<area shape="rect" id="node1" title="Create a new buffer." alt="" coords="473,411,561,436"/>
+<area shape="rect" id="node2" href="$hex2otf_8c.html#afd499a24ff34cb5c19b52df795422c12" title="Fill OpenType bitmap data and location tables." alt="" coords="127,6,212,31"/>
+<area shape="rect" id="node3" href="$hex2otf_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="The main function." alt="" coords="5,432,60,458"/>
+<area shape="rect" id="node4" href="$hex2otf_8c.html#ab37b4f7111692f8d1163bafd2aab831e" title="Create a dummy blank outline in a font table." alt="" coords="108,132,231,158"/>
+<area shape="rect" id="node5" href="$hex2otf_8c.html#a3d62aa29f94c3fa78ca4438739d64a62" title="Add a CFF table to a font." alt="" coords="138,208,201,234"/>
+<area shape="rect" id="node6" href="$hex2otf_8c.html#a6362601eb41d051a103a1d9edcd4f284" title="Fill a &quot;cmap&quot; font table." alt="" coords="114,259,225,284"/>
+<area shape="rect" id="node7" href="$hex2otf_8c.html#a6c1e982fdc6c51b9f84051daa2e71936" title="Fill a &quot;GPOS&quot; font table." alt="" coords="117,308,222,334"/>
+<area shape="rect" id="node8" href="$hex2otf_8c.html#a06b8121dea15c8117b7c951ffb22fb7e" title="Fill a &quot;GSUB&quot; font table." alt="" coords="117,358,222,383"/>
+<area shape="rect" id="node9" href="$hex2otf_8c.html#a4ac0c02117b703a71bee3dd34e2eb306" title="Fill a &quot;head&quot; font table." alt="" coords="116,407,223,432"/>
+<area shape="rect" id="node10" href="$hex2otf_8c.html#a28e889c3a36007c2e5d50a498046a6c6" title="Fill a &quot;hhea&quot; font table." alt="" coords="116,456,223,482"/>
+<area shape="rect" id="node11" href="$hex2otf_8c.html#a97c9b2ae58f5989d68e639715c3f9df9" title="Fill an &quot;hmtx&quot; font table." alt="" coords="298,512,406,538"/>
+<area shape="rect" id="node12" href="$hex2otf_8c.html#aff4f28ce178c84c7365245ec10034433" title="Fill a &quot;maxp&quot; font table." alt="" coords="298,562,406,587"/>
+<area shape="rect" id="node13" href="$hex2otf_8c.html#a79d8a322be9d9131b684a9ea67abe05e" title="Fill a &quot;name&quot; font table." alt="" coords="297,611,407,636"/>
+<area shape="rect" id="node14" href="$hex2otf_8c.html#ab6e3bb110dc3e55193c344cb7b56e328" title="Fill an &quot;OS/2&quot; font table." alt="" coords="303,660,401,686"/>
+<area shape="rect" id="node15" href="$hex2otf_8c.html#a0ddc03905c4918e04aa1e54a7c1716b1" title="Fill a &quot;post&quot; font table." alt="" coords="302,710,402,735"/>
+<area shape="rect" id="node16" href="$hex2otf_8c.html#a326e4fa86eb32bb18e37eab8f495bd2f" title="Add a TrueType table to a font." alt="" coords="305,760,399,786"/>
+<area shape="rect" id="node17" href="$hex2otf_8c.html#aa52cd46a50cdc2040a72e5c7ecfa944b" title="Prepare a font name string index." alt="" coords="279,208,425,234"/>
+<area shape="rect" id="node18" href="$hex2otf_8c.html#a074562f0527ff6db8b1b956b9356a315" title="Write OpenType font to output file." alt="" coords="311,810,393,835"/>
+</map>

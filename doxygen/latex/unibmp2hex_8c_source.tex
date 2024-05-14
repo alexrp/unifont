@@ -1,0 +1,726 @@
+\hypertarget{unibmp2hex_8c_source}{}\doxysection{unibmp2hex.\+c}
+\label{unibmp2hex_8c_source}\index{src/unibmp2hex.c@{src/unibmp2hex.c}}
+\mbox{\hyperlink{unibmp2hex_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00001}00001\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00002}00002\ \textcolor{comment}{\ \ \ @file\ unibmp2hex.c}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00003}00003\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00004}00004\ \textcolor{comment}{\ \ \ @brief\ unibmp2hex\ -\/\ Turn\ a\ .bmp\ or\ .wbmp\ glyph\ matrix\ into\ a}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00005}00005\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ GNU\ Unifont\ hex\ glyph\ set\ of\ 256\ characters}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00006}00006\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00007}00007\ \textcolor{comment}{\ \ \ @author\ Paul\ Hardy,\ unifoundry\ <at>\ unifoundry.com,\ December\ 2007}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00008}00008\ \textcolor{comment}{\ \ \ }}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00009}00009\ \textcolor{comment}{\ \ \ @copyright\ Copyright\ (C)\ 2007,\ 2008,\ 2013,\ 2017,\ 2019,\ 2022\ Paul\ Hardy}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00010}00010\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00011}00011\ \textcolor{comment}{\ \ \ Synopsis:\ unibmp2hex\ [-\/iin\_file.bmp]\ [-\/oout\_file.hex]\ [-\/phex\_page\_num]\ [-\/w]}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00012}00012\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00013}00013\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00014}00014\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00015}00015\ \textcolor{comment}{\ \ \ LICENSE:}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00016}00016\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00017}00017\ \textcolor{comment}{\ \ \ \ \ \ This\ program\ is\ free\ software:\ you\ can\ redistribute\ it\ and/or\ modify}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00018}00018\ \textcolor{comment}{\ \ \ \ \ \ it\ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00019}00019\ \textcolor{comment}{\ \ \ \ \ \ the\ Free\ Software\ Foundation,\ either\ version\ 2\ of\ the\ License,\ or}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00020}00020\ \textcolor{comment}{\ \ \ \ \ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00021}00021\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00022}00022\ \textcolor{comment}{\ \ \ \ \ \ This\ program\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00023}00023\ \textcolor{comment}{\ \ \ \ \ \ but\ WITHOUT\ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00024}00024\ \textcolor{comment}{\ \ \ \ \ \ MERCHANTABILITY\ or\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00025}00025\ \textcolor{comment}{\ \ \ \ \ \ GNU\ General\ Public\ License\ for\ more\ details.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00026}00026\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00027}00027\ \textcolor{comment}{\ \ \ \ \ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00028}00028\ \textcolor{comment}{\ \ \ \ \ \ along\ with\ this\ program.\ \ If\ not,\ see\ <http://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00029}00029\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00031}00031\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00032}00032\ \textcolor{comment}{\ \ \ 6\ September\ 2021\ [Paul\ Hardy]:}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00033}00033\ \textcolor{comment}{\ \ \ \ \ \ -\/\ Set\ U+12F90..U+12FFF\ (Cypro-\/Minoan)\ to\ be\ double\ width.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00034}00034\ \textcolor{comment}{\ \ \ \ \ \ -\/\ Set\ U+1CF00..U+1CFCF\ (Znamenny\ Musical\ Notation)\ to\ be\ double\ width.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00035}00035\ \textcolor{comment}{\ \ \ \ \ \ -\/\ Set\ U+1AFF0..U+1AFFF\ (Kana\ Extended-\/B)\ to\ be\ double\ width.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00036}00036\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00037}00037\ \textcolor{comment}{\ \ \ 20\ June\ 2017\ [Paul\ Hardy]:}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00038}00038\ \textcolor{comment}{\ \ \ \ \ \ -\/\ Modify\ to\ allow\ hard-\/coding\ of\ quadruple-\/width\ hex\ glyphs.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00039}00039\ \textcolor{comment}{\ \ \ \ \ \ \ \ The\ 32nd\ column\ (rightmost\ column)\ is\ cleared\ to\ zero,\ because}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00040}00040\ \textcolor{comment}{\ \ \ \ \ \ \ \ that\ column\ contains\ the\ vertical\ cell\ border.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00041}00041\ \textcolor{comment}{\ \ \ \ \ \ -\/\ Set\ U+9FD8..U+9FE9\ (complex\ CJK)\ to\ be\ quadruple-\/width.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00042}00042\ \textcolor{comment}{\ \ \ \ \ \ -\/\ Set\ U+011A00..U+011A4F\ (Masaram\ Gondi,\ non-\/digits)\ to\ be\ wide.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00043}00043\ \textcolor{comment}{\ \ \ \ \ \ -\/\ Set\ U+011A50..U+011AAF\ (Soyombo)\ to\ be\ wide.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00044}00044\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00045}00045\ \textcolor{comment}{\ \ \ 8\ July\ 2017\ [Paul\ Hardy]:}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00046}00046\ \textcolor{comment}{\ \ \ \ \ \ -\/\ All\ CJK\ glyphs\ in\ the\ range\ U+4E00..u+9FFF\ are\ double\ width}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00047}00047\ \textcolor{comment}{\ \ \ \ \ \ \ \ again;\ commented\ out\ the\ line\ that\ sets\ U+9FD8..U+9FE9\ to\ be}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00048}00048\ \textcolor{comment}{\ \ \ \ \ \ \ \ quadruple\ width.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00049}00049\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00050}00050\ \textcolor{comment}{\ \ \ 6\ August\ 2017\ [Paul\ Hardy]:}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00051}00051\ \textcolor{comment}{\ \ \ \ \ \ -\/\ Remove\ hard-\/coding\ of\ U+01D200..U+01D24F\ Ancient\ Greek\ Musical}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00052}00052\ \textcolor{comment}{\ \ \ \ \ \ \ \ Notation\ to\ double-\/width;\ allow\ range\ to\ be\ dual-\/width.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00053}00053\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00054}00054\ \textcolor{comment}{\ \ \ 12\ August\ 2017\ [Paul\ Hardy]:}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00055}00055\ \textcolor{comment}{\ \ \ \ \ \ -\/\ Remove\ Miao\ script\ from\ list\ of\ wide\ scripts,\ so\ it\ can\ contain}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00056}00056\ \textcolor{comment}{\ \ \ \ \ \ \ \ single-\/width\ glyphs.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00057}00057\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00058}00058\ \textcolor{comment}{\ \ \ 26\ December\ 2017\ Paul\ Hardy:}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00059}00059\ \textcolor{comment}{\ \ \ \ \ \ -\/\ Removed\ Tibetan\ from\ list\ of\ wide\ scripts,\ so\ it\ can\ contain}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00060}00060\ \textcolor{comment}{\ \ \ \ \ \ \ \ single-\/width\ glyphs.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00061}00061\ \textcolor{comment}{\ \ \ \ \ \ -\/\ Added\ a\ number\ of\ scripts\ to\ be\ explicitly\ double-\/width\ in\ case}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00062}00062\ \textcolor{comment}{\ \ \ \ \ \ \ \ they\ are\ redrawn.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00063}00063\ \textcolor{comment}{\ \ \ \ \ \ -\/\ Added\ Miao\ script\ back\ as\ wide,\ because\ combining\ glyphs\ are}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00064}00064\ \textcolor{comment}{\ \ \ \ \ \ \ \ added\ back\ to\ font/plane01/plane01-\/combining.txt.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00065}00065\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00066}00066\ \textcolor{comment}{\ \ \ 05\ June\ 2018\ Paul\ Hardy:}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00067}00067\ \textcolor{comment}{\ \ \ \ \ \ -\/\ Made\ U+2329]\ and\ U+232A\ wide.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00068}00068\ \textcolor{comment}{\ \ \ \ \ \ -\/\ Added\ to\ wide\ settings\ for\ CJK\ Compatibility\ Forms\ over\ entire\ range.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00069}00069\ \textcolor{comment}{\ \ \ \ \ \ -\/\ Made\ Kayah\ Li\ script\ double-\/width.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00070}00070\ \textcolor{comment}{\ \ \ \ \ \ -\/\ Made\ U+232A\ (Right-\/pointing\ Angle\ Bracket)\ double-\/width.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00071}00071\ \textcolor{comment}{\ \ \ \ \ \ -\/\ Made\ U+01F5E7\ (Three\ Rays\ Right)\ double-\/width.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00072}00072\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00073}00073\ \textcolor{comment}{\ \ \ July\ 2018\ Paul\ Hardy:}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00074}00074\ \textcolor{comment}{\ \ \ \ \ \ -\/\ Changed\ 2017\ to\ 2018\ in\ previous\ change\ entry.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00075}00075\ \textcolor{comment}{\ \ \ \ \ \ -\/\ Added\ Dogra\ (U+011800..U+01184F)\ as\ double\ width.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00076}00076\ \textcolor{comment}{\ \ \ \ \ \ -\/\ Added\ Makasar\ (U+011EE0..U+011EFF)\ as\ dobule\ width.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00077}00077\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00078}00078\ \textcolor{comment}{\ \ \ 23\ February\ 2019\ [Paul\ Hardy]:}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00079}00079\ \textcolor{comment}{\ \ \ \ \ \ -\/\ Set\ U+119A0..U+119FF\ (Nandinagari)\ to\ be\ wide.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00080}00080\ \textcolor{comment}{\ \ \ \ \ \ -\/\ Set\ U+1E2C0..U+1E2FF\ (Wancho)\ to\ be\ wide.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00081}00081\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00082}00082\ \textcolor{comment}{\ \ \ 25\ May\ 2019\ [Paul\ Hardy]:}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00083}00083\ \textcolor{comment}{\ \ \ \ \ \ -\/\ Added\ support\ for\ the\ case\ when\ the\ original\ .bmp\ monochrome}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00084}00084\ \textcolor{comment}{\ \ \ \ \ \ \ \ file\ has\ been\ converted\ to\ a\ 32\ bit\ per\ pixel\ RGB\ file.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00085}00085\ \textcolor{comment}{\ \ \ \ \ \ -\/\ Added\ support\ for\ bitmap\ images\ stored\ from\ either\ top\ to\ bottom}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00086}00086\ \textcolor{comment}{\ \ \ \ \ \ \ \ or\ bottom\ to\ top.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00087}00087\ \textcolor{comment}{\ \ \ \ \ \ -\/\ Add\ DEBUG\ compile\ flag\ to\ print\ header\ information,\ to\ ease}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00088}00088\ \textcolor{comment}{\ \ \ \ \ \ \ \ adding\ support\ for\ additional\ bitmap\ formats\ in\ the\ future.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00089}00089\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00090}00090\ \textcolor{comment}{\ \ \ 13\ March\ 2022\ [Paul\ Hardy]:}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00091}00091\ \textcolor{comment}{\ \ \ \ \ \ -\/\ Added\ support\ for\ 24\ bits\ per\ pixel\ RGB\ file.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00092}00092\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00093}00093\ \textcolor{comment}{\ \ \ 12\ June\ 2022\ [Paul\ Hardy]:}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00094}00094\ \textcolor{comment}{\ \ \ \ \ \ -\/\ Set\ U+11B00..U+11B5F\ (Devanagari\ Extended-\/A)\ to\ be\ wide.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00095}00095\ \textcolor{comment}{\ \ \ \ \ \ -\/\ Set\ U+11F00..U+11F5F\ (Kawi)\ to\ be\ wide.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00096}00096\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00097}00097\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00098}00098\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00100}00100\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00101}00101\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00102}00102\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00103}00103\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00104}\mbox{\hyperlink{unibmp2hex_8c_ad7871643c05865c80f5d8050aead2b57}{00104}}\ \textcolor{preprocessor}{\#define\ MAXBUF\ 256\ \ }\textcolor{comment}{///<\ Maximum\ input\ file\ line\ length\ -\/\ 1}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00106}00106\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00107}\mbox{\hyperlink{unibmp2hex_8c_a8e50648544568f9274781c2c90acdd78}{00107}}\ \textcolor{keywordtype}{unsigned}\ \mbox{\hyperlink{unibmp2hex_8c_a8e50648544568f9274781c2c90acdd78}{hexdigit}}[16][4];\ \textcolor{comment}{///<\ 32\ bit\ representation\ of\ 16x8\ 0..F\ bitmap}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00108}00108\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00109}\mbox{\hyperlink{unibmp2hex_8c_a6ab9015718d2f37f1420e7a0b53713ec}{00109}}\ \textcolor{keywordtype}{unsigned}\ \mbox{\hyperlink{unibmp2hex_8c_a6ab9015718d2f37f1420e7a0b53713ec}{uniplane}}=0;\ \ \ \ \ \ \textcolor{comment}{///<\ Unicode\ plane\ number,\ 0..0xff\ ff\ ff}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00110}\mbox{\hyperlink{unibmp2hex_8c_a23c536e061c3387fee66c7f6250f2b58}{00110}}\ \textcolor{keywordtype}{unsigned}\ \mbox{\hyperlink{unibmp2hex_8c_a23c536e061c3387fee66c7f6250f2b58}{planeset}}=0;\ \ \ \ \ \ \textcolor{comment}{///<\ =1:\ use\ plane\ specified\ with\ -\/p\ parameter}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00111}\mbox{\hyperlink{unibmp2hex_8c_af7ab3cd5a9f70af7701580cdf283636c}{00111}}\ \textcolor{keywordtype}{unsigned}\ \mbox{\hyperlink{unibmp2hex_8c_af7ab3cd5a9f70af7701580cdf283636c}{flip}}=0;\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{///<\ =1\ if\ we're\ transposing\ glyph\ matrix}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00112}\mbox{\hyperlink{unibmp2hex_8c_a77fe45bfa888a90761ae6dc8627fdd5e}{00112}}\ \textcolor{keywordtype}{unsigned}\ \mbox{\hyperlink{unibmp2hex_8c_a77fe45bfa888a90761ae6dc8627fdd5e}{forcewide}}=0;\ \ \ \ \ \textcolor{comment}{///<\ =1\ to\ set\ each\ glyph\ to\ 16\ pixels\ wide}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00113}00113\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00114}00114\ \textcolor{comment}{/**\ The\ six\ Unicode\ plane\ digits,\ from\ left-\/most\ (0)\ to\ right-\/most\ (5)\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00115}\mbox{\hyperlink{unibmp2hex_8c_a4000465b001e714b0bfa857e4956a76c}{00115}}\ \textcolor{keywordtype}{unsigned}\ \mbox{\hyperlink{unibmp2hex_8c_a4000465b001e714b0bfa857e4956a76c}{unidigit}}[6][4];}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00116}00116\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00117}00117\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00118}00118\ \textcolor{comment}{/**\ Bitmap\ Header\ parameters\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00119}00119\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00120}00120\ \ \ \ \textcolor{keywordtype}{char}\ filetype[2];}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00121}00121\ \ \ \ \textcolor{keywordtype}{int}\ file\_size;}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00122}00122\ \ \ \ \textcolor{keywordtype}{int}\ image\_offset;}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00123}00123\ \ \ \ \textcolor{keywordtype}{int}\ info\_size;}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00124}00124\ \ \ \ \textcolor{keywordtype}{int}\ width;}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00125}00125\ \ \ \ \textcolor{keywordtype}{int}\ height;}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00126}00126\ \ \ \ \textcolor{keywordtype}{int}\ nplanes;}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00127}00127\ \ \ \ \textcolor{keywordtype}{int}\ bits\_per\_pixel;}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00128}00128\ \ \ \ \textcolor{keywordtype}{int}\ compression;}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00129}00129\ \ \ \ \textcolor{keywordtype}{int}\ image\_size;}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00130}00130\ \ \ \ \textcolor{keywordtype}{int}\ x\_ppm;}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00131}00131\ \ \ \ \textcolor{keywordtype}{int}\ y\_ppm;}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00132}00132\ \ \ \ \textcolor{keywordtype}{int}\ ncolors;}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00133}00133\ \ \ \ \textcolor{keywordtype}{int}\ important\_colors;}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00134}\mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{00134}}\ \}\ \mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}};}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00135}00135\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00136}00136\ \textcolor{comment}{/**\ Bitmap\ Color\ Table\ -\/-\/\ maximum\ of\ 256\ colors\ in\ a\ BMP\ file\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00137}\mbox{\hyperlink{unibmp2hex_8c_aa2196ad512cd5cffe3c54f7798f1b286}{00137}}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{unibmp2hex_8c_aa2196ad512cd5cffe3c54f7798f1b286}{color\_table}}[256][4];\ \ \textcolor{comment}{/*\ R,\ G,\ B,\ alpha\ for\ up\ to\ 256\ colors\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00138}00138\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00139}00139\ \textcolor{comment}{//\ \#define\ DEBUG}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00140}00140\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00141}00141\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00142}00142\ \textcolor{comment}{\ \ \ @brief\ The\ main\ function.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00143}00143\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00144}00144\ \textcolor{comment}{\ \ \ @param[in]\ argc\ The\ count\ of\ command\ line\ arguments.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00145}00145\ \textcolor{comment}{\ \ \ @param[in]\ argv\ Pointer\ to\ array\ of\ command\ line\ arguments.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00146}00146\ \textcolor{comment}{\ \ \ @return\ This\ program\ exits\ with\ status\ 0.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00147}00147\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00148}00148\ \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00149}\mbox{\hyperlink{unibmp2hex_8c_a0ddf1224851353fc92bfbff6f499fa97}{00149}}\ \mbox{\hyperlink{unibdf2hex_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}}\ (\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}\ *argv[])}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00150}00150\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00151}00151\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00152}00152\ \ \ \ \textcolor{keywordtype}{int}\ i,\ j,\ k;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ loop\ variables\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00153}00153\ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ inchar;\ \ \ \ \ \ \ \textcolor{comment}{/*\ temporary\ input\ character\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00154}00154\ \ \ \ \textcolor{keywordtype}{char}\ header[\mbox{\hyperlink{unibmp2hex_8c_ad7871643c05865c80f5d8050aead2b57}{MAXBUF}}];\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ input\ buffer\ for\ bitmap\ file\ header\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00155}00155\ \ \ \ \textcolor{keywordtype}{int}\ wbmp=0;\ \textcolor{comment}{/*\ =0\ for\ Windows\ Bitmap\ (.bmp);\ 1\ for\ Wireless\ Bitmap\ (.wbmp)\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00156}00156\ \ \ \ \textcolor{keywordtype}{int}\ fatal;\ \textcolor{comment}{/*\ =1\ if\ a\ fatal\ error\ occurred\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00157}00157\ \ \ \ \textcolor{keywordtype}{int}\ match;\ \textcolor{comment}{/*\ =1\ if\ we're\ still\ matching\ a\ pattern,\ 0\ if\ no\ match\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00158}00158\ \ \ \ \textcolor{keywordtype}{int}\ empty1,\ empty2;\ \textcolor{comment}{/*\ =1\ if\ bytes\ tested\ are\ all\ zeroes\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00159}00159\ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ thischar1[16],\ thischar2[16];\ \textcolor{comment}{/*\ bytes\ of\ hex\ char\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00160}00160\ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ thischar0[16],\ thischar3[16];\ \textcolor{comment}{/*\ bytes\ for\ quadruple-\/width\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00161}00161\ \ \ \ \textcolor{keywordtype}{int}\ thisrow;\ \textcolor{comment}{/*\ index\ to\ point\ into\ thischar1[]\ and\ thischar2[]\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00162}00162\ \ \ \ \textcolor{keywordtype}{int}\ tmpsum;\ \ \textcolor{comment}{/*\ temporary\ sum\ to\ see\ if\ a\ character\ is\ blank\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00163}00163\ \ \ \ \textcolor{keywordtype}{unsigned}\ this\_pixel;\ \ \textcolor{comment}{/*\ color\ of\ one\ pixel,\ if\ >\ 1\ bit\ per\ pixel\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00164}00164\ \ \ \ \textcolor{keywordtype}{unsigned}\ next\_pixels;\ \textcolor{comment}{/*\ pending\ group\ of\ 8\ pixels\ being\ read\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00165}00165\ \ \ \ \textcolor{keywordtype}{unsigned}\ color\_mask\ =\ 0x00;\ \ \textcolor{comment}{/*\ to\ invert\ monochrome\ bitmap,\ set\ to\ 0xFF\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00166}00166\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00167}00167\ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ bitmap[17*32][18*32/8];\ \textcolor{comment}{/*\ final\ bitmap\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00168}00168\ \ \ \ \textcolor{comment}{/*\ For\ wide\ array:}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00169}00169\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ 0\ =\ don't\ force\ glyph\ to\ double-\/width;}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00170}00170\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ 1\ =\ force\ glyph\ to\ double-\/width;}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00171}00171\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ 4\ =\ force\ glyph\ to\ quadruple-\/width.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00172}00172\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00173}00173\ \ \ \ \textcolor{keywordtype}{char}\ wide[0x200000]=\{0x200000\ *\ 0\};}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00174}00174\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00175}00175\ \ \ \ \textcolor{keywordtype}{char}\ *infile=\textcolor{stringliteral}{"{}"{}},\ *outfile=\textcolor{stringliteral}{"{}"{}};\ \ \textcolor{comment}{/*\ names\ of\ input\ and\ output\ files\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00176}00176\ \ \ \ FILE\ *infp,\ *outfp;\ \ \ \ \ \ \textcolor{comment}{/*\ file\ pointers\ of\ input\ and\ output\ files\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00177}00177\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00178}00178\ \ \ \ \textcolor{keywordflow}{if}\ (argc\ >\ 1)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00179}00179\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 1;\ i\ <\ argc;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (argv[i][0]\ ==\ \textcolor{charliteral}{'-\/'})\ \{\ \ \textcolor{comment}{/*\ this\ is\ an\ option\ argument\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (argv[i][1])\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'i'}:\ \ \textcolor{comment}{/*\ name\ of\ input\ file\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ infile\ =\ \&argv[i][2];}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'o'}:\ \ \textcolor{comment}{/*\ name\ of\ output\ file\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outfile\ =\ \&argv[i][2];}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'p'}:\ \ \textcolor{comment}{/*\ specify\ a\ Unicode\ plane\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sscanf\ (\&argv[i][2],\ \textcolor{stringliteral}{"{}\%x"{}},\ \&\mbox{\hyperlink{unibmp2hex_8c_a6ab9015718d2f37f1420e7a0b53713ec}{uniplane}});\ \textcolor{comment}{/*\ Get\ Unicode\ plane\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unibmp2hex_8c_a23c536e061c3387fee66c7f6250f2b58}{planeset}}\ =\ 1;\ \textcolor{comment}{/*\ Use\ specified\ range,\ not\ what's\ in\ bitmap\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'w'}:\ \textcolor{comment}{/*\ force\ wide\ (16\ pixels)\ for\ each\ glyph\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unibmp2hex_8c_a77fe45bfa888a90761ae6dc8627fdd5e}{forcewide}}\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:\ \ \ \textcolor{comment}{/*\ if\ unrecognized\ option,\ print\ list\ and\ exit\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)nSyntax:\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\ \ \ \%s\ -\/p<Unicode\_Page>\ "{}},\ argv[0]);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}-\/i<Input\_File>\ -\/o<Output\_File>\ -\/w\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\ \ \ -\/w\ specifies\ .wbmp\ output\ instead\ of\ "{}});}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}default\ Windows\ .bmp\ output.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\ \ \ -\/p\ is\ followed\ by\ 1\ to\ 6\ "{}});}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}Unicode\ plane\ hex\ digits\ "{}});}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}(default\ is\ Page\ 0).\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)nExample:\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00205}00205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\ \ \ \%s\ -\/p83\ -\/iunifont.hex\ -\/ou83.bmp\(\backslash\)n\(\backslash\)n\(\backslash\)n"{}},}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ argv[0]);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00207}00207\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ exit\ (1);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00210}00210\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00211}00211\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00212}00212\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00213}00213\ \textcolor{comment}{\ \ \ \ \ \ Make\ sure\ we\ can\ open\ any\ I/O\ files\ that\ were\ specified\ before}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00214}00214\ \textcolor{comment}{\ \ \ \ \ \ doing\ anything\ else.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00215}00215\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00216}00216\ \ \ \ \textcolor{keywordflow}{if}\ (strlen\ (infile)\ >\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00217}00217\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((infp\ =\ fopen\ (infile,\ \textcolor{stringliteral}{"{}r"{}}))\ ==\ NULL)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00218}00218\ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}Error:\ can't\ open\ \%s\ for\ input.\(\backslash\)n"{}},\ infile);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00219}00219\ \ \ \ \ \ \ \ \ \ exit\ (1);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00220}00220\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00221}00221\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00222}00222\ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00223}00223\ \ \ \ \ \ \ infp\ =\ stdin;}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00224}00224\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00225}00225\ \ \ \ \textcolor{keywordflow}{if}\ (strlen\ (outfile)\ >\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00226}00226\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((outfp\ =\ fopen\ (outfile,\ \textcolor{stringliteral}{"{}w"{}}))\ ==\ NULL)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00227}00227\ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}Error:\ can't\ open\ \%s\ for\ output.\(\backslash\)n"{}},\ outfile);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00228}00228\ \ \ \ \ \ \ \ \ \ exit\ (1);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00229}00229\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00230}00230\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00231}00231\ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00232}00232\ \ \ \ \ \ \ outfp\ =\ stdout;}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00233}00233\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00234}00234\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00235}00235\ \textcolor{comment}{\ \ \ \ \ \ Initialize\ selected\ code\ points\ for\ double\ width\ (16x16).}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00236}00236\ \textcolor{comment}{\ \ \ \ \ \ Double-\/width\ is\ forced\ in\ cases\ where\ a\ glyph\ (usually\ a\ combining}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00237}00237\ \textcolor{comment}{\ \ \ \ \ \ glyph)\ only\ occupies\ the\ left-\/hand\ side\ of\ a\ 16x16\ grid,\ but\ must}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00238}00238\ \textcolor{comment}{\ \ \ \ \ \ be\ rendered\ as\ double-\/width\ to\ appear\ properly\ with\ other\ glyphs}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00239}00239\ \textcolor{comment}{\ \ \ \ \ \ in\ a\ given\ script.\ \ If\ additions\ were\ made\ to\ a\ script\ after}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00240}00240\ \textcolor{comment}{\ \ \ \ \ \ Unicode\ 5.0,\ the\ Unicode\ version\ is\ given\ in\ parentheses\ after}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00241}00241\ \textcolor{comment}{\ \ \ \ \ \ the\ script\ name.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00242}00242\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00243}00243\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x0700;\ i\ <=\ 0x074F;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Syriac\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00244}00244\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x0800;\ i\ <=\ 0x083F;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Samaritan\ (5.2)\ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00245}00245\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x0900;\ i\ <=\ 0x0DFF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Indic\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00246}00246\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x1000;\ i\ <=\ 0x109F;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Myanmar\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00247}00247\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x1100;\ i\ <=\ 0x11FF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Hangul\ Jamo\ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00248}00248\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x1400;\ i\ <=\ 0x167F;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Canadian\ Aboriginal\ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00249}00249\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x1700;\ i\ <=\ 0x171F;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Tagalog\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00250}00250\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x1720;\ i\ <=\ 0x173F;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Hanunoo\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00251}00251\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x1740;\ i\ <=\ 0x175F;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Buhid\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00252}00252\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x1760;\ i\ <=\ 0x177F;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Tagbanwa\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00253}00253\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x1780;\ i\ <=\ 0x17FF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Khmer\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00254}00254\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x18B0;\ i\ <=\ 0x18FF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Ext.\ Can.\ Aboriginal\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00255}00255\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x1800;\ i\ <=\ 0x18AF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Mongolian\ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00256}00256\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x1900;\ i\ <=\ 0x194F;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Limbu\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00257}00257\ \textcolor{comment}{//\ for\ (i\ =\ 0x1980;\ i\ <=\ 0x19DF;\ i++)\ wide[i]\ =\ 1;\ /*\ New\ Tai\ Lue\ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00258}00258\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x1A00;\ i\ <=\ 0x1A1F;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Buginese\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00259}00259\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x1A20;\ i\ <=\ 0x1AAF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Tai\ Tham\ (5.2)\ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00260}00260\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x1B00;\ i\ <=\ 0x1B7F;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Balinese\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00261}00261\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x1B80;\ i\ <=\ 0x1BBF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Sundanese\ (5.1)\ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00262}00262\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x1BC0;\ i\ <=\ 0x1BFF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Batak\ (6.0)\ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00263}00263\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x1C00;\ i\ <=\ 0x1C4F;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Lepcha\ (5.1)\ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00264}00264\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x1CC0;\ i\ <=\ 0x1CCF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Sundanese\ Supplement\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00265}00265\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x1CD0;\ i\ <=\ 0x1CFF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Vedic\ Extensions\ (5.2)\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00266}00266\ \ \ \ wide[0x2329]\ =\ wide[0x232A]\ =\ 1;\ \textcolor{comment}{/*\ Left-\/\ \&\ Right-\/pointing\ Angle\ Brackets\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00267}00267\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x2E80;\ i\ <=\ 0xA4CF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ CJK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00268}00268\ \textcolor{comment}{//\ for\ (i\ =\ 0x9FD8;\ i\ <=\ 0x9FE9;\ i++)\ wide[i]\ =\ 4;\ /*\ CJK\ quadruple-\/width\ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00269}00269\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0xA900;\ i\ <=\ 0xA92F;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Kayah\ Li\ (5.1)\ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00270}00270\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0xA930;\ i\ <=\ 0xA95F;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Rejang\ (5.1)\ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00271}00271\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0xA960;\ i\ <=\ 0xA97F;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Hangul\ Jamo\ Extended-\/A\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00272}00272\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0xA980;\ i\ <=\ 0xA9DF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Javanese\ (5.2)\ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00273}00273\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0xAA00;\ i\ <=\ 0xAA5F;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Cham\ (5.1)\ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00274}00274\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0xA9E0;\ i\ <=\ 0xA9FF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Myanmar\ Extended-\/B\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00275}00275\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0xAA00;\ i\ <=\ 0xAA5F;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Cham\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00276}00276\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0xAA60;\ i\ <=\ 0xAA7F;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Myanmar\ Extended-\/A\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00277}00277\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0xAAE0;\ i\ <=\ 0xAAFF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Meetei\ Mayek\ Ext\ (6.0)\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00278}00278\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0xABC0;\ i\ <=\ 0xABFF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Meetei\ Mayek\ (5.2)\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00279}00279\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0xAC00;\ i\ <=\ 0xD7AF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Hangul\ Syllables\ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00280}00280\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0xD7B0;\ i\ <=\ 0xD7FF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Hangul\ Jamo\ Extended-\/B\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00281}00281\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0xF900;\ i\ <=\ 0xFAFF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ CJK\ Compatibility\ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00282}00282\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0xFE10;\ i\ <=\ 0xFE1F;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Vertical\ Forms\ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00283}00283\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0xFE30;\ i\ <=\ 0xFE60;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ CJK\ Compatibility\ Forms*/}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00284}00284\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0xFFE0;\ i\ <=\ 0xFFE6;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ CJK\ Compatibility\ Forms*/}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00285}00285\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00286}00286\ \ \ \ wide[0x303F]\ =\ 0;\ \textcolor{comment}{/*\ CJK\ half-\/space\ fill\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00287}00287\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00288}00288\ \ \ \ \textcolor{comment}{/*\ Supplemental\ Multilingual\ Plane\ (Plane\ 01)\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00289}00289\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x010A00;\ i\ <=\ 0x010A5F;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Kharoshthi\ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00290}00290\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x011000;\ i\ <=\ 0x01107F;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Brahmi\ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00291}00291\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x011080;\ i\ <=\ 0x0110CF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Kaithi\ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00292}00292\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x011100;\ i\ <=\ 0x01114F;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Chakma\ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00293}00293\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x011180;\ i\ <=\ 0x0111DF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Sharada\ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00294}00294\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x011200;\ i\ <=\ 0x01124F;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Khojki\ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00295}00295\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x0112B0;\ i\ <=\ 0x0112FF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Khudawadi\ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00296}00296\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x011300;\ i\ <=\ 0x01137F;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Grantha\ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00297}00297\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x011400;\ i\ <=\ 0x01147F;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Newa\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00298}00298\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x011480;\ i\ <=\ 0x0114DF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Tirhuta\ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00299}00299\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x011580;\ i\ <=\ 0x0115FF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Siddham\ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00300}00300\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x011600;\ i\ <=\ 0x01165F;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Modi\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00301}00301\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x011660;\ i\ <=\ 0x01167F;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Mongolian\ Suppl.\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00302}00302\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x011680;\ i\ <=\ 0x0116CF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Takri\ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00303}00303\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x011700;\ i\ <=\ 0x01173F;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Ahom\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00304}00304\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x011800;\ i\ <=\ 0x01184F;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Dogra\ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00305}00305\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x011900;\ i\ <=\ 0x01195F;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Dives\ Akuru\ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00306}00306\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x0119A0;\ i\ <=\ 0x0119FF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Nandinagari\ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00307}00307\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x011A00;\ i\ <=\ 0x011A4F;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Zanabazar\ Square\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00308}00308\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x011A50;\ i\ <=\ 0x011AAF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Soyombo\ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00309}00309\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x011B00;\ i\ <=\ 0x011B5F;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Devanagari\ Extended-\/A*/}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00310}00310\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x011F00;\ i\ <=\ 0x011F5F;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Kawi\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00311}00311\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x011C00;\ i\ <=\ 0x011C6F;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Bhaiksuki\ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00312}00312\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x011C70;\ i\ <=\ 0x011CBF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Marchen\ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00313}00313\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x011D00;\ i\ <=\ 0x011D5F;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Masaram\ Gondi\ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00314}00314\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x011EE0;\ i\ <=\ 0x011EFF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Makasar\ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00315}00315\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x012F90;\ i\ <=\ 0x012FFF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Cypro-\/Minoan\ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00316}00316\ \ \ \ \textcolor{comment}{/*\ Make\ Bassa\ Vah\ all\ single\ width\ or\ all\ double\ width\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00317}00317\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x016AD0;\ i\ <=\ 0x016AFF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Bassa\ Vah\ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00318}00318\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x016B00;\ i\ <=\ 0x016B8F;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Pahawh\ Hmong\ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00319}00319\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x016F00;\ i\ <=\ 0x016F9F;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Miao\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00320}00320\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x016FE0;\ i\ <=\ 0x016FFF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Ideograph\ Sym/Punct*/}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00321}00321\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x017000;\ i\ <=\ 0x0187FF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Tangut\ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00322}00322\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x018800;\ i\ <=\ 0x018AFF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Tangut\ Components\ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00323}00323\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x01AFF0;\ i\ <=\ 0x01AFFF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Kana\ Extended-\/B\ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00324}00324\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x01B000;\ i\ <=\ 0x01B0FF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Kana\ Supplement\ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00325}00325\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x01B100;\ i\ <=\ 0x01B12F;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Kana\ Extended-\/A\ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00326}00326\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x01B170;\ i\ <=\ 0x01B2FF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Nushu\ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00327}00327\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x01CF00;\ i\ <=\ 0x01CFCF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Znamenny\ Musical\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00328}00328\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x01D100;\ i\ <=\ 0x01D1FF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Musical\ Symbols\ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00329}00329\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x01D800;\ i\ <=\ 0x01DAAF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Sutton\ SignWriting\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00330}00330\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x01E2C0;\ i\ <=\ 0x01E2FF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Wancho\ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00331}00331\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x01E800;\ i\ <=\ 0x01E8DF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Mende\ Kikakui\ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00332}00332\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x01F200;\ i\ <=\ 0x01F2FF;\ i++)\ wide[i]\ =\ 1;\ \textcolor{comment}{/*\ Encl\ Ideograp\ Suppl*/}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00333}00333\ \ \ \ wide[0x01F5E7]\ =\ 1;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Three\ Rays\ Right\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00334}00334\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00335}00335\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00336}00336\ \textcolor{comment}{\ \ \ \ \ \ Determine\ whether\ or\ not\ the\ file\ is\ a\ Microsoft\ Windows\ Bitmap\ file.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00337}00337\ \textcolor{comment}{\ \ \ \ \ \ If\ it\ starts\ with\ 'B',\ 'M',\ assume\ it's\ a\ Windows\ Bitmap\ file.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00338}00338\ \textcolor{comment}{\ \ \ \ \ \ Otherwise,\ assume\ it's\ a\ Wireless\ Bitmap\ file.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00339}00339\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00340}00340\ \textcolor{comment}{\ \ \ \ \ \ WARNING:\ There\ isn't\ much\ in\ the\ way\ of\ error\ checking\ here\ -\/-\/}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00341}00341\ \textcolor{comment}{\ \ \ \ \ \ if\ you\ give\ it\ a\ file\ that\ wasn't\ first\ created\ by\ hex2bmp.c,}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00342}00342\ \textcolor{comment}{\ \ \ \ \ \ all\ bets\ are\ off.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00343}00343\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00344}00344\ \ \ \ fatal\ =\ 0;\ \ \textcolor{comment}{/*\ assume\ everything\ is\ okay\ with\ reading\ input\ file\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00345}00345\ \ \ \ \textcolor{keywordflow}{if}\ ((header[0]\ =\ fgetc\ (infp))\ !=\ EOF)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00346}00346\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((header[1]\ =\ fgetc\ (infp))\ !=\ EOF)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00347}00347\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (header[0]\ ==\ \textcolor{charliteral}{'B'}\ \&\&\ header[1]\ ==\ \textcolor{charliteral}{'M'})\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00348}00348\ \ \ \ \ \ \ \ \ \ \ \ \ wbmp\ =\ 0;\ \textcolor{comment}{/*\ Not\ a\ Wireless\ Bitmap\ -\/-\/\ it's\ a\ Windows\ Bitmap\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00349}00349\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00350}00350\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00351}00351\ \ \ \ \ \ \ \ \ \ \ \ \ wbmp\ =\ 1;\ \textcolor{comment}{/*\ Assume\ it's\ a\ Wireless\ Bitmap\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00352}00352\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00353}00353\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00354}00354\ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00355}00355\ \ \ \ \ \ \ \ \ \ fatal\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00356}00356\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00357}00357\ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00358}00358\ \ \ \ \ \ \ fatal\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00359}00359\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00360}00360\ \ \ \ \textcolor{keywordflow}{if}\ (fatal)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00361}00361\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}Fatal\ error;\ end\ of\ input\ file.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00362}00362\ \ \ \ \ \ \ exit\ (1);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00363}00363\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00364}00364\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00365}00365\ \textcolor{comment}{\ \ \ \ \ \ If\ this\ is\ a\ Wireless\ Bitmap\ (.wbmp)\ format\ file,}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00366}00366\ \textcolor{comment}{\ \ \ \ \ \ skip\ the\ header\ and\ point\ to\ the\ start\ of\ the\ bitmap\ itself.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00367}00367\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00368}00368\ \ \ \ \textcolor{keywordflow}{if}\ (wbmp)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00369}00369\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i=2;\ i<6;\ i++)}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00370}00370\ \ \ \ \ \ \ \ \ \ header[i]\ =\ fgetc\ (infp);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00371}00371\ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00372}00372\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ Now\ read\ the\ bitmap.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00373}00373\ \textcolor{comment}{\ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00374}00374\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i=0;\ i\ <\ 32*17;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00375}00375\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j=0;\ j\ <\ 32*18/8;\ j++)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00376}00376\ \ \ \ \ \ \ \ \ \ \ \ \ inchar\ =\ fgetc\ (infp);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00377}00377\ \ \ \ \ \ \ \ \ \ \ \ \ bitmap[i][j]\ =\ \string~inchar;\ \ \textcolor{comment}{/*\ invert\ bits\ for\ proper\ color\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00378}00378\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00379}00379\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00380}00380\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00381}00381\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00382}00382\ \textcolor{comment}{\ \ \ \ \ \ Otherwise,\ treat\ this\ as\ a\ Windows\ Bitmap\ file,\ because\ we\ checked}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00383}00383\ \textcolor{comment}{\ \ \ \ \ \ that\ it\ began\ with\ "{}BM"{}.\ \ Save\ the\ header\ contents\ for\ future\ use.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00384}00384\ \textcolor{comment}{\ \ \ \ \ \ Expect\ a\ 14\ byte\ standard\ BITMAPFILEHEADER\ format\ header\ followed}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00385}00385\ \textcolor{comment}{\ \ \ \ \ \ by\ a\ 40\ byte\ standard\ BITMAPINFOHEADER\ Device\ Independent\ Bitmap}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00386}00386\ \textcolor{comment}{\ \ \ \ \ \ header,\ with\ data\ stored\ in\ little-\/endian\ format.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00387}00387\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00388}00388\ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00389}00389\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 2;\ i\ <\ 54;\ i++)}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00390}00390\ \ \ \ \ \ \ \ \ \ header[i]\ =\ fgetc\ (infp);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00391}00391\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00392}00392\ \ \ \ \ \ \ \mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.filetype[0]\ =\ \textcolor{charliteral}{'B'};}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00393}00393\ \ \ \ \ \ \ \mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.filetype[1]\ =\ \textcolor{charliteral}{'M'};}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00394}00394\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00395}00395\ \ \ \ \ \ \ \mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.file\_size\ =}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00396}00396\ \ \ \ \ \ \ \ \ \ \ (header[2]\ \&\ 0xFF)\ \ \ \ \ \ \ \ |\ ((header[3]\ \&\ 0xFF)\ <<\ \ 8)\ |}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00397}00397\ \ \ \ \ \ \ \ \ \ ((header[4]\ \&\ 0xFF)\ <<\ 16)\ |\ ((header[5]\ \&\ 0xFF)\ <<\ 24);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00398}00398\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00399}00399\ \ \ \ \ \ \ \textcolor{comment}{/*\ header\ bytes\ 6..9\ are\ reserved\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00400}00400\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00401}00401\ \ \ \ \ \ \ \mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.image\_offset\ =}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00402}00402\ \ \ \ \ \ \ \ \ \ \ (header[10]\ \&\ 0xFF)\ \ \ \ \ \ \ \ |\ ((header[11]\ \&\ 0xFF)\ <<\ \ 8)\ |}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00403}00403\ \ \ \ \ \ \ \ \ \ ((header[12]\ \&\ 0xFF)\ <<\ 16)\ |\ ((header[13]\ \&\ 0xFF)\ <<\ 24);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00404}00404\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00405}00405\ \ \ \ \ \ \ \mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.info\_size\ =}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00406}00406\ \ \ \ \ \ \ \ \ \ \ (header[14]\ \&\ 0xFF)\ \ \ \ \ \ \ \ |\ ((header[15]\ \&\ 0xFF)\ <<\ \ 8)\ |}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00407}00407\ \ \ \ \ \ \ \ \ \ ((header[16]\ \&\ 0xFF)\ <<\ 16)\ |\ ((header[17]\ \&\ 0xFF)\ <<\ 24);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00408}00408\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00409}00409\ \ \ \ \ \ \ \mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.width\ =}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00410}00410\ \ \ \ \ \ \ \ \ \ \ (header[18]\ \&\ 0xFF)\ \ \ \ \ \ \ \ |\ ((header[19]\ \&\ 0xFF)\ <<\ \ 8)\ |}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00411}00411\ \ \ \ \ \ \ \ \ \ ((header[20]\ \&\ 0xFF)\ <<\ 16)\ |\ ((header[21]\ \&\ 0xFF)\ <<\ 24);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00412}00412\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00413}00413\ \ \ \ \ \ \ \mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.height\ =}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00414}00414\ \ \ \ \ \ \ \ \ \ \ (header[22]\ \&\ 0xFF)\ \ \ \ \ \ \ \ |\ ((header[23]\ \&\ 0xFF)\ <<\ \ 8)\ |}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00415}00415\ \ \ \ \ \ \ \ \ \ ((header[24]\ \&\ 0xFF)\ <<\ 16)\ |\ ((header[25]\ \&\ 0xFF)\ <<\ 24);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00416}00416\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00417}00417\ \ \ \ \ \ \ \mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.nplanes\ =}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00418}00418\ \ \ \ \ \ \ \ \ \ \ (header[26]\ \&\ 0xFF)\ \ \ \ \ \ \ \ |\ ((header[27]\ \&\ 0xFF)\ <<\ \ 8);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00419}00419\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00420}00420\ \ \ \ \ \ \ \mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.bits\_per\_pixel\ =}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00421}00421\ \ \ \ \ \ \ \ \ \ \ (header[28]\ \&\ 0xFF)\ \ \ \ \ \ \ \ |\ ((header[29]\ \&\ 0xFF)\ <<\ \ 8);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00422}00422\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00423}00423\ \ \ \ \ \ \ \mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.compression\ =}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00424}00424\ \ \ \ \ \ \ \ \ \ \ (header[30]\ \&\ 0xFF)\ \ \ \ \ \ \ \ |\ ((header[31]\ \&\ 0xFF)\ <<\ \ 8)\ |}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00425}00425\ \ \ \ \ \ \ \ \ \ ((header[32]\ \&\ 0xFF)\ <<\ 16)\ |\ ((header[33]\ \&\ 0xFF)\ <<\ 24);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00426}00426\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00427}00427\ \ \ \ \ \ \ \mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.image\_size\ =}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00428}00428\ \ \ \ \ \ \ \ \ \ \ (header[34]\ \&\ 0xFF)\ \ \ \ \ \ \ \ |\ ((header[35]\ \&\ 0xFF)\ <<\ \ 8)\ |}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00429}00429\ \ \ \ \ \ \ \ \ \ ((header[36]\ \&\ 0xFF)\ <<\ 16)\ |\ ((header[37]\ \&\ 0xFF)\ <<\ 24);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00430}00430\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00431}00431\ \ \ \ \ \ \ \mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.x\_ppm\ =}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00432}00432\ \ \ \ \ \ \ \ \ \ \ (header[38]\ \&\ 0xFF)\ \ \ \ \ \ \ \ |\ ((header[39]\ \&\ 0xFF)\ <<\ \ 8)\ |}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00433}00433\ \ \ \ \ \ \ \ \ \ ((header[40]\ \&\ 0xFF)\ <<\ 16)\ |\ ((header[41]\ \&\ 0xFF)\ <<\ 24);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00434}00434\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00435}00435\ \ \ \ \ \ \ \mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.y\_ppm\ =}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00436}00436\ \ \ \ \ \ \ \ \ \ \ (header[42]\ \&\ 0xFF)\ \ \ \ \ \ \ \ |\ ((header[43]\ \&\ 0xFF)\ <<\ \ 8)\ |}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00437}00437\ \ \ \ \ \ \ \ \ \ ((header[44]\ \&\ 0xFF)\ <<\ 16)\ |\ ((header[45]\ \&\ 0xFF)\ <<\ 24);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00438}00438\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00439}00439\ \ \ \ \ \ \ \mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.ncolors\ =}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00440}00440\ \ \ \ \ \ \ \ \ \ \ (header[46]\ \&\ 0xFF)\ \ \ \ \ \ \ \ |\ ((header[47]\ \&\ 0xFF)\ <<\ \ 8)\ |}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00441}00441\ \ \ \ \ \ \ \ \ \ ((header[48]\ \&\ 0xFF)\ <<\ 16)\ |\ ((header[49]\ \&\ 0xFF)\ <<\ 24);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00442}00442\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00443}00443\ \ \ \ \ \ \ \mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.important\_colors\ =}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00444}00444\ \ \ \ \ \ \ \ \ \ \ (header[50]\ \&\ 0xFF)\ \ \ \ \ \ \ \ |\ ((header[51]\ \&\ 0xFF)\ <<\ \ 8)\ |}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00445}00445\ \ \ \ \ \ \ \ \ \ ((header[52]\ \&\ 0xFF)\ <<\ 16)\ |\ ((header[53]\ \&\ 0xFF)\ <<\ 24);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00446}00446\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00447}00447\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.ncolors\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00448}00448\ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.ncolors\ =\ 1\ <<\ \mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.bits\_per\_pixel;}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00449}00449\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00450}00450\ \ \ \ \ \ \ \textcolor{comment}{/*\ If\ a\ Color\ Table\ exists,\ read\ it\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00451}00451\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.ncolors\ >\ 0\ \&\&\ \mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.bits\_per\_pixel\ <=\ 8)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00452}00452\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ \mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.ncolors;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00453}00453\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unibmp2hex_8c_aa2196ad512cd5cffe3c54f7798f1b286}{color\_table}}[i][0]\ =\ fgetc\ (infp);\ \ \textcolor{comment}{/*\ Red\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00454}00454\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unibmp2hex_8c_aa2196ad512cd5cffe3c54f7798f1b286}{color\_table}}[i][1]\ =\ fgetc\ (infp);\ \ \textcolor{comment}{/*\ Green\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00455}00455\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unibmp2hex_8c_aa2196ad512cd5cffe3c54f7798f1b286}{color\_table}}[i][2]\ =\ fgetc\ (infp);\ \ \textcolor{comment}{/*\ Blue\ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00456}00456\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unibmp2hex_8c_aa2196ad512cd5cffe3c54f7798f1b286}{color\_table}}[i][3]\ =\ fgetc\ (infp);\ \ \textcolor{comment}{/*\ Alpha\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00457}00457\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00458}00458\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00459}00459\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ Determine\ from\ the\ first\ color\ table\ entry\ whether\ we}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00460}00460\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ are\ inverting\ the\ resulting\ bitmap\ image.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00461}00461\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00462}00462\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ (\mbox{\hyperlink{unibmp2hex_8c_aa2196ad512cd5cffe3c54f7798f1b286}{color\_table}}[0][0]\ +\ \mbox{\hyperlink{unibmp2hex_8c_aa2196ad512cd5cffe3c54f7798f1b286}{color\_table}}[0][1]\ +\ \mbox{\hyperlink{unibmp2hex_8c_aa2196ad512cd5cffe3c54f7798f1b286}{color\_table}}[0][2])\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00463}00463\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <\ (3\ *\ 128)\ )\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00464}00464\ \ \ \ \ \ \ \ \ \ \ \ \ color\_mask\ =\ 0xFF;}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00465}00465\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00466}00466\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00467}00467\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00468}00468\ \textcolor{preprocessor}{\#ifdef\ DEBUG}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00469}00469\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00470}00470\ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00471}00471\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ Print\ header\ info\ for\ possibly\ adding\ support\ for}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00472}00472\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ additional\ file\ formats\ in\ the\ future,\ to\ determine}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00473}00473\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ how\ the\ bitmap\ is\ encoded.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00474}00474\ \textcolor{comment}{\ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00475}00475\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}Filetype:\ '\%c\%c'\(\backslash\)n"{}},}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00476}00476\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.filetype[0],\ \mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.filetype[1]);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00477}00477\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}File\ Size:\ \%d\(\backslash\)n"{}},\ \mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.file\_size);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00478}00478\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}Image\ Offset:\ \%d\(\backslash\)n"{}},\ \mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.image\_offset);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00479}00479\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}Info\ Header\ Size:\ \%d\(\backslash\)n"{}},\ \mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.info\_size);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00480}00480\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}Image\ Width:\ \%d\(\backslash\)n"{}},\ \mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.width);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00481}00481\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}Image\ Height:\ \%d\(\backslash\)n"{}},\ \mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.height);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00482}00482\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}Number\ of\ Planes:\ \%d\(\backslash\)n"{}},\ \mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.nplanes);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00483}00483\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}Bits\ per\ Pixel:\ \%d\(\backslash\)n"{}},\ \mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.bits\_per\_pixel);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00484}00484\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}Compression\ Method:\ \%d\(\backslash\)n"{}},\ \mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.compression);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00485}00485\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}Image\ Size:\ \%d\(\backslash\)n"{}},\ \mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.image\_size);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00486}00486\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}X\ Pixels\ per\ Meter:\ \%d\(\backslash\)n"{}},\ \mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.x\_ppm);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00487}00487\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}Y\ Pixels\ per\ Meter:\ \%d\(\backslash\)n"{}},\ \mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.y\_ppm);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00488}00488\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}Number\ of\ Colors:\ \%d\(\backslash\)n"{}},\ \mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.ncolors);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00489}00489\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}Important\ Colors:\ \%d\(\backslash\)n"{}},\ \mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.important\_colors);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00490}00490\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00491}00491\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00492}00492\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00493}00493\ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00494}00494\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ Now\ read\ the\ bitmap.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00495}00495\ \textcolor{comment}{\ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00496}00496\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 32*17-\/1;\ i\ >=\ 0;\ i-\/-\/)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00497}00497\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j=0;\ j\ <\ 32*18/8;\ j++)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00498}00498\ \ \ \ \ \ \ \ \ \ \ \ \ next\_pixels\ =\ 0x00;\ \ \textcolor{comment}{/*\ initialize\ next\ group\ of\ 8\ pixels\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00499}00499\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Read\ a\ monochrome\ image\ -\/-\/\ the\ original\ case\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00500}00500\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.bits\_per\_pixel\ ==\ 1)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00501}00501\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ next\_pixels\ =\ fgetc\ (infp);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00502}00502\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00503}00503\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Read\ a\ 32\ bit\ per\ pixel\ RGB\ image;\ convert\ to\ monochrome\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00504}00504\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\ \mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.bits\_per\_pixel\ ==\ 24\ ||}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00505}00505\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.bits\_per\_pixel\ ==\ 32)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00506}00506\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ next\_pixels\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00507}00507\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (k\ =\ 0;\ k\ <\ 8;\ k++)\ \{\ \ \textcolor{comment}{/*\ get\ next\ 8\ pixels\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00508}00508\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this\_pixel\ =\ (fgetc\ (infp)\ \&\ 0xFF)\ +}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00509}00509\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (fgetc\ (infp)\ \&\ 0xFF)\ +}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00510}00510\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (fgetc\ (infp)\ \&\ 0xFF);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00511}00511\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00512}00512\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.bits\_per\_pixel\ ==\ 32)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00513}00513\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (void)\ fgetc\ (infp);\ \ \textcolor{comment}{/*\ ignore\ alpha\ value\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00514}00514\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00515}00515\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00516}00516\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ convert\ RGB\ color\ space\ to\ monochrome\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00517}00517\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (this\_pixel\ >=\ (128\ *\ 3))}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00518}00518\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this\_pixel\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00519}00519\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00520}00520\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this\_pixel\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00521}00521\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00522}00522\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ shift\ next\ pixel\ color\ into\ place\ for\ 8\ pixels\ total\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00523}00523\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ next\_pixels\ =\ (next\_pixels\ <<\ 1)\ |\ this\_pixel;}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00524}00524\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00525}00525\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00526}00526\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{unibmp2hex_8c_a8b1d9ca32eaf9f66c2a2d2d7761b8526}{bmp\_header}}.height\ <\ 0)\ \{\ \ \textcolor{comment}{/*\ Bitmap\ drawn\ top\ to\ bottom\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00527}00527\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bitmap\ [(32*17-\/1)\ -\/\ i]\ [j]\ =\ next\_pixels;}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00528}00528\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00529}00529\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{\ \ \textcolor{comment}{/*\ Bitmap\ drawn\ bottom\ to\ top\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00530}00530\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bitmap\ [i][j]\ =\ next\_pixels;}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00531}00531\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00532}00532\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00533}00533\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00534}00534\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00535}00535\ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00536}00536\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ If\ any\ bits\ are\ set\ in\ color\_mask,\ apply\ it\ to}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00537}00537\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ entire\ bitmap\ to\ invert\ black\ <-\/-\/>\ white.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00538}00538\ \textcolor{comment}{\ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00539}00539\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (color\_mask\ !=\ 0x00)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00540}00540\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 32*17-\/1;\ i\ >=\ 0;\ i-\/-\/)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00541}00541\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j=0;\ j\ <\ 32*18/8;\ j++)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00542}00542\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bitmap\ [i][j]\ \string^=\ color\_mask;}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00543}00543\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00544}00544\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00545}00545\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00546}00546\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00547}00547\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00548}00548\ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00549}00549\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00550}00550\ \textcolor{comment}{\ \ \ \ \ \ We've\ read\ the\ entire\ file.\ \ Now\ close\ the\ input\ file\ pointer.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00551}00551\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00552}00552\ \ \ \ fclose\ (infp);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00553}00553\ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00554}00554\ \textcolor{comment}{\ \ \ \ \ \ We\ now\ have\ the\ header\ portion\ in\ the\ header[]\ array,}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00555}00555\ \textcolor{comment}{\ \ \ \ \ \ and\ have\ the\ bitmap\ portion\ from\ top-\/to-\/bottom\ in\ the\ bitmap[]\ array.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00556}00556\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00557}00557\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00558}00558\ \textcolor{comment}{\ \ \ \ \ \ If\ no\ Unicode\ range\ (U+nnnnnn00\ through\ U+nnnnnnFF)\ was\ specified}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00559}00559\ \textcolor{comment}{\ \ \ \ \ \ with\ a\ -\/p\ parameter,\ determine\ the\ range\ from\ the\ digits\ in\ the}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00560}00560\ \textcolor{comment}{\ \ \ \ \ \ bitmap\ itself.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00561}00561\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00562}00562\ \textcolor{comment}{\ \ \ \ \ \ Store\ bitmaps\ for\ the\ hex\ digit\ patterns\ that\ this\ file\ uses.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00563}00563\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00564}00564\ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{unibmp2hex_8c_a23c536e061c3387fee66c7f6250f2b58}{planeset}})\ \{\ \ \textcolor{comment}{/*\ If\ Unicode\ range\ not\ specified\ with\ -\/p\ parameter\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00565}00565\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x0;\ i\ <=\ 0xF;\ i++)\ \{\ \ \textcolor{comment}{/*\ hex\ digit\ pattern\ we're\ storing\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00566}00566\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 4;\ j++)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00567}00567\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unibmp2hex_8c_a8e50648544568f9274781c2c90acdd78}{hexdigit}}[i][j]\ \ \ =}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00568}00568\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ((unsigned)bitmap[32\ *\ (i+1)\ +\ 4\ *\ j\ +\ 8\ \ \ \ ][6]\ <<\ 24\ )\ |}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00569}00569\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ((\textcolor{keywordtype}{unsigned})bitmap[32\ *\ (i+1)\ +\ 4\ *\ j\ +\ 8\ +\ 1][6]\ <<\ 16\ )\ |}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00570}00570\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ((unsigned)bitmap[32\ *\ (i+1)\ +\ 4\ *\ j\ +\ 8\ +\ 2][6]\ <<\ \ 8\ )\ |}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00571}00571\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ((\textcolor{keywordtype}{unsigned})bitmap[32\ *\ (i+1)\ +\ 4\ *\ j\ +\ 8\ +\ 3][6]\ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00572}00572\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00573}00573\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00574}00574\ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00575}00575\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ Read\ the\ Unicode\ plane\ digits\ into\ arrays\ for\ comparison,\ to}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00576}00576\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ determine\ the\ upper\ four\ hex\ digits\ of\ the\ glyph\ addresses.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00577}00577\ \textcolor{comment}{\ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00578}00578\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 4;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00579}00579\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 4;\ j++)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00580}00580\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unibmp2hex_8c_a4000465b001e714b0bfa857e4956a76c}{unidigit}}[i][j]\ =}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00581}00581\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ((unsigned)bitmap[32\ *\ 0\ +\ 4\ *\ j\ +\ 8\ +\ 1][i\ +\ 3]\ <<\ 24\ )\ |}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00582}00582\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ((unsigned)bitmap[32\ *\ 0\ +\ 4\ *\ j\ +\ 8\ +\ 2][i\ +\ 3]\ <<\ 16\ )\ |}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00583}00583\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ((unsigned)bitmap[32\ *\ 0\ +\ 4\ *\ j\ +\ 8\ +\ 3][i\ +\ 3]\ <<\ \ 8\ )\ |}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00584}00584\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ((unsigned)bitmap[32\ *\ 0\ +\ 4\ *\ j\ +\ 8\ +\ 4][i\ +\ 3]\ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00585}00585\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00586}00586\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00587}00587\ \ \ \ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00588}00588\ \ \ \ \ \ \ tmpsum\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00589}00589\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 4;\ i\ <\ 6;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00590}00590\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 4;\ j++)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00591}00591\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unibmp2hex_8c_a4000465b001e714b0bfa857e4956a76c}{unidigit}}[i][j]\ =}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00592}00592\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ((unsigned)bitmap[32\ *\ 1\ +\ 4\ *\ j\ +\ 8\ \ \ \ ][i]\ <<\ 24\ )\ |}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00593}00593\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ((unsigned)bitmap[32\ *\ 1\ +\ 4\ *\ j\ +\ 8\ +\ 1][i]\ <<\ 16\ )\ |}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00594}00594\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ((unsigned)bitmap[32\ *\ 1\ +\ 4\ *\ j\ +\ 8\ +\ 2][i]\ <<\ \ 8\ )\ |}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00595}00595\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ((unsigned)bitmap[32\ *\ 1\ +\ 4\ *\ j\ +\ 8\ +\ 3][i]\ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00596}00596\ \ \ \ \ \ \ \ \ \ \ \ \ tmpsum\ |=\ \mbox{\hyperlink{unibmp2hex_8c_a4000465b001e714b0bfa857e4956a76c}{unidigit}}[i][j];}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00597}00597\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00598}00598\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00599}00599\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (tmpsum\ ==\ 0)\ \{\ \ \textcolor{comment}{/*\ the\ glyph\ matrix\ is\ transposed\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00600}00600\ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unibmp2hex_8c_af7ab3cd5a9f70af7701580cdf283636c}{flip}}\ =\ 1;\ \ \textcolor{comment}{/*\ note\ transposed\ order\ for\ processing\ glyphs\ in\ matrix\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00601}00601\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00602}00602\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ Get\ 5th\ and\ 6th\ hex\ digits\ by\ shifting\ first\ column\ header\ left\ by}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00603}00603\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ 1.5\ columns,\ thereby\ shifting\ the\ hex\ digit\ right\ after\ the\ leading}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00604}00604\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ "{}U+nnnn"{}\ page\ number.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00605}00605\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00606}00606\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x08;\ i\ <\ 0x18;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00607}00607\ \ \ \ \ \ \ \ \ \ \ \ \ bitmap[i][7]\ =\ (bitmap[i][8]\ <<\ 4)\ |\ ((bitmap[i][\ 9]\ >>\ 4)\ \&\ 0xf);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00608}00608\ \ \ \ \ \ \ \ \ \ \ \ \ bitmap[i][8]\ =\ (bitmap[i][9]\ <<\ 4)\ |\ ((bitmap[i][10]\ >>\ 4)\ \&\ 0xf);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00609}00609\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00610}00610\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 4;\ i\ <\ 6;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00611}00611\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 4;\ j++)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00612}00612\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unibmp2hex_8c_a4000465b001e714b0bfa857e4956a76c}{unidigit}}[i][j]\ =}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00613}00613\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ((unsigned)bitmap[4\ *\ j\ +\ 8\ +\ 1][i\ +\ 3]\ <<\ 24\ )\ |}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00614}00614\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ((unsigned)bitmap[4\ *\ j\ +\ 8\ +\ 2][i\ +\ 3]\ <<\ 16\ )\ |}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00615}00615\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ((unsigned)bitmap[4\ *\ j\ +\ 8\ +\ 3][i\ +\ 3]\ <<\ \ 8\ )\ |}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00616}00616\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ((unsigned)bitmap[4\ *\ j\ +\ 8\ +\ 4][i\ +\ 3]\ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00617}00617\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00618}00618\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00619}00619\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00620}00620\ \ \ \ }
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00621}00621\ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00622}00622\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ Now\ determine\ the\ Unicode\ plane\ by\ comparing\ unidigit[0..5]\ to}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00623}00623\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ the\ hexdigit[0x0..0xF]\ array.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00624}00624\ \textcolor{comment}{\ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00625}00625\ \ \ \ \ \ \ \mbox{\hyperlink{unibmp2hex_8c_a6ab9015718d2f37f1420e7a0b53713ec}{uniplane}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00626}00626\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i=0;\ i<6;\ i++)\ \{\ \textcolor{comment}{/*\ go\ through\ one\ bitmap\ digit\ at\ a\ time\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00627}00627\ \ \ \ \ \ \ \ \ \ match\ =\ 0;\ \textcolor{comment}{/*\ haven't\ found\ pattern\ yet\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00628}00628\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0x0;\ !match\ \&\&\ j\ <=\ 0xF;\ j++)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00629}00629\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{unibmp2hex_8c_a4000465b001e714b0bfa857e4956a76c}{unidigit}}[i][0]\ ==\ \mbox{\hyperlink{unibmp2hex_8c_a8e50648544568f9274781c2c90acdd78}{hexdigit}}[j][0]\ \&\&}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00630}00630\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unibmp2hex_8c_a4000465b001e714b0bfa857e4956a76c}{unidigit}}[i][1]\ ==\ \mbox{\hyperlink{unibmp2hex_8c_a8e50648544568f9274781c2c90acdd78}{hexdigit}}[j][1]\ \&\&}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00631}00631\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unibmp2hex_8c_a4000465b001e714b0bfa857e4956a76c}{unidigit}}[i][2]\ ==\ \mbox{\hyperlink{unibmp2hex_8c_a8e50648544568f9274781c2c90acdd78}{hexdigit}}[j][2]\ \&\&}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00632}00632\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unibmp2hex_8c_a4000465b001e714b0bfa857e4956a76c}{unidigit}}[i][3]\ ==\ \mbox{\hyperlink{unibmp2hex_8c_a8e50648544568f9274781c2c90acdd78}{hexdigit}}[j][3])\ \{\ \textcolor{comment}{/*\ we\ found\ the\ digit\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00633}00633\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unibmp2hex_8c_a6ab9015718d2f37f1420e7a0b53713ec}{uniplane}}\ |=\ j;}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00634}00634\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ match\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00635}00635\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00636}00636\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00637}00637\ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unibmp2hex_8c_a6ab9015718d2f37f1420e7a0b53713ec}{uniplane}}\ <<=\ 4;}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00638}00638\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00639}00639\ \ \ \ \ \ \ \mbox{\hyperlink{unibmp2hex_8c_a6ab9015718d2f37f1420e7a0b53713ec}{uniplane}}\ >>=\ 4;}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00640}00640\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00641}00641\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00642}00642\ \textcolor{comment}{\ \ \ \ \ \ Now\ read\ each\ glyph\ and\ print\ it\ as\ hex.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00643}00643\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00644}00644\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x0;\ i\ <=\ 0xf;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00645}00645\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0x0;\ j\ <=\ 0xf;\ j++)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00646}00646\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (k\ =\ 0;\ k\ <\ 16;\ k++)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00647}00647\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{unibmp2hex_8c_af7ab3cd5a9f70af7701580cdf283636c}{flip}})\ \{\ \ \textcolor{comment}{/*\ transpose\ glyph\ matrix\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00648}00648\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ thischar0[k]\ =\ bitmap[32*(j+1)\ +\ k\ +\ 7][4\ *\ (i+2)\ \ \ \ ];}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00649}00649\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ thischar1[k]\ =\ bitmap[32*(j+1)\ +\ k\ +\ 7][4\ *\ (i+2)\ +\ 1];}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00650}00650\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ thischar2[k]\ =\ bitmap[32*(j+1)\ +\ k\ +\ 7][4\ *\ (i+2)\ +\ 2];}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00651}00651\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ thischar3[k]\ =\ bitmap[32*(j+1)\ +\ k\ +\ 7][4\ *\ (i+2)\ +\ 3];}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00652}00652\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00653}00653\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00654}00654\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ thischar0[k]\ =\ bitmap[32*(i+1)\ +\ k\ +\ 7][4\ *\ (j+2)\ \ \ \ ];}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00655}00655\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ thischar1[k]\ =\ bitmap[32*(i+1)\ +\ k\ +\ 7][4\ *\ (j+2)\ +\ 1];}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00656}00656\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ thischar2[k]\ =\ bitmap[32*(i+1)\ +\ k\ +\ 7][4\ *\ (j+2)\ +\ 2];}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00657}00657\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ thischar3[k]\ =\ bitmap[32*(i+1)\ +\ k\ +\ 7][4\ *\ (j+2)\ +\ 3];}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00658}00658\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00659}00659\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00660}00660\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00661}00661\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ If\ the\ second\ half\ of\ the\ 16*16\ character\ is\ all\ zeroes,\ this}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00662}00662\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ character\ is\ only\ 8\ bits\ wide,\ so\ print\ a\ half-\/width\ character.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00663}00663\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00664}00664\ \ \ \ \ \ \ \ \ \ empty1\ =\ empty2\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00665}00665\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (k=0;\ (empty1\ ||\ empty2)\ \&\&\ k\ <\ 16;\ k++)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00666}00666\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (thischar1[k]\ !=\ 0)\ empty1\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00667}00667\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (thischar2[k]\ !=\ 0)\ empty2\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00668}00668\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00669}00669\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00670}00670\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ Only\ print\ this\ glyph\ if\ it\ isn't\ blank.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00671}00671\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00672}00672\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!empty1\ ||\ !empty2)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00673}00673\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00674}00674\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ If\ the\ second\ half\ is\ empty,\ this\ is\ a\ half-\/width\ character.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00675}00675\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Only\ print\ the\ first\ half.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00676}00676\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00677}00677\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00678}00678\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Original\ GNU\ Unifont\ format\ is\ four\ hexadecimal\ digit\ character}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00679}00679\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ code\ followed\ by\ a\ colon\ followed\ by\ a\ hex\ string.\ \ Add\ support}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00680}00680\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ for\ codes\ beyond\ the\ Basic\ Multilingual\ Plane.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00681}00681\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00682}00682\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Unicode\ ranges\ from\ U+0000\ to\ U+10FFFF,\ so\ print\ either\ a}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00683}00683\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 4-\/digit\ or\ a\ 6-\/digit\ code\ point.\ \ Note\ that\ this\ software}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00684}00684\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ should\ support\ up\ to\ an\ 8-\/digit\ code\ point,\ extending\ beyond}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00685}00685\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ the\ normal\ Unicode\ range,\ but\ this\ has\ not\ been\ fully\ tested.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00686}00686\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00687}00687\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{unibmp2hex_8c_a6ab9015718d2f37f1420e7a0b53713ec}{uniplane}}\ >\ 0xff)}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00688}00688\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\%04X\%X\%X:"{}},\ \mbox{\hyperlink{unibmp2hex_8c_a6ab9015718d2f37f1420e7a0b53713ec}{uniplane}},\ i,\ j);\ \textcolor{comment}{//\ 6\ digit\ code\ pt.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00689}00689\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00690}00690\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\%02X\%X\%X:"{}},\ \mbox{\hyperlink{unibmp2hex_8c_a6ab9015718d2f37f1420e7a0b53713ec}{uniplane}},\ i,\ j);\ \textcolor{comment}{//\ 4\ digit\ code\ pt.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00691}00691\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (thisrow=0;\ thisrow<16;\ thisrow++)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00692}00692\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00693}00693\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ If\ second\ half\ is\ empty\ and\ we're\ not\ forcing\ this}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00694}00694\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ code\ point\ to\ double\ width,\ print\ as\ single\ width.}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00695}00695\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00696}00696\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{unibmp2hex_8c_a77fe45bfa888a90761ae6dc8627fdd5e}{forcewide}}\ \&\&}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00697}00697\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ empty2\ \&\&\ !wide[(\mbox{\hyperlink{unibmp2hex_8c_a6ab9015718d2f37f1420e7a0b53713ec}{uniplane}}\ <<\ 8)\ |\ (i\ <<\ 4)\ |\ j])\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00698}00698\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (outfp,}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00699}00699\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\%02X"{}},}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00700}00700\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ thischar1[thisrow]);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00701}00701\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00702}00702\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (wide[(\mbox{\hyperlink{unibmp2hex_8c_a6ab9015718d2f37f1420e7a0b53713ec}{uniplane}}\ <<\ 8)\ |\ (i\ <<\ 4)\ |\ j]\ ==\ 4)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00703}00703\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ quadruple-\/width;\ force\ 32nd\ pixel\ to\ zero\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00704}00704\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (outfp,}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00705}00705\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\%02X\%02X\%02X\%02X"{}},}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00706}00706\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ thischar0[thisrow],\ thischar1[thisrow],}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00707}00707\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ thischar2[thisrow],\ thischar3[thisrow]\ \&\ 0xFE);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00708}00708\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00709}00709\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{\ \textcolor{comment}{/*\ treat\ as\ double-\/width\ */}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00710}00710\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (outfp,}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00711}00711\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\%02X\%02X"{}},}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00712}00712\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ thischar1[thisrow],\ thischar2[thisrow]);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00713}00713\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00714}00714\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00715}00715\ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00716}00716\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00717}00717\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00718}00718\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00719}00719\ \ \ \ exit\ (0);}
+\DoxyCodeLine{\Hypertarget{unibmp2hex_8c_source_l00720}00720\ \}}
+
+\end{DoxyCode}

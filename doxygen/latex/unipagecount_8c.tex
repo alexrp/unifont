@@ -1,0 +1,293 @@
+\hypertarget{unipagecount_8c}{}\doxysection{src/unipagecount.c File Reference}
+\label{unipagecount_8c}\index{src/unipagecount.c@{src/unipagecount.c}}
+
+
+unipagecount -\/ Count the number of glyphs defined in each page of 256 code points  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+Include dependency graph for unipagecount.\+c\+:
+% FIG 0
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{unipagecount_8c_ad7871643c05865c80f5d8050aead2b57}{MAXBUF}}~256
+\begin{DoxyCompactList}\small\item\em Maximum input line size -\/ 1. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{unipagecount_8c_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em The main function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{unipagecount_8c_ab3fa087c3244a7238a3109a42834608c}{mkftable}} (unsigned plane, int pagecount\mbox{[}256\mbox{]}, int links)
+\begin{DoxyCompactList}\small\item\em Create an HTML table linked to PNG images. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+unipagecount -\/ Count the number of glyphs defined in each page of 256 code points 
+
+\begin{DoxyAuthor}{Author}
+Paul Hardy, unifoundry $<$at$>$ unifoundry.\+com, December 2007
+\end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+Copyright (C) 2007, 2008, 2013, 2014 Paul Hardy
+\end{DoxyCopyright}
+This program counts the number of glyphs that are defined in each \char`\"{}page\char`\"{} of 256 code points, and prints the counts in an 8 x 8 grid. Input is from stdin. Output is to stdout.
+
+The background color of each cell in a 16-\/by-\/16 grid of 256 code points is shaded to indicate percentage coverage. Red indicates 0\% coverage, green represents 100\% coverage, and colors in between pure red and pure green indicate partial coverage on a scale.
+
+Each code point range number can be a hyperlink to a PNG file for that 256-\/code point range\textquotesingle{}s corresponding bitmap glyph image.
+
+Synopsis\+: \begin{DoxyVerb}      unipagecount < font_file.hex > count.txt
+      unipagecount -phex_page_num < font_file.hex  -- just 256 points
+      unipagecount -h < font_file.hex              -- HTML table
+      unipagecount -P1 -h < font.hex > count.html  -- Plane 1, HTML out
+      unipagecount -l < font_file.hex              -- linked HTML table
+\end{DoxyVerb}
+ 
+
+Definition in file \mbox{\hyperlink{unipagecount_8c_source}{unipagecount.\+c}}.
+
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{unipagecount_8c_ad7871643c05865c80f5d8050aead2b57}\label{unipagecount_8c_ad7871643c05865c80f5d8050aead2b57}} 
+\index{unipagecount.c@{unipagecount.c}!MAXBUF@{MAXBUF}}
+\index{MAXBUF@{MAXBUF}!unipagecount.c@{unipagecount.c}}
+\doxysubsubsection{\texorpdfstring{MAXBUF}{MAXBUF}}
+{\footnotesize\ttfamily \#define MAXBUF~256}
+
+
+
+Maximum input line size -\/ 1. 
+
+
+
+Definition at line \mbox{\hyperlink{unipagecount_8c_source_l00059}{59}} of file \mbox{\hyperlink{unipagecount_8c_source}{unipagecount.\+c}}.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{unipagecount_8c_a0ddf1224851353fc92bfbff6f499fa97}\label{unipagecount_8c_a0ddf1224851353fc92bfbff6f499fa97}} 
+\index{unipagecount.c@{unipagecount.c}!main@{main}}
+\index{main@{main}!unipagecount.c@{unipagecount.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+The main function. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em argc} & The count of command line arguments. \\
+\hline
+\mbox{\texttt{ in}}  & {\em argv} & Pointer to array of command line arguments. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+This program exits with status 0. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{unipagecount_8c_source_l00070}{70}} of file \mbox{\hyperlink{unipagecount_8c_source}{unipagecount.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00071\ \{}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \ \textcolor{keywordtype}{char}\ inbuf[\mbox{\hyperlink{unipagecount_8c_ad7871643c05865c80f5d8050aead2b57}{MAXBUF}}];\ \textcolor{comment}{/*\ Max\ 256\ characters\ in\ an\ input\ line\ */}}
+\DoxyCodeLine{00074\ \ \ \ \textcolor{keywordtype}{int}\ i,\ j;\ \ \textcolor{comment}{/*\ loop\ variables\ */}}
+\DoxyCodeLine{00075\ \ \ \ \textcolor{keywordtype}{unsigned}\ plane=0;\ \textcolor{comment}{/*\ Unicode\ plane\ number,\ 0\ to\ 0x16\ */}}
+\DoxyCodeLine{00076\ \ \ \ \textcolor{keywordtype}{unsigned}\ page;\ \ \textcolor{comment}{/*\ unicode\ page\ (256\ bytes\ wide)\ */}}
+\DoxyCodeLine{00077\ \ \ \ \textcolor{keywordtype}{unsigned}\ unichar;\ \textcolor{comment}{/*\ unicode\ character\ */}}
+\DoxyCodeLine{00078\ \ \ \ \textcolor{keywordtype}{int}\ pagecount[256]\ =\ \{256\ *\ 0\};}
+\DoxyCodeLine{00079\ \ \ \ \textcolor{keywordtype}{int}\ onepage=0;\ \textcolor{comment}{/*\ set\ to\ one\ if\ printing\ character\ grid\ for\ one\ page\ */}}
+\DoxyCodeLine{00080\ \ \ \ \textcolor{keywordtype}{int}\ pageno=0;\ \textcolor{comment}{/*\ page\ number\ selected\ if\ only\ examining\ one\ page\ */}}
+\DoxyCodeLine{00081\ \ \ \ \textcolor{keywordtype}{int}\ html=0;\ \ \ \textcolor{comment}{/*\ =0:\ print\ plain\ text;\ =1:\ print\ HTML\ */}}
+\DoxyCodeLine{00082\ \ \ \ \textcolor{keywordtype}{int}\ links=0;\ \ \textcolor{comment}{/*\ =1:\ print\ HTML\ links;\ =0:\ don't\ print\ links\ */}}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \ \textcolor{comment}{/*\ make\ (print)\ flipped\ HTML\ table\ */}}
+\DoxyCodeLine{00085\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{unipagecount_8c_ab3fa087c3244a7238a3109a42834608c}{mkftable}}\ (\textcolor{keywordtype}{unsigned}\ plane,\ \textcolor{keywordtype}{int}\ pagecount[256],\ \textcolor{keywordtype}{int}\ links);}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \ \ \ \textcolor{keywordtype}{size\_t}\ strlen();}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \ \ \ \textcolor{keywordflow}{if}\ (argc\ >\ 1\ \&\&\ argv[1][0]\ ==\ \textcolor{charliteral}{'-\/'})\ \{\ \ \textcolor{comment}{/*\ Parse\ option\ */}}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ plane\ =\ 0;}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 1;\ i\ <\ argc;\ i++)\ \{}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (argv[i][1])\ \{}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'p'}:\ \ \textcolor{comment}{/*\ specified\ -\/p<hexpage>\ -\/-\/\ use\ given\ page\ number\ */}}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sscanf\ (\&argv[1][2],\ \textcolor{stringliteral}{"{}\%x"{}},\ \&pageno);}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pageno\ >=\ 0\ \&\&\ pageno\ <=\ 255)\ onepage\ =\ 1;}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'h'}:\ \ \textcolor{comment}{/*\ print\ HTML\ table\ instead\ of\ text\ table\ */}}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ html\ =\ 1;}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'l'}:\ \ \textcolor{comment}{/*\ print\ hyperlinks\ in\ HTML\ table\ */}}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ links\ =\ 1;}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ html\ =\ 1;}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'P'}:\ \ \textcolor{comment}{/*\ Plane\ number\ specified\ */}}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ plane\ =\ atoi(\&argv[1][2]);}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00109\ \ \ \ \}}
+\DoxyCodeLine{00110\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00111\ \textcolor{comment}{\ \ \ \ \ \ Initialize\ pagecount\ to\ account\ for\ noncharacters.}}
+\DoxyCodeLine{00112\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00113\ \ \ \ \textcolor{keywordflow}{if}\ (!onepage\ \&\&\ plane==0)\ \{}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ pagecount[0xfd]\ =\ 32;\ \ \textcolor{comment}{/*\ for\ U+FDD0..U+FDEF\ */}}
+\DoxyCodeLine{00115\ \ \ \ \}}
+\DoxyCodeLine{00116\ \ \ \ pagecount[0xff]\ =\ 2;\ \ \ \textcolor{comment}{/*\ for\ U+nnFFFE,\ U+nnFFFF\ */}}
+\DoxyCodeLine{00117\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00118\ \textcolor{comment}{\ \ \ \ \ \ Read\ one\ line\ at\ a\ time\ from\ input.\ \ The\ format\ is:}}
+\DoxyCodeLine{00119\ \textcolor{comment}{}}
+\DoxyCodeLine{00120\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ <hexpos>:<hexbitmap>}}
+\DoxyCodeLine{00121\ \textcolor{comment}{}}
+\DoxyCodeLine{00122\ \textcolor{comment}{\ \ \ \ \ \ where\ <hexpos>\ is\ the\ hexadecimal\ Unicode\ character\ position}}
+\DoxyCodeLine{00123\ \textcolor{comment}{\ \ \ \ \ \ in\ the\ range\ 00..FF\ and\ <hexbitmap>\ is\ the\ sequence\ of\ hexadecimal}}
+\DoxyCodeLine{00124\ \textcolor{comment}{\ \ \ \ \ \ digits\ of\ the\ character,\ laid\ out\ in\ a\ grid\ from\ left\ to\ right,}}
+\DoxyCodeLine{00125\ \textcolor{comment}{\ \ \ \ \ \ top\ to\ bottom.\ \ The\ character\ is\ assumed\ to\ be\ 16\ rows\ of\ variable}}
+\DoxyCodeLine{00126\ \textcolor{comment}{\ \ \ \ \ \ width.}}
+\DoxyCodeLine{00127\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00128\ \ \ \ \textcolor{keywordflow}{while}\ (fgets\ (inbuf,\ \mbox{\hyperlink{unipagecount_8c_ad7871643c05865c80f5d8050aead2b57}{MAXBUF}}-\/1,\ stdin)\ !=\ NULL)\ \{}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ sscanf\ (inbuf,\ \textcolor{stringliteral}{"{}\%X"{}},\ \&unichar);}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ page\ =\ unichar\ >>\ 8;}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (onepage)\ \{\ \textcolor{comment}{/*\ only\ increment\ counter\ if\ this\ is\ page\ we\ want\ */}}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (page\ ==\ pageno)\ \{\ \textcolor{comment}{/*\ character\ is\ in\ the\ page\ we\ want\ */}}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ pagecount[unichar\ \&\ 0xff]++;\ \textcolor{comment}{/*\ mark\ character\ as\ covered\ */}}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{\ \textcolor{comment}{/*\ counting\ all\ characters\ in\ all\ pages\ */}}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (plane\ ==\ 0)\ \{}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Don't\ add\ in\ noncharacters\ (U+FDD0..U+FDEF,\ U+FFFE,\ U+FFFF)\ */}}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (unichar\ <\ 0xfdd0\ ||\ (unichar\ >\ 0xfdef\ \&\&\ unichar\ <\ 0xfffe))}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pagecount[page]++;}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((page\ >>\ 8)\ ==\ plane)\ \{\ \textcolor{comment}{/*\ code\ point\ is\ in\ desired\ plane\ */}}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pagecount[page\ \&\ 0xFF]++;}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00148\ \ \ \ \}}
+\DoxyCodeLine{00149\ \ \ \ \textcolor{keywordflow}{if}\ (html)\ \{}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \mbox{\hyperlink{unipagecount_8c_ab3fa087c3244a7238a3109a42834608c}{mkftable}}\ (plane,\ pagecount,\ links);}
+\DoxyCodeLine{00151\ \ \ \ \}}
+\DoxyCodeLine{00152\ \ \ \ \textcolor{keywordflow}{else}\ \{\ \ \textcolor{comment}{/*\ Otherwise,\ print\ plain\ text\ table\ */}}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (plane\ >\ 0)\ fprintf\ (stdout,\ \textcolor{stringliteral}{"{}\ \ "{}});}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ fprintf\ (stdout,}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\ \ \ \ \ 0\ \ \ 1\ \ \ 2\ \ \ 3\ \ \ 4\ \ \ 5\ \ \ 6\ \ \ 7\ \ \ 8\ \ \ 9\ \ \ A\ \ \ B\ \ \ C\ \ \ D\ \ \ E\ \ \ F\(\backslash\)n"{}});}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i=0;\ i<0x10;\ i++)\ \{}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ fprintf\ (stdout,\textcolor{stringliteral}{"{}\%02X\%X\ "{}},\ plane,\ i);\ \textcolor{comment}{/*\ row\ header\ */}}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j=0;\ j<0x10;\ j++)\ \{}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (onepage)\ \{}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pagecount[i*16+j])}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stdout,\textcolor{stringliteral}{"{}\ *\ \ "{}});}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stdout,\textcolor{stringliteral}{"{}\ .\ \ "{}});}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stdout,\ \textcolor{stringliteral}{"{}\%3X\ "{}},\ pagecount[i*16+j]);}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ fprintf\ (stdout,\textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00171\ \ \ \ }
+\DoxyCodeLine{00172\ \ \ \ \}}
+\DoxyCodeLine{00173\ \ \ \ exit\ (0);}
+\DoxyCodeLine{00174\ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+% FIG 1
+\mbox{\Hypertarget{unipagecount_8c_ab3fa087c3244a7238a3109a42834608c}\label{unipagecount_8c_ab3fa087c3244a7238a3109a42834608c}} 
+\index{unipagecount.c@{unipagecount.c}!mkftable@{mkftable}}
+\index{mkftable@{mkftable}!unipagecount.c@{unipagecount.c}}
+\doxysubsubsection{\texorpdfstring{mkftable()}{mkftable()}}
+{\footnotesize\ttfamily void mkftable (\begin{DoxyParamCaption}\item[{unsigned}]{plane,  }\item[{int}]{pagecount\mbox{[}256\mbox{]},  }\item[{int}]{links }\end{DoxyParamCaption})}
+
+
+
+Create an HTML table linked to PNG images. 
+
+This function creates an HTML table to show PNG files in a 16 by 16 grid. The background color of each \char`\"{}page\char`\"{} of 256 code points is shaded from red (for 0\% coverage) to green (for 100\% coverage).
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em plane} & The Unicode plane, 0..17. \\
+\hline
+\mbox{\texttt{ in}}  & {\em pagecount} & Array with count of glyphs in each 256 code point range. \\
+\hline
+\mbox{\texttt{ in}}  & {\em links} & 1 = generate hyperlinks, 0 = do not generate hyperlinks. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{unipagecount_8c_source_l00190}{190}} of file \mbox{\hyperlink{unipagecount_8c_source}{unipagecount.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00191\ \{}
+\DoxyCodeLine{00192\ \ \ \ \textcolor{keywordtype}{int}\ i,\ j;}
+\DoxyCodeLine{00193\ \ \ \ \textcolor{keywordtype}{int}\ count;}
+\DoxyCodeLine{00194\ \ \ \ \textcolor{keywordtype}{unsigned}\ bgcolor;}
+\DoxyCodeLine{00195\ \ \ \ }
+\DoxyCodeLine{00196\ \ \ \ printf\ (\textcolor{stringliteral}{"{}<html>\(\backslash\)n"{}});}
+\DoxyCodeLine{00197\ \ \ \ printf\ (\textcolor{stringliteral}{"{}<body>\(\backslash\)n"{}});}
+\DoxyCodeLine{00198\ \ \ \ printf\ (\textcolor{stringliteral}{"{}<table\ border=\(\backslash\)"{}3\(\backslash\)"{}\ align=\(\backslash\)"{}center\(\backslash\)"{}>\(\backslash\)n"{}});}
+\DoxyCodeLine{00199\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ <tr><th\ colspan=\(\backslash\)"{}16\(\backslash\)"{}\ bgcolor=\(\backslash\)"{}\#ffcc80\(\backslash\)"{}>"{}});}
+\DoxyCodeLine{00200\ \ \ \ printf\ (\textcolor{stringliteral}{"{}GNU\ Unifont\ Glyphs<br>with\ Page\ Coverage\ for\ Plane\ \%d<br>(Green=100\%\%,\ Red=0\%\%)</th></tr>\(\backslash\)n"{}},\ plane);}
+\DoxyCodeLine{00201\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0x0;\ i\ <=\ 0xF;\ i++)\ \{}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ <tr>\(\backslash\)n"{}});}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0x0;\ j\ <=\ 0xF;\ j++)\ \{}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \ count\ =\ pagecount[\ (i\ <<\ 4)\ |\ j\ ];}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ print\ link\ in\ cell\ if\ links\ ==\ 1\ */}}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (plane\ !=\ 0\ ||\ (i\ <\ 0xd\ ||\ (i\ ==\ 0xd\ \&\&\ j\ <\ 0x8)\ ||\ (i\ ==\ 0xf\ \&\&\ j\ >\ 0x8)))\ \{}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ background\ color\ is\ light\ green\ if\ completely\ done\ */}}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (count\ ==\ 0x100)\ bgcolor\ =\ 0xccffcc;}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ otherwise\ background\ is\ a\ shade\ of\ yellow\ to\ orange\ to\ red\ */}}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ bgcolor\ =\ 0xff0000\ |\ (count\ <<\ 8)\ |\ (count\ >>\ 1);}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ <td\ bgcolor=\(\backslash\)"{}\#\%06X\(\backslash\)"{}>"{}},\ bgcolor);}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (plane\ ==\ 0)}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}<a\ href=\(\backslash\)"{}png/plane\%02X/uni\%02X\%X\%X.png\(\backslash\)"{}>\%X\%X</a>"{}},\ plane,\ plane,\ i,\ j,\ i,\ j);}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}<a\ href=\(\backslash\)"{}png/plane\%02X/uni\%02X\%X\%X.png\(\backslash\)"{}>\%02X\%X\%X</a>"{}},\ plane,\ plane,\ i,\ j,\ plane,\ i,\ j);}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}</td>\(\backslash\)n"{}});}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (i\ ==\ 0xd)\ \{}
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (j\ ==\ 0x8)\ \{}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ <td\ align=\(\backslash\)"{}center\(\backslash\)"{}\ colspan=\(\backslash\)"{}8\(\backslash\)"{}\ bgcolor=\(\backslash\)"{}\#cccccc\(\backslash\)"{}>"{}});}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}<b>Surrogate\ Pairs</b>"{}});}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}</td>\(\backslash\)n"{}});}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \ \textcolor{comment}{/*\ otherwise\ don't\ print\ anything\ more\ columns\ in\ this\ row\ */}}
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (i\ ==\ 0xe)\ \{}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (j\ ==\ 0x0)\ \{}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ <td\ align=\(\backslash\)"{}center\(\backslash\)"{}\ colspan=\(\backslash\)"{}16\(\backslash\)"{}\ bgcolor=\(\backslash\)"{}\#cccccc\(\backslash\)"{}>"{}});}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}<b>Private\ Use\ Area</b>"{}});}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}</td>\(\backslash\)n"{}});}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \ \textcolor{comment}{/*\ otherwise\ don't\ print\ any\ more\ columns\ in\ this\ row\ */}}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (i\ ==\ 0xf)\ \{}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (j\ ==\ 0x0)\ \{}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ <td\ align=\(\backslash\)"{}center\(\backslash\)"{}\ colspan=\(\backslash\)"{}9\(\backslash\)"{}\ bgcolor=\(\backslash\)"{}\#cccccc\(\backslash\)"{}>"{}});}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}<b>Private\ Use\ Area</b>"{}});}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}</td>\(\backslash\)n"{}});}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ </tr>\(\backslash\)n"{}});}
+\DoxyCodeLine{00242\ \ \ \ \}}
+\DoxyCodeLine{00243\ \ \ \ printf\ (\textcolor{stringliteral}{"{}</table>\(\backslash\)n"{}});}
+\DoxyCodeLine{00244\ \ \ \ printf\ (\textcolor{stringliteral}{"{}</body>\(\backslash\)n"{}});}
+\DoxyCodeLine{00245\ \ \ \ printf\ (\textcolor{stringliteral}{"{}</html>\(\backslash\)n"{}});}
+\DoxyCodeLine{00246\ }
+\DoxyCodeLine{00247\ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00248\ \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+% FIG 2

@@ -1,0 +1,181 @@
+\hypertarget{unifont1per_8c_source}{}\doxysection{unifont1per.\+c}
+\label{unifont1per_8c_source}\index{src/unifont1per.c@{src/unifont1per.c}}
+\mbox{\hyperlink{unifont1per_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00001}00001\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00002}00002\ \textcolor{comment}{\ \ \ @file\ unifont1per.c}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00003}00003\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00004}00004\ \textcolor{comment}{\ \ \ @brief\ unifont1per\ -\/\ Read\ a\ Unifont\ .hex\ file\ from\ standard\ input\ and}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00005}00005\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ produce\ one\ glyph\ per\ "{}.bmp"{}\ bitmap\ file\ as\ output}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00006}00006\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00007}00007\ \textcolor{comment}{\ \ \ @author\ Paul\ Hardy,\ unifoundry\ <at>\ unifoundry.com,\ December\ 2016}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00008}00008\ \textcolor{comment}{\ \ \ }}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00009}00009\ \textcolor{comment}{\ \ \ @copyright\ Copyright\ (C)\ 2016,\ 2017\ Paul\ Hardy}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00010}00010\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00011}00011\ \textcolor{comment}{\ \ \ Each\ glyph\ is\ 16\ pixels\ tall,\ and\ can\ be\ 8,\ 16,\ 24,}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00012}00012\ \textcolor{comment}{\ \ \ or\ 32\ pixels\ wide.\ \ The\ width\ of\ each\ output\ graphic}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00013}00013\ \textcolor{comment}{\ \ \ file\ is\ determined\ automatically\ by\ the\ width\ of\ each}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00014}00014\ \textcolor{comment}{\ \ \ Unifont\ hex\ representation.}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00015}00015\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00016}00016\ \textcolor{comment}{\ \ \ This\ program\ creates\ files\ of\ the\ form\ "{}U+<codepoint>.bmp"{},\ 1\ per\ glyph.}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00017}00017\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00018}00018\ \textcolor{comment}{\ \ \ Synopsis:\ unifont1per\ <\ unifont.hex}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00019}00019\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00020}00020\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00021}00021\ \textcolor{comment}{\ \ \ LICENSE:}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00022}00022\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00023}00023\ \textcolor{comment}{\ \ \ \ \ \ This\ program\ is\ free\ software:\ you\ can\ redistribute\ it\ and/or\ modify}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00024}00024\ \textcolor{comment}{\ \ \ \ \ \ it\ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00025}00025\ \textcolor{comment}{\ \ \ \ \ \ the\ Free\ Software\ Foundation,\ either\ version\ 2\ of\ the\ License,\ or}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00026}00026\ \textcolor{comment}{\ \ \ \ \ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00027}00027\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00028}00028\ \textcolor{comment}{\ \ \ \ \ \ This\ program\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00029}00029\ \textcolor{comment}{\ \ \ \ \ \ but\ WITHOUT\ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00030}00030\ \textcolor{comment}{\ \ \ \ \ \ MERCHANTABILITY\ or\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00031}00031\ \textcolor{comment}{\ \ \ \ \ \ GNU\ General\ Public\ License\ for\ more\ details.}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00032}00032\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00033}00033\ \textcolor{comment}{\ \ \ \ \ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00034}00034\ \textcolor{comment}{\ \ \ \ \ \ along\ with\ this\ program.\ \ If\ not,\ see\ <http://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00035}00035\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00036}00036\ \textcolor{comment}{\ \ \ Example:}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00037}00037\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00038}00038\ \textcolor{comment}{\ \ \ \ \ \ mkdir\ my-\/bmp}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00039}00039\ \textcolor{comment}{\ \ \ \ \ \ cd\ my-\/bmp}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00040}00040\ \textcolor{comment}{\ \ \ \ \ \ unifont1per\ <\ ../glyphs.hex}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00041}00041\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00042}00042\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00044}00044\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00045}00045\ \textcolor{comment}{\ \ \ 11\ May\ 2019\ [Paul\ Hardy]:}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00046}00046\ \textcolor{comment}{\ \ \ \ \ \ -\/\ Changed\ sprintf\ function\ call\ to\ snprintf\ for\ writing}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00047}00047\ \textcolor{comment}{\ \ \ \ "{}filename"{}\ character\ string.}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00048}00048\ \textcolor{comment}{\ \ \ \ \ \ -\/\ Defined\ MAXFILENAME\ to\ hold\ size\ of\ "{}filename"{}\ array}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00049}00049\ \textcolor{comment}{\ \ \ \ for\ snprintf\ function\ call.}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00050}00050\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00052}00052\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00053}00053\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00054}00054\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00055}00055\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00056}00056\ \textcolor{comment}{/**\ Maximum\ size\ of\ an\ input\ line\ in\ a\ Unifont\ .hex\ file\ -\/\ 1.\ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00057}\mbox{\hyperlink{unifont1per_8c_a2ff420a6c6a2d1effc47a81e37327985}{00057}}\ \textcolor{preprocessor}{\#define\ MAXSTRING\ 266}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00058}00058\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00059}00059\ \textcolor{comment}{/**\ Maximum\ size\ of\ a\ filename\ of\ the\ form\ "{}U+\%06X.bmp"{}.\ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00060}\mbox{\hyperlink{unifont1per_8c_a0947c0a3d28c188caa4497cce08539c9}{00060}}\ \textcolor{preprocessor}{\#define\ MAXFILENAME\ 20}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00062}00062\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00063}00063\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00064}00064\ \textcolor{comment}{\ \ \ @brief\ The\ main\ function.}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00065}00065\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00066}00066\ \textcolor{comment}{\ \ \ @return\ This\ program\ exits\ with\ status\ EXIT\_SUCCESS.}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00067}00067\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00068}00068\ \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00069}\mbox{\hyperlink{unifont1per_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{00069}}\ \mbox{\hyperlink{unifont1per_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}}\ ()\ \{}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00071}00071\ \ \ \ \textcolor{keywordtype}{int}\ i;\ \textcolor{comment}{/*\ loop\ variable\ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00073}00073\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00074}00074\ \textcolor{comment}{\ \ \ \ \ \ Define\ bitmap\ header\ bytes}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00075}00075\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00076}00076\ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ header\ [62]\ =\ \{}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00077}00077\ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00078}00078\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ Bitmap\ File\ Header\ -\/-\/\ 14\ bytes}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00079}00079\ \textcolor{comment}{\ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00080}00080\ \ \ \ \ \ \ \textcolor{charliteral}{'B'},\ \textcolor{charliteral}{'M'},\ \ \ \ \ \ \ \textcolor{comment}{/*\ Signature\ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00081}00081\ \ \ \ \ \ \ 0x7E,\ 0,\ 0,\ 0,\ \ \textcolor{comment}{/*\ File\ Size\ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00082}00082\ \ \ \ \ \ \ \ \ \ 0,\ 0,\ 0,\ 0,\ \ \textcolor{comment}{/*\ Reserved\ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00083}00083\ \ \ \ \ \ \ 0x3E,\ 0,\ 0,\ 0,\ \ \textcolor{comment}{/*\ Pixel\ Array\ Offset\ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00084}00084\ }
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00085}00085\ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00086}00086\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ Device\ Independent\ Bitmap\ Header\ -\/-\/\ 40\ bytes}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00087}00087\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00088}00088\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ Image\ Width\ and\ Image\ Height\ are\ assigned\ final\ values}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00089}00089\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ based\ on\ the\ dimensions\ of\ each\ glyph.}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00090}00090\ \textcolor{comment}{\ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00091}00091\ \ \ \ \ \ \ 0x28,\ \ \ \ 0,\ \ \ \ 0,\ \ \ \ 0,\ \ \textcolor{comment}{/*\ DIB\ Header\ Size\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00092}00092\ \ \ \ \ \ \ 0x10,\ \ \ \ 0,\ \ \ \ 0,\ \ \ \ 0,\ \ \textcolor{comment}{/*\ Image\ Width\ =\ 16\ pixels\ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00093}00093\ \ \ \ \ \ \ 0xF0,\ 0xFF,\ 0xFF,\ 0xFF,\ \ \textcolor{comment}{/*\ Image\ Height\ =\ -\/16\ pixels\ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00094}00094\ \ \ \ \ \ \ 0x01,\ \ \ \ 0,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Planes\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00095}00095\ \ \ \ \ \ \ 0x01,\ \ \ \ 0,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Bits\ Per\ Pixel\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00096}00096\ \ \ \ \ \ \ \ \ \ 0,\ \ \ \ 0,\ \ \ \ 0,\ \ \ \ 0,\ \ \textcolor{comment}{/*\ Compression\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00097}00097\ \ \ \ \ \ \ 0x40,\ \ \ \ 0,\ \ \ \ 0,\ \ \ \ 0,\ \ \textcolor{comment}{/*\ Image\ Size\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00098}00098\ \ \ \ \ \ \ 0x14,\ 0x0B,\ \ \ \ 0,\ \ \ \ 0,\ \ \textcolor{comment}{/*\ X\ Pixels\ Per\ Meter\ =\ 72\ dpi\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00099}00099\ \ \ \ \ \ \ 0x14,\ 0x0B,\ \ \ \ 0,\ \ \ \ 0,\ \ \textcolor{comment}{/*\ Y\ Pixels\ Per\ Meter\ =\ 72\ dpi\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00100}00100\ \ \ \ \ \ \ 0x02,\ \ \ \ 0,\ \ \ \ 0,\ \ \ \ 0,\ \ \textcolor{comment}{/*\ Colors\ In\ Color\ Table\ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00101}00101\ \ \ \ \ \ \ \ \ \ 0,\ \ \ \ 0,\ \ \ \ 0,\ \ \ \ 0,\ \ \textcolor{comment}{/*\ Important\ Colors\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00102}00102\ }
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00103}00103\ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00104}00104\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ Color\ Palette\ -\/-\/\ 8\ bytes}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00105}00105\ \textcolor{comment}{\ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00106}00106\ \ \ \ \ \ \ 0xFF,\ 0xFF,\ 0xFF,\ 0,\ \ \textcolor{comment}{/*\ White\ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00107}00107\ \ \ \ \ \ \ \ \ \ 0,\ \ \ \ 0,\ \ \ \ 0,\ 0\ \ \ \textcolor{comment}{/*\ Black\ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00108}00108\ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00109}00109\ }
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00110}00110\ \ \ \ \textcolor{keywordtype}{char}\ instring[\mbox{\hyperlink{unifont1per_8c_a2ff420a6c6a2d1effc47a81e37327985}{MAXSTRING}}];\ \textcolor{comment}{/*\ input\ string\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00111}00111\ \ \ \ \textcolor{keywordtype}{int}\ \ code\_point;\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ current\ Unicode\ code\ point\ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00112}00112\ \ \ \ \textcolor{keywordtype}{char}\ glyph[\mbox{\hyperlink{unifont1per_8c_a2ff420a6c6a2d1effc47a81e37327985}{MAXSTRING}}];\ \ \ \ \textcolor{comment}{/*\ bitmap\ string\ for\ this\ glyph\ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00113}00113\ \ \ \ \textcolor{keywordtype}{int}\ \ glyph\_height=16;\ \ \ \ \ \textcolor{comment}{/*\ for\ now,\ fixed\ at\ 16\ pixels\ high\ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00114}00114\ \ \ \ \textcolor{keywordtype}{int}\ \ glyph\_width;\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 8,\ 16,\ 24,\ or\ 32\ pixels\ wide\ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00115}00115\ \ \ \ \textcolor{keywordtype}{char}\ filename[\mbox{\hyperlink{unifont1per_8c_a0947c0a3d28c188caa4497cce08539c9}{MAXFILENAME}}];\textcolor{comment}{/*\ name\ of\ current\ output\ file\ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00116}00116\ \ \ \ FILE\ *outfp;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ file\ pointer\ to\ current\ output\ file\ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00117}00117\ }
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00118}00118\ \ \ \ \textcolor{keywordtype}{int}\ string\_index;\ \ \textcolor{comment}{/*\ pointer\ into\ hexadecimal\ glyph\ string\ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00119}00119\ \ \ \ \textcolor{keywordtype}{int}\ nextbyte;\ \ \ \ \ \ \textcolor{comment}{/*\ next\ set\ of\ 8\ bits\ to\ print\ out\ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00120}00120\ }
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00121}00121\ \ \ \ \textcolor{comment}{/*\ Repeat\ for\ each\ line\ in\ the\ input\ stream\ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00122}00122\ \ \ \ \textcolor{keywordflow}{while}\ (fgets\ (instring,\ \mbox{\hyperlink{unifont1per_8c_a2ff420a6c6a2d1effc47a81e37327985}{MAXSTRING}}\ -\/\ 1,\ stdin)\ !=\ NULL)\ \{}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00123}00123\ \ \ \ \ \ \ \textcolor{comment}{/*\ Read\ next\ Unifont\ ASCII\ hexadecimal\ format\ glyph\ description\ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00124}00124\ \ \ \ \ \ \ sscanf\ (instring,\ \textcolor{stringliteral}{"{}\%X:\%s"{}},\ \&code\_point,\ glyph);}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00125}00125\ \ \ \ \ \ \ \textcolor{comment}{/*\ Calculate\ width\ of\ a\ glyph\ in\ pixels;\ 4\ bits\ per\ ASCII\ hex\ digit\ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00126}00126\ \ \ \ \ \ \ glyph\_width\ =\ strlen\ (glyph)\ /\ (glyph\_height\ /\ 4);}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00127}00127\ \ \ \ \ \ \ snprintf\ (filename,\ \mbox{\hyperlink{unifont1per_8c_a0947c0a3d28c188caa4497cce08539c9}{MAXFILENAME}},\ \textcolor{stringliteral}{"{}U+\%06X.bmp"{}},\ code\_point);}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00128}00128\ \ \ \ \ \ \ header\ [18]\ =\ \ glyph\_width;\ \ \textcolor{comment}{/*\ bitmap\ width\ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00129}00129\ \ \ \ \ \ \ header\ [22]\ =\ -\/glyph\_height;\ \textcolor{comment}{/*\ negative\ height\ -\/-\/>\ draw\ top\ to\ bottom\ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00130}00130\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((outfp\ =\ fopen\ (filename,\ \textcolor{stringliteral}{"{}w"{}}))\ !=\ NULL)\ \{}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 62;\ i++)\ fputc\ (header[i],\ outfp);}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00133}00133\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ Bitmap,\ with\ each\ row\ padded\ with\ zeroes\ if\ necessary}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00134}00134\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ so\ each\ row\ is\ four\ bytes\ wide.\ \ (Each\ row\ must\ end}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00135}00135\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ on\ a\ four-\/byte\ boundary,\ and\ four\ bytes\ is\ the\ maximum}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00136}00136\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ possible\ row\ length\ for\ up\ to\ 32\ pixels\ in\ a\ row.)}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00137}00137\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00138}00138\ \ \ \ \ \ \ \ \ \ string\_index\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ glyph\_height;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Read\ 2\ ASCII\ hexadecimal\ digits\ (1\ byte\ of\ output\ pixels)\ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ sscanf\ (\&glyph[string\_index],\ \textcolor{stringliteral}{"{}\%2X"{}},\ \&nextbyte);}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ string\_index\ +=\ 2;}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ fputc\ (nextbyte,\ outfp);\ \ \textcolor{comment}{/*\ write\ out\ the\ 8\ pixels\ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (glyph\_width\ <=\ 8)\ \{\ \ \ \textcolor{comment}{/*\ pad\ row\ with\ 3\ zero\ bytes\ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fputc\ (0x00,\ outfp);\ fputc\ (0x00,\ outfp);\ fputc\ (0x00,\ outfp);}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{\ \textcolor{comment}{/*\ get\ 8\ more\ pixels\ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sscanf\ (\&glyph[string\_index],\ \textcolor{stringliteral}{"{}\%2X"{}},\ \&nextbyte);}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ string\_index\ +=\ 2;}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fputc\ (nextbyte,\ outfp);\ \ \textcolor{comment}{/*\ write\ out\ the\ 8\ pixels\ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (glyph\_width\ <=\ 16)\ \{\ \ \textcolor{comment}{/*\ pad\ row\ with\ 2\ zero\ bytes\ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fputc\ (0x00,\ outfp);\ fputc\ (0x00,\ outfp);}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{\ \textcolor{comment}{/*\ get\ 8\ more\ pixels\ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sscanf\ (\&glyph[string\_index],\ \textcolor{stringliteral}{"{}\%2X"{}},\ \&nextbyte);}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ string\_index\ +=\ 2;}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fputc\ (nextbyte,\ outfp);\ \ \textcolor{comment}{/*\ write\ out\ the\ 8\ pixels\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (glyph\_width\ <=\ 24)\ \{\ \ \textcolor{comment}{/*\ pad\ row\ with\ 1\ zero\ byte\ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fputc\ (0x00,\ outfp);}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{\ \textcolor{comment}{/*\ get\ 8\ more\ pixels\ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sscanf\ (\&glyph[string\_index],\ \textcolor{stringliteral}{"{}\%2X"{}},\ \&nextbyte);}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ string\_index\ +=\ 2;}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fputc\ (nextbyte,\ outfp);\ \textcolor{comment}{/*\ write\ out\ the\ 8\ pixels\ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \ \textcolor{comment}{/*\ glyph\ is\ 32\ pixels\ wide\ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \ \textcolor{comment}{/*\ glyph\ is\ 24\ pixels\ wide\ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \ \textcolor{comment}{/*\ glyph\ is\ 16\ pixels\ wide\ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \}\ \ \textcolor{comment}{/*\ glyph\ is\ 8\ pixels\ wide\ */}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00169}00169\ }
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00170}00170\ \ \ \ \ \ \ \ \ \ fclose\ (outfp);}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00171}00171\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00172}00172\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00173}00173\ }
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00174}00174\ \ \ \ exit\ (EXIT\_SUCCESS);}
+\DoxyCodeLine{\Hypertarget{unifont1per_8c_source_l00175}00175\ \}}
+
+\end{DoxyCode}

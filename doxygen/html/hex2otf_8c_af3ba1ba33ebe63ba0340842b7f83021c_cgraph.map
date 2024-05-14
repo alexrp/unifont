@@ -1,0 +1,6 @@
+<map id="positionGlyphs" name="positionGlyphs">
+<area shape="rect" id="node1" title="Position a glyph within a 16&#45;by&#45;16 pixel bounding box." alt="" coords="5,56,124,81"/>
+<area shape="rect" id="node2" href="$hex2otf_8c.html#a0d187cc87528ef35478afd7a68309f08" title="Compare two Unicode code points to determine which is greater." alt="" coords="179,5,283,31"/>
+<area shape="rect" id="node3" href="$hex2otf_8c.html#a2f5976201b1e630a94045f04a0348572" title="Print an error message on stderr, then exit." alt="" coords="337,81,380,107"/>
+<area shape="rect" id="node4" href="$hex2otf_8c.html#ae28f2f636e4d3dd3b5784a3bc3f92b58" title="Read up to 6 hexadecimal digits and a colon from file." alt="" coords="172,107,289,132"/>
+</map>

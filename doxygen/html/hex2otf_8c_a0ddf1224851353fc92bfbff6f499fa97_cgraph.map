@@ -1,0 +1,50 @@
+<map id="main" name="main">
+<area shape="rect" id="node1" title="The main function." alt="" coords="5,703,60,729"/>
+<area shape="rect" id="node2" href="$hex2otf_8c.html#ac947cbe076da5fbab8f5e4c1c821b7a6" title="Free all allocated buffer pointers." alt="" coords="116,49,219,74"/>
+<area shape="rect" id="node3" href="$hex2otf_8c.html#afd499a24ff34cb5c19b52df795422c12" title="Fill OpenType bitmap data and location tables." alt="" coords="319,849,404,874"/>
+<area shape="rect" id="node12" href="$hex2otf_8c.html#ae8310060f5a9b7cefb84d0bb1b459b64" title="Create a new buffer." alt="" coords="511,537,599,562"/>
+<area shape="rect" id="node13" href="$hex2otf_8c.html#ab37b4f7111692f8d1163bafd2aab831e" title="Create a dummy blank outline in a font table." alt="" coords="300,149,423,174"/>
+<area shape="rect" id="node14" href="$hex2otf_8c.html#a3d62aa29f94c3fa78ca4438739d64a62" title="Add a CFF table to a font." alt="" coords="136,1073,199,1098"/>
+<area shape="rect" id="node20" href="$hex2otf_8c.html#a6362601eb41d051a103a1d9edcd4f284" title="Fill a &quot;cmap&quot; font table." alt="" coords="306,697,417,722"/>
+<area shape="rect" id="node21" href="$hex2otf_8c.html#a6c1e982fdc6c51b9f84051daa2e71936" title="Fill a &quot;GPOS&quot; font table." alt="" coords="309,198,414,223"/>
+<area shape="rect" id="node22" href="$hex2otf_8c.html#a06b8121dea15c8117b7c951ffb22fb7e" title="Fill a &quot;GSUB&quot; font table." alt="" coords="309,549,414,574"/>
+<area shape="rect" id="node23" href="$hex2otf_8c.html#a4ac0c02117b703a71bee3dd34e2eb306" title="Fill a &quot;head&quot; font table." alt="" coords="308,647,415,673"/>
+<area shape="rect" id="node25" href="$hex2otf_8c.html#a28e889c3a36007c2e5d50a498046a6c6" title="Fill a &quot;hhea&quot; font table." alt="" coords="308,247,415,273"/>
+<area shape="rect" id="node26" href="$hex2otf_8c.html#a97c9b2ae58f5989d68e639715c3f9df9" title="Fill an &quot;hmtx&quot; font table." alt="" coords="307,99,415,125"/>
+<area shape="rect" id="node27" href="$hex2otf_8c.html#aff4f28ce178c84c7365245ec10034433" title="Fill a &quot;maxp&quot; font table." alt="" coords="307,499,415,525"/>
+<area shape="rect" id="node28" href="$hex2otf_8c.html#a79d8a322be9d9131b684a9ea67abe05e" title="Fill a &quot;name&quot; font table." alt="" coords="112,1237,223,1262"/>
+<area shape="rect" id="node30" href="$hex2otf_8c.html#ab6e3bb110dc3e55193c344cb7b56e328" title="Fill an &quot;OS/2&quot; font table." alt="" coords="312,598,411,623"/>
+<area shape="rect" id="node31" href="$hex2otf_8c.html#a0ddc03905c4918e04aa1e54a7c1716b1" title="Fill a &quot;post&quot; font table." alt="" coords="311,450,411,475"/>
+<area shape="rect" id="node32" href="$hex2otf_8c.html#a326e4fa86eb32bb18e37eab8f495bd2f" title="Add a TrueType table to a font." alt="" coords="314,997,409,1022"/>
+<area shape="rect" id="node33" href="$hex2otf_8c.html#a4cebe6a72365812b5f392f4db9dc5db5" title="Initialize an array of buffer pointers to all zeroes." alt="" coords="677,1605,767,1630"/>
+<area shape="rect" id="node34" href="$hex2otf_8c.html#a049e485562f7f4dfe978c4146ad225b8" title="Sort tables according to OpenType recommendations." alt="" coords="108,1983,227,2009"/>
+<area shape="rect" id="node35" href="$hex2otf_8c.html#ac2eec01939cae967aa9882b2517288a1" title="Parse command line options." alt="" coords="113,1934,221,1959"/>
+<area shape="rect" id="node39" href="$hex2otf_8c.html#af3ba1ba33ebe63ba0340842b7f83021c" title="Position a glyph within a 16&#45;by&#45;16 pixel bounding box." alt="" coords="496,1706,615,1731"/>
+<area shape="rect" id="node42" href="$hex2otf_8c.html#ad77c441582f862d494a734eb9855dd41" title="Read glyph definitions from a Unifont .hex format file." alt="" coords="507,1755,603,1781"/>
+<area shape="rect" id="node43" href="$hex2otf_8c.html#a77ff68152c5cb38605010bc7621b0722" title="Sort the glyphs in a font by Unicode code point." alt="" coords="509,2057,601,2082"/>
+<area shape="rect" id="node44" href="$hex2otf_8c.html#a074562f0527ff6db8b1b956b9356a315" title="Write OpenType font to output file." alt="" coords="320,1807,403,1833"/>
+<area shape="rect" id="node4" href="$hex2otf_8c.html#a1fab24bb2d2b38b68a38ec871afc3f9c" title="Add a TrueType or OpenType table to the font." alt="" coords="515,463,595,489"/>
+<area shape="rect" id="node5" href="$hex2otf_8c.html#a927c31a7e187d15a70667ce6b0ef296a" title="Append a string of bytes to a buffer." alt="" coords="507,874,604,899"/>
+<area shape="rect" id="node8" href="$hex2otf_8c.html#a07b29528c561e5852a228c98391225f7" title="Append two unsigned bytes to the end of a byte array." alt="" coords="512,647,599,673"/>
+<area shape="rect" id="node9" href="$hex2otf_8c.html#a051a88b0ac4eb063945b84e2242408ea" title="Append four unsigned bytes to the end of a byte array." alt="" coords="512,697,599,722"/>
+<area shape="rect" id="node10" href="$hex2otf_8c.html#a84d7310553d31f4ec587dc001f472834" title="Append one unsigned byte to the end of a byte array." alt="" coords="516,973,595,998"/>
+<area shape="rect" id="node11" href="$hex2otf_8c.html#ac928f7761fc187ff86f33805309bec21" title="Free the memory previously allocated for a buffer." alt="" coords="512,1111,599,1137"/>
+<area shape="rect" id="node6" href="$hex2otf_8c.html#ae32c0f82cbb6a4d8ece0559f1c7b74f4" title="Ensure that the buffer has at least the specified minimum size." alt="" coords="669,1067,775,1093"/>
+<area shape="rect" id="node7" href="$hex2otf_8c.html#a2f5976201b1e630a94045f04a0348572" title="Print an error message on stderr, then exit." alt="" coords="829,1605,872,1630"/>
+<area shape="rect" id="node15" href="$hex2otf_8c.html#a5af7c9bcfd40e5b11f9d12c40966bb65" title="Build a glyph outline." alt="" coords="505,1161,606,1186"/>
+<area shape="rect" id="node16" href="$hex2otf_8c.html#a560637130747e543118ff304389fd18f" title="Append bytes of a table to a byte buffer." alt="" coords="506,1255,605,1281"/>
+<area shape="rect" id="node17" href="$hex2otf_8c.html#a51be7f69e0f6053772b3ddacf215df84" title="Cache charstring number encoding in a CFF buffer." alt="" coords="291,947,431,973"/>
+<area shape="rect" id="node18" href="$hex2otf_8c.html#a97af00050b8fd6b7e7b81c7027e4c8e6" title="Prepare 32&#45;bit glyph offsets in a font table." alt="" coords="663,1453,781,1478"/>
+<area shape="rect" id="node19" href="$hex2otf_8c.html#aa52cd46a50cdc2040a72e5c7ecfa944b" title="Prepare a font name string index." alt="" coords="288,898,435,923"/>
+<area shape="rect" id="node24" href="$hex2otf_8c.html#a0d4560c5d562d31a33f092bb579f8397" title="Append 1 to 4 bytes of zeroes to a buffer, for padding." alt="" coords="507,923,604,949"/>
+<area shape="rect" id="node29" href="$hex2otf_8c.html#a199befd98ef9ec0ee659d82609abded4" title="Cache a string as a big&#45;ending UTF&#45;16 surrogate pair." alt="" coords="275,1503,448,1529"/>
+<area shape="rect" id="node36" href="$hex2otf_8c.html#af1d113ec0d790035476f2743cbf2696f" title="Match a command line option with its key for enabling." alt="" coords="311,1958,411,1983"/>
+<area shape="rect" id="node37" href="$hex2otf_8c.html#a0d20b69b0ad703df78459e1033d5c1d4" title="Print help message to stdout and then exit." alt="" coords="320,2007,403,2033"/>
+<area shape="rect" id="node38" href="$hex2otf_8c.html#a9c4b081f1e1ad60def15811c71a936f2" title="Print program version string on stdout." alt="" coords="311,1909,411,1934"/>
+<area shape="rect" id="node40" href="$hex2otf_8c.html#a0d187cc87528ef35478afd7a68309f08" title="Compare two Unicode code points to determine which is greater." alt="" coords="670,1755,774,1781"/>
+<area shape="rect" id="node41" href="$hex2otf_8c.html#ae28f2f636e4d3dd3b5784a3bc3f92b58" title="Read up to 6 hexadecimal digits and a colon from file." alt="" coords="663,1706,781,1731"/>
+<area shape="rect" id="node45" href="$hex2otf_8c.html#af1223f39e8627e0a3b0b7b533e6d0b64" title="Compare tables by 4&#45;byte unsigned table tag value." alt="" coords="508,1857,603,1882"/>
+<area shape="rect" id="node46" href="$hex2otf_8c.html#ae2b46edf2ac290c695e2b27d16f1b380" title="Write an array of bytes to an output file." alt="" coords="676,1931,768,1957"/>
+<area shape="rect" id="node47" href="$hex2otf_8c.html#a83aece82aa1fe815fc24a12be34a24b1" title="Write an unsigned 16&#45;bit value to an output file." alt="" coords="515,1958,596,1983"/>
+<area shape="rect" id="node48" href="$hex2otf_8c.html#a941153850cde042e39ce40d47d5aac5f" title="Write an unsigned 32&#45;bit value to an output file." alt="" coords="515,2007,596,2033"/>
+</map>

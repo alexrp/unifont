@@ -1,0 +1,7 @@
+<map id="cacheBuffer" name="cacheBuffer">
+<area shape="rect" id="node1" title="Append bytes of a table to a byte buffer." alt="" coords="267,55,365,80"/>
+<area shape="rect" id="node2" href="$hex2otf_8c.html#a3d62aa29f94c3fa78ca4438739d64a62" title="Add a CFF table to a font." alt="" coords="132,5,195,31"/>
+<area shape="rect" id="node4" href="$hex2otf_8c.html#a79d8a322be9d9131b684a9ea67abe05e" title="Fill a &quot;name&quot; font table." alt="" coords="108,55,219,80"/>
+<area shape="rect" id="node5" href="$hex2otf_8c.html#a326e4fa86eb32bb18e37eab8f495bd2f" title="Add a TrueType table to a font." alt="" coords="116,104,211,129"/>
+<area shape="rect" id="node3" href="$hex2otf_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="The main function." alt="" coords="5,55,60,80"/>
+</map>

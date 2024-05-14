@@ -1,0 +1,258 @@
+\hypertarget{unicoverage_8c_source}{}\doxysection{unicoverage.\+c}
+\label{unicoverage_8c_source}\index{src/unicoverage.c@{src/unicoverage.c}}
+\mbox{\hyperlink{unicoverage_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00001}00001\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00002}00002\ \textcolor{comment}{\ \ \ @file\ unicoverage.c}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00003}00003\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00004}00004\ \textcolor{comment}{\ \ \ @brief\ unicoverage\ -\/\ Show\ the\ coverage\ of\ Unicode\ plane\ scripts}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00005}00005\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ for\ a\ GNU\ Unifont\ hex\ glyph\ file}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00006}00006\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00007}00007\ \textcolor{comment}{\ \ \ @author\ Paul\ Hardy,\ unifoundry\ <at>\ unifoundry.com,\ 6\ January\ 2008}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00008}00008\ \textcolor{comment}{\ \ \ }}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00009}00009\ \textcolor{comment}{\ \ \ @copyright\ Copyright\ (C)\ 2008,\ 2013\ Paul\ Hardy}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00010}00010\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00011}00011\ \textcolor{comment}{\ \ \ Synopsis:\ unicoverage\ [-\/ifont\_file.hex]\ [-\/ocoverage\_file.txt]}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00012}00012\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00013}00013\ \textcolor{comment}{\ \ \ This\ program\ requires\ the\ file\ "{}coverage.dat"{}\ to\ be\ present}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00014}00014\ \textcolor{comment}{\ \ \ in\ the\ directory\ from\ which\ it\ is\ run.}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00015}00015\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00016}00016\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00017}00017\ \textcolor{comment}{\ \ \ LICENSE:}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00018}00018\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00019}00019\ \textcolor{comment}{\ \ \ \ \ \ This\ program\ is\ free\ software:\ you\ can\ redistribute\ it\ and/or\ modify}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00020}00020\ \textcolor{comment}{\ \ \ \ \ \ it\ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00021}00021\ \textcolor{comment}{\ \ \ \ \ \ the\ Free\ Software\ Foundation,\ either\ version\ 2\ of\ the\ License,\ or}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00022}00022\ \textcolor{comment}{\ \ \ \ \ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00023}00023\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00024}00024\ \textcolor{comment}{\ \ \ \ \ \ This\ program\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00025}00025\ \textcolor{comment}{\ \ \ \ \ \ but\ WITHOUT\ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00026}00026\ \textcolor{comment}{\ \ \ \ \ \ MERCHANTABILITY\ or\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00027}00027\ \textcolor{comment}{\ \ \ \ \ \ GNU\ General\ Public\ License\ for\ more\ details.}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00028}00028\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00029}00029\ \textcolor{comment}{\ \ \ \ \ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00030}00030\ \textcolor{comment}{\ \ \ \ \ \ along\ with\ this\ program.\ \ If\ not,\ see\ <http://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00031}00031\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00033}00033\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00034}00034\ \textcolor{comment}{\ \ \ 2016\ (Paul\ Hardy):\ Modified\ in\ Unifont\ 9.0.01\ release\ to\ remove\ non-\/existent}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00035}00035\ \textcolor{comment}{\ \ \ "{}-\/p"{}\ option\ and\ empty\ example\ from\ help\ printout.}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00036}00036\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00037}00037\ \textcolor{comment}{\ \ \ 2018\ (Paul\ Hardy):\ Modified\ to\ cover\ entire\ Unicode\ range,\ not\ just\ Plane\ 0.}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00038}00038\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00039}00039\ \textcolor{comment}{\ \ \ 11\ May\ 2019:\ [Paul\ Hardy]\ changed\ strcpy\ function\ call\ to\ strlcpy}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00040}00040\ \textcolor{comment}{\ \ \ for\ better\ error\ handling.}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00041}00041\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00042}00042\ \textcolor{comment}{\ \ \ 31\ May\ 2019:\ [Paul\ Hardy]\ replaced\ strlcpy\ call\ with\ strncpy}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00043}00043\ \textcolor{comment}{\ \ \ for\ compilation\ on\ more\ systems.}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00044}00044\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00045}00045\ \textcolor{comment}{\ \ \ 4\ June\ 2022:\ [Paul\ Hardy]\ Adjusted\ column\ spacing\ for\ better\ alignment}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00046}00046\ \textcolor{comment}{\ \ \ of\ Unicode\ Plane\ 1-\/15\ scripts.\ \ Added\ "{}-\/n"{}\ option\ to\ print\ number\ of}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00047}00047\ \textcolor{comment}{\ \ \ glyphs\ in\ each\ range\ instead\ of\ percent\ coverage.}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00048}00048\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00049}00049\ \textcolor{comment}{\ \ \ 18\ September\ 2022:\ [Paul\ Hardy]\ in\ nextrange\ function,\ initialize\ retval.}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00050}00050\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00051}00051\ \textcolor{comment}{\ \ \ 21\ October\ 2023:\ [Paul\ Hardy]}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00052}00052\ \textcolor{comment}{\ \ \ Added\ full\ function\ prototype\ for\ nextrange\ function\ in\ main\ function.}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00053}00053\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00055}00055\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00056}00056\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00057}00057\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00060}\mbox{\hyperlink{unicoverage_8c_ad7871643c05865c80f5d8050aead2b57}{00060}}\ \textcolor{preprocessor}{\#define\ MAXBUF\ 256\ \ \ }\textcolor{comment}{///<\ Maximum\ input\ line\ length\ -\/\ 1}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00062}00062\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00063}00063\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00064}00064\ \textcolor{comment}{\ \ \ @brief\ The\ main\ function.}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00065}00065\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00066}00066\ \textcolor{comment}{\ \ \ @param[in]\ argc\ The\ count\ of\ command\ line\ arguments.}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00067}00067\ \textcolor{comment}{\ \ \ @param[in]\ argv\ Pointer\ to\ array\ of\ command\ line\ arguments.}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00068}00068\ \textcolor{comment}{\ \ \ @return\ This\ program\ exits\ with\ status\ 0.}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00069}00069\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00070}00070\ \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00071}\mbox{\hyperlink{unicoverage_8c_a0ddf1224851353fc92bfbff6f499fa97}{00071}}\ \mbox{\hyperlink{unibdf2hex_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}}\ (\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}\ *argv[])}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00072}00072\ \{}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00074}00074\ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ print\_n=0;\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ print\ \#\ of\ glyphs,\ not\ percentage\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00075}00075\ \ \ \ \textcolor{keywordtype}{unsigned}\ i;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ loop\ variable\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00076}00076\ \ \ \ \textcolor{keywordtype}{unsigned}\ slen;\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ string\ length\ of\ coverage\ file\ line\ */}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00077}00077\ \ \ \ \textcolor{keywordtype}{char}\ \ \ \ \ inbuf[256];\ \ \ \ \ \ \ \textcolor{comment}{/*\ input\ buffer\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00078}00078\ \ \ \ \textcolor{keywordtype}{unsigned}\ thischar;\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ the\ current\ character\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00079}00079\ }
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00080}00080\ \ \ \ \textcolor{keywordtype}{char}\ *infile=\textcolor{stringliteral}{"{}"{}},\ *outfile=\textcolor{stringliteral}{"{}"{}};\ \ \textcolor{comment}{/*\ names\ of\ input\ and\ output\ files\ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00081}00081\ \ \ \ FILE\ *infp,\ *outfp;\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ file\ pointers\ of\ input\ and\ output\ files\ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00082}00082\ \ \ \ FILE\ *coveragefp;\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ file\ pointer\ to\ coverage.dat\ file\ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00083}00083\ \ \ \ \textcolor{keywordtype}{int}\ cstart,\ cend;\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ current\ coverage\ start\ and\ end\ code\ points\ */}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00084}00084\ \ \ \ \textcolor{keywordtype}{char}\ coverstring[\mbox{\hyperlink{unicoverage_8c_ad7871643c05865c80f5d8050aead2b57}{MAXBUF}}];\ \ \textcolor{comment}{/*\ description\ of\ current\ coverage\ range\ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00085}00085\ \ \ \ \textcolor{keywordtype}{int}\ nglyphs;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ number\ of\ glyphs\ in\ this\ section\ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00086}00086\ }
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00087}00087\ \ \ \ \textcolor{comment}{/*\ to\ get\ next\ range\ \&\ name\ of\ Unicode\ glyphs\ */}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00088}00088\ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{unicoverage_8c_aecb35821cec5af4455f392b872cc1dc4}{nextrange}}\ (FILE\ *coveragefp,\ \textcolor{keywordtype}{int}\ *cstart,\ \textcolor{keywordtype}{int}\ *cend,\ \textcolor{keywordtype}{char}\ *coverstring);}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00089}00089\ }
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00090}00090\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{unicoverage_8c_acfeab2c5c5e91c5343674cb7c523911f}{print\_subtotal}}\ (FILE\ *outfp,\ \textcolor{keywordtype}{int}\ print\_n,\ \textcolor{keywordtype}{int}\ nglyphs,}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ cstart,\ \textcolor{keywordtype}{int}\ cend,\ \textcolor{keywordtype}{char}\ *coverstring);}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00092}00092\ }
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00093}00093\ \ \ \ \textcolor{keywordflow}{if}\ ((coveragefp\ =\ fopen\ (\textcolor{stringliteral}{"{}coverage.dat"{}},\ \textcolor{stringliteral}{"{}r"{}}))\ ==\ NULL)\ \{}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00094}00094\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)nError:\ data\ file\ \(\backslash\)"{}coverage.dat\(\backslash\)"{}\ not\ found.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00095}00095\ \ \ \ \ \ \ exit\ (0);}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00096}00096\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00097}00097\ }
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00098}00098\ \ \ \ \textcolor{keywordflow}{if}\ (argc\ >\ 1)\ \{}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00099}00099\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 1;\ i\ <\ argc;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (argv[i][0]\ ==\ \textcolor{charliteral}{'-\/'})\ \{\ \ \textcolor{comment}{/*\ this\ is\ an\ option\ argument\ */}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (argv[i][1])\ \{}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'i'}:\ \ \textcolor{comment}{/*\ name\ of\ input\ file\ */}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ infile\ =\ \&argv[i][2];}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'n'}:\ \ \textcolor{comment}{/*\ print\ number\ of\ glyphs\ instead\ of\ percentage\ */}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print\_n\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'o'}:\ \ \textcolor{comment}{/*\ name\ of\ output\ file\ */}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outfile\ =\ \&argv[i][2];}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:\ \ \ \textcolor{comment}{/*\ if\ unrecognized\ option,\ print\ list\ and\ exit\ */}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)nSyntax:\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\ \ \ \%s\ -\/p<Unicode\_Page>\ "{}},\ argv[0]);}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}-\/i<Input\_File>\ -\/o<Output\_File>\ -\/w\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ exit\ (1);}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00117}00117\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00118}00118\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00119}00119\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00120}00120\ \textcolor{comment}{\ \ \ \ \ \ Make\ sure\ we\ can\ open\ any\ I/O\ files\ that\ were\ specified\ before}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00121}00121\ \textcolor{comment}{\ \ \ \ \ \ doing\ anything\ else.}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00122}00122\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00123}00123\ \ \ \ \textcolor{keywordflow}{if}\ (strlen\ (infile)\ >\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00124}00124\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((infp\ =\ fopen\ (infile,\ \textcolor{stringliteral}{"{}r"{}}))\ ==\ NULL)\ \{}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00125}00125\ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}Error:\ can't\ open\ \%s\ for\ input.\(\backslash\)n"{}},\ infile);}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00126}00126\ \ \ \ \ \ \ \ \ \ exit\ (1);}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00127}00127\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00128}00128\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00129}00129\ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00130}00130\ \ \ \ \ \ \ infp\ =\ stdin;}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00131}00131\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00132}00132\ \ \ \ \textcolor{keywordflow}{if}\ (strlen\ (outfile)\ >\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00133}00133\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((outfp\ =\ fopen\ (outfile,\ \textcolor{stringliteral}{"{}w"{}}))\ ==\ NULL)\ \{}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00134}00134\ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}Error:\ can't\ open\ \%s\ for\ output.\(\backslash\)n"{}},\ outfile);}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00135}00135\ \ \ \ \ \ \ \ \ \ exit\ (1);}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00136}00136\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00137}00137\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00138}00138\ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00139}00139\ \ \ \ \ \ \ outfp\ =\ stdout;}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00140}00140\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00141}00141\ }
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00142}00142\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00143}00143\ \textcolor{comment}{\ \ \ \ \ \ Print\ header\ row.}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00144}00144\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00145}00145\ \ \ \ \textcolor{keywordflow}{if}\ (print\_n)\ \{}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00146}00146\ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\#\ Glyphs\ \ \ \ \ \ Range\ \ \ \ \ \ \ \ Script\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00147}00147\ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/-\/\ \ \ \ \ \ -\/-\/-\/-\/-\/\ \ \ \ \ \ \ \ -\/-\/-\/-\/-\/-\/\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00148}00148\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00149}00149\ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00150}00150\ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}Covered\ \ \ \ \ \ Range\ \ \ \ \ \ \ \ Script\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00151}00151\ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/\ \ \ \ \ \ -\/-\/-\/-\/-\/\ \ \ \ \ \ \ \ -\/-\/-\/-\/-\/-\/\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00152}00152\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00153}00153\ }
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00154}00154\ \ \ \ slen\ =\ \mbox{\hyperlink{unicoverage_8c_aecb35821cec5af4455f392b872cc1dc4}{nextrange}}\ (coveragefp,\ \&cstart,\ \&cend,\ coverstring);}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00155}00155\ \ \ \ nglyphs\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00156}00156\ }
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00157}00157\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00158}00158\ \textcolor{comment}{\ \ \ \ \ \ Read\ in\ the\ glyphs\ in\ the\ file}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00159}00159\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00160}00160\ \ \ \ \textcolor{keywordflow}{while}\ (slen\ !=\ 0\ \&\&\ fgets\ (inbuf,\ \mbox{\hyperlink{unicoverage_8c_ad7871643c05865c80f5d8050aead2b57}{MAXBUF}}-\/1,\ infp)\ !=\ NULL)\ \{}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00161}00161\ \ \ \ \ \ \ sscanf\ (inbuf,\ \textcolor{stringliteral}{"{}\%x"{}},\ \&thischar);}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00162}00162\ }
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00163}00163\ \ \ \ \ \ \ \textcolor{comment}{/*\ Read\ a\ character\ beyond\ end\ of\ current\ script.\ */}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00164}00164\ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (cend\ <\ thischar\ \&\&\ slen\ !=\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unicoverage_8c_acfeab2c5c5e91c5343674cb7c523911f}{print\_subtotal}}\ (outfp,\ print\_n,\ nglyphs,\ cstart,\ cend,\ coverstring);}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00166}00166\ }
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ start\ new\ range\ total\ */}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00168}00168\ \ \ \ \ \ \ \ \ \ slen\ =\ \mbox{\hyperlink{unicoverage_8c_aecb35821cec5af4455f392b872cc1dc4}{nextrange}}\ (coveragefp,\ \&cstart,\ \&cend,\ coverstring);}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00169}00169\ \ \ \ \ \ \ \ \ \ nglyphs\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00170}00170\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00171}00171\ \ \ \ \ \ \ nglyphs++;}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00172}00172\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00173}00173\ }
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00174}00174\ \ \ \ \mbox{\hyperlink{unicoverage_8c_acfeab2c5c5e91c5343674cb7c523911f}{print\_subtotal}}\ (outfp,\ print\_n,\ nglyphs,\ cstart,\ cend,\ coverstring);}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00175}00175\ }
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00176}00176\ \ \ \ exit\ (0);}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00177}00177\ \}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00178}00178\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00179}00179\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00180}00180\ \textcolor{comment}{\ \ \ @brief\ Get\ next\ Unicode\ range.}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00181}00181\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00182}00182\ \textcolor{comment}{\ \ \ This\ function\ reads\ the\ next\ Unicode\ script\ range\ to\ count\ its}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00183}00183\ \textcolor{comment}{\ \ \ glyph\ coverage.}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00184}00184\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00185}00185\ \textcolor{comment}{\ \ \ @param[in]\ coveragefp\ File\ pointer\ to\ Unicode\ script\ range\ data\ file.}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00186}00186\ \textcolor{comment}{\ \ \ @param[in]\ cstart\ Starting\ code\ point\ in\ current\ Unicode\ script\ range.}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00187}00187\ \textcolor{comment}{\ \ \ @param[in]\ cend\ Ending\ code\ point\ in\ current\ Unicode\ script\ range.}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00188}00188\ \textcolor{comment}{\ \ \ @param[out]\ coverstring\ String\ containing\ <cstart>-\/<cend>\ substring.}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00189}00189\ \textcolor{comment}{\ \ \ @return\ Length\ of\ the\ last\ string\ read,\ or\ 0\ for\ end\ of\ file.}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00190}00190\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00191}00191\ \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00192}\mbox{\hyperlink{unicoverage_8c_aecb35821cec5af4455f392b872cc1dc4}{00192}}\ \mbox{\hyperlink{unicoverage_8c_aecb35821cec5af4455f392b872cc1dc4}{nextrange}}\ (FILE\ *coveragefp,}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ *cstart,\ \textcolor{keywordtype}{int}\ *cend,}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ *coverstring)}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00195}00195\ \{}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00196}00196\ \ \ \ \textcolor{keywordtype}{int}\ i;}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00197}00197\ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{char}\ inbuf[\mbox{\hyperlink{unicoverage_8c_ad7871643c05865c80f5d8050aead2b57}{MAXBUF}}];}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00198}00198\ \ \ \ \textcolor{keywordtype}{int}\ retval;\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ the\ return\ value\ */}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00199}00199\ }
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00200}00200\ \ \ \ retval\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00201}00201\ }
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00202}00202\ \ \ \ \textcolor{keywordflow}{do}\ \{}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00203}00203\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fgets\ (inbuf,\ \mbox{\hyperlink{unicoverage_8c_ad7871643c05865c80f5d8050aead2b57}{MAXBUF}}-\/1,\ coveragefp)\ !=\ NULL)\ \{}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00204}00204\ \ \ \ \ \ \ \ \ \ retval\ =\ strlen\ (inbuf);}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00205}00205\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((inbuf[0]\ >=\ \textcolor{charliteral}{'0'}\ \&\&\ inbuf[0]\ <=\ \textcolor{charliteral}{'9'})\ ||}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ \ \ \ (inbuf[0]\ >=\ \textcolor{charliteral}{'A'}\ \&\&\ inbuf[0]\ <=\ \textcolor{charliteral}{'F'})\ ||}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00207}00207\ \ \ \ \ \ \ \ \ \ \ \ \ \ (inbuf[0]\ >=\ \textcolor{charliteral}{'a'}\ \&\&\ inbuf[0]\ <=\ \textcolor{charliteral}{'f'}))\ \{}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ \ \ sscanf\ (inbuf,\ \textcolor{stringliteral}{"{}\%x-\/\%x"{}},\ cstart,\ cend);}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ i\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (inbuf[i]\ !=\ \textcolor{charliteral}{'\ '})\ i++;\ \ \textcolor{comment}{/*\ find\ first\ blank\ */}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00211}00211\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (inbuf[i]\ ==\ \textcolor{charliteral}{'\ '})\ i++;\ \ \textcolor{comment}{/*\ find\ next\ non-\/blank\ */}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00212}00212\ \ \ \ \ \ \ \ \ \ \ \ \ strncpy\ (coverstring,\ \&inbuf[i],\ \mbox{\hyperlink{unicoverage_8c_ad7871643c05865c80f5d8050aead2b57}{MAXBUF}});}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ retval\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00215}00215\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00216}00216\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ retval\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00217}00217\ \ \ \ \}\ \textcolor{keywordflow}{while}\ (retval\ ==\ 0\ \&\&\ !feof\ (coveragefp));}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00218}00218\ }
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00219}00219\ \ \ \ \textcolor{keywordflow}{return}\ (retval);}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00220}00220\ \}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00221}00221\ }
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00222}00222\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00223}00223\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00224}00224\ \textcolor{comment}{\ \ \ @brief\ Print\ the\ subtotal\ for\ one\ Unicode\ script\ range.}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00225}00225\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00226}00226\ \textcolor{comment}{\ \ \ @param[in]\ outfp\ Pointer\ to\ output\ file.}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00227}00227\ \textcolor{comment}{\ \ \ @param[in]\ print\_n\ 1\ =\ print\ number\ of\ glyphs,\ 0\ =\ print\ percentage.}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00228}00228\ \textcolor{comment}{\ \ \ @param[in]\ nglyphs\ Number\ of\ glyphs\ in\ current\ range.}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00229}00229\ \textcolor{comment}{\ \ \ @param[in]\ cstart\ Starting\ code\ point\ for\ current\ range.}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00230}00230\ \textcolor{comment}{\ \ \ @param[in]\ cend\ Ending\ code\ point\ for\ current\ range.}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00231}00231\ \textcolor{comment}{\ \ \ @param[in]\ coverstring\ Character\ string\ of\ "{}<cstart>-\/<cend>"{}.}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00232}00232\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00233}\mbox{\hyperlink{unicoverage_8c_acfeab2c5c5e91c5343674cb7c523911f}{00233}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{unicoverage_8c_acfeab2c5c5e91c5343674cb7c523911f}{print\_subtotal}}\ (FILE\ *outfp,\ \textcolor{keywordtype}{int}\ print\_n,\ \textcolor{keywordtype}{int}\ nglyphs,}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ cstart,\ \textcolor{keywordtype}{int}\ cend,\ \textcolor{keywordtype}{char}\ *coverstring)\ \{}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00235}00235\ }
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00236}00236\ \ \ \ \textcolor{comment}{/*\ print\ old\ range\ total\ */}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00237}00237\ \ \ \ \textcolor{keywordflow}{if}\ (print\_n)\ \{\ \ \textcolor{comment}{/*\ Print\ number\ of\ glyphs,\ not\ percentage\ */}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00238}00238\ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ \%6d\ "{}},\ nglyphs);}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00239}00239\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00240}00240\ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00241}00241\ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ \%5.1f\%\%"{}},\ 100.0*nglyphs/(1+cend-\/cstart));}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00242}00242\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00243}00243\ }
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00244}00244\ \ \ \ \textcolor{keywordflow}{if}\ (cend\ <\ 0x10000)}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00245}00245\ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ \ U+\%04X..U+\%04X\ \ \ \%s"{}},}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cstart,\ cend,\ coverstring);}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00247}00247\ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00248}00248\ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\ U+\%05X..U+\%05X\ \ \%s"{}},}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cstart,\ cend,\ coverstring);}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00250}00250\ }
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00251}00251\ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{unicoverage_8c_source_l00252}00252\ \}}
+
+\end{DoxyCode}

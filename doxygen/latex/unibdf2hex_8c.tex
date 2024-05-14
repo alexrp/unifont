@@ -1,0 +1,176 @@
+\hypertarget{unibdf2hex_8c}{}\doxysection{src/unibdf2hex.c File Reference}
+\label{unibdf2hex_8c}\index{src/unibdf2hex.c@{src/unibdf2hex.c}}
+
+
+unibdf2hex -\/ Convert a BDF file into a unifont.\+hex file  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+Include dependency graph for unibdf2hex.\+c\+:
+% FIG 0
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{unibdf2hex_8c_a2e467ad6d1fb7b24985a45af8b1e7ad1}{UNISTART}}~0x3400
+\begin{DoxyCompactList}\small\item\em First Unicode code point to examine. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{unibdf2hex_8c_afd5dcd82c8e611d544ad18b798c54d50}{UNISTOP}}~0x4\+DBF
+\begin{DoxyCompactList}\small\item\em Last Unicode code point to examine. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{unibdf2hex_8c_ad7871643c05865c80f5d8050aead2b57}{MAXBUF}}~256
+\begin{DoxyCompactList}\small\item\em Maximum allowable input file line length -\/ 1. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{unibdf2hex_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}} ()
+\begin{DoxyCompactList}\small\item\em The main function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+unibdf2hex -\/ Convert a BDF file into a unifont.\+hex file 
+
+\begin{DoxyAuthor}{Author}
+Paul Hardy, January 2008
+\end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+Copyright (C) 2008, 2013 Paul Hardy
+\end{DoxyCopyright}
+Note\+: currently this has hard-\/coded code points for glyphs extracted from Wen Quan Yi to create the Unifont source file \char`\"{}wqy.\+hex\char`\"{}. 
+
+Definition in file \mbox{\hyperlink{unibdf2hex_8c_source}{unibdf2hex.\+c}}.
+
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{unibdf2hex_8c_ad7871643c05865c80f5d8050aead2b57}\label{unibdf2hex_8c_ad7871643c05865c80f5d8050aead2b57}} 
+\index{unibdf2hex.c@{unibdf2hex.c}!MAXBUF@{MAXBUF}}
+\index{MAXBUF@{MAXBUF}!unibdf2hex.c@{unibdf2hex.c}}
+\doxysubsubsection{\texorpdfstring{MAXBUF}{MAXBUF}}
+{\footnotesize\ttfamily \#define MAXBUF~256}
+
+
+
+Maximum allowable input file line length -\/ 1. 
+
+
+
+Definition at line \mbox{\hyperlink{unibdf2hex_8c_source_l00037}{37}} of file \mbox{\hyperlink{unibdf2hex_8c_source}{unibdf2hex.\+c}}.
+
+\mbox{\Hypertarget{unibdf2hex_8c_a2e467ad6d1fb7b24985a45af8b1e7ad1}\label{unibdf2hex_8c_a2e467ad6d1fb7b24985a45af8b1e7ad1}} 
+\index{unibdf2hex.c@{unibdf2hex.c}!UNISTART@{UNISTART}}
+\index{UNISTART@{UNISTART}!unibdf2hex.c@{unibdf2hex.c}}
+\doxysubsubsection{\texorpdfstring{UNISTART}{UNISTART}}
+{\footnotesize\ttfamily \#define UNISTART~0x3400}
+
+
+
+First Unicode code point to examine. 
+
+
+
+Definition at line \mbox{\hyperlink{unibdf2hex_8c_source_l00034}{34}} of file \mbox{\hyperlink{unibdf2hex_8c_source}{unibdf2hex.\+c}}.
+
+\mbox{\Hypertarget{unibdf2hex_8c_afd5dcd82c8e611d544ad18b798c54d50}\label{unibdf2hex_8c_afd5dcd82c8e611d544ad18b798c54d50}} 
+\index{unibdf2hex.c@{unibdf2hex.c}!UNISTOP@{UNISTOP}}
+\index{UNISTOP@{UNISTOP}!unibdf2hex.c@{unibdf2hex.c}}
+\doxysubsubsection{\texorpdfstring{UNISTOP}{UNISTOP}}
+{\footnotesize\ttfamily \#define UNISTOP~0x4\+DBF}
+
+
+
+Last Unicode code point to examine. 
+
+
+
+Definition at line \mbox{\hyperlink{unibdf2hex_8c_source_l00035}{35}} of file \mbox{\hyperlink{unibdf2hex_8c_source}{unibdf2hex.\+c}}.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{unibdf2hex_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}\label{unibdf2hex_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}} 
+\index{unibdf2hex.c@{unibdf2hex.c}!main@{main}}
+\index{main@{main}!unibdf2hex.c@{unibdf2hex.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+The main function. 
+
+\begin{DoxyReturn}{Returns}
+Exit status is always 0 (successful termination). 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{unibdf2hex_8c_source_l00046}{46}} of file \mbox{\hyperlink{unibdf2hex_8c_source}{unibdf2hex.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00047\ \{}
+\DoxyCodeLine{00048\ \ \ \ \textcolor{keywordtype}{int}\ i;}
+\DoxyCodeLine{00049\ \ \ \ \textcolor{keywordtype}{int}\ digitsout;\ \ \textcolor{comment}{/*\ how\ many\ hex\ digits\ we\ output\ in\ a\ bitmap\ */}}
+\DoxyCodeLine{00050\ \ \ \ \textcolor{keywordtype}{int}\ thispoint;}
+\DoxyCodeLine{00051\ \ \ \ \textcolor{keywordtype}{char}\ inbuf[\mbox{\hyperlink{unibdf2hex_8c_ad7871643c05865c80f5d8050aead2b57}{MAXBUF}}];}
+\DoxyCodeLine{00052\ \ \ \ \textcolor{keywordtype}{int}\ bbxx,\ bbxy,\ bbxxoff,\ bbxyoff;}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \ \textcolor{keywordtype}{int}\ descent=4;\ \textcolor{comment}{/*\ font\ descent\ wrt\ baseline\ */}}
+\DoxyCodeLine{00055\ \ \ \ \textcolor{keywordtype}{int}\ startrow;\ \ \textcolor{comment}{/*\ row\ to\ start\ glyph\ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00056\ \ \ \ \textcolor{keywordtype}{unsigned}\ rowout;}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \ \ \ \textcolor{keywordflow}{while}\ (fgets\ (inbuf,\ \mbox{\hyperlink{unibdf2hex_8c_ad7871643c05865c80f5d8050aead2b57}{MAXBUF}}\ -\/\ 1,\ stdin)\ !=\ NULL)\ \{}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (strncmp\ (inbuf,\ \textcolor{stringliteral}{"{}ENCODING\ "{}},\ 9)\ ==\ 0)\ \{}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ sscanf\ (\&inbuf[9],\ \textcolor{stringliteral}{"{}\%d"{}},\ \&thispoint);\ \textcolor{comment}{/*\ get\ code\ point\ */}}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00062\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ If\ we\ want\ this\ code\ point,\ get\ the\ BBX\ (bounding\ box)\ and}}
+\DoxyCodeLine{00063\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ BITMAP\ information.}}
+\DoxyCodeLine{00064\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((thispoint\ >=\ 0x2E80\ \&\&\ thispoint\ <=\ 0x2EFF)\ ||\ \textcolor{comment}{//\ CJK\ Radicals\ Supplement}}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ (thispoint\ >=\ 0x2F00\ \&\&\ thispoint\ <=\ 0x2FDF)\ ||\ \textcolor{comment}{//\ Kangxi\ Radicals}}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ (thispoint\ >=\ 0x2FF0\ \&\&\ thispoint\ <=\ 0x2FFF)\ ||\ \textcolor{comment}{//\ Ideographic\ Description\ Characters}}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ (thispoint\ >=\ 0x3001\ \&\&\ thispoint\ <=\ 0x303F)\ ||\ \textcolor{comment}{//\ CJK\ Symbols\ and\ Punctuation\ (U+3000\ is\ a\ space)}}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ (thispoint\ >=\ 0x3100\ \&\&\ thispoint\ <=\ 0x312F)\ ||\ \textcolor{comment}{//\ Bopomofo}}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ (thispoint\ >=\ 0x31A0\ \&\&\ thispoint\ <=\ 0x31BF)\ ||\ \textcolor{comment}{//\ Bopomofo\ extend}}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ (thispoint\ >=\ 0x31C0\ \&\&\ thispoint\ <=\ 0x31EF)\ ||\ \textcolor{comment}{//\ CJK\ Strokes}}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ (thispoint\ >=\ 0x3400\ \&\&\ thispoint\ <=\ 0x4DBF)\ ||\ \textcolor{comment}{//\ CJK\ Unified\ Ideographs\ Extension\ A}}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ (thispoint\ >=\ 0x4E00\ \&\&\ thispoint\ <=\ 0x9FCF)\ ||\ \textcolor{comment}{//\ CJK\ Unified\ Ideographs}}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ (thispoint\ >=\ 0xF900\ \&\&\ thispoint\ <=\ 0xFAFF))\ \ \ \textcolor{comment}{//\ CJK\ Compatibility\ Ideographs}}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (fgets\ (inbuf,\ \mbox{\hyperlink{unibdf2hex_8c_ad7871643c05865c80f5d8050aead2b57}{MAXBUF}}\ -\/\ 1,\ stdin)\ !=\ NULL\ \&\&}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ strncmp\ (inbuf,\ \textcolor{stringliteral}{"{}BBX\ "{}},\ 4)\ !=\ 0);\ \textcolor{comment}{/*\ find\ bounding\ box\ */}}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ sscanf\ (\&inbuf[4],\ \textcolor{stringliteral}{"{}\%d\ \%d\ \%d\ \%d"{}},\ \&bbxx,\ \&bbxy,\ \&bbxxoff,\ \&bbxyoff);}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (fgets\ (inbuf,\ \mbox{\hyperlink{unibdf2hex_8c_ad7871643c05865c80f5d8050aead2b57}{MAXBUF}}\ -\/\ 1,\ stdin)\ !=\ NULL\ \&\&}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ strncmp\ (inbuf,\ \textcolor{stringliteral}{"{}BITMAP"{}},\ 6)\ !=\ 0);\ \textcolor{comment}{/*\ find\ bitmap\ start\ */}}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stdout,\ \textcolor{stringliteral}{"{}\%04X:"{}},\ thispoint);}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ digitsout\ =\ 0;}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Print\ initial\ blank\ rows\ */}}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ startrow\ =\ descent\ +\ bbxyoff\ +\ bbxy;}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Force\ everything\ to\ 16\ pixels\ wide\ */}}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 16;\ i\ >\ startrow;\ i-\/-\/)\ \{}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stdout,\textcolor{stringliteral}{"{}0000"{}});}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ digitsout\ +=\ 4;}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (fgets\ (inbuf,\ \mbox{\hyperlink{unibdf2hex_8c_ad7871643c05865c80f5d8050aead2b57}{MAXBUF}}\ -\/\ 1,\ stdin)\ !=\ NULL\ \&\&}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ strncmp\ (inbuf,\ \textcolor{stringliteral}{"{}END"{}},\ 3)\ !=\ 0)\ \{\ \textcolor{comment}{/*\ copy\ bitmap\ until\ END\ */}}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sscanf\ (inbuf,\ \textcolor{stringliteral}{"{}\%X"{}},\ \&rowout);}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Now\ force\ glyph\ to\ a\ 16x16\ grid\ even\ if\ they'd\ fit\ in\ 8x16\ */}}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (bbxx\ <=\ 8)\ rowout\ <<=\ 8;\ \ \textcolor{comment}{/*\ shift\ left\ for\ 16x16\ glyph\ */}}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rowout\ >>=\ bbxxoff;}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stdout,\ \textcolor{stringliteral}{"{}\%04X"{}},\ rowout);}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ digitsout\ +=\ 4;}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Pad\ for\ 16x16\ glyph\ */}}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (digitsout\ <\ 64)\ \{}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stdout,\textcolor{stringliteral}{"{}0000"{}});}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ digitsout\ +=\ 4;}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stdout,\textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00110\ \ \ \ \}}
+\DoxyCodeLine{00111\ \ \ \ exit\ (0);}
+\DoxyCodeLine{00112\ \}}
+
+\end{DoxyCode}

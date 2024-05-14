@@ -1,0 +1,11 @@
+<map id="main" name="main">
+<area shape="rect" id="node1" title="Program entry point." alt="" coords="5,153,60,179"/>
+<area shape="rect" id="node2" href="$unihangul-support_8c.html#a07b8c0163dd9e9b6f2560f09e0f3e570" title="Convert Hangul Jamo choseong, jungseong, and jongseong into a glyph." alt="" coords="123,79,249,104"/>
+<area shape="rect" id="node6" href="$unihangul-support_8c.html#afd372e1a400e28d1b61410187f038eec" title="Read hangul&#45;base.hex file into a unsigned array." alt="" coords="108,128,264,153"/>
+<area shape="rect" id="node7" href="$unigen-hangul_8c.html#af21f77b695eb80e4d88265be6647978e" title="Parse command line arguments." alt="" coords="139,177,233,203"/>
+<area shape="rect" id="node9" href="$unihangul-support_8c.html#a056fdfdb02eeccd48026c05ccb200435" title="Print one glyph in Unifont hexdraw hexadecimal string style." alt="" coords="123,227,249,252"/>
+<area shape="rect" id="node3" href="$unihangul-support_8c.html#ab795ff183c3e429e0eb9257a7737c57f" title="Return the Johab 6/3/1 choseong variation for a syllable." alt="" coords="321,29,431,55"/>
+<area shape="rect" id="node4" href="$unihangul-support_8c.html#a9aacff561033067830249796de592258" title="Combine two glyphs into one glyph." alt="" coords="312,79,440,104"/>
+<area shape="rect" id="node5" href="$unihangul-support_8c.html#a12a0a69a62e5beb75f723a0e35bb2b37" title="Whether vowel has rightmost vertical stroke to the right." alt="" coords="317,128,435,153"/>
+<area shape="rect" id="node8" href="$unigen-hangul_8c.html#a97cb9bdd18abd681712b192f5729ad56" title="Scan a hexadecimal range from a character string." alt="" coords="317,177,435,203"/>
+</map>

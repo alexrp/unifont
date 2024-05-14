@@ -1,0 +1,352 @@
+\hypertarget{unigencircles_8c}{}\doxysection{src/unigencircles.c File Reference}
+\label{unigencircles_8c}\index{src/unigencircles.c@{src/unigencircles.c}}
+
+
+unigencircles -\/ Superimpose dashed combining circles on combining glyphs  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$ctype.\+h$>$}\newline
+Include dependency graph for unigencircles.\+c\+:
+% FIG 0
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{unigencircles_8c_a2ff420a6c6a2d1effc47a81e37327985}{MAXSTRING}}~256
+\begin{DoxyCompactList}\small\item\em Maximum input line length -\/ 1. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{unigencircles_8c_a3c04138a5bfe5d72780bb7e82a18e627}{main}} (int argc, char $\ast$$\ast$argv)
+\begin{DoxyCompactList}\small\item\em The main function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{unigencircles_8c_a88eb1195637a2f1fe03d339f99582cfe}{add\+\_\+single\+\_\+circle}} (char $\ast$glyphstring)
+\begin{DoxyCompactList}\small\item\em Superimpose a single-\/width dashed combining circle on a glyph bitmap. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{unigencircles_8c_a2e8aac93a2a490025d3653467cf40eda}{add\+\_\+double\+\_\+circle}} (char $\ast$glyphstring, int offset)
+\begin{DoxyCompactList}\small\item\em Superimpose a double-\/width dashed combining circle on a glyph bitmap. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+unigencircles -\/ Superimpose dashed combining circles on combining glyphs 
+
+\begin{DoxyAuthor}{Author}
+Paul Hardy
+\end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+Copyright (C) 2013, Paul Hardy. 
+\end{DoxyCopyright}
+
+
+Definition in file \mbox{\hyperlink{unigencircles_8c_source}{unigencircles.\+c}}.
+
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{unigencircles_8c_a2ff420a6c6a2d1effc47a81e37327985}\label{unigencircles_8c_a2ff420a6c6a2d1effc47a81e37327985}} 
+\index{unigencircles.c@{unigencircles.c}!MAXSTRING@{MAXSTRING}}
+\index{MAXSTRING@{MAXSTRING}!unigencircles.c@{unigencircles.c}}
+\doxysubsubsection{\texorpdfstring{MAXSTRING}{MAXSTRING}}
+{\footnotesize\ttfamily \#define MAXSTRING~256}
+
+
+
+Maximum input line length -\/ 1. 
+
+
+
+Definition at line \mbox{\hyperlink{unigencircles_8c_source_l00062}{62}} of file \mbox{\hyperlink{unigencircles_8c_source}{unigencircles.\+c}}.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{unigencircles_8c_a2e8aac93a2a490025d3653467cf40eda}\label{unigencircles_8c_a2e8aac93a2a490025d3653467cf40eda}} 
+\index{unigencircles.c@{unigencircles.c}!add\_double\_circle@{add\_double\_circle}}
+\index{add\_double\_circle@{add\_double\_circle}!unigencircles.c@{unigencircles.c}}
+\doxysubsubsection{\texorpdfstring{add\_double\_circle()}{add\_double\_circle()}}
+{\footnotesize\ttfamily void add\+\_\+double\+\_\+circle (\begin{DoxyParamCaption}\item[{char $\ast$}]{glyphstring,  }\item[{int}]{offset }\end{DoxyParamCaption})}
+
+
+
+Superimpose a double-\/width dashed combining circle on a glyph bitmap. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em glyphstring} & A double-\/width glyph, 16x16 pixels. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{unigencircles_8c_source_l00221}{221}} of file \mbox{\hyperlink{unigencircles_8c_source}{unigencircles.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00222\ \{}
+\DoxyCodeLine{00223\ }
+\DoxyCodeLine{00224\ \ \ \ \textcolor{keywordtype}{char}\ newstring[256];}
+\DoxyCodeLine{00225\ \ \ \ \textcolor{comment}{/*\ Circle\ hex\ string\ pattern\ is\ "{}00000008000024004200240000000000"{}\ */}}
+\DoxyCodeLine{00226\ }
+\DoxyCodeLine{00227\ \ \ \ \textcolor{comment}{/*\ For\ double\ diacritical\ glyphs\ (offset\ =\ -\/8)\ */}}
+\DoxyCodeLine{00228\ \ \ \ \textcolor{comment}{/*\ Combining\ circle\ is\ left-\/justified.\ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00229\ \ \ \ \textcolor{keywordtype}{char}\ circle08[64]=\{0x0,0x0,0x0,0x0,\ \ \textcolor{comment}{/*\ row\ \ 1\ */}}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x0,0x0,0x0,\ \ \textcolor{comment}{/*\ row\ \ 2\ */}}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x0,0x0,0x0,\ \ \textcolor{comment}{/*\ row\ \ 3\ */}}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x0,0x0,0x0,\ \ \textcolor{comment}{/*\ row\ \ 4\ */}}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x0,0x0,0x0,\ \ \textcolor{comment}{/*\ row\ \ 5\ */}}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x0,0x0,0x0,\ \ \textcolor{comment}{/*\ row\ \ 6\ */}}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x2,0x4,0x0,0x0,\ \ \textcolor{comment}{/*\ row\ \ 7\ */}}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x0,0x0,0x0,\ \ \textcolor{comment}{/*\ row\ \ 8\ */}}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x4,0x2,0x0,0x0,\ \ \textcolor{comment}{/*\ row\ \ 9\ */}}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x0,0x0,0x0,\ \ \textcolor{comment}{/*\ row\ 10\ */}}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x2,0x4,0x0,0x0,\ \ \textcolor{comment}{/*\ row\ 11\ */}}
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x0,0x0,0x0,\ \ \textcolor{comment}{/*\ row\ 12\ */}}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x0,0x0,0x0,\ \ \textcolor{comment}{/*\ row\ 13\ */}}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x0,0x0,0x0,\ \ \textcolor{comment}{/*\ row\ 14\ */}}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x0,0x0,0x0,\ \ \textcolor{comment}{/*\ row\ 15\ */}}
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x0,0x0,0x0\};\ \textcolor{comment}{/*\ row\ 16\ */}}
+\DoxyCodeLine{00245\ }
+\DoxyCodeLine{00246\ \ \ \ \textcolor{comment}{/*\ For\ all\ other\ combining\ glyphs\ (offset\ =\ -\/16)\ */}}
+\DoxyCodeLine{00247\ \ \ \ \textcolor{comment}{/*\ Combining\ circle\ is\ centered\ in\ 16\ columns.\ \ \ */}}
+\DoxyCodeLine{00248\ \ \ \ \textcolor{keywordtype}{char}\ circle16[64]=\{0x0,0x0,0x0,0x0,\ \ \textcolor{comment}{/*\ row\ \ 1\ */}}
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x0,0x0,0x0,\ \ \textcolor{comment}{/*\ row\ \ 2\ */}}
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x0,0x0,0x0,\ \ \textcolor{comment}{/*\ row\ \ 3\ */}}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x0,0x0,0x0,\ \ \textcolor{comment}{/*\ row\ \ 4\ */}}
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x0,0x0,0x0,\ \ \textcolor{comment}{/*\ row\ \ 5\ */}}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x0,0x0,0x0,\ \ \textcolor{comment}{/*\ row\ \ 6\ */}}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x2,0x4,0x0,\ \ \textcolor{comment}{/*\ row\ \ 7\ */}}
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x0,0x0,0x0,\ \ \textcolor{comment}{/*\ row\ \ 8\ */}}
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x4,0x2,0x0,\ \ \textcolor{comment}{/*\ row\ \ 9\ */}}
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x0,0x0,0x0,\ \ \textcolor{comment}{/*\ row\ 10\ */}}
+\DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x2,0x4,0x0,\ \ \textcolor{comment}{/*\ row\ 11\ */}}
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x0,0x0,0x0,\ \ \textcolor{comment}{/*\ row\ 12\ */}}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x0,0x0,0x0,\ \ \textcolor{comment}{/*\ row\ 13\ */}}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x0,0x0,0x0,\ \ \textcolor{comment}{/*\ row\ 14\ */}}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x0,0x0,0x0,\ \ \textcolor{comment}{/*\ row\ 15\ */}}
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x0,0x0,0x0\};\ \textcolor{comment}{/*\ row\ 16\ */}}
+\DoxyCodeLine{00264\ }
+\DoxyCodeLine{00265\ \ \ \ \textcolor{keywordtype}{char}\ *circle;\ \textcolor{comment}{/*\ points\ into\ circle16\ or\ circle08\ */}}
+\DoxyCodeLine{00266\ }
+\DoxyCodeLine{00267\ \ \ \ \textcolor{keywordtype}{int}\ digit1,\ digit2;\ \textcolor{comment}{/*\ corresponding\ digits\ in\ each\ string\ */}}
+\DoxyCodeLine{00268\ }
+\DoxyCodeLine{00269\ \ \ \ \textcolor{keywordtype}{int}\ i;\ \textcolor{comment}{/*\ index\ variables\ */}}
+\DoxyCodeLine{00270\ }
+\DoxyCodeLine{00271\ }
+\DoxyCodeLine{00272\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00273\ \textcolor{comment}{\ \ \ \ \ \ Determine\ if\ combining\ circle\ is\ left-\/justified\ (offset\ =\ -\/8)}}
+\DoxyCodeLine{00274\ \textcolor{comment}{\ \ \ \ \ \ or\ centered\ (offset\ =\ -\/16).}}
+\DoxyCodeLine{00275\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00276\ \ \ \ circle\ =\ (offset\ >=\ -\/8)\ ?\ circle08\ :\ circle16;}
+\DoxyCodeLine{00277\ }
+\DoxyCodeLine{00278\ \ \ \ \textcolor{comment}{/*\ for\ each\ character\ position,\ OR\ the\ corresponding\ circle\ glyph\ value\ */}}
+\DoxyCodeLine{00279\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 64;\ i++)\ \{}
+\DoxyCodeLine{00280\ \ \ \ \ \ \ glyphstring[i]\ =\ toupper\ (glyphstring[i]);}
+\DoxyCodeLine{00281\ }
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \textcolor{comment}{/*\ Convert\ ASCII\ character\ to\ a\ hexadecimal\ integer\ */}}
+\DoxyCodeLine{00283\ \ \ \ \ \ \ digit1\ =\ (glyphstring[i]\ <=\ \textcolor{charliteral}{'9'})\ ?}
+\DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (glyphstring[i]\ -\/\ \textcolor{charliteral}{'0'})\ :\ (glyphstring[i]\ -\/\ \textcolor{charliteral}{'A'}\ +\ 0xA);}
+\DoxyCodeLine{00285\ }
+\DoxyCodeLine{00286\ \ \ \ \ \ \ \textcolor{comment}{/*\ Superimpose\ dashed\ circle\ */}}
+\DoxyCodeLine{00287\ \ \ \ \ \ \ digit2\ =\ digit1\ |\ circle[i];}
+\DoxyCodeLine{00288\ }
+\DoxyCodeLine{00289\ \ \ \ \ \ \ \textcolor{comment}{/*\ Convert\ hexadecimal\ integer\ to\ an\ ASCII\ character\ */}}
+\DoxyCodeLine{00290\ \ \ \ \ \ \ newstring[i]\ =\ (digit2\ <=\ 9)\ ?}
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{charliteral}{'0'}\ +\ digit2)\ :\ (\textcolor{charliteral}{'A'}\ +\ digit2\ -\/\ 0xA);}
+\DoxyCodeLine{00292\ \ \ \ \}}
+\DoxyCodeLine{00293\ }
+\DoxyCodeLine{00294\ \ \ \ \textcolor{comment}{/*\ Terminate\ string\ for\ output\ */}}
+\DoxyCodeLine{00295\ \ \ \ newstring[i++]\ =\ \textcolor{charliteral}{'\(\backslash\)n'};}
+\DoxyCodeLine{00296\ \ \ \ newstring[i++]\ =\ \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{00297\ }
+\DoxyCodeLine{00298\ \ \ \ memcpy\ (glyphstring,\ newstring,\ i);}
+\DoxyCodeLine{00299\ }
+\DoxyCodeLine{00300\ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00301\ \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+% FIG 1
+\mbox{\Hypertarget{unigencircles_8c_a88eb1195637a2f1fe03d339f99582cfe}\label{unigencircles_8c_a88eb1195637a2f1fe03d339f99582cfe}} 
+\index{unigencircles.c@{unigencircles.c}!add\_single\_circle@{add\_single\_circle}}
+\index{add\_single\_circle@{add\_single\_circle}!unigencircles.c@{unigencircles.c}}
+\doxysubsubsection{\texorpdfstring{add\_single\_circle()}{add\_single\_circle()}}
+{\footnotesize\ttfamily void add\+\_\+single\+\_\+circle (\begin{DoxyParamCaption}\item[{char $\ast$}]{glyphstring }\end{DoxyParamCaption})}
+
+
+
+Superimpose a single-\/width dashed combining circle on a glyph bitmap. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em glyphstring} & A single-\/width glyph, 8x16 pixels. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{unigencircles_8c_source_l00163}{163}} of file \mbox{\hyperlink{unigencircles_8c_source}{unigencircles.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00164\ \{}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00166\ \ \ \ \textcolor{keywordtype}{char}\ newstring[256];}
+\DoxyCodeLine{00167\ \ \ \ \textcolor{comment}{/*\ Circle\ hex\ string\ pattern\ is\ "{}00000008000024004200240000000000"{}\ */}}
+\DoxyCodeLine{00168\ \ \ \ \textcolor{keywordtype}{char}\ circle[32]=\{0x0,0x0,\ \ \textcolor{comment}{/*\ row\ \ 1\ */}}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x0,\ \ \textcolor{comment}{/*\ row\ \ 2\ */}}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x0,\ \ \textcolor{comment}{/*\ row\ \ 3\ */}}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x0,\ \ \textcolor{comment}{/*\ row\ \ 4\ */}}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x0,\ \ \textcolor{comment}{/*\ row\ \ 5\ */}}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x0,\ \ \textcolor{comment}{/*\ row\ \ 6\ */}}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x2,0x4,\ \ \textcolor{comment}{/*\ row\ \ 7\ */}}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x0,\ \ \textcolor{comment}{/*\ row\ \ 8\ */}}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x4,0x2,\ \ \textcolor{comment}{/*\ row\ \ 9\ */}}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x0,\ \ \textcolor{comment}{/*\ row\ 10\ */}}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x2,0x4,\ \ \textcolor{comment}{/*\ row\ 11\ */}}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x0,\ \ \textcolor{comment}{/*\ row\ 12\ */}}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x0,\ \ \textcolor{comment}{/*\ row\ 13\ */}}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x0,\ \ \textcolor{comment}{/*\ row\ 14\ */}}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x0,\ \ \textcolor{comment}{/*\ row\ 15\ */}}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0,0x0\};\ \textcolor{comment}{/*\ row\ 16\ */}}
+\DoxyCodeLine{00184\ }
+\DoxyCodeLine{00185\ \ \ \ \textcolor{keywordtype}{int}\ digit1,\ digit2;\ \textcolor{comment}{/*\ corresponding\ digits\ in\ each\ string\ */}}
+\DoxyCodeLine{00186\ }
+\DoxyCodeLine{00187\ \ \ \ \textcolor{keywordtype}{int}\ i;\ \textcolor{comment}{/*\ index\ variables\ */}}
+\DoxyCodeLine{00188\ }
+\DoxyCodeLine{00189\ \ \ \ \textcolor{comment}{/*\ for\ each\ character\ position,\ OR\ the\ corresponding\ circle\ glyph\ value\ */}}
+\DoxyCodeLine{00190\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 32;\ i++)\ \{}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ glyphstring[i]\ =\ toupper\ (glyphstring[i]);}
+\DoxyCodeLine{00192\ }
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \textcolor{comment}{/*\ Convert\ ASCII\ character\ to\ a\ hexadecimal\ integer\ */}}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ digit1\ =\ (glyphstring[i]\ <=\ \textcolor{charliteral}{'9'})\ ?}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (glyphstring[i]\ -\/\ \textcolor{charliteral}{'0'})\ :\ (glyphstring[i]\ -\/\ \textcolor{charliteral}{'A'}\ +\ 0xA);}
+\DoxyCodeLine{00196\ }
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \textcolor{comment}{/*\ Superimpose\ dashed\ circle\ */}}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ digit2\ =\ digit1\ |\ circle[i];}
+\DoxyCodeLine{00199\ }
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \textcolor{comment}{/*\ Convert\ hexadecimal\ integer\ to\ an\ ASCII\ character\ */}}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ newstring[i]\ =\ (digit2\ <=\ 9)\ ?}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{charliteral}{'0'}\ +\ digit2)\ :\ (\textcolor{charliteral}{'A'}\ +\ digit2\ -\/\ 0xA);}
+\DoxyCodeLine{00203\ \ \ \ \}}
+\DoxyCodeLine{00204\ }
+\DoxyCodeLine{00205\ \ \ \ \textcolor{comment}{/*\ Terminate\ string\ for\ output\ */}}
+\DoxyCodeLine{00206\ \ \ \ newstring[i++]\ =\ \textcolor{charliteral}{'\(\backslash\)n'};}
+\DoxyCodeLine{00207\ \ \ \ newstring[i++]\ =\ \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{00208\ }
+\DoxyCodeLine{00209\ \ \ \ memcpy\ (glyphstring,\ newstring,\ i);}
+\DoxyCodeLine{00210\ }
+\DoxyCodeLine{00211\ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00212\ \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+% FIG 2
+\mbox{\Hypertarget{unigencircles_8c_a3c04138a5bfe5d72780bb7e82a18e627}\label{unigencircles_8c_a3c04138a5bfe5d72780bb7e82a18e627}} 
+\index{unigencircles.c@{unigencircles.c}!main@{main}}
+\index{main@{main}!unigencircles.c@{unigencircles.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$$\ast$}]{argv }\end{DoxyParamCaption})}
+
+
+
+The main function. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em argc} & The count of command line arguments. \\
+\hline
+\mbox{\texttt{ in}}  & {\em argv} & Pointer to array of command line arguments. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+This program exits with status EXIT\+\_\+\+SUCCESS. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{unigencircles_8c_source_l00073}{73}} of file \mbox{\hyperlink{unigencircles_8c_source}{unigencircles.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00074\ \{}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \ \ \ \textcolor{keywordtype}{char}\ teststring[\mbox{\hyperlink{unigencircles_8c_a2ff420a6c6a2d1effc47a81e37327985}{MAXSTRING}}];\ \ \textcolor{comment}{/*\ current\ input\ line\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00077\ \ \ \ \textcolor{keywordtype}{int}\ \ loc;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Unicode\ code\ point\ of\ current\ input\ line\ */}}
+\DoxyCodeLine{00078\ \ \ \ \textcolor{keywordtype}{int}\ \ offset;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ offset\ value\ of\ a\ combining\ character\ \ \ \ */}}
+\DoxyCodeLine{00079\ \ \ \ \textcolor{keywordtype}{char}\ *gstart;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ glyph\ start,\ pointing\ into\ teststring\ \ \ \ */}}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \ \textcolor{keywordtype}{char}\ combining[0x110000];\ \ \ \ \textcolor{comment}{/*\ 1\ -\/-\/>\ combining\ glyph;\ 0\ -\/-\/>\ non-\/combining\ */}}
+\DoxyCodeLine{00082\ \ \ \ \textcolor{keywordtype}{char}\ x\_offset\ [0x110000];\ \ \ \ \textcolor{comment}{/*\ second\ value\ in\ *combining.txt\ files\ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{unigencircles_8c_a88eb1195637a2f1fe03d339f99582cfe}{add\_single\_circle}}(\textcolor{keywordtype}{char}\ *);\ \ \ \ \ \ \textcolor{comment}{/*\ add\ a\ single-\/width\ dashed\ circle\ */}}
+\DoxyCodeLine{00085\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{unigencircles_8c_a2e8aac93a2a490025d3653467cf40eda}{add\_double\_circle}}(\textcolor{keywordtype}{char}\ *,\ \textcolor{keywordtype}{int});\ \textcolor{comment}{/*\ add\ a\ double-\/width\ dashed\ circle\ */}}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \ \ \ FILE\ *infilefp;}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00090\ \textcolor{comment}{\ \ \ \ \ \ if\ (argc\ !=\ 3)\ \{}}
+\DoxyCodeLine{00091\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ fprintf\ (stderr,}}
+\DoxyCodeLine{00092\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ "{}\(\backslash\)n\(\backslash\)nUsage:\ \%s\ combining.txt\ nonprinting.hex\ <\ unifont.hex\ >\ unifontfull.hex\(\backslash\)n\(\backslash\)n"{});}}
+\DoxyCodeLine{00093\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ exit\ (EXIT\_FAILURE);}}
+\DoxyCodeLine{00094\ \textcolor{comment}{\ \ \ \ \ \ \}}}
+\DoxyCodeLine{00095\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00098\ \textcolor{comment}{\ \ \ \ \ \ Read\ the\ combining\ characters\ list.}}
+\DoxyCodeLine{00099\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00100\ \ \ \ \textcolor{comment}{/*\ Start\ with\ no\ combining\ code\ points\ flagged\ */}}
+\DoxyCodeLine{00101\ \ \ \ memset\ (combining,\ 0,\ 0x110000\ *\ \textcolor{keyword}{sizeof}\ (\textcolor{keywordtype}{char}));}
+\DoxyCodeLine{00102\ \ \ \ memset\ (x\_offset\ ,\ 0,\ 0x110000\ *\ \textcolor{keyword}{sizeof}\ (\textcolor{keywordtype}{char}));}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \ \ \ \textcolor{keywordflow}{if}\ ((infilefp\ =\ fopen\ (argv[1],\textcolor{stringliteral}{"{}r"{}}))\ ==\ NULL)\ \{}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ fprintf\ (stderr,\textcolor{stringliteral}{"{}ERROR\ -\/\ combining\ characters\ file\ \%s\ not\ found.\(\backslash\)n\(\backslash\)n"{}},}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ argv[1]);}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ exit\ (EXIT\_FAILURE);}
+\DoxyCodeLine{00108\ \ \ \ \}}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00110\ \ \ \ \textcolor{comment}{/*\ Flag\ list\ of\ combining\ characters\ to\ add\ a\ dashed\ circle.\ */}}
+\DoxyCodeLine{00111\ \ \ \ \textcolor{keywordflow}{while}\ (fscanf\ (infilefp,\ \textcolor{stringliteral}{"{}\%X:\%d"{}},\ \&loc,\ \&offset)\ !=\ EOF)\ \{}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00113\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ U+01107F\ and\ U+01D1A0\ are\ not\ defined\ as\ combining\ characters}}
+\DoxyCodeLine{00114\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ in\ Unicode;\ they\ were\ added\ in\ a\ combining.txt\ file\ as\ the}}
+\DoxyCodeLine{00115\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ only\ way\ to\ make\ them\ look\ acceptable\ in\ proximity\ to\ other}}
+\DoxyCodeLine{00116\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ glyphs\ in\ their\ script.}}
+\DoxyCodeLine{00117\ \textcolor{comment}{\ \ \ \ \ \ */}}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (loc\ !=\ 0x01107F\ \&\&\ loc\ !=\ 0x01D1A0)\ \{}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ combining[loc]\ =\ 1;}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ x\_offset\ [loc]\ =\ offset;}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00122\ \ \ \ \}}
+\DoxyCodeLine{00123\ \ \ \ fclose\ (infilefp);\ \textcolor{comment}{/*\ all\ done\ reading\ combining.txt\ */}}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \ \ \ \textcolor{comment}{/*\ Now\ read\ the\ non-\/printing\ glyphs;\ they\ never\ have\ dashed\ circles\ */}}
+\DoxyCodeLine{00126\ \ \ \ \textcolor{keywordflow}{if}\ ((infilefp\ =\ fopen\ (argv[2],\textcolor{stringliteral}{"{}r"{}}))\ ==\ NULL)\ \{}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ fprintf\ (stderr,\textcolor{stringliteral}{"{}ERROR\ -\/\ nonprinting\ characters\ file\ \%s\ not\ found.\(\backslash\)n\(\backslash\)n"{}},}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ argv[1]);}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ exit\ (EXIT\_FAILURE);}
+\DoxyCodeLine{00130\ \ \ \ \}}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00132\ \ \ \ \textcolor{comment}{/*\ Reset\ list\ of\ nonprinting\ characters\ to\ avoid\ adding\ a\ dashed\ circle.\ */}}
+\DoxyCodeLine{00133\ \ \ \ \textcolor{keywordflow}{while}\ (fscanf\ (infilefp,\ \textcolor{stringliteral}{"{}\%X:\%*s"{}},\ \&loc)\ !=\ EOF)\ combining[loc]\ =\ 0;}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00135\ \ \ \ fclose\ (infilefp);\ \textcolor{comment}{/*\ all\ done\ reading\ nonprinting.hex\ */}}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00137\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00138\ \textcolor{comment}{\ \ \ \ \ \ Read\ the\ hex\ glyphs.}}
+\DoxyCodeLine{00139\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00140\ \ \ \ teststring[\mbox{\hyperlink{unigencircles_8c_a2ff420a6c6a2d1effc47a81e37327985}{MAXSTRING}}\ -\/\ 1]\ =\ \textcolor{charliteral}{'\(\backslash\)0'};\ \ \ \textcolor{comment}{/*\ so\ there's\ no\ chance\ we\ leave\ array\ \ */}}
+\DoxyCodeLine{00141\ \ \ \ \textcolor{keywordflow}{while}\ (fgets\ (teststring,\ \mbox{\hyperlink{unigencircles_8c_a2ff420a6c6a2d1effc47a81e37327985}{MAXSTRING}}-\/1,\ stdin)\ !=\ NULL)\ \{}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ sscanf\ (teststring,\ \textcolor{stringliteral}{"{}\%X"{}},\ \&loc);\ \ \ \ \ \textcolor{comment}{/*\ loc\ ==\ the\ Uniocde\ code\ point\ \ \ \ */}}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ gstart\ =\ strchr\ (teststring,\textcolor{charliteral}{':'})\ +\ 1;\ \textcolor{comment}{/*\ start\ of\ glyph\ bitmap\ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (combining[loc])\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ if\ a\ combining\ character\ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (strlen\ (gstart)\ <\ 35)}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unigencircles_8c_a88eb1195637a2f1fe03d339f99582cfe}{add\_single\_circle}}\ (gstart);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ single-\/width\ */}}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unigencircles_8c_a2e8aac93a2a490025d3653467cf40eda}{add\_double\_circle}}\ (gstart,\ x\_offset[loc]);\ \ \textcolor{comment}{/*\ double-\/width\ */}}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ printf\ (\textcolor{stringliteral}{"{}\%s"{}},\ teststring);\ \textcolor{comment}{/*\ output\ the\ new\ character\ .hex\ string\ */}}
+\DoxyCodeLine{00151\ \ \ \ \}}
+\DoxyCodeLine{00152\ }
+\DoxyCodeLine{00153\ \ \ \ exit\ (EXIT\_SUCCESS);}
+\DoxyCodeLine{00154\ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+% FIG 3

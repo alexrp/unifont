@@ -1,0 +1,203 @@
+/**
+
+@mainpage
+
+@section Title GNU Unifont C Utilities
+
+This documentation covers C utility programs for creating
+GNU Unifont glyphs and fonts.
+
+@section License LICENSE
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+@section Introduction Introduction
+
+Unifont is the creation of Roman Czyborra, who created Perl utilities
+for generating a dual-width Bitmap Distribution Format (BDF) font
+16 pixels tall, unifont.bdf, from an input file named unifont.hex.
+The unifont.hex file contained two fields separated by a colon:
+a Unicode code point as four hexadecimal digits, and a hexadecimal
+string of 32 or 64 characters representing the glyph bitmap pattern.
+Roman also wrote other Perl scripts for manipulating unifont.hex files.
+
+Jungshik Shin wrote a Perl script, johab2ucs2, to convert Hangul
+syllable glyph elements into Hangul Johab-encoded fonts.  These glyph
+elements are compatible with Jaekyung "Jake" Song's Hanterm terminal
+emulator.  Paul Hardy modified johab2ucs2 and drew Hangul Syllables
+Unicode elements for compatibility with this Johab encoding and with
+Hanterm.  These new glyphs were created to avoid licensing issues with
+the Hangul Syllables glyphs that were in the original unifont.hex file.
+
+Over time, Unifont was extended to allow correct positioning of combining
+marks in a TrueType font, coverage beyond Unicode Plane 0, and the
+addition of Under-ConScript Unicode Registry (UCSUR) glyphs.  There
+is also partial support for experimental quadruple-width glyphs.
+
+Paul Hardy wrote the first pair of C programs, unihex2bmp.c and
+unibmp2hex.c, to facilitate editing the bitmaps at their real aspect ratio.
+These programs allow conversion between the Unifont .hex format and
+a Windows Bitmap or Wireless Bitmap file for editing with a graphics
+editor.  This was followed by make files, other C programs, Perl scripts,
+and shell scripts.
+
+Luis Alejandro González Miranda wrote scripts for converting unifont.hex
+into a TrueType font using FontForge.
+
+Andrew Miller wrote additional Perl programs for directly rendering
+unifont.hex files, for converting unifont.hex to and from Portable
+Network Graphics (PNG) files for editing based upon Paul Hardy's
+BMP conversion programs, and also wrote other Perl scripts.
+
+David Corbett wrote a Perl script to rotate glyphs in a unifont.hex
+file and an awk script to substitute new glyphs for old glyphs
+of the same Unicode code point in a unifont.hex file.
+
+何志翔 (He Zhixiang) wrote a program to convert Unifont files into
+OpenType fonts, hex2otf.c.
+
+Minseo Lee created new Hangul glyphs for the original Unifont
+Johab 10/3 or 4/4 encoding.  This was followed immediately after
+by Ho-Seok Ee, who created Hangul glyphs for a new, simpler
+Johab 6/3/1 encoding that are now in Unifont.
+
+@section Programs The C Programs
+
+This documentation only covers C programs and their header files.
+These programs are typically longer than the Unifont package's
+Perl scripts, which being much smaller are easier to understand.
+The C programs are, in alphabetical order:
+
+<center>
+  <table>
+    <tr><th>Program</th><th>Description</th></tr>
+    <tr><td>hex2otf.c</td>
+        <td>Convert a GNU Unifont .hex file to an OpenType font</td></tr>
+    <tr><td>johab2syllables.c</td>
+        <td>Generate Hangul Syllables range with simple positioning</td></tr>
+    <tr><td>unibdf2hex.c</td>
+        <td>Convert a BDF file into a unifont.hex file</td></tr>
+    <tr><td>unibmp2hex.c</td>
+        <td>Turn a .bmp or .wbmp glyph matrix into a
+            GNU Unifont hex glyph set of 256 characters </td></tr>
+    <tr><td>unibmpbump.c</td>
+        <td>Adjust a Microsoft bitmap (.bmp) file that
+            was created by unihex2png but converted to .bmp</td></tr>
+    <tr><td>unicoverage.c</td>
+        <td>Show the coverage of Unicode plane scripts
+            for a GNU Unifont hex glyph file</td></tr>
+    <tr><td>unidup.c</td>
+        <td>Check for duplicate code points in sorted unifont.hex
+            file</td></tr>
+    <tr><td>unifont1per.c</td>
+        <td>Read a Unifont .hex file from standard input and
+            produce one glyph per .bmp bitmap file as output</td></tr>
+    <tr><td>unifontpic.c</td>
+        <td>See the "Big Picture": the entire Unifont
+            in one BMP bitmap</td></tr>
+    <tr><td>unigen-hangul.c</td>
+        <td>Generate modern and ancient Hangul syllables with
+            shifting of final consonants combined with diphthongs
+            having two long vertical strokes on the right</td></tr>
+    <tr><td>unigencircles.c</td>
+        <td>Superimpose dashed combining circles
+            on combining glyphs</td></tr>
+    <tr><td>unigenwidth.c</td>
+        <td>IEEE 1003.1-2008 setup to calculate
+            wchar_t string widths</td></tr>
+    <tr><td>unihex2bmp.c</td>
+        <td>Turn a GNU Unifont hex glyph page of 256 code points
+            into a bitmap for editing</td></tr>
+    <tr><td>unihexgen.c</td>
+        <td>Generate a series of glyphs containing
+            hexadecimal code points</td></tr>
+    <tr><td>unihexpose.c</td>
+        <td>Transpose Unifont .hex glyph bitmaps to simplify sending
+            to graphics display controller chips that read bitmaps
+            as a series of columns 8 rows (one byte) high</td></tr>
+    <tr><td>unijohab2html.c</td>
+        <td>Read a <code>hangul-base.hex</code> file and produce
+            an HTML page as output showing juxtaposition and overlapping
+            of all letter combinations in modern and ancient Hangul
+            syllables</td></tr>
+    <tr><td>unipagecount.c</td>
+        <td>Count the number of glyphs defined in each page
+            of 256 code points</td></tr>
+  
+  </table>
+</center>
+  
+@section Scripts Perl Scripts
+
+The very first program written for Unifont conversion was Roman
+Czyborra's hexdraw Perl script.  That one script would convert
+a unifont.hex file into a text file with 16 lines per glyph (one
+for each glyph row) followed by a blank line aftr each glyph.
+That allowed editing unifont.hex glyphs with a text-based editor.
+
+Combined with Roman's hex2bdf Perl script to convert a unifont.hex
+file into a BDF font, these two scripts formed a complete package
+for editing Unifont and generating the resulting BDF fonts.
+
+There was no combining mark support initially, and the original
+unifont.hex file included combining circles with combining mark
+glyphs.
+
+The list below gives a brief description of these and the other
+Perl scripts that are in the Unifont package src subdirectory.
+
+<center>
+  <table>
+    <tr><th>Perl Script</th><th>Description</th></tr>
+    <tr><td>bdfimplode</td>
+        <td>Convert a BDF font into GNU Unifont .hex format</td></tr>
+    <tr><td>hex2bdf</td>
+        <td>Convert a GNU Unifont .hex file into a BDF font</td></tr>
+    <tr><td>hex2sfd</td>
+        <td>Convert a GNU Unifont .hex file into a FontForge .sfd
+            format</td></tr>
+    <tr><td>hexbraille</td>
+        <td>Algorithmically generate the Unicode Braille range
+            (U+28xx)</td></tr>
+    <tr><td>hexdraw</td>
+        <td>Convert a GNU Unifont .hex file to and from an ASCII text
+            file</td></tr>
+    <tr><td>hexkinya</td>
+        <td>Create the Private Use Area Kinya syllables</td></tr>
+    <tr><td>hexmerge</td>
+        <td>Merge two or more GNU Unifont .hex font files into one</td></tr>
+    <tr><td>johab2ucs2</td>
+        <td>Convert a Johab BDF font into GNU Unifont Hangul
+            Syllables</td></tr>
+    <tr><td>unifont-viewer</td>
+        <td>View a .hex font file with a graphical user interface</td></tr>
+    <tr><td>unifontchojung</td>
+        <td>Extract Hangul syllables that have no final consonant</td></tr>
+    <tr><td>unifontksx</td>
+        <td>Extract Hangul syllables that comprise KS X 1001:1992</td></tr>
+    <tr><td>unihex2png</td>
+        <td>GNU Unifont .hex file to Portable Network Graphics
+            converter</td></tr>
+    <tr><td>unihexfill</td>
+        <td>Generate range of Unifont 4- or 6-digit hexadecimal glyp</td></tr>
+    <tr><td>unihexrotate</td>
+        <td>Rotate Unifont hex glyphs in quarter turn increments</td></tr>
+    <tr><td>unipng2hex</td>
+        <td>Portable Network Graphics to GNU Unifont .hex file
+            converter</td></tr>
+  </table>
+</center>
+
+*/

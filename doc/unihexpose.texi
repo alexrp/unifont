@@ -1,0 +1,162 @@
+@comment TROFF INPUT: .TH UNIHEXPOSE 1 "2023 Aug 05"
+
+@node unihexpose
+@section unihexpose
+@c DEBUG: print_menu("@section")
+
+@menu
+* unihexpose NAME::
+* unihexpose SYNOPSIS::
+* unihexpose DESCRIPTION::
+* unihexpose FILES::
+* unihexpose SEE ALSO::
+* unihexpose AUTHOR::
+* unihexpose LICENSE::
+* unihexpose BUGS::
+
+@end menu
+
+
+@comment TROFF INPUT: .SH NAME
+
+@node unihexpose NAME
+@subsection unihexpose NAME
+@c DEBUG: print_menu("unihexpose NAME")
+
+unihexpose @minus{} Convert a GNU Unifont glyph into column-major format
+@comment TROFF INPUT: .SH SYNOPSIS
+
+@node unihexpose SYNOPSIS
+@subsection unihexpose SYNOPSIS
+@c DEBUG: print_menu("unihexpose SYNOPSIS")
+
+@b{unihexpose }< @i{input-font.hex }> @i{transposed-font.hex}
+@comment TROFF INPUT: .SH DESCRIPTION
+
+@node unihexpose DESCRIPTION
+@subsection unihexpose DESCRIPTION
+@c DEBUG: print_menu("unihexpose DESCRIPTION")
+
+@comment TROFF INPUT: .B unihexpose
+@b{unihexpose}
+reads a sorted GNU Unifont .hex file from STDIN and writes a
+transposed Unifont .hex file to STDOUT.  The output .hex file
+contains glyphs encoded in column major format, with 8 rows per
+output column.  This will simplify output of Unifont glyphs on
+graphics displays with controller chips designed to autoincrement
+across a line of 8 pixel rows, one column at a time.
+@comment TROFF INPUT: .PP
+
+The output .hex file contains a Unifont glyph in two halves:
+the first half is the first 8 pixels rows, and the second half
+the second 8 pixel rows.  The glyphs are 8 or 16 columns wide.
+@comment TROFF INPUT: .SH FILES
+
+@node unihexpose FILES
+@subsection unihexpose FILES
+@c DEBUG: print_menu("unihexpose FILES")
+
+*.hex GNU Unifont font files
+@comment TROFF INPUT: .SH SEE ALSO
+
+@node unihexpose SEE ALSO
+@subsection unihexpose SEE ALSO
+@c DEBUG: print_menu("unihexpose SEE ALSO")
+
+@comment TROFF INPUT: .BR bdfimplode (1),
+@b{bdfimplode}@r{(1),}
+@comment TROFF INPUT: .BR hex2bdf (1),
+@b{hex2bdf}@r{(1),}
+@comment TROFF INPUT: .BR hex2otf (1),
+@b{hex2otf}@r{(1),}
+@comment TROFF INPUT: .BR hex2sfd (1),
+@b{hex2sfd}@r{(1),}
+@comment TROFF INPUT: .BR hexbraille (1),
+@b{hexbraille}@r{(1),}
+@comment TROFF INPUT: .BR hexdraw (1),
+@b{hexdraw}@r{(1),}
+@comment TROFF INPUT: .BR hexkinya (1),
+@b{hexkinya}@r{(1),}
+@comment TROFF INPUT: .BR hexmerge (1),
+@b{hexmerge}@r{(1),}
+@comment TROFF INPUT: .BR johab2syllables (1),
+@b{johab2syllables}@r{(1),}
+@comment TROFF INPUT: .BR johab2ucs2 (1),
+@b{johab2ucs2}@r{(1),}
+@comment TROFF INPUT: .BR unibdf2hex (1),
+@b{unibdf2hex}@r{(1),}
+@comment TROFF INPUT: .BR unibmp2hex (1),
+@b{unibmp2hex}@r{(1),}
+@comment TROFF INPUT: .BR unibmpbump (1),
+@b{unibmpbump}@r{(1),}
+@comment TROFF INPUT: .BR unicoverage (1),
+@b{unicoverage}@r{(1),}
+@comment TROFF INPUT: .BR unidup (1),
+@b{unidup}@r{(1),}
+@comment TROFF INPUT: .BR unifont (5),
+@b{unifont}@r{(5),}
+@comment TROFF INPUT: .BR unifont-johab631 (5),
+@b{unifont-johab631}@r{(5),}
+@comment TROFF INPUT: .BR unifont-viewer (1),
+@b{unifont-viewer}@r{(1),}
+@comment TROFF INPUT: .BR unifont1per (1),
+@b{unifont1per}@r{(1),}
+@comment TROFF INPUT: .BR unifontchojung (1),
+@b{unifontchojung}@r{(1),}
+@comment TROFF INPUT: .BR unifontksx (1),
+@b{unifontksx}@r{(1),}
+@comment TROFF INPUT: .BR unifontpic (1),
+@b{unifontpic}@r{(1),}
+@comment TROFF INPUT: .BR unigen-hangul (1),
+@b{unigen-hangul}@r{(1),}
+@comment TROFF INPUT: .BR unigencircles (1),
+@b{unigencircles}@r{(1),}
+@comment TROFF INPUT: .BR unigenwidth (1),
+@b{unigenwidth}@r{(1),}
+@comment TROFF INPUT: .BR unihex2bmp (1),
+@b{unihex2bmp}@r{(1),}
+@comment TROFF INPUT: .BR unihex2png (1),
+@b{unihex2png}@r{(1),}
+@comment TROFF INPUT: .BR unihexfill (1),
+@b{unihexfill}@r{(1),}
+@comment TROFF INPUT: .BR unihexgen (1),
+@b{unihexgen}@r{(1),}
+@comment TROFF INPUT: .BR unihexrotate (1),
+@b{unihexrotate}@r{(1),}
+@comment TROFF INPUT: .BR unijohab2html (1),
+@b{unijohab2html}@r{(1),}
+@comment TROFF INPUT: .BR unipagecount (1),
+@b{unipagecount}@r{(1),}
+@comment TROFF INPUT: .BR unipng2hex (1)
+@b{unipng2hex}@r{(1)}
+@comment TROFF INPUT: .SH AUTHOR
+
+@node unihexpose AUTHOR
+@subsection unihexpose AUTHOR
+@c DEBUG: print_menu("unihexpose AUTHOR")
+
+@comment TROFF INPUT: .B unihexpose
+@b{unihexpose}
+was written by Paul Hardy.
+@comment TROFF INPUT: .SH LICENSE
+
+@node unihexpose LICENSE
+@subsection unihexpose LICENSE
+@c DEBUG: print_menu("unihexpose LICENSE")
+
+@comment TROFF INPUT: .B hexdraw
+@b{hexdraw}
+is Copyright @copyright{} 2023 Paul Hardy.
+@comment TROFF INPUT: .PP
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+@comment TROFF INPUT: .SH BUGS
+
+@node unihexpose BUGS
+@subsection unihexpose BUGS
+@c DEBUG: print_menu("unihexpose BUGS")
+
+No known bugs exist.

@@ -1,0 +1,9 @@
+<map id="cacheBytes" name="cacheBytes">
+<area shape="rect" id="node1" title="Append a string of bytes to a buffer." alt="" coords="456,80,553,105"/>
+<area shape="rect" id="node2" href="$hex2otf_8c.html#afd499a24ff34cb5c19b52df795422c12" title="Fill OpenType bitmap data and location tables." alt="" coords="118,5,203,31"/>
+<area shape="rect" id="node4" href="$hex2otf_8c.html#a3d62aa29f94c3fa78ca4438739d64a62" title="Add a CFF table to a font." alt="" coords="129,80,192,105"/>
+<area shape="rect" id="node5" href="$hex2otf_8c.html#a06b8121dea15c8117b7c951ffb22fb7e" title="Fill a &quot;GSUB&quot; font table." alt="" coords="108,129,213,155"/>
+<area shape="rect" id="node6" href="$hex2otf_8c.html#ab6e3bb110dc3e55193c344cb7b56e328" title="Fill an &quot;OS/2&quot; font table." alt="" coords="285,181,384,207"/>
+<area shape="rect" id="node7" href="$hex2otf_8c.html#aa52cd46a50cdc2040a72e5c7ecfa944b" title="Prepare a font name string index." alt="" coords="261,80,408,105"/>
+<area shape="rect" id="node3" href="$hex2otf_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="The main function." alt="" coords="5,105,60,131"/>
+</map>

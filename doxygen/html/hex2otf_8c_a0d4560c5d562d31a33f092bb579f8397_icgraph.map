@@ -1,0 +1,6 @@
+<map id="cacheZeros" name="cacheZeros">
+<area shape="rect" id="node1" title="Append 1 to 4 bytes of zeroes to a buffer, for padding." alt="" coords="263,31,360,56"/>
+<area shape="rect" id="node2" href="$hex2otf_8c.html#a4ac0c02117b703a71bee3dd34e2eb306" title="Fill a &quot;head&quot; font table." alt="" coords="108,5,215,31"/>
+<area shape="rect" id="node4" href="$hex2otf_8c.html#a074562f0527ff6db8b1b956b9356a315" title="Write OpenType font to output file." alt="" coords="120,55,203,80"/>
+<area shape="rect" id="node3" href="$hex2otf_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="The main function." alt="" coords="5,31,60,56"/>
+</map>

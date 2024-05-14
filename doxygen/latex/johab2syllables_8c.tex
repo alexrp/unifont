@@ -1,0 +1,211 @@
+\hypertarget{johab2syllables_8c}{}\doxysection{src/johab2syllables.c File Reference}
+\label{johab2syllables_8c}\index{src/johab2syllables.c@{src/johab2syllables.c}}
+
+
+Create the Unicode Hangul Syllables block from component letters.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}hangul.\+h\char`\"{}}\newline
+Include dependency graph for johab2syllables.\+c\+:
+% FIG 0
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{johab2syllables_8c_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em The main function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{johab2syllables_8c_a853216ac51aa181669ff4d3de74058a7}{print\+\_\+help}} ()
+\begin{DoxyCompactList}\small\item\em Print a help message. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Create the Unicode Hangul Syllables block from component letters. 
+
+This program reads in a \char`\"{}hangul-\/base.\+hex\char`\"{} file containing Hangul letters in Johab 6/3/1 format and outputs a Unifont .hex format file covering the Unicode Hangul Syllables range of U+\+AC00..U+\+D7\+A3.
+
+\begin{DoxyAuthor}{Author}
+Paul Hardy
+\end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+Copyright © 2023 Paul Hardy 
+\end{DoxyCopyright}
+
+
+Definition in file \mbox{\hyperlink{johab2syllables_8c_source}{johab2syllables.\+c}}.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{johab2syllables_8c_a0ddf1224851353fc92bfbff6f499fa97}\label{johab2syllables_8c_a0ddf1224851353fc92bfbff6f499fa97}} 
+\index{johab2syllables.c@{johab2syllables.c}!main@{main}}
+\index{main@{main}!johab2syllables.c@{johab2syllables.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+The main function. 
+
+
+
+Definition at line \mbox{\hyperlink{johab2syllables_8c_source_l00042}{42}} of file \mbox{\hyperlink{johab2syllables_8c_source}{johab2syllables.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00043\ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ i;\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Loop\ variables\ \ \ \ \ */}}
+\DoxyCodeLine{00044\ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ arg\_count;\ \ \textcolor{comment}{/*\ index\ into\ *argv[]\ */}}
+\DoxyCodeLine{00045\ \ \ \ \textcolor{keywordtype}{unsigned}\ codept;}
+\DoxyCodeLine{00046\ \ \ \ \textcolor{keywordtype}{unsigned}\ max\_codept;}
+\DoxyCodeLine{00047\ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ \ hangul\_base[MAX\_GLYPHS][32];}
+\DoxyCodeLine{00048\ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ initial,\ medial,\ \textcolor{keyword}{final};\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Base\ glyphs\ for\ a\ syllable.\ */}}
+\DoxyCodeLine{00049\ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ \ syllable[32];\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Syllable\ glyph\ built\ for\ output.\ */}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ FILE\ *infp\ \ =\ stdin;\ \ \ \textcolor{comment}{/*\ Input\ Hangul\ Johab\ 6/3/1\ file\ */}}
+\DoxyCodeLine{00052\ \ \ \ FILE\ *outfp\ =\ stdout;\ \ \textcolor{comment}{/*\ Output\ Hangul\ Syllables\ file\ \ */}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \ \textcolor{comment}{/*\ Print\ a\ help\ message\ */}}
+\DoxyCodeLine{00055\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{johab2syllables_8c_a853216ac51aa181669ff4d3de74058a7}{print\_help}}\ ();}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \ \textcolor{comment}{/*\ Read\ the\ file\ containing\ Hangul\ base\ glyphs.\ */}}
+\DoxyCodeLine{00058\ \ \ \ \textcolor{keywordtype}{unsigned}\ \mbox{\hyperlink{hangul_8h_a0c3abd429f2b52cfa38a22ba6a83eb78}{hangul\_read\_base8}}\ (FILE\ *infp,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ hangul\_base[][32]);}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ \ \textcolor{comment}{/*\ Given\ a\ Hangul\ Syllables\ code\ point,\ determine\ component\ glyphs.\ */}}
+\DoxyCodeLine{00061\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{hangul_8h_a50a8e6626a7e76210784a560e8ac15b5}{hangul\_decompose}}\ (\textcolor{keywordtype}{unsigned}\ codept,\ \textcolor{keywordtype}{int}\ *,\ \textcolor{keywordtype}{int}\ *,\ \textcolor{keywordtype}{int}\ *);}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \textcolor{comment}{/*\ Given\ letters\ in\ a\ Hangul\ syllable,\ return\ a\ glyph.\ */}}
+\DoxyCodeLine{00064\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{hangul_8h_abb373afe914554ff8443f05d83b69e8e}{hangul\_syllable}}\ (\textcolor{keywordtype}{int}\ choseong,\ \textcolor{keywordtype}{int}\ jungseong,\ \textcolor{keywordtype}{int}\ jongseong,}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ hangul\_base[][32],}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ *syllable);}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00070\ \textcolor{comment}{\ \ \ \ \ \ If\ there\ are\ command\ line\ arguments,\ parse\ them.}}
+\DoxyCodeLine{00071\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00072\ \ \ \ arg\_count\ =\ 1;}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \ \ \ \textcolor{keywordflow}{while}\ (arg\_count\ <\ argc)\ \{}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \textcolor{comment}{/*\ If\ input\ file\ is\ specified,\ open\ it\ for\ read\ access.\ */}}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (strncmp\ (argv\ [arg\_count],\ \textcolor{stringliteral}{"{}-\/i"{}},\ 2)\ ==\ 0)\ \{}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ arg\_count++;}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (arg\_count\ <\ argc)\ \{}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ infp\ =\ fopen\ (argv\ [arg\_count],\ \textcolor{stringliteral}{"{}r"{}});}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (infp\ ==\ NULL)\ \{}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)n***\ ERROR:\ Cannot\ open\ \%s\ for\ input.\(\backslash\)n\(\backslash\)n"{}},}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ argv\ [arg\_count]);}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ exit\ (EXIT\_FAILURE);}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \textcolor{comment}{/*\ If\ output\ file\ is\ specified,\ open\ it\ for\ write\ access.\ */}}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (strncmp\ (argv\ [arg\_count],\ \textcolor{stringliteral}{"{}-\/o"{}},\ 2)\ ==\ 0)\ \{}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ arg\_count++;}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (arg\_count\ <\ argc)\ \{}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ outfp\ =\ fopen\ (argv\ [arg\_count],\ \textcolor{stringliteral}{"{}w"{}});}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (outfp\ ==\ NULL)\ \{}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)n***\ ERROR:\ Cannot\ open\ \%s\ for\ output.\(\backslash\)n\(\backslash\)n"{}},}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ argv\ [arg\_count]);}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ exit\ (EXIT\_FAILURE);}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \textcolor{comment}{/*\ If\ help\ is\ requested,\ print\ help\ message\ and\ exit.\ */}}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (strncmp\ (argv\ [arg\_count],\ \textcolor{stringliteral}{"{}-\/h"{}},\ \ \ \ \ 2)\ ==\ 0\ ||}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ strncmp\ (argv\ [arg\_count],\ \textcolor{stringliteral}{"{}-\/-\/help"{}},\ 6)\ ==\ 0)\ \{}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{johab2syllables_8c_a853216ac51aa181669ff4d3de74058a7}{print\_help}}\ ();}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ exit\ (EXIT\_SUCCESS);}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \ \ \ \ \ \ arg\_count++;}
+\DoxyCodeLine{00107\ \ \ \ \}}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00110\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00111\ \textcolor{comment}{\ \ \ \ \ \ Initialize\ entire\ glyph\ array\ to\ zeroes\ in\ case\ the\ input}}
+\DoxyCodeLine{00112\ \textcolor{comment}{\ \ \ \ \ \ file\ skips\ over\ some\ code\ points.}}
+\DoxyCodeLine{00113\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00114\ \ \ \ \textcolor{keywordflow}{for}\ (codept\ =\ 0;\ codept\ <\ MAX\_GLYPHS;\ codept++)\ \{}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 32;\ i++)\ hangul\_base[codept][i]\ =\ 0;}
+\DoxyCodeLine{00116\ \ \ \ \}}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00119\ \textcolor{comment}{\ \ \ \ \ \ Read\ the\ entire\ "{}hangul-\/base.hex"{}\ file\ into\ an\ array}}
+\DoxyCodeLine{00120\ \textcolor{comment}{\ \ \ \ \ \ organized\ as\ hangul\_base\ [code\_point][glyph\_byte].}}
+\DoxyCodeLine{00121\ \textcolor{comment}{\ \ \ \ \ \ The\ Hangul\ glyphs\ are\ 16\ columns\ wide,\ which\ is}}
+\DoxyCodeLine{00122\ \textcolor{comment}{\ \ \ \ \ \ two\ bytes,\ by\ 16\ rows,\ for\ a\ total\ of\ 2\ *\ 16\ =\ 32\ bytes.}}
+\DoxyCodeLine{00123\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00124\ \ \ \ max\_codept\ =\ \mbox{\hyperlink{hangul_8h_a0c3abd429f2b52cfa38a22ba6a83eb78}{hangul\_read\_base8}}\ (infp,\ hangul\_base);}
+\DoxyCodeLine{00125\ \ \ \ \textcolor{keywordflow}{if}\ (max\_codept\ >\ 0x8FF)\ \{}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)nWARNING:\ Hangul\ glyph\ range\ exceeds\ PUA\ space.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{00127\ \ \ \ \}}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00129\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00130\ \textcolor{comment}{\ \ \ \ \ \ For\ each\ glyph\ in\ the\ Unicode\ Hangul\ Syllables\ block,}}
+\DoxyCodeLine{00131\ \textcolor{comment}{\ \ \ \ \ \ form\ a\ composite\ glyph\ of\ choseong\ +\ jungseong\ +}}
+\DoxyCodeLine{00132\ \textcolor{comment}{\ \ \ \ \ \ optional\ jongseong\ and\ output\ it\ in\ Unifont\ .hex\ format.}}
+\DoxyCodeLine{00133\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00134\ \ \ \ \textcolor{keywordflow}{for}\ (codept\ =\ 0xAC00;\ codept\ <\ 0xAC00\ +\ 19\ *\ 21\ *\ 28;\ codept++)\ \{}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \mbox{\hyperlink{hangul_8h_a50a8e6626a7e76210784a560e8ac15b5}{hangul\_decompose}}\ (codept,\ \&initial,\ \&medial,\ \&\textcolor{keyword}{final});}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \mbox{\hyperlink{hangul_8h_abb373afe914554ff8443f05d83b69e8e}{hangul\_syllable}}\ (initial,\ medial,\ \textcolor{keyword}{final},\ hangul\_base,\ syllable);}
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00139\ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\%04X:"{}},\ codept);}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 32;\ i++)\ \{}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ fprintf\ (outfp,\ \textcolor{stringliteral}{"{}\%02X"{}},\ syllable[i]);}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ fputc\ (\textcolor{charliteral}{'\(\backslash\)n'},\ outfp);}
+\DoxyCodeLine{00145\ \ \ \ \}}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00147\ \ \ \ exit\ (EXIT\_SUCCESS);}
+\DoxyCodeLine{00148\ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+% FIG 1
+\mbox{\Hypertarget{johab2syllables_8c_a853216ac51aa181669ff4d3de74058a7}\label{johab2syllables_8c_a853216ac51aa181669ff4d3de74058a7}} 
+\index{johab2syllables.c@{johab2syllables.c}!print\_help@{print\_help}}
+\index{print\_help@{print\_help}!johab2syllables.c@{johab2syllables.c}}
+\doxysubsubsection{\texorpdfstring{print\_help()}{print\_help()}}
+{\footnotesize\ttfamily void print\+\_\+help (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Print a help message. 
+
+
+
+Definition at line \mbox{\hyperlink{johab2syllables_8c_source_l00155}{155}} of file \mbox{\hyperlink{johab2syllables_8c_source}{johab2syllables.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00156\ }
+\DoxyCodeLine{00157\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\(\backslash\)ngen-\/hangul\ [options]\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{00158\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ Generates\ Hangul\ syllables\ from\ an\ input\ Unifont\ .hex\ file\ encoded\(\backslash\)n"{}});}
+\DoxyCodeLine{00159\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ in\ Johab\ 6/3/1\ format.\ \ The\ output\ is\ the\ Unicode\ Hangul\ Syllables\(\backslash\)n"{}});}
+\DoxyCodeLine{00160\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ range,\ U+AC00..U+D7A3.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{00161\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ This\ program\ demonstrates\ forming\ Hangul\ syllables\ without\ shifting\(\backslash\)n"{}});}
+\DoxyCodeLine{00162\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ the\ final\ consonant\ (jongseong)\ when\ combined\ with\ a\ vowel\ having\(\backslash\)n"{}});}
+\DoxyCodeLine{00163\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ a\ long\ double\ vertical\ stroke.\ \ For\ a\ program\ that\ demonstrtes\(\backslash\)n"{}});}
+\DoxyCodeLine{00164\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ shifting\ jongseong\ in\ those\ cases,\ see\ unigen-\/hangul,\ which\ is\ what\(\backslash\)n"{}});}
+\DoxyCodeLine{00165\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ creates\ the\ Unifont\ Hangul\ Syllables\ block.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00167\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ This\ program\ may\ be\ invoked\ with\ the\ following\ command\ line\ options:\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{00168\ }
+\DoxyCodeLine{00169\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ Option\ \ \ \ Parameters\ \ \ \ Function\(\backslash\)n"{}});}
+\DoxyCodeLine{00170\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ -\/-\/-\/-\/-\/-\/\ \ \ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ \ \ \ -\/-\/-\/-\/-\/-\/-\/-\/\(\backslash\)n"{}});}
+\DoxyCodeLine{00171\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ -\/h,\ -\/-\/help\ \ \ \ \ \ \ \ \ \ \ \ \ \ Print\ this\ message\ and\ exit.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{00172\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ -\/i\ \ \ \ \ \ \ \ input\_file\ \ \ \ Unifont\ hangul-\/base.hex\ formatted\ input\ file.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{00173\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ -\/o\ \ \ \ \ \ \ \ output\_file\ \ \ Unifont\ .hex\ format\ output\ file.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{00174\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ Example:\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{00175\ \ \ \ printf\ (\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ johab2syllables\ -\/i\ hangul-\/base.hex\ -\/o\ hangul-\/syllables.hex\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{00176\ }
+\DoxyCodeLine{00177\ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00178\ \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+% FIG 2

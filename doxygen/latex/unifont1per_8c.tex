@@ -1,0 +1,197 @@
+\hypertarget{unifont1per_8c}{}\doxysection{src/unifont1per.c File Reference}
+\label{unifont1per_8c}\index{src/unifont1per.c@{src/unifont1per.c}}
+
+
+unifont1per -\/ Read a Unifont .hex file from standard input and produce one glyph per \char`\"{}.\+bmp\char`\"{} bitmap file as output  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+Include dependency graph for unifont1per.\+c\+:
+% FIG 0
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{unifont1per_8c_a2ff420a6c6a2d1effc47a81e37327985}{MAXSTRING}}~266
+\item 
+\#define \mbox{\hyperlink{unifont1per_8c_a0947c0a3d28c188caa4497cce08539c9}{MAXFILENAME}}~20
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{unifont1per_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}} ()
+\begin{DoxyCompactList}\small\item\em The main function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+unifont1per -\/ Read a Unifont .hex file from standard input and produce one glyph per \char`\"{}.\+bmp\char`\"{} bitmap file as output 
+
+\begin{DoxyAuthor}{Author}
+Paul Hardy, unifoundry $<$at$>$ unifoundry.\+com, December 2016
+\end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+Copyright (C) 2016, 2017 Paul Hardy
+\end{DoxyCopyright}
+Each glyph is 16 pixels tall, and can be 8, 16, 24, or 32 pixels wide. The width of each output graphic file is determined automatically by the width of each Unifont hex representation.
+
+This program creates files of the form \char`\"{}\+U+$<$codepoint$>$.\+bmp\char`\"{}, 1 per glyph.
+
+Synopsis\+: unifont1per \texorpdfstring{$<$}{<} unifont.\+hex 
+
+Definition in file \mbox{\hyperlink{unifont1per_8c_source}{unifont1per.\+c}}.
+
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{unifont1per_8c_a0947c0a3d28c188caa4497cce08539c9}\label{unifont1per_8c_a0947c0a3d28c188caa4497cce08539c9}} 
+\index{unifont1per.c@{unifont1per.c}!MAXFILENAME@{MAXFILENAME}}
+\index{MAXFILENAME@{MAXFILENAME}!unifont1per.c@{unifont1per.c}}
+\doxysubsubsection{\texorpdfstring{MAXFILENAME}{MAXFILENAME}}
+{\footnotesize\ttfamily \#define MAXFILENAME~20}
+
+Maximum size of a filename of the form \char`\"{}\+U+\%06\+X.\+bmp\char`\"{}. 
+
+Definition at line \mbox{\hyperlink{unifont1per_8c_source_l00060}{60}} of file \mbox{\hyperlink{unifont1per_8c_source}{unifont1per.\+c}}.
+
+\mbox{\Hypertarget{unifont1per_8c_a2ff420a6c6a2d1effc47a81e37327985}\label{unifont1per_8c_a2ff420a6c6a2d1effc47a81e37327985}} 
+\index{unifont1per.c@{unifont1per.c}!MAXSTRING@{MAXSTRING}}
+\index{MAXSTRING@{MAXSTRING}!unifont1per.c@{unifont1per.c}}
+\doxysubsubsection{\texorpdfstring{MAXSTRING}{MAXSTRING}}
+{\footnotesize\ttfamily \#define MAXSTRING~266}
+
+Maximum size of an input line in a Unifont .hex file -\/ 1. 
+
+Definition at line \mbox{\hyperlink{unifont1per_8c_source_l00057}{57}} of file \mbox{\hyperlink{unifont1per_8c_source}{unifont1per.\+c}}.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{unifont1per_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}\label{unifont1per_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}} 
+\index{unifont1per.c@{unifont1per.c}!main@{main}}
+\index{main@{main}!unifont1per.c@{unifont1per.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+The main function. 
+
+\begin{DoxyReturn}{Returns}
+This program exits with status EXIT\+\_\+\+SUCCESS. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{unifont1per_8c_source_l00069}{69}} of file \mbox{\hyperlink{unifont1per_8c_source}{unifont1per.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \ \ \ \textcolor{keywordtype}{int}\ i;\ \textcolor{comment}{/*\ loop\ variable\ */}}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00074\ \textcolor{comment}{\ \ \ \ \ \ Define\ bitmap\ header\ bytes}}
+\DoxyCodeLine{00075\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00076\ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ header\ [62]\ =\ \{}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00078\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ Bitmap\ File\ Header\ -\/-\/\ 14\ bytes}}
+\DoxyCodeLine{00079\ \textcolor{comment}{\ \ \ \ \ \ */}}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \textcolor{charliteral}{'B'},\ \textcolor{charliteral}{'M'},\ \ \ \ \ \ \ \textcolor{comment}{/*\ Signature\ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ 0x7E,\ 0,\ 0,\ 0,\ \ \textcolor{comment}{/*\ File\ Size\ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ 0,\ 0,\ 0,\ 0,\ \ \textcolor{comment}{/*\ Reserved\ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ 0x3E,\ 0,\ 0,\ 0,\ \ \textcolor{comment}{/*\ Pixel\ Array\ Offset\ */}}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00086\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ Device\ Independent\ Bitmap\ Header\ -\/-\/\ 40\ bytes}}
+\DoxyCodeLine{00087\ \textcolor{comment}{}}
+\DoxyCodeLine{00088\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ Image\ Width\ and\ Image\ Height\ are\ assigned\ final\ values}}
+\DoxyCodeLine{00089\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ based\ on\ the\ dimensions\ of\ each\ glyph.}}
+\DoxyCodeLine{00090\ \textcolor{comment}{\ \ \ \ \ \ */}}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ 0x28,\ \ \ \ 0,\ \ \ \ 0,\ \ \ \ 0,\ \ \textcolor{comment}{/*\ DIB\ Header\ Size\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ 0x10,\ \ \ \ 0,\ \ \ \ 0,\ \ \ \ 0,\ \ \textcolor{comment}{/*\ Image\ Width\ =\ 16\ pixels\ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ 0xF0,\ 0xFF,\ 0xFF,\ 0xFF,\ \ \textcolor{comment}{/*\ Image\ Height\ =\ -\/16\ pixels\ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ 0x01,\ \ \ \ 0,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Planes\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ 0x01,\ \ \ \ 0,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Bits\ Per\ Pixel\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ 0,\ \ \ \ 0,\ \ \ \ 0,\ \ \ \ 0,\ \ \textcolor{comment}{/*\ Compression\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ 0x40,\ \ \ \ 0,\ \ \ \ 0,\ \ \ \ 0,\ \ \textcolor{comment}{/*\ Image\ Size\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ 0x14,\ 0x0B,\ \ \ \ 0,\ \ \ \ 0,\ \ \textcolor{comment}{/*\ X\ Pixels\ Per\ Meter\ =\ 72\ dpi\ \ \ \ \ */}}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ 0x14,\ 0x0B,\ \ \ \ 0,\ \ \ \ 0,\ \ \textcolor{comment}{/*\ Y\ Pixels\ Per\ Meter\ =\ 72\ dpi\ \ \ \ \ */}}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ 0x02,\ \ \ \ 0,\ \ \ \ 0,\ \ \ \ 0,\ \ \textcolor{comment}{/*\ Colors\ In\ Color\ Table\ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ 0,\ \ \ \ 0,\ \ \ \ 0,\ \ \ \ 0,\ \ \textcolor{comment}{/*\ Important\ Colors\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00104\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ Color\ Palette\ -\/-\/\ 8\ bytes}}
+\DoxyCodeLine{00105\ \textcolor{comment}{\ \ \ \ \ \ */}}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ 0xFF,\ 0xFF,\ 0xFF,\ 0,\ \ \textcolor{comment}{/*\ White\ */}}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ 0,\ \ \ \ 0,\ \ \ \ 0,\ 0\ \ \ \textcolor{comment}{/*\ Black\ */}}
+\DoxyCodeLine{00108\ \ \ \ \};}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00110\ \ \ \ \textcolor{keywordtype}{char}\ instring[\mbox{\hyperlink{unifont1per_8c_a2ff420a6c6a2d1effc47a81e37327985}{MAXSTRING}}];\ \textcolor{comment}{/*\ input\ string\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00111\ \ \ \ \textcolor{keywordtype}{int}\ \ code\_point;\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ current\ Unicode\ code\ point\ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00112\ \ \ \ \textcolor{keywordtype}{char}\ glyph[\mbox{\hyperlink{unifont1per_8c_a2ff420a6c6a2d1effc47a81e37327985}{MAXSTRING}}];\ \ \ \ \textcolor{comment}{/*\ bitmap\ string\ for\ this\ glyph\ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00113\ \ \ \ \textcolor{keywordtype}{int}\ \ glyph\_height=16;\ \ \ \ \ \textcolor{comment}{/*\ for\ now,\ fixed\ at\ 16\ pixels\ high\ \ \ \ */}}
+\DoxyCodeLine{00114\ \ \ \ \textcolor{keywordtype}{int}\ \ glyph\_width;\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 8,\ 16,\ 24,\ or\ 32\ pixels\ wide\ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00115\ \ \ \ \textcolor{keywordtype}{char}\ filename[\mbox{\hyperlink{unifont1per_8c_a0947c0a3d28c188caa4497cce08539c9}{MAXFILENAME}}];\textcolor{comment}{/*\ name\ of\ current\ output\ file\ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00116\ \ \ \ FILE\ *outfp;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ file\ pointer\ to\ current\ output\ file\ */}}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \ \ \ \textcolor{keywordtype}{int}\ string\_index;\ \ \textcolor{comment}{/*\ pointer\ into\ hexadecimal\ glyph\ string\ */}}
+\DoxyCodeLine{00119\ \ \ \ \textcolor{keywordtype}{int}\ nextbyte;\ \ \ \ \ \ \textcolor{comment}{/*\ next\ set\ of\ 8\ bits\ to\ print\ out\ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00121\ \ \ \ \textcolor{comment}{/*\ Repeat\ for\ each\ line\ in\ the\ input\ stream\ */}}
+\DoxyCodeLine{00122\ \ \ \ \textcolor{keywordflow}{while}\ (fgets\ (instring,\ \mbox{\hyperlink{unifont1per_8c_a2ff420a6c6a2d1effc47a81e37327985}{MAXSTRING}}\ -\/\ 1,\ stdin)\ !=\ NULL)\ \{}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \textcolor{comment}{/*\ Read\ next\ Unifont\ ASCII\ hexadecimal\ format\ glyph\ description\ */}}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ sscanf\ (instring,\ \textcolor{stringliteral}{"{}\%X:\%s"{}},\ \&code\_point,\ glyph);}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \textcolor{comment}{/*\ Calculate\ width\ of\ a\ glyph\ in\ pixels;\ 4\ bits\ per\ ASCII\ hex\ digit\ */}}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ glyph\_width\ =\ strlen\ (glyph)\ /\ (glyph\_height\ /\ 4);}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ snprintf\ (filename,\ \mbox{\hyperlink{unifont1per_8c_a0947c0a3d28c188caa4497cce08539c9}{MAXFILENAME}},\ \textcolor{stringliteral}{"{}U+\%06X.bmp"{}},\ code\_point);}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ header\ [18]\ =\ \ glyph\_width;\ \ \textcolor{comment}{/*\ bitmap\ width\ */}}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ header\ [22]\ =\ -\/glyph\_height;\ \textcolor{comment}{/*\ negative\ height\ -\/-\/>\ draw\ top\ to\ bottom\ */}}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((outfp\ =\ fopen\ (filename,\ \textcolor{stringliteral}{"{}w"{}}))\ !=\ NULL)\ \{}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 62;\ i++)\ fputc\ (header[i],\ outfp);}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00133\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ Bitmap,\ with\ each\ row\ padded\ with\ zeroes\ if\ necessary}}
+\DoxyCodeLine{00134\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ so\ each\ row\ is\ four\ bytes\ wide.\ \ (Each\ row\ must\ end}}
+\DoxyCodeLine{00135\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ on\ a\ four-\/byte\ boundary,\ and\ four\ bytes\ is\ the\ maximum}}
+\DoxyCodeLine{00136\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ possible\ row\ length\ for\ up\ to\ 32\ pixels\ in\ a\ row.)}}
+\DoxyCodeLine{00137\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ string\_index\ =\ 0;}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ glyph\_height;\ i++)\ \{}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Read\ 2\ ASCII\ hexadecimal\ digits\ (1\ byte\ of\ output\ pixels)\ */}}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ sscanf\ (\&glyph[string\_index],\ \textcolor{stringliteral}{"{}\%2X"{}},\ \&nextbyte);}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ string\_index\ +=\ 2;}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ \ \ \ fputc\ (nextbyte,\ outfp);\ \ \textcolor{comment}{/*\ write\ out\ the\ 8\ pixels\ \ \ \ */}}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (glyph\_width\ <=\ 8)\ \{\ \ \ \textcolor{comment}{/*\ pad\ row\ with\ 3\ zero\ bytes\ */}}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fputc\ (0x00,\ outfp);\ fputc\ (0x00,\ outfp);\ fputc\ (0x00,\ outfp);}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{\ \textcolor{comment}{/*\ get\ 8\ more\ pixels\ */}}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sscanf\ (\&glyph[string\_index],\ \textcolor{stringliteral}{"{}\%2X"{}},\ \&nextbyte);}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ string\_index\ +=\ 2;}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fputc\ (nextbyte,\ outfp);\ \ \textcolor{comment}{/*\ write\ out\ the\ 8\ pixels\ \ \ \ */}}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (glyph\_width\ <=\ 16)\ \{\ \ \textcolor{comment}{/*\ pad\ row\ with\ 2\ zero\ bytes\ */}}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fputc\ (0x00,\ outfp);\ fputc\ (0x00,\ outfp);}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{\ \textcolor{comment}{/*\ get\ 8\ more\ pixels\ */}}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sscanf\ (\&glyph[string\_index],\ \textcolor{stringliteral}{"{}\%2X"{}},\ \&nextbyte);}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ string\_index\ +=\ 2;}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fputc\ (nextbyte,\ outfp);\ \ \textcolor{comment}{/*\ write\ out\ the\ 8\ pixels\ \ \ */}}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (glyph\_width\ <=\ 24)\ \{\ \ \textcolor{comment}{/*\ pad\ row\ with\ 1\ zero\ byte\ */}}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fputc\ (0x00,\ outfp);}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{\ \textcolor{comment}{/*\ get\ 8\ more\ pixels\ */}}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sscanf\ (\&glyph[string\_index],\ \textcolor{stringliteral}{"{}\%2X"{}},\ \&nextbyte);}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ string\_index\ +=\ 2;}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fputc\ (nextbyte,\ outfp);\ \textcolor{comment}{/*\ write\ out\ the\ 8\ pixels\ */}}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \ \textcolor{comment}{/*\ glyph\ is\ 32\ pixels\ wide\ */}}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \ \textcolor{comment}{/*\ glyph\ is\ 24\ pixels\ wide\ */}}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \ \textcolor{comment}{/*\ glyph\ is\ 16\ pixels\ wide\ */}}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \}\ \ \textcolor{comment}{/*\ glyph\ is\ 8\ pixels\ wide\ */}}
+\DoxyCodeLine{00169\ }
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ fclose\ (outfp);}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00172\ \ \ \ \}}
+\DoxyCodeLine{00173\ }
+\DoxyCodeLine{00174\ \ \ \ exit\ (EXIT\_SUCCESS);}
+\DoxyCodeLine{00175\ \}}
+
+\end{DoxyCode}

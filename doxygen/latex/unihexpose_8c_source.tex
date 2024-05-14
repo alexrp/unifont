@@ -1,0 +1,106 @@
+\hypertarget{unihexpose_8c_source}{}\doxysection{unihexpose.\+c}
+\label{unihexpose_8c_source}\index{src/unihexpose.c@{src/unihexpose.c}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00001}00001\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00002}00002\ \textcolor{comment}{\ \ \ @file:\ unihetranspose.c}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00003}00003\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00004}00004\ \textcolor{comment}{\ \ \ @brief:\ Transpose\ Unifont\ glyph\ bitmaps.}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00005}00005\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00006}00006\ \textcolor{comment}{\ \ \ This\ program\ takes\ Unifont\ .hex\ format\ glyphs\ and\ converts\ those}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00007}00007\ \textcolor{comment}{\ \ \ glyphs\ so\ that\ each\ byte\ (two\ hexadecimal\ digits\ in\ the\ .hex\ file)}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00008}00008\ \textcolor{comment}{\ \ \ represents\ a\ column\ of\ 8\ rows.\ \ This\ simplifies\ use\ with\ graphics}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00009}00009\ \textcolor{comment}{\ \ \ display\ controllers\ that\ write\ lines\ consisting\ of\ 8\ rows\ at\ a\ time}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00010}00010\ \textcolor{comment}{\ \ \ to\ a\ display.}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00011}00011\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00012}00012\ \textcolor{comment}{\ \ \ The\ bytes\ are\ ordered\ as\ first\ all\ the\ columns\ for\ the\ glyph\ in}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00013}00013\ \textcolor{comment}{\ \ \ the\ first\ 8\ rows,\ then\ all\ the\ columns\ in\ the\ next\ 8\ rows,\ with}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00014}00014\ \textcolor{comment}{\ \ \ columns\ ordered\ from\ left\ to\ right.}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00015}00015\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00016}00016\ \textcolor{comment}{\ \ \ This\ file\ must\ be\ linked\ with\ functions\ in\ unifont-\/support.c.}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00017}00017\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00018}00018\ \textcolor{comment}{\ \ \ @author\ Paul\ Hardy}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00019}00019\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00020}00020\ \textcolor{comment}{\ \ \ @copyright\ Copyright\ ©\ 2023\ Paul\ Hardy}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00021}00021\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00022}00022\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00023}00023\ \textcolor{comment}{\ \ \ LICENSE:}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00024}00024\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00025}00025\ \textcolor{comment}{\ \ \ \ \ \ This\ program\ is\ free\ software:\ you\ can\ redistribute\ it\ and/or\ modify}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00026}00026\ \textcolor{comment}{\ \ \ \ \ \ it\ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00027}00027\ \textcolor{comment}{\ \ \ \ \ \ the\ Free\ Software\ Foundation,\ either\ version\ 2\ of\ the\ License,\ or}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00028}00028\ \textcolor{comment}{\ \ \ \ \ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00029}00029\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00030}00030\ \textcolor{comment}{\ \ \ \ \ \ This\ program\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00031}00031\ \textcolor{comment}{\ \ \ \ \ \ but\ WITHOUT\ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00032}00032\ \textcolor{comment}{\ \ \ \ \ \ MERCHANTABILITY\ or\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00033}00033\ \textcolor{comment}{\ \ \ \ \ \ GNU\ General\ Public\ License\ for\ more\ details.}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00034}00034\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00035}00035\ \textcolor{comment}{\ \ \ \ \ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00036}00036\ \textcolor{comment}{\ \ \ \ \ \ along\ with\ this\ program.\ \ If\ not,\ see\ <http://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00037}00037\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00038}00038\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00039}00039\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00041}00041\ \textcolor{preprocessor}{\#define\ MAXWIDTH\ 128}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00043}00043\ \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00044}00044\ \mbox{\hyperlink{unibdf2hex_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}}\ (\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}\ *argv[])\ \{}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00045}00045\ \ \ \ \textcolor{keywordtype}{unsigned}\ codept;\ \ \ \ \ \textcolor{comment}{/*\ Unicode\ code\ point\ for\ glyph\ */}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00046}00046\ \ \ \ \textcolor{keywordtype}{char}\ instring\ [MAXWIDTH];\ \ \ \textcolor{comment}{/*\ input\ Unifont\ hex\ string\ */}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00047}00047\ \ \ \ \textcolor{keywordtype}{char}\ outstring\ [MAXWIDTH];\ \ \textcolor{comment}{/*\ output\ Unfont\ hex\ string\ */}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00048}00048\ \ \ \ \textcolor{keywordtype}{int}\ \ width;\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ width\ of\ current\ glyph\ */}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00049}00049\ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ glyph\ \ \ \ \ [16][2];}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00050}00050\ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ glyphbits\ [16][16];\ \ \textcolor{comment}{/*\ One\ glyphbits\ row,\ for\ transposing\ */}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00051}00051\ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ transpose\ [2][16];\ \ \textcolor{comment}{/*\ Transponsed\ glyphbits\ bitmap\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00053}00053\ \ \ \ \textcolor{keywordtype}{void}\ print\_syntax\ ();}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00055}00055\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{unifont-support_8c_ac9dc2e18133dd52df3d7a09122f63c5f}{parse\_hex}}\ (\textcolor{keywordtype}{char}\ *hexstring,}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ *width,}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ *codept,}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ glyph[16][2]);}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00060}00060\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{unifont-support_8c_a2eeb053259792aa3fb7ff53813f7d7e4}{glyph2bits}}\ (\textcolor{keywordtype}{int}\ width,\ }
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ glyph[16][2],}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ glyphbits\ [16][16]);}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00063}00063\ }
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00064}00064\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{unifont-support_8c_a0156000204eb606b3288854b0a38acf0}{hexpose}}\ (\textcolor{keywordtype}{int}\ \ width,}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ glyphbits\ [16][16],}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ transpose\ [2][16]);}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00068}00068\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{unifont-support_8c_a9292d6df99f93635cc891baaf8f66346}{xglyph2string}}\ (\textcolor{keywordtype}{int}\ width,\ \textcolor{keywordtype}{unsigned}\ codept,}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ transpose\ [2][16],}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ *outstring);}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00072}00072\ \ \ \ \textcolor{keywordflow}{if}\ (argc\ >\ 1)\ \{}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00073}00073\ \ \ \ \ \ \ print\_syntax\ ();}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00074}00074\ \ \ \ \ \ \ exit\ (EXIT\_FAILURE);}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00075}00075\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00076}00076\ }
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00077}00077\ \ \ \ \textcolor{keywordflow}{while}\ (fgets\ (instring,\ MAXWIDTH,\ stdin)\ !=\ NULL)\ \{}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00078}00078\ \ \ \ \ \ \ \mbox{\hyperlink{unifont-support_8c_ac9dc2e18133dd52df3d7a09122f63c5f}{parse\_hex}}\ (instring,\ \&width,\ \&codept,\ glyph);}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00079}00079\ }
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00080}00080\ \ \ \ \ \ \ \mbox{\hyperlink{unifont-support_8c_a2eeb053259792aa3fb7ff53813f7d7e4}{glyph2bits}}\ (width,\ glyph,\ glyphbits);}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00082}00082\ \ \ \ \ \ \ \mbox{\hyperlink{unifont-support_8c_a0156000204eb606b3288854b0a38acf0}{hexpose}}\ (width,\ glyphbits,\ transpose);}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00083}00083\ }
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00084}00084\ \ \ \ \ \ \ \mbox{\hyperlink{unifont-support_8c_a9292d6df99f93635cc891baaf8f66346}{xglyph2string}}\ (width,\ codept,\ transpose,\ outstring);}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00086}00086\ \ \ \ \ \ \ fprintf\ (stdout,\ \textcolor{stringliteral}{"{}\%s\(\backslash\)n"{}},\ outstring);}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00087}00087\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00089}00089\ \ \ \ exit\ (EXIT\_SUCCESS);}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00090}00090\ \}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00091}00091\ }
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00092}00092\ }
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00093}00093\ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00094}00094\ print\_syntax\ ()\ \{}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00096}00096\ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)nSyntax:\ unihexpose\ <\ input.hex\ >\ output.hex\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00097}00097\ }
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00098}00098\ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00099}00099\ \}}
+\DoxyCodeLine{\Hypertarget{unihexpose_8c_source_l00100}00100\ }
+
+\end{DoxyCode}

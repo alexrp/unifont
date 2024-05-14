@@ -1,0 +1,81 @@
+\hypertarget{unidup_8c_source}{}\doxysection{unidup.\+c}
+\label{unidup_8c_source}\index{src/unidup.c@{src/unidup.c}}
+\mbox{\hyperlink{unidup_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00001}00001\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00002}00002\ \textcolor{comment}{\ \ \ @file\ unidup.c}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00003}00003\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00004}00004\ \textcolor{comment}{\ \ \ @brief\ unidup\ -\/\ Check\ for\ duplicate\ code\ points\ in\ sorted\ unifont.hex\ file}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00005}00005\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00006}00006\ \textcolor{comment}{\ \ \ @author\ Paul\ Hardy,\ unifoundry\ <at>\ unifoundry.com,\ December\ 2007}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00007}00007\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00008}00008\ \textcolor{comment}{\ \ \ @copyright\ Copyright\ (C)\ 2007,\ 2008,\ 2013\ Paul\ Hardy}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00009}00009\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00010}00010\ \textcolor{comment}{\ \ \ This\ program\ reads\ a\ sorted\ list\ of\ glyphs\ in\ Unifont\ .hex\ format}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00011}00011\ \textcolor{comment}{\ \ \ and\ prints\ duplicate\ code\ points\ on\ stderr\ if\ any\ were\ detected.}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00012}00012\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00013}00013\ \textcolor{comment}{\ \ \ Synopsis:\ unidup\ <\ unifont\_file.hex}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00014}00014\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00015}00015\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ [Hopefully\ there\ won't\ be\ any\ output!]}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00016}00016\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00017}00017\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00018}00018\ \textcolor{comment}{\ \ \ LICENSE:}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00019}00019\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00020}00020\ \textcolor{comment}{\ \ \ \ \ \ This\ program\ is\ free\ software:\ you\ can\ redistribute\ it\ and/or\ modify}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00021}00021\ \textcolor{comment}{\ \ \ \ \ \ it\ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00022}00022\ \textcolor{comment}{\ \ \ \ \ \ the\ Free\ Software\ Foundation,\ either\ version\ 2\ of\ the\ License,\ or}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00023}00023\ \textcolor{comment}{\ \ \ \ \ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00024}00024\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00025}00025\ \textcolor{comment}{\ \ \ \ \ \ This\ program\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00026}00026\ \textcolor{comment}{\ \ \ \ \ \ but\ WITHOUT\ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00027}00027\ \textcolor{comment}{\ \ \ \ \ \ MERCHANTABILITY\ or\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00028}00028\ \textcolor{comment}{\ \ \ \ \ \ GNU\ General\ Public\ License\ for\ more\ details.}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00029}00029\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00030}00030\ \textcolor{comment}{\ \ \ \ \ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00031}00031\ \textcolor{comment}{\ \ \ \ \ \ along\ with\ this\ program.\ \ If\ not,\ see\ <http://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00032}00032\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00034}00034\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00035}00035\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00037}\mbox{\hyperlink{unidup_8c_ad7871643c05865c80f5d8050aead2b57}{00037}}\ \textcolor{preprocessor}{\#define\ MAXBUF\ 256\ \ \ }\textcolor{comment}{///<\ Maximum\ input\ line\ length\ -\/\ 1}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00039}00039\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00040}00040\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00041}00041\ \textcolor{comment}{\ \ \ @brief\ The\ main\ function.}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00042}00042\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00043}00043\ \textcolor{comment}{\ \ \ @param[in]\ argc\ The\ count\ of\ command\ line\ arguments.}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00044}00044\ \textcolor{comment}{\ \ \ @param[in]\ argv\ Pointer\ to\ array\ of\ command\ line\ arguments.}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00045}00045\ \textcolor{comment}{\ \ \ @return\ This\ program\ exits\ with\ status\ 0.}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00046}00046\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00047}00047\ \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00048}\mbox{\hyperlink{unidup_8c_a3c04138a5bfe5d72780bb7e82a18e627}{00048}}\ \mbox{\hyperlink{unibdf2hex_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}}\ (\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}\ **argv)}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00049}00049\ \{}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00051}00051\ \ \ \ \textcolor{keywordtype}{int}\ ix,\ iy;}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00052}00052\ \ \ \ \textcolor{keywordtype}{char}\ inbuf[\mbox{\hyperlink{unidup_8c_ad7871643c05865c80f5d8050aead2b57}{MAXBUF}}];}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00053}00053\ \ \ \ \textcolor{keywordtype}{char}\ *infile;\ \ \ \textcolor{comment}{/*\ the\ input\ file\ name\ */}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00054}00054\ \ \ \ FILE\ *infilefp;\ \textcolor{comment}{/*\ file\ pointer\ to\ input\ file\ */}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00056}00056\ \ \ \ \textcolor{keywordflow}{if}\ (argc\ >\ 1)\ \{}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00057}00057\ \ \ \ \ \ \ infile\ =\ argv[1];}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00058}00058\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((infilefp\ =\ fopen\ (infile,\ \textcolor{stringliteral}{"{}r"{}}))\ ==\ NULL)\ \{}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00059}00059\ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)nERROR:\ Can't\ open\ file\ \%s\(\backslash\)n\(\backslash\)n"{}},\ infile);}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00060}00060\ \ \ \ \ \ \ \ \ \ exit\ (EXIT\_FAILURE);}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00061}00061\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00062}00062\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00063}00063\ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00064}00064\ \ \ \ \ \ \ infilefp\ =\ stdin;}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00065}00065\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00067}00067\ \ \ \ ix\ =\ -\/1;}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00069}00069\ \ \ \ \textcolor{keywordflow}{while}\ (fgets\ (inbuf,\ \mbox{\hyperlink{unidup_8c_ad7871643c05865c80f5d8050aead2b57}{MAXBUF}}-\/1,\ infilefp)\ !=\ NULL)\ \{}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00070}00070\ \ \ \ \ \ \ sscanf\ (inbuf,\ \textcolor{stringliteral}{"{}\%X"{}},\ \&iy);}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00071}00071\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ix\ ==\ iy)\ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}Duplicate\ code\ point:\ \%04X\(\backslash\)n"{}},\ ix);}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00072}00072\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ ix\ =\ iy;}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00073}00073\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00074}00074\ \ \ \ exit\ (0);}
+\DoxyCodeLine{\Hypertarget{unidup_8c_source_l00075}00075\ \}}
+
+\end{DoxyCode}

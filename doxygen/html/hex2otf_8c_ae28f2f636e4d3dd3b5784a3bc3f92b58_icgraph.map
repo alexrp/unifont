@@ -1,0 +1,6 @@
+<map id="readCodePoint" name="readCodePoint">
+<area shape="rect" id="node1" title="Read up to 6 hexadecimal digits and a colon from file." alt="" coords="275,31,392,56"/>
+<area shape="rect" id="node2" href="$hex2otf_8c.html#af3ba1ba33ebe63ba0340842b7f83021c" title="Position a glyph within a 16&#45;by&#45;16 pixel bounding box." alt="" coords="108,5,227,31"/>
+<area shape="rect" id="node4" href="$hex2otf_8c.html#ad77c441582f862d494a734eb9855dd41" title="Read glyph definitions from a Unifont .hex format file." alt="" coords="119,55,215,80"/>
+<area shape="rect" id="node3" href="$hex2otf_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="The main function." alt="" coords="5,31,60,56"/>
+</map>

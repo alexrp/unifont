@@ -1,0 +1,6 @@
+<map id="output2" name="output2">
+<area shape="rect" id="node1" title="Output a 2&#45;byte integer in little&#45;endian order." alt="" coords="263,31,335,56"/>
+<area shape="rect" id="node2" href="$unifontpic_8c.html#afd429d88175c59dae5c32e8c9aa7851d" title="Generate the BMP output file in long format." alt="" coords="110,5,213,31"/>
+<area shape="rect" id="node4" href="$unifontpic_8c.html#a3931c7b44c00ffdb8925a3c837577677" title="Generate the BMP output file in wide format." alt="" coords="108,55,215,80"/>
+<area shape="rect" id="node3" href="$unifontpic_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="The main function." alt="" coords="5,31,60,56"/>
+</map>

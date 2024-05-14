@@ -1,0 +1,9 @@
+<map id="cacheU8" name="cacheU8">
+<area shape="rect" id="node1" title="Append one unsigned byte to the end of a byte array." alt="" coords="445,107,524,132"/>
+<area shape="rect" id="node2" href="$hex2otf_8c.html#a51be7f69e0f6053772b3ddacf215df84" title="Cache charstring number encoding in a CFF buffer." alt="" coords="254,5,394,31"/>
+<area shape="rect" id="node3" href="$hex2otf_8c.html#a3d62aa29f94c3fa78ca4438739d64a62" title="Add a CFF table to a font." alt="" coords="124,81,187,107"/>
+<area shape="rect" id="node5" href="$hex2otf_8c.html#afd499a24ff34cb5c19b52df795422c12" title="Fill OpenType bitmap data and location tables." alt="" coords="113,157,198,183"/>
+<area shape="rect" id="node6" href="$hex2otf_8c.html#a326e4fa86eb32bb18e37eab8f495bd2f" title="Add a TrueType table to a font." alt="" coords="108,207,203,232"/>
+<area shape="rect" id="node7" href="$hex2otf_8c.html#aa52cd46a50cdc2040a72e5c7ecfa944b" title="Prepare a font name string index." alt="" coords="251,107,397,132"/>
+<area shape="rect" id="node4" href="$hex2otf_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="The main function." alt="" coords="5,157,60,183"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="get_hex_range" name="get_hex_range">
+<area shape="rect" id="node1" title="Scan a hexadecimal range from a character string." alt="" coords="249,5,368,31"/>
+<area shape="rect" id="node2" href="$unigen-hangul_8c.html#af21f77b695eb80e4d88265be6647978e" title="Parse command line arguments." alt="" coords="108,5,201,31"/>
+<area shape="rect" id="node3" href="$unigen-hangul_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="Program entry point." alt="" coords="5,5,60,31"/>
+</map>

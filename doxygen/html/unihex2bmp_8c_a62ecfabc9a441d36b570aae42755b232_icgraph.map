@@ -1,0 +1,5 @@
+<map id="hex2bit" name="hex2bit">
+<area shape="rect" id="node1" title="Generate a bitmap for one glyph." alt="" coords="199,31,269,56"/>
+<area shape="rect" id="node2" href="$unihex2bmp_8c.html#a0ae74e74805cbaa4bf60ff3c8df15512" title="Initialize the bitmap grid." alt="" coords="108,5,151,31"/>
+<area shape="rect" id="node3" href="$unihex2bmp_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="The main function." alt="" coords="5,31,60,56"/>
+</map>

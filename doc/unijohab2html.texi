@@ -1,0 +1,265 @@
+@comment TROFF INPUT: .TH UNIJOHAB2HTML 1 "30 July 2023"
+
+@node unijohab2html
+@section unijohab2html
+@c DEBUG: print_menu("@section")
+
+@menu
+* unijohab2html NAME::
+* unijohab2html SYNOPSIS::
+* unijohab2html DESCRIPTION::
+* unijohab2html OPTIONS::
+* unijohab2html EXAMPLES::
+* unijohab2html FILES::
+* unijohab2html SEE ALSO::
+* unijohab2html AUTHOR::
+* unijohab2html LICENSE::
+* unijohab2html BUGS::
+
+@end menu
+
+
+@comment TROFF INPUT: .SH NAME
+
+@node unijohab2html NAME
+@subsection unijohab2html NAME
+@c DEBUG: print_menu("unijohab2html NAME")
+
+unijohab2html @minus{} Show combined Hangul syllable jamo juxtaposition as a web page
+@comment TROFF INPUT: .SH SYNOPSIS
+
+@node unijohab2html SYNOPSIS
+@subsection unijohab2html SYNOPSIS
+@c DEBUG: print_menu("unijohab2html SYNOPSIS")
+
+@b{unijohab2html @minus{}i} @i{hangul-base.hex }
+@b{@minus{}o} @i{hangul-syllables.hex}
+@comment TROFF INPUT: .SH DESCRIPTION
+
+@node unijohab2html DESCRIPTION
+@subsection unijohab2html DESCRIPTION
+@c DEBUG: print_menu("unijohab2html DESCRIPTION")
+
+@comment TROFF INPUT: .B unijohab2html
+@b{unijohab2html}
+reads glyphs in a Unifont .hex file organized in a Johab 6/3/1 format
+(6 choseong variations, 3 jungseong variations, and 1 jongseung variation).
+It then produces an HTML output file showing all Hangul letters in a
+color-coded output in 16-by-16 cell grids: blue cells show where choseong
+glyphs appear; green for jungseong; and red for jongseong.
+@comment TROFF INPUT: .PP
+
+Any overlaps are shown with a combination of the colors.   For example,
+where one or more choseong (blue) letters overlap jungseong (green),
+the associated cell will be blue + green = cyan.  Likewise, jungseong (green)
+and jongseong (red) overlaps will appear as green + red = yellow, etc.
+There is a color key at the beginning of the HTML table.
+@comment TROFF INPUT: .PP
+
+If any overlaps of choseong and jungseong exist, these will then be
+output in the HTML file identifying the overlapping letters in a
+combined Unifont .txt file format.  From these overlaps, a Hangul
+font creator can decide whether the overlap is acceptable or should
+be modified.
+@comment TROFF INPUT: .PP
+
+If an overlap is with an ancient vowel or diphthong
+@comment TROFF INPUT: .RI ( i.e.,
+@r{(}@i{i.e.,}
+U+1176, HANGUL JUNGSEONG A-O through U+11A7, HANGUL JUNGSEONG O-YAE),
+it is marked as an "Ancient Vowel" in this ending list of overlaps.
+If a choseong is ancient
+@comment TROFF INPUT: .RI ( i.e.,
+@r{(}@i{i.e.,}
+U+11C3, HANGUL JONGSEONG KIYEOK-RIEUL, through U+11FF,
+HANGUL JONGSEONG SSANGNIEUN), it is marked as "Ancient Choseong"
+in the output.  Overlapping choseong and jungseong in the Hangul
+Jamo Extended-A and Extended-B ranges are listed as "Extended Ancient".
+This identification of ancient and extended ancient versus modern
+Hangul will allow a font designer to optimize modern Hangul when
+weighing design tradeoffs.
+@comment TROFF INPUT: .SH OPTIONS
+
+@node unijohab2html OPTIONS
+@subsection unijohab2html OPTIONS
+@c DEBUG: print_menu("unijohab2html OPTIONS")
+
+@comment TROFF INPUT: .RS
+
+@c ---------------------------------------------------------------------
+@quotation
+@comment TROFF INPUT: .IP \fBOption\fP 15
+
+@b{Function}
+@comment TROFF INPUT: .TP
+
+@c ---------------------------------------------------------------------
+@table @code
+@item @b{@minus{}h, @minus{}@minus{}help}
+Print a help message and exit.
+@comment TROFF INPUT: .TP
+
+@item @b{@minus{}i} @i{input@t{_}file}
+Unifont hangul-base.hex formatted input file.
+@comment TROFF INPUT: .TP
+
+@item @b{@minus{}m, @minus{}@minus{}modern}
+Only examine modern Hangul letters.
+@comment TROFF INPUT: .TP
+
+@item @b{@minus{}o} @i{output@t{_}file}
+HTML output file, viewable in a web browser.
+@comment TROFF INPUT: .RE
+
+@end table
+
+@c ---------------------------------------------------------------------
+
+@end quotation
+
+@c ---------------------------------------------------------------------
+@comment TROFF INPUT: .SH EXAMPLES
+
+@node unijohab2html EXAMPLES
+@subsection unijohab2html EXAMPLES
+@c DEBUG: print_menu("unijohab2html EXAMPLES")
+
+@comment TROFF INPUT: .TP 5
+@comment TROFF INPUT: .RS
+
+@c ---------------------------------------------------------------------
+@c @table @code
+@c @item
+@c ---------------------------------------------------------------------
+@quotation
+unijohab2html -i hangul-base.hex -o hangul-overlaps.html
+@comment TROFF INPUT: .PP
+
+unijohab2html < hangul-base.hex > hangul-overlaps.html
+@comment TROFF INPUT: .RE
+
+@end quotation
+
+@c ---------------------------------------------------------------------
+@comment TROFF INPUT: .SH FILES
+
+@c @end table
+
+@c ---------------------------------------------------------------------
+
+@node unijohab2html FILES
+@subsection unijohab2html FILES
+@c DEBUG: print_menu("unijohab2html FILES")
+
+Unifont .hex files in Johab 6/3/1 encoding.  See
+@comment TROFF INPUT: .BR unifont-johab631 (5)
+@b{unifont-johab631}@r{(5)}
+for a description of the input file structure.  This program
+uses functions contained in the file unihangul-support.c.
+@comment TROFF INPUT: .SH SEE ALSO
+
+@node unijohab2html SEE ALSO
+@subsection unijohab2html SEE ALSO
+@c DEBUG: print_menu("unijohab2html SEE ALSO")
+
+@comment TROFF INPUT: .BR bdfimplode (1),
+@b{bdfimplode}@r{(1),}
+@comment TROFF INPUT: .BR hex2bdf (1),
+@b{hex2bdf}@r{(1),}
+@comment TROFF INPUT: .BR hex2otf (1),
+@b{hex2otf}@r{(1),}
+@comment TROFF INPUT: .BR hex2sfd (1),
+@b{hex2sfd}@r{(1),}
+@comment TROFF INPUT: .BR hexbraille (1),
+@b{hexbraille}@r{(1),}
+@comment TROFF INPUT: .BR hexdraw (1),
+@b{hexdraw}@r{(1),}
+@comment TROFF INPUT: .BR hexkinya (1),
+@b{hexkinya}@r{(1),}
+@comment TROFF INPUT: .BR hexmerge (1),
+@b{hexmerge}@r{(1),}
+@comment TROFF INPUT: .BR johab2syllables (1),
+@b{johab2syllables}@r{(1),}
+@comment TROFF INPUT: .BR johab2ucs2 (1),
+@b{johab2ucs2}@r{(1),}
+@comment TROFF INPUT: .BR unibdf2hex (1),
+@b{unibdf2hex}@r{(1),}
+@comment TROFF INPUT: .BR unibmp2hex (1),
+@b{unibmp2hex}@r{(1),}
+@comment TROFF INPUT: .BR unibmpbump (1),
+@b{unibmpbump}@r{(1),}
+@comment TROFF INPUT: .BR unicoverage (1),
+@b{unicoverage}@r{(1),}
+@comment TROFF INPUT: .BR unidup (1),
+@b{unidup}@r{(1),}
+@comment TROFF INPUT: .BR unifont (5),
+@b{unifont}@r{(5),}
+@comment TROFF INPUT: .BR unifont-johab631 (5),
+@b{unifont-johab631}@r{(5),}
+@comment TROFF INPUT: .BR unifont-viewer (1),
+@b{unifont-viewer}@r{(1),}
+@comment TROFF INPUT: .BR unifont1per (1),
+@b{unifont1per}@r{(1),}
+@comment TROFF INPUT: .BR unifontchojung (1),
+@b{unifontchojung}@r{(1),}
+@comment TROFF INPUT: .BR unifontksx (1),
+@b{unifontksx}@r{(1),}
+@comment TROFF INPUT: .BR unifontpic (1),
+@b{unifontpic}@r{(1),}
+@comment TROFF INPUT: .BR unigen-hangul (1),
+@b{unigen-hangul}@r{(1),}
+@comment TROFF INPUT: .BR unigen-hangul (1),
+@b{unigen-hangul}@r{(1),}
+@comment TROFF INPUT: .BR unigencircles (1),
+@b{unigencircles}@r{(1),}
+@comment TROFF INPUT: .BR unigenwidth (1),
+@b{unigenwidth}@r{(1),}
+@comment TROFF INPUT: .BR unihex2bmp (1),
+@b{unihex2bmp}@r{(1),}
+@comment TROFF INPUT: .BR unihex2png (1),
+@b{unihex2png}@r{(1),}
+@comment TROFF INPUT: .BR unihexfill (1),
+@b{unihexfill}@r{(1),}
+@comment TROFF INPUT: .BR unihexgen (1),
+@b{unihexgen}@r{(1),}
+@comment TROFF INPUT: .BR unihexpose (1),
+@b{unihexpose}@r{(1),}
+@comment TROFF INPUT: .BR unihexrotate (1),
+@b{unihexrotate}@r{(1),}
+@comment TROFF INPUT: .BR unijohab2html (1),
+@b{unijohab2html}@r{(1),}
+@comment TROFF INPUT: .BR unipagecount (1),
+@b{unipagecount}@r{(1),}
+@comment TROFF INPUT: .BR unipng2hex (1)
+@b{unipng2hex}@r{(1)}
+@comment TROFF INPUT: .SH AUTHOR
+
+@node unijohab2html AUTHOR
+@subsection unijohab2html AUTHOR
+@c DEBUG: print_menu("unijohab2html AUTHOR")
+
+@comment TROFF INPUT: .B unijohab2html
+@b{unijohab2html}
+was written by Paul Hardy.
+@comment TROFF INPUT: .SH LICENSE
+
+@node unijohab2html LICENSE
+@subsection unijohab2html LICENSE
+@c DEBUG: print_menu("unijohab2html LICENSE")
+
+@comment TROFF INPUT: .B unijohab2html
+@b{unijohab2html}
+is Copyright @copyright{} 2023 Paul Hardy.
+@comment TROFF INPUT: .PP
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+@comment TROFF INPUT: .SH BUGS
+
+@node unijohab2html BUGS
+@subsection unijohab2html BUGS
+@c DEBUG: print_menu("unijohab2html BUGS")
+
+No known bugs exist.

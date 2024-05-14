@@ -1,0 +1,8 @@
+<map id="main" name="main">
+<area shape="rect" id="node1" title="The main function." alt="" coords="5,55,60,80"/>
+<area shape="rect" id="node2" href="$unifontpic_8c.html#afd429d88175c59dae5c32e8c9aa7851d" title="Generate the BMP output file in long format." alt="" coords="110,55,213,80"/>
+<area shape="rect" id="node5" href="$unifontpic_8c.html#a3931c7b44c00ffdb8925a3c837577677" title="Generate the BMP output file in wide format." alt="" coords="108,5,215,31"/>
+<area shape="rect" id="node6" href="$unifontpic_8c.html#a0a030f2857f0d855b7ab0ccd8e968f1f" title="Read a Unifont .hex&#45;format input file from stdin." alt="" coords="128,104,195,129"/>
+<area shape="rect" id="node3" href="$unifontpic_8c.html#af1fbb002e4787785de92e073ec46b787" title="Output a 2&#45;byte integer in little&#45;endian order." alt="" coords="263,5,335,31"/>
+<area shape="rect" id="node4" href="$unifontpic_8c.html#ac186155c351c9c3fb9c43acffcbab710" title="Output a 4&#45;byte integer in little&#45;endian order." alt="" coords="263,55,335,80"/>
+</map>

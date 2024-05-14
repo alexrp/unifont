@@ -1,0 +1,13 @@
+digraph "main"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node1 [label="main",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="The main function."];
+  Node1 -> Node2 [color="steelblue1",style="solid"];
+  Node2 [label="hexprint4",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$unihexgen_8c.html#a65e81f32c04621e4a0985e7767223c9b",tooltip="Generate a bitmap containing a 4-digit Unicode code point."];
+  Node1 -> Node3 [color="steelblue1",style="solid"];
+  Node3 [label="hexprint6",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$unihexgen_8c.html#aaa160beefc690fbc75658fa9134d07a2",tooltip="Generate a bitmap containing a 6-digit Unicode code point."];
+}

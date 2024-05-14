@@ -1,0 +1,37 @@
+digraph "cacheU32"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="RL";
+  Node1 [label="cacheU32",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Append four unsigned bytes to the end of a byte array."];
+  Node1 -> Node2 [dir="back",color="steelblue1",style="solid"];
+  Node2 [label="cacheCFFOperand",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$hex2otf_8c.html#a51be7f69e0f6053772b3ddacf215df84",tooltip="Cache charstring number encoding in a CFF buffer."];
+  Node2 -> Node3 [dir="back",color="steelblue1",style="solid"];
+  Node3 [label="fillCFF",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$hex2otf_8c.html#a3d62aa29f94c3fa78ca4438739d64a62",tooltip="Add a CFF table to a font."];
+  Node3 -> Node4 [dir="back",color="steelblue1",style="solid"];
+  Node4 [label="main",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$hex2otf_8c.html#a0ddf1224851353fc92bfbff6f499fa97",tooltip="The main function."];
+  Node1 -> Node5 [dir="back",color="steelblue1",style="solid"];
+  Node5 [label="fillBitmap",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$hex2otf_8c.html#afd499a24ff34cb5c19b52df795422c12",tooltip="Fill OpenType bitmap data and location tables."];
+  Node5 -> Node4 [dir="back",color="steelblue1",style="solid"];
+  Node1 -> Node3 [dir="back",color="steelblue1",style="solid"];
+  Node1 -> Node6 [dir="back",color="steelblue1",style="solid"];
+  Node6 [label="fillCmapTable",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$hex2otf_8c.html#a6362601eb41d051a103a1d9edcd4f284",tooltip="Fill a \"cmap\" font table."];
+  Node6 -> Node4 [dir="back",color="steelblue1",style="solid"];
+  Node1 -> Node7 [dir="back",color="steelblue1",style="solid"];
+  Node7 [label="fillHeadTable",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$hex2otf_8c.html#a4ac0c02117b703a71bee3dd34e2eb306",tooltip="Fill a \"head\" font table."];
+  Node7 -> Node4 [dir="back",color="steelblue1",style="solid"];
+  Node1 -> Node8 [dir="back",color="steelblue1",style="solid"];
+  Node8 [label="fillMaxpTable",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$hex2otf_8c.html#aff4f28ce178c84c7365245ec10034433",tooltip="Fill a \"maxp\" font table."];
+  Node8 -> Node4 [dir="back",color="steelblue1",style="solid"];
+  Node1 -> Node9 [dir="back",color="steelblue1",style="solid"];
+  Node9 [label="fillOS2Table",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$hex2otf_8c.html#ab6e3bb110dc3e55193c344cb7b56e328",tooltip="Fill an \"OS/2\" font table."];
+  Node9 -> Node4 [dir="back",color="steelblue1",style="solid"];
+  Node1 -> Node10 [dir="back",color="steelblue1",style="solid"];
+  Node10 [label="fillPostTable",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$hex2otf_8c.html#a0ddc03905c4918e04aa1e54a7c1716b1",tooltip="Fill a \"post\" font table."];
+  Node10 -> Node4 [dir="back",color="steelblue1",style="solid"];
+  Node1 -> Node11 [dir="back",color="steelblue1",style="solid"];
+  Node11 [label="fillTrueType",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$hex2otf_8c.html#a326e4fa86eb32bb18e37eab8f495bd2f",tooltip="Add a TrueType table to a font."];
+  Node11 -> Node4 [dir="back",color="steelblue1",style="solid"];
+}

@@ -1,0 +1,12 @@
+<map id="writeFont" name="writeFont">
+<area shape="rect" id="node1" title="Write OpenType font to output file." alt="" coords="5,181,88,207"/>
+<area shape="rect" id="node2" href="$hex2otf_8c.html#af1223f39e8627e0a3b0b7b533e6d0b64" title="Compare tables by 4&#45;byte unsigned table tag value." alt="" coords="137,5,232,31"/>
+<area shape="rect" id="node3" href="$hex2otf_8c.html#a0d4560c5d562d31a33f092bb579f8397" title="Append 1 to 4 bytes of zeroes to a buffer, for padding." alt="" coords="136,55,233,80"/>
+<area shape="rect" id="node5" href="$hex2otf_8c.html#a2f5976201b1e630a94045f04a0348572" title="Print an error message on stderr, then exit." alt="" coords="435,131,477,156"/>
+<area shape="rect" id="node6" href="$hex2otf_8c.html#ac928f7761fc187ff86f33805309bec21" title="Free the memory previously allocated for a buffer." alt="" coords="141,156,228,181"/>
+<area shape="rect" id="node7" href="$hex2otf_8c.html#ae8310060f5a9b7cefb84d0bb1b459b64" title="Create a new buffer." alt="" coords="290,181,378,207"/>
+<area shape="rect" id="node8" href="$hex2otf_8c.html#ae2b46edf2ac290c695e2b27d16f1b380" title="Write an array of bytes to an output file." alt="" coords="288,283,380,308"/>
+<area shape="rect" id="node9" href="$hex2otf_8c.html#a83aece82aa1fe815fc24a12be34a24b1" title="Write an unsigned 16&#45;bit value to an output file." alt="" coords="144,308,225,333"/>
+<area shape="rect" id="node10" href="$hex2otf_8c.html#a941153850cde042e39ce40d47d5aac5f" title="Write an unsigned 32&#45;bit value to an output file." alt="" coords="144,357,225,383"/>
+<area shape="rect" id="node4" href="$hex2otf_8c.html#ae32c0f82cbb6a4d8ece0559f1c7b74f4" title="Ensure that the buffer has at least the specified minimum size." alt="" coords="281,55,387,80"/>
+</map>

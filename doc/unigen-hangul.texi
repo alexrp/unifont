@@ -1,0 +1,432 @@
+@comment TROFF INPUT: .TH UNIGEN-HANGUL 1 "30 July 2023"
+
+@node unigen-hangul
+@section unigen-hangul
+@c DEBUG: print_menu("@section")
+
+@menu
+* unigen-hangul NAME::
+* unigen-hangul SYNOPSIS::
+* unigen-hangul DESCRIPTION::
+* unigen-hangul OPTIONS::
+* unigen-hangul EXAMPLES::
+* unigen-hangul FILES::
+* unigen-hangul SEE ALSO::
+* unigen-hangul AUTHOR::
+* unigen-hangul LICENSE::
+* unigen-hangul BUGS::
+
+@end menu
+
+
+@comment TROFF INPUT: .SH NAME
+
+@node unigen-hangul NAME
+@subsection unigen-hangul NAME
+@c DEBUG: print_menu("unigen-hangul NAME")
+
+unigen-hangul @minus{} Generate Hangul syllables from a Johab 6/3/1 Unifont hex file
+@comment TROFF INPUT: .SH SYNOPSIS
+
+@node unigen-hangul SYNOPSIS
+@subsection unigen-hangul SYNOPSIS
+@c DEBUG: print_menu("unigen-hangul SYNOPSIS")
+
+@b{unigen-hangul @minus{}i} @i{hangul-base.hex }
+@b{@minus{}o} @i{hangul-syllables.hex}
+@comment TROFF INPUT: .SH DESCRIPTION
+
+@node unigen-hangul DESCRIPTION
+@subsection unigen-hangul DESCRIPTION
+@c DEBUG: print_menu("unigen-hangul DESCRIPTION")
+
+@comment TROFF INPUT: .B unigen-hangul
+@b{unigen-hangul}
+generates Hangul syllables from an input Unifont .hex file encoded
+in Johab 6/3/1 format.  By default, the output is the Unicode Hangul
+Syllables range, U+AC00..U+D7A3.  Options allow the user to specify
+a starting code point for the output Unifont .hex file, and ranges
+in hexadecimal of the starting and ending Hangul Jamo code points:
+@comment TROFF INPUT: .RS
+
+@c ---------------------------------------------------------------------
+@quotation
+@comment TROFF INPUT: .IP \fBRange\fP 15
+
+@b{Hangul}
+@comment TROFF INPUT: .TP
+@comment TROFF INPUT: .BR 1100\-115E
+
+@c ---------------------------------------------------------------------
+@table @code
+@item @b{1100@minus{}115E}
+Hangul Jamo initial consonants (choseong)
+@comment TROFF INPUT: .TP
+@comment TROFF INPUT: .BR A960\-A97C
+
+@item @b{A960@minus{}A97C}
+Hangul Jamo Extended-A initial consonants (choseong)
+@comment TROFF INPUT: .TP
+@comment TROFF INPUT: .BR 1161\-11A7
+
+@item @b{1161@minus{}11A7}
+Hangul Jamo medial vowels and diphthongs (jungseong)
+@comment TROFF INPUT: .TP
+@comment TROFF INPUT: .BR D7B0\-D7C6
+
+@item @b{D7B0@minus{}D7C6}
+Hangul Jamo Extended-B medial vowels and diphthongs (jungseong)
+@comment TROFF INPUT: .TP
+@comment TROFF INPUT: .BR 11A8\-11FF
+
+@item @b{11A8@minus{}11FF}
+Hangul Jamo final consonants (jongseong).
+@comment TROFF INPUT: .TP
+@comment TROFF INPUT: .BR D7CB\-D7FB
+
+@item @b{D7CB@minus{}D7FB}
+Hangul Jamo Extended-B final consonants (jongseong).
+@comment TROFF INPUT: .RE
+
+@end table
+
+@c ---------------------------------------------------------------------
+
+@end quotation
+
+@c ---------------------------------------------------------------------
+@comment TROFF INPUT: .PP
+
+A single code point or 0 to omit can be specified instead of a range.
+A starting code point of one position before a valid starting range
+for a Hangul jamo series (choseong, jungseong, and/or jongseong) will
+first use a blank glyph for that jamo, and then cycle through remaining
+valid code points for the respective choseong, jungseong, or jongseong.
+A range can span modern and ancient, and even Hangul Jamo Extended-A
+and Hangul Jamo Extended-B ranges.
+@comment TROFF INPUT: .PP
+
+For example,
+@comment TROFF INPUT: .PP
+
+@comment TROFF INPUT: .RS
+
+@c ---------------------------------------------------------------------
+@quotation
+@comment TROFF INPUT: .TP
+
+@c ---------------------------------------------------------------------
+@table @code
+@item -j3 11A7@minus{}D7FB
+@comment TROFF INPUT: .RE
+
+@end table
+
+@c ---------------------------------------------------------------------
+
+@end quotation
+
+@c ---------------------------------------------------------------------
+@comment TROFF INPUT: .PP
+
+Will first use no jongseong (because U+11A7 is one before the start of
+Hangul Jamo jongseong code points), then loop through jongseong in the
+Hangul Jamo range of U+11A8 through U+11FF, and then loop through
+jongseong in the Hangul Jamo Extended-B range of U+D7CB through U+D7FB.
+@comment TROFF INPUT: .SH OPTIONS
+
+@node unigen-hangul OPTIONS
+@subsection unigen-hangul OPTIONS
+@c DEBUG: print_menu("unigen-hangul OPTIONS")
+
+@comment TROFF INPUT: .RS
+
+@c ---------------------------------------------------------------------
+@quotation
+@comment TROFF INPUT: .IP \fBOption\fP 15
+
+@b{Function}
+@comment TROFF INPUT: .TP
+
+@c ---------------------------------------------------------------------
+@table @code
+@item @b{@minus{}h, @minus{}@minus{}help}
+Print a help message and exit.
+@comment TROFF INPUT: .TP
+@comment TROFF INPUT: .BR \-all
+
+@item @b{@minus{}all}
+Generate all Hangul syllables, using all modern and
+ancient Hangul in the Unicode range U+1100..U+11FF, assigned
+code points in the Extended-A range of U+A960..U+A97C, and
+assigned code points in the Extended-B range of U+D7B0..U+D7FF.
+@b{WARNING:} this will generate over 1,600,000 syllables
+in a 115 megabyte Unifont .hex format file.  The default
+is to only output the 11,172 modern Hangul syllables.
+@comment TROFF INPUT: .TP
+
+@item @b{-c} @i{code@t{_}point}
+Starting code point in hexadecimal for output file.
+@comment TROFF INPUT: .TP
+
+@item @b{@minus{}j1} @i{start-end}
+Choseong (jamo 1) start-end range in hexadecimal.
+@comment TROFF INPUT: .TP
+
+@item @b{@minus{}j2} @i{start-end}
+Jungseong (jamo 2) start-end range in hexadecimal.
+@comment TROFF INPUT: .TP
+
+@item @b{@minus{}j3} @i{start-end}
+Jongseong (jamo 3) start-end range in hexadecimal.
+@comment TROFF INPUT: .TP
+
+@item @b{@minus{}i} @i{input@t{_}file}
+Unifont hangul-base.hex formatted input file.
+@comment TROFF INPUT: .TP
+
+@item @b{@minus{}o} @i{output@t{_}file}
+Unifont .hex format output file.
+@comment TROFF INPUT: .RE
+
+@end table
+
+@c ---------------------------------------------------------------------
+
+@end quotation
+
+@c ---------------------------------------------------------------------
+@comment TROFF INPUT: .SH EXAMPLES
+
+@node unigen-hangul EXAMPLES
+@subsection unigen-hangul EXAMPLES
+@c DEBUG: print_menu("unigen-hangul EXAMPLES")
+
+@comment TROFF INPUT: .TP 5
+@comment TROFF INPUT: .RS
+
+@c ---------------------------------------------------------------------
+@c @table @code
+@c @item 
+@c ---------------------------------------------------------------------
+@quotation
+unigen-hangul -c 1 -j3 11AB-11AB \
+@comment TROFF INPUT: .PP
+
+      -i hangul-base.hex -o nieun-only.hex
+@comment TROFF INPUT: .RE
+
+@end quotation
+
+@c ---------------------------------------------------------------------
+@comment TROFF INPUT: .PP
+
+This command generates Hangul syllables using all modern choseong
+and jungseong, and only the jongseong nieun (Unicode code point U+11AB).
+The output Unifont .hex file will contain code points starting at 1.
+Instead of specifying "-j3 11AB-11AB", simply using "-j3 11AB" will
+also suffice.
+@comment TROFF INPUT: .PP
+
+This next example is a series of syllable sets suggested by Ho-Seok Ee
+for preliminary syllable alignment checking of modern Hangul.
+@comment TROFF INPUT: .PP
+
+@comment TROFF INPUT: .RS
+
+@c ---------------------------------------------------------------------
+@quotation
+@comment TROFF INPUT: .TP 2
+
+@c ---------------------------------------------------------------------
+@table @code
+@item @bullet{}
+The first command generates all modern syllables containing no
+jongseong (final consonant), starting at Unifont hexadecimal glyph
+location 0x1000; selecting a jongseong value that is out of range
+(U+1160 in this case) will use a blank filler in place of the jongseong.
+@comment TROFF INPUT: .TP
+
+@item @bullet{}
+The second command generates all modern syllables containing jongseong
+Kiyeok (U+11AB), which has a horizontal line extending across the lower
+portion of a syllable, starting at Unifont hexadecimal glyph location 0x2000.
+@comment TROFF INPUT: .TP
+
+@item @bullet{}
+The third command generates all modern Hangul syllables containing
+jongseong Rieul (U+11AF), starting at Unifont hexadecimal glyph location
+0x3000.
+@comment TROFF INPUT: .TP
+
+@item @bullet{}
+The fourth command generates all modern Hangul syllables containing
+choseong (initial consonant) Rieul (U+1105), starting at Unifont hexadecimal
+glyph location 0x4000.
+@comment TROFF INPUT: .RE
+
+@end table
+
+@c ---------------------------------------------------------------------
+
+@end quotation
+
+@c ---------------------------------------------------------------------
+@comment TROFF INPUT: .PP
+
+Here is the command sequence:
+@comment TROFF INPUT: .PP
+
+@comment TROFF INPUT: .RS
+
+@c ---------------------------------------------------------------------
+@quotation
+unigen-hangul -c 1000 -j1 1100-1112 -j2 1161-1175 -j3 1160 \
+@comment TROFF INPUT: .PP
+
+      -i hangul-base.hex  >  hangul-prep.hex
+@comment TROFF INPUT: .PP
+
+unigen-hangul -c 2000 -j1 1100-1112 -j2 1161-1175 -j3 11AB \
+@comment TROFF INPUT: .PP
+
+      -i hangul-base.hex  >> hangul-prep.hex
+@comment TROFF INPUT: .PP
+
+unigen-hangul -c 3000 -j1 1100-1112 -j2 1161-1175 -j3 11AF \
+@comment TROFF INPUT: .PP
+
+      -i hangul-base.hex  >> hangul-prep.hex
+@comment TROFF INPUT: .PP
+
+unigen-hangul -c 4000 -j1 1105 -j2 1161-1175 -j3 11A8-11C2 \
+@comment TROFF INPUT: .PP
+
+      -i hangul-base.hex  >> hangul-prep.hex
+@comment TROFF INPUT: .RE
+
+@end quotation
+
+@c ---------------------------------------------------------------------
+@comment TROFF INPUT: .PP
+
+The resulting .hex file can then be examined with hexdraw,
+unihex2bmp, @i{etc.}
+@comment TROFF INPUT: .SH FILES
+
+@c @end table
+
+@c ---------------------------------------------------------------------
+
+@node unigen-hangul FILES
+@subsection unigen-hangul FILES
+@c DEBUG: print_menu("unigen-hangul FILES")
+
+Unifont .hex files in Johab 6/3/1 encoding.  See
+@comment TROFF INPUT: .BR unifont-johab631 (5)
+@b{unifont-johab631}@r{(5)}
+for a description of the input file structure.  This program
+uses functions contained in the file unihangul-support.c.
+@comment TROFF INPUT: .SH SEE ALSO
+
+@node unigen-hangul SEE ALSO
+@subsection unigen-hangul SEE ALSO
+@c DEBUG: print_menu("unigen-hangul SEE ALSO")
+
+@comment TROFF INPUT: .BR bdfimplode (1),
+@b{bdfimplode}@r{(1),}
+@comment TROFF INPUT: .BR hex2bdf (1),
+@b{hex2bdf}@r{(1),}
+@comment TROFF INPUT: .BR hex2otf (1),
+@b{hex2otf}@r{(1),}
+@comment TROFF INPUT: .BR hex2sfd (1),
+@b{hex2sfd}@r{(1),}
+@comment TROFF INPUT: .BR hexbraille (1),
+@b{hexbraille}@r{(1),}
+@comment TROFF INPUT: .BR hexdraw (1),
+@b{hexdraw}@r{(1),}
+@comment TROFF INPUT: .BR hexkinya (1),
+@b{hexkinya}@r{(1),}
+@comment TROFF INPUT: .BR hexmerge (1),
+@b{hexmerge}@r{(1),}
+@comment TROFF INPUT: .BR johab2syllables (1),
+@b{johab2syllables}@r{(1),}
+@comment TROFF INPUT: .BR johab2ucs2 (1),
+@b{johab2ucs2}@r{(1),}
+@comment TROFF INPUT: .BR unibdf2hex (1),
+@b{unibdf2hex}@r{(1),}
+@comment TROFF INPUT: .BR unibmp2hex (1),
+@b{unibmp2hex}@r{(1),}
+@comment TROFF INPUT: .BR unibmpbump (1),
+@b{unibmpbump}@r{(1),}
+@comment TROFF INPUT: .BR unicoverage (1),
+@b{unicoverage}@r{(1),}
+@comment TROFF INPUT: .BR unidup (1),
+@b{unidup}@r{(1),}
+@comment TROFF INPUT: .BR unifont (5),
+@b{unifont}@r{(5),}
+@comment TROFF INPUT: .BR unifont-johab631 (5),
+@b{unifont-johab631}@r{(5),}
+@comment TROFF INPUT: .BR unifont-viewer (1),
+@b{unifont-viewer}@r{(1),}
+@comment TROFF INPUT: .BR unifont1per (1),
+@b{unifont1per}@r{(1),}
+@comment TROFF INPUT: .BR unifontchojung (1),
+@b{unifontchojung}@r{(1),}
+@comment TROFF INPUT: .BR unifontksx (1),
+@b{unifontksx}@r{(1),}
+@comment TROFF INPUT: .BR unifontpic (1),
+@b{unifontpic}@r{(1),}
+@comment TROFF INPUT: .BR unigencircles (1),
+@b{unigencircles}@r{(1),}
+@comment TROFF INPUT: .BR unigenwidth (1),
+@b{unigenwidth}@r{(1),}
+@comment TROFF INPUT: .BR unihex2bmp (1),
+@b{unihex2bmp}@r{(1),}
+@comment TROFF INPUT: .BR unihex2png (1),
+@b{unihex2png}@r{(1),}
+@comment TROFF INPUT: .BR unihexfill (1),
+@b{unihexfill}@r{(1),}
+@comment TROFF INPUT: .BR unihexgen (1),
+@b{unihexgen}@r{(1),}
+@comment TROFF INPUT: .BR unihexpose (1),
+@b{unihexpose}@r{(1),}
+@comment TROFF INPUT: .BR unihexrotate (1),
+@b{unihexrotate}@r{(1),}
+@comment TROFF INPUT: .BR unijohab2html (1),
+@b{unijohab2html}@r{(1),}
+@comment TROFF INPUT: .BR unipagecount (1),
+@b{unipagecount}@r{(1),}
+@comment TROFF INPUT: .BR unipng2hex (1)
+@b{unipng2hex}@r{(1)}
+@comment TROFF INPUT: .SH AUTHOR
+
+@node unigen-hangul AUTHOR
+@subsection unigen-hangul AUTHOR
+@c DEBUG: print_menu("unigen-hangul AUTHOR")
+
+@comment TROFF INPUT: .B unigen-hangul
+@b{unigen-hangul}
+was written by Paul Hardy.
+@comment TROFF INPUT: .SH LICENSE
+
+@node unigen-hangul LICENSE
+@subsection unigen-hangul LICENSE
+@c DEBUG: print_menu("unigen-hangul LICENSE")
+
+@comment TROFF INPUT: .B unigen-hangul
+@b{unigen-hangul}
+is Copyright @copyright{} 2023 Paul Hardy.
+@comment TROFF INPUT: .PP
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+@comment TROFF INPUT: .SH BUGS
+
+@node unigen-hangul BUGS
+@subsection unigen-hangul BUGS
+@c DEBUG: print_menu("unigen-hangul BUGS")
+
+No known bugs exist.

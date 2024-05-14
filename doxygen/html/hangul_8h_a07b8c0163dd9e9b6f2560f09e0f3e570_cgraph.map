@@ -1,0 +1,6 @@
+<map id="combined_jamo" name="combined_jamo">
+<area shape="rect" id="node1" title="Convert Hangul Jamo choseong, jungseong, and jongseong into a glyph." alt="" coords="5,79,132,104"/>
+<area shape="rect" id="node2" href="$unihangul-support_8c.html#ab795ff183c3e429e0eb9257a7737c57f" title="Return the Johab 6/3/1 choseong variation for a syllable." alt="" coords="189,29,299,55"/>
+<area shape="rect" id="node3" href="$unihangul-support_8c.html#a9aacff561033067830249796de592258" title="Combine two glyphs into one glyph." alt="" coords="180,79,308,104"/>
+<area shape="rect" id="node4" href="$unihangul-support_8c.html#a12a0a69a62e5beb75f723a0e35bb2b37" title="Whether vowel has rightmost vertical stroke to the right." alt="" coords="185,128,303,153"/>
+</map>

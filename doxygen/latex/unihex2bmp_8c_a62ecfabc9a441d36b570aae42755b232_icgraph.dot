@@ -1,0 +1,14 @@
+digraph "hex2bit"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="RL";
+  Node1 [label="hex2bit",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Generate a bitmap for one glyph."];
+  Node1 -> Node2 [dir="back",color="steelblue1",style="solid"];
+  Node2 [label="init",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$unihex2bmp_8c.html#a0ae74e74805cbaa4bf60ff3c8df15512",tooltip="Initialize the bitmap grid."];
+  Node2 -> Node3 [dir="back",color="steelblue1",style="solid"];
+  Node3 [label="main",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$unihex2bmp_8c.html#a0ddf1224851353fc92bfbff6f499fa97",tooltip="The main function."];
+  Node1 -> Node3 [dir="back",color="steelblue1",style="solid"];
+}

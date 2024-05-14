@@ -1,0 +1,67 @@
+.TH UNIHEXPOSE 1 "2023 Aug 05"
+.SH NAME
+unihexpose \- Convert a GNU Unifont glyph into column-major format
+.SH SYNOPSIS
+\fBunihexpose \fP< \fIinput-font.hex \fP> \fItransposed-font.hex\fP
+.SH DESCRIPTION
+.B unihexpose
+reads a sorted GNU Unifont .hex file from STDIN and writes a
+transposed Unifont .hex file to STDOUT.  The output .hex file
+contains glyphs encoded in column major format, with 8 rows per
+output column.  This will simplify output of Unifont glyphs on
+graphics displays with controller chips designed to autoincrement
+across a line of 8 pixel rows, one column at a time.
+.PP
+The output .hex file contains a Unifont glyph in two halves:
+the first half is the first 8 pixels rows, and the second half
+the second 8 pixel rows.  The glyphs are 8 or 16 columns wide.
+.SH FILES
+*.hex GNU Unifont font files
+.SH SEE ALSO
+.BR bdfimplode (1),
+.BR hex2bdf (1),
+.BR hex2otf (1),
+.BR hex2sfd (1),
+.BR hexbraille (1),
+.BR hexdraw (1),
+.BR hexkinya (1),
+.BR hexmerge (1),
+.BR johab2syllables (1),
+.BR johab2ucs2 (1),
+.BR unibdf2hex (1),
+.BR unibmp2hex (1),
+.BR unibmpbump (1),
+.BR unicoverage (1),
+.BR unidup (1),
+.BR unifont (5),
+.BR unifont-johab631 (5),
+.BR unifont-viewer (1),
+.BR unifont1per (1),
+.BR unifontchojung (1),
+.BR unifontksx (1),
+.BR unifontpic (1),
+.BR unigen-hangul (1),
+.BR unigencircles (1),
+.BR unigenwidth (1),
+.BR unihex2bmp (1),
+.BR unihex2png (1),
+.BR unihexfill (1),
+.BR unihexgen (1),
+.BR unihexpose (1),
+.BR unihexrotate (1),
+.BR unijohab2html (1),
+.BR unipagecount (1),
+.BR unipng2hex (1)
+.SH AUTHOR
+.B unihexpose
+was written by Paul Hardy.
+.SH LICENSE
+.B hexdraw
+is Copyright \(co 2023 Paul Hardy.
+.PP
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+.SH BUGS
+No known bugs exist.

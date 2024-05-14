@@ -1,0 +1,5 @@
+<map id="main" name="main">
+<area shape="rect" id="node1" title="The main function." alt="" coords="5,5,60,31"/>
+<area shape="rect" id="node2" href="$unihex2bmp_8c.html#a62ecfabc9a441d36b570aae42755b232" title="Generate a bitmap for one glyph." alt="" coords="199,5,269,31"/>
+<area shape="rect" id="node3" href="$unihex2bmp_8c.html#a0ae74e74805cbaa4bf60ff3c8df15512" title="Initialize the bitmap grid." alt="" coords="108,31,151,56"/>
+</map>

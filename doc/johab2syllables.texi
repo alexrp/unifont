@@ -1,0 +1,279 @@
+@comment TROFF INPUT: .TH JOHAB2SYLLABLES 1 "30 July 2023"
+
+@node johab2syllables
+@section johab2syllables
+@c DEBUG: print_menu("@section")
+
+@menu
+* johab2syllables NAME::
+* johab2syllables SYNOPSIS::
+* johab2syllables DESCRIPTION::
+* johab2syllables OPTIONS::
+* johab2syllables EXAMPLES::
+* johab2syllables FILES::
+* johab2syllables SEE ALSO::
+* johab2syllables AUTHOR::
+* johab2syllables LICENSE::
+* johab2syllables BUGS::
+
+@end menu
+
+
+@comment TROFF INPUT: .SH NAME
+
+@node johab2syllables NAME
+@subsection johab2syllables NAME
+@c DEBUG: print_menu("johab2syllables NAME")
+
+johab2syllables @minus{} Convert Unifont Johab 6/3/1 file to Hangul Syllables
+@comment TROFF INPUT: .SH SYNOPSIS
+
+@node johab2syllables SYNOPSIS
+@subsection johab2syllables SYNOPSIS
+@c DEBUG: print_menu("johab2syllables SYNOPSIS")
+
+@b{johab2syllables @minus{}i} @i{hangul-base.hex }
+@b{@minus{}o} @i{hangul-syllables.hex}
+@comment TROFF INPUT: .SH DESCRIPTION
+
+@node johab2syllables DESCRIPTION
+@subsection johab2syllables DESCRIPTION
+@c DEBUG: print_menu("johab2syllables DESCRIPTION")
+
+@comment TROFF INPUT: .B johab2syllables
+@b{johab2syllables}
+generates the modern Hangul Syllables Unicode range, U+AC00..U+D7A3,
+from an input Unifont .hex file encoded in Johab 6/3/1 format.  This
+program demonstrates how to use functions in the unihangul-support.c
+file to map a Hangul Syllables code point to the choseong, jungseong,
+and jongseong Hangul Jamo that comprise each syllable.
+@comment TROFF INPUT: .PP
+
+This program is specifically designed to generate the Unicode
+Hangul Syllables range only, and does @i{not} shift final consonants
+(jongseong) if the vowel contains two long vertical strokes.
+For a more general program that uses the entire Hangul Jamo
+modern, ancient, and extended ancient ranges of U+1100..U+11FF,
+U+A960..U+A97F, and U+D7B0..D7FF, and which @i{does} shift
+jongseong right one column for vowels with two long vertical
+strokes on the right, see
+@comment TROFF INPUT: .BR unigen-hangul (1).
+@b{unigen-hangul}@r{(1).}
+That program is  used to generate the distributed Unifont
+Hangul Syllables range.
+@comment TROFF INPUT: .RS
+
+@c ---------------------------------------------------------------------
+@quotation
+@comment TROFF INPUT: .IP \fBRange\fP 15
+
+@b{Hangul}
+@comment TROFF INPUT: .TP
+@comment TROFF INPUT: .BR 1100-1112
+
+@c ---------------------------------------------------------------------
+@table @code
+@item @b{1100-1112}
+Modern initial consonants (choseong)
+@comment TROFF INPUT: .TP
+@comment TROFF INPUT: .BR 1161-1175
+
+@item @b{1161-1175}
+Modern medial vowels and diphthongs (jungseong)
+@comment TROFF INPUT: .TP
+@comment TROFF INPUT: .BR 11A8-11C2
+
+@item @b{11A8-11C2}
+Modern final consonants (jongseong).
+@comment TROFF INPUT: .RE
+
+@end table
+
+@c ---------------------------------------------------------------------
+
+@end quotation
+
+@c ---------------------------------------------------------------------
+@comment TROFF INPUT: .PP
+
+@comment TROFF INPUT: .SH OPTIONS
+
+@node johab2syllables OPTIONS
+@subsection johab2syllables OPTIONS
+@c DEBUG: print_menu("johab2syllables OPTIONS")
+
+@comment TROFF INPUT: .RS
+
+@c ---------------------------------------------------------------------
+@quotation
+@comment TROFF INPUT: .IP \fBOption\fP 15
+
+@b{Function}
+@comment TROFF INPUT: .TP
+
+@c ---------------------------------------------------------------------
+@table @code
+@item @b{@minus{}h, @minus{}@minus{}help}
+Print a help message and exit.
+@comment TROFF INPUT: .TP
+
+@item @b{@minus{}i} @i{input@t{_}file}
+Unifont hangul-base.hex formatted input file.
+@comment TROFF INPUT: .TP
+
+@item @b{@minus{}o} @i{output@t{_}file}
+Unifont .hex format output file.
+@comment TROFF INPUT: .RE
+
+@end table
+
+@c ---------------------------------------------------------------------
+
+@end quotation
+
+@c ---------------------------------------------------------------------
+@comment TROFF INPUT: .SH EXAMPLES
+
+@node johab2syllables EXAMPLES
+@subsection johab2syllables EXAMPLES
+@c DEBUG: print_menu("johab2syllables EXAMPLES")
+
+@comment TROFF INPUT: .TP 5
+@comment TROFF INPUT: .RS
+
+@c ---------------------------------------------------------------------
+@c @table @code
+@c @item 
+@c ---------------------------------------------------------------------
+@quotation
+johab2syllables -i hangul-base.hex -o hangul-syllables.hex
+@comment TROFF INPUT: .PP
+
+johab2syllables < hangul-base.hex > hangul-syllables.hex
+@comment TROFF INPUT: .RE
+
+@end quotation
+
+@c ---------------------------------------------------------------------
+@comment TROFF INPUT: .SH FILES
+
+@c @end table
+
+@c ---------------------------------------------------------------------
+
+@node johab2syllables FILES
+@subsection johab2syllables FILES
+@c DEBUG: print_menu("johab2syllables FILES")
+
+Unifont .hex files in Johab 6/3/1 encoding.  See
+@comment TROFF INPUT: .BR unifont-johab631 (5)
+@b{unifont-johab631}@r{(5)}
+for a description of the input file structure.  This program
+uses functions contained in the file unihangul-support.c.
+@comment TROFF INPUT: .SH SEE ALSO
+
+@node johab2syllables SEE ALSO
+@subsection johab2syllables SEE ALSO
+@c DEBUG: print_menu("johab2syllables SEE ALSO")
+
+@comment TROFF INPUT: .BR bdfimplode (1),
+@b{bdfimplode}@r{(1),}
+@comment TROFF INPUT: .BR hex2bdf (1),
+@b{hex2bdf}@r{(1),}
+@comment TROFF INPUT: .BR hex2otf (1),
+@b{hex2otf}@r{(1),}
+@comment TROFF INPUT: .BR hex2sfd (1),
+@b{hex2sfd}@r{(1),}
+@comment TROFF INPUT: .BR hexbraille (1),
+@b{hexbraille}@r{(1),}
+@comment TROFF INPUT: .BR hexdraw (1),
+@b{hexdraw}@r{(1),}
+@comment TROFF INPUT: .BR hexkinya (1),
+@b{hexkinya}@r{(1),}
+@comment TROFF INPUT: .BR hexmerge (1),
+@b{hexmerge}@r{(1),}
+@comment TROFF INPUT: .BR johab2ucs2 (1),
+@b{johab2ucs2}@r{(1),}
+@comment TROFF INPUT: .BR unibdf2hex (1),
+@b{unibdf2hex}@r{(1),}
+@comment TROFF INPUT: .BR unibmp2hex (1),
+@b{unibmp2hex}@r{(1),}
+@comment TROFF INPUT: .BR unibmpbump (1),
+@b{unibmpbump}@r{(1),}
+@comment TROFF INPUT: .BR unicoverage (1),
+@b{unicoverage}@r{(1),}
+@comment TROFF INPUT: .BR unidup (1),
+@b{unidup}@r{(1),}
+@comment TROFF INPUT: .BR unifont (5),
+@b{unifont}@r{(5),}
+@comment TROFF INPUT: .BR unifont-johab631 (5),
+@b{unifont-johab631}@r{(5),}
+@comment TROFF INPUT: .BR unifont-viewer (1),
+@b{unifont-viewer}@r{(1),}
+@comment TROFF INPUT: .BR unifont1per (1),
+@b{unifont1per}@r{(1),}
+@comment TROFF INPUT: .BR unifontchojung (1),
+@b{unifontchojung}@r{(1),}
+@comment TROFF INPUT: .BR unifontksx (1),
+@b{unifontksx}@r{(1),}
+@comment TROFF INPUT: .BR unifontpic (1),
+@b{unifontpic}@r{(1),}
+@comment TROFF INPUT: .BR unigen-hangul (1),
+@b{unigen-hangul}@r{(1),}
+@comment TROFF INPUT: .BR unigen-hangul (1),
+@b{unigen-hangul}@r{(1),}
+@comment TROFF INPUT: .BR unigencircles (1),
+@b{unigencircles}@r{(1),}
+@comment TROFF INPUT: .BR unigenwidth (1),
+@b{unigenwidth}@r{(1),}
+@comment TROFF INPUT: .BR unihex2bmp (1),
+@b{unihex2bmp}@r{(1),}
+@comment TROFF INPUT: .BR unihex2png (1),
+@b{unihex2png}@r{(1),}
+@comment TROFF INPUT: .BR unihexfill (1),
+@b{unihexfill}@r{(1),}
+@comment TROFF INPUT: .BR unihexgen (1),
+@b{unihexgen}@r{(1),}
+@comment TROFF INPUT: .BR unihexpose (1),
+@b{unihexpose}@r{(1),}
+@comment TROFF INPUT: .BR unihexrotate (1),
+@b{unihexrotate}@r{(1),}
+@comment TROFF INPUT: .BR unijohab2html (1),
+@b{unijohab2html}@r{(1),}
+@comment TROFF INPUT: .BR unijohab2html (1),
+@b{unijohab2html}@r{(1),}
+@comment TROFF INPUT: .BR unipagecount (1),
+@b{unipagecount}@r{(1),}
+@comment TROFF INPUT: .BR unipng2hex (1)
+@b{unipng2hex}@r{(1)}
+@comment TROFF INPUT: .SH AUTHOR
+
+@node johab2syllables AUTHOR
+@subsection johab2syllables AUTHOR
+@c DEBUG: print_menu("johab2syllables AUTHOR")
+
+@comment TROFF INPUT: .B johab2syllables
+@b{johab2syllables}
+was written by Paul Hardy.
+@comment TROFF INPUT: .SH LICENSE
+
+@node johab2syllables LICENSE
+@subsection johab2syllables LICENSE
+@c DEBUG: print_menu("johab2syllables LICENSE")
+
+@comment TROFF INPUT: .B johab2syllables
+@b{johab2syllables}
+is Copyright @copyright{} 2023 Paul Hardy.
+@comment TROFF INPUT: .PP
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+@comment TROFF INPUT: .SH BUGS
+
+@node johab2syllables BUGS
+@subsection johab2syllables BUGS
+@c DEBUG: print_menu("johab2syllables BUGS")
+
+No known bugs exist.

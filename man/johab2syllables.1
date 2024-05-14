@@ -1,0 +1,112 @@
+.TH JOHAB2SYLLABLES 1 "30 July 2023"
+.SH NAME
+johab2syllables \- Convert Unifont Johab 6/3/1 file to Hangul Syllables
+.SH SYNOPSIS
+\fBjohab2syllables \-i\fP \fIhangul-base.hex \fP
+\fB\-o\fP \fIhangul-syllables.hex\fP
+.SH DESCRIPTION
+.B johab2syllables
+generates the modern Hangul Syllables Unicode range, U+AC00..U+D7A3,
+from an input Unifont .hex file encoded in Johab 6/3/1 format.  This
+program demonstrates how to use functions in the unihangul-support.c
+file to map a Hangul Syllables code point to the choseong, jungseong,
+and jongseong Hangul Jamo that comprise each syllable.
+.PP
+This program is specifically designed to generate the Unicode
+Hangul Syllables range only, and does \fInot\fP shift final consonants
+(jongseong) if the vowel contains two long vertical strokes.
+For a more general program that uses the entire Hangul Jamo
+modern, ancient, and extended ancient ranges of U+1100..U+11FF,
+U+A960..U+A97F, and U+D7B0..D7FF, and which \fIdoes\fP shift
+jongseong right one column for vowels with two long vertical
+strokes on the right, see
+.BR unigen-hangul (1).
+That program is  used to generate the distributed Unifont
+Hangul Syllables range.
+.RS
+.IP \fBRange\fP 15
+\fBHangul\fP
+.TP
+.BR 1100-1112
+Modern initial consonants (choseong)
+.TP
+.BR 1161-1175
+Modern medial vowels and diphthongs (jungseong)
+.TP
+.BR 11A8-11C2
+Modern final consonants (jongseong).
+.RE
+.PP
+.SH OPTIONS
+.RS
+.IP \fBOption\fP 15
+\fBFunction\fP
+.TP
+\fB\-h, \-\-help\fP
+Print a help message and exit.
+.TP
+\fB\-i\fP \fIinput_file\fP
+Unifont hangul-base.hex formatted input file.
+.TP
+\fB\-o\fP \fIoutput_file\fP
+Unifont .hex format output file.
+.RE
+.SH EXAMPLES
+.TP 5
+.RS
+johab2syllables -i hangul-base.hex -o hangul-syllables.hex
+.PP
+johab2syllables < hangul-base.hex > hangul-syllables.hex
+.RE
+.SH FILES
+Unifont .hex files in Johab 6/3/1 encoding.  See
+.BR unifont-johab631 (5)
+for a description of the input file structure.  This program
+uses functions contained in the file unihangul-support.c.
+.SH SEE ALSO
+.BR bdfimplode (1),
+.BR hex2bdf (1),
+.BR hex2otf (1),
+.BR hex2sfd (1),
+.BR hexbraille (1),
+.BR hexdraw (1),
+.BR hexkinya (1),
+.BR hexmerge (1),
+.BR johab2ucs2 (1),
+.BR unibdf2hex (1),
+.BR unibmp2hex (1),
+.BR unibmpbump (1),
+.BR unicoverage (1),
+.BR unidup (1),
+.BR unifont (5),
+.BR unifont-johab631 (5),
+.BR unifont-viewer (1),
+.BR unifont1per (1),
+.BR unifontchojung (1),
+.BR unifontksx (1),
+.BR unifontpic (1),
+.BR unigen-hangul (1),
+.BR unigencircles (1),
+.BR unigenwidth (1),
+.BR unihex2bmp (1),
+.BR unihex2png (1),
+.BR unihexfill (1),
+.BR unihexgen (1),
+.BR unihexpose (1),
+.BR unihexrotate (1),
+.BR unijohab2html (1),
+.BR unipagecount (1),
+.BR unipng2hex (1)
+.SH AUTHOR
+.B johab2syllables
+was written by Paul Hardy.
+.SH LICENSE
+.B johab2syllables
+is Copyright \(co 2023 Paul Hardy.
+.PP
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+.SH BUGS
+No known bugs exist.

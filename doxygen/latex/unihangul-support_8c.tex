@@ -1,0 +1,1278 @@
+\hypertarget{unihangul-support_8c}{}\doxysection{src/unihangul-\/support.c File Reference}
+\label{unihangul-support_8c}\index{src/unihangul-\/support.c@{src/unihangul-\/support.c}}
+
+
+Functions for converting Hangul letters into syllables.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}hangul.\+h\char`\"{}}\newline
+Include dependency graph for unihangul-\/support.c\+:
+% FIG 0
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+unsigned \mbox{\hyperlink{unihangul-support_8c_a0c3abd429f2b52cfa38a22ba6a83eb78}{hangul\+\_\+read\+\_\+base8}} (FILE $\ast$infp, unsigned char base\mbox{[}$\,$\mbox{]}\mbox{[}32\mbox{]})
+\begin{DoxyCompactList}\small\item\em Read hangul-\/base.\+hex file into a unsigned char array. \end{DoxyCompactList}\item 
+unsigned \mbox{\hyperlink{unihangul-support_8c_afd372e1a400e28d1b61410187f038eec}{hangul\+\_\+read\+\_\+base16}} (FILE $\ast$infp, unsigned base\mbox{[}$\,$\mbox{]}\mbox{[}16\mbox{]})
+\begin{DoxyCompactList}\small\item\em Read hangul-\/base.\+hex file into a unsigned array. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{unihangul-support_8c_a50a8e6626a7e76210784a560e8ac15b5}{hangul\+\_\+decompose}} (unsigned codept, int $\ast$initial, int $\ast$medial, int $\ast$final)
+\begin{DoxyCompactList}\small\item\em Decompose a Hangul Syllables code point into three letters. \end{DoxyCompactList}\item 
+unsigned \mbox{\hyperlink{unihangul-support_8c_ae1787a61039977179f60e6f2cda16ac9}{hangul\+\_\+compose}} (int initial, int medial, int final)
+\begin{DoxyCompactList}\small\item\em Compose a Hangul syllable into a code point, or 0 if none exists. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{unihangul-support_8c_a2f88bf9b2f6d754350f996933a0a9a65}{hangul\+\_\+hex\+\_\+indices}} (int choseong, int jungseong, int jongseong, int $\ast$cho\+\_\+index, int $\ast$jung\+\_\+index, int $\ast$jong\+\_\+index)
+\begin{DoxyCompactList}\small\item\em Determine index values to the bitmaps for a syllable\textquotesingle{}s components. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{unihangul-support_8c_a7b8f3653d0dd30a1145be38529370def}{hangul\+\_\+variations}} (int choseong, int jungseong, int jongseong, int $\ast$cho\+\_\+var, int $\ast$jung\+\_\+var, int $\ast$jong\+\_\+var)
+\begin{DoxyCompactList}\small\item\em Determine the variations of each letter in a Hangul syllable. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{unihangul-support_8c_ab795ff183c3e429e0eb9257a7737c57f}{cho\+\_\+variation}} (int choseong, int jungseong, int jongseong)
+\begin{DoxyCompactList}\small\item\em Return the Johab 6/3/1 choseong variation for a syllable. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{unihangul-support_8c_a12a0a69a62e5beb75f723a0e35bb2b37}{is\+\_\+wide\+\_\+vowel}} (int vowel)
+\begin{DoxyCompactList}\small\item\em Whether vowel has rightmost vertical stroke to the right. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{unihangul-support_8c_abaed5273181b15b047e92b3b79f68a4d}{jung\+\_\+variation}} (int choseong, int jungseong, int jongseong)
+\begin{DoxyCompactList}\small\item\em Return the Johab 6/3/1 jungseong variation. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{unihangul-support_8c_aaf73601bfe34292aa58b0d827feb01d8}{jong\+\_\+variation}} (int choseong, int jungseong, int jongseong)
+\begin{DoxyCompactList}\small\item\em Return the Johab 6/3/1 jongseong variation. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{unihangul-support_8c_abb373afe914554ff8443f05d83b69e8e}{hangul\+\_\+syllable}} (int choseong, int jungseong, int jongseong, unsigned char hangul\+\_\+base\mbox{[}$\,$\mbox{]}\mbox{[}32\mbox{]}, unsigned char $\ast$syllable)
+\begin{DoxyCompactList}\small\item\em Given letters in a Hangul syllable, return a glyph. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{unihangul-support_8c_a5683e04e68511d40e66dc8fe26a9a934}{glyph\+\_\+overlap}} (unsigned $\ast$glyph1, unsigned $\ast$glyph2)
+\begin{DoxyCompactList}\small\item\em See if two glyphs overlap. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{unihangul-support_8c_a9aacff561033067830249796de592258}{combine\+\_\+glyphs}} (unsigned $\ast$glyph1, unsigned $\ast$glyph2, unsigned $\ast$combined\+\_\+glyph)
+\begin{DoxyCompactList}\small\item\em Combine two glyphs into one glyph. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{unihangul-support_8c_a0b8d4a416ad7bb42a332332c7ba86da8}{print\+\_\+glyph\+\_\+txt}} (FILE $\ast$fp, unsigned codept, unsigned $\ast$this\+\_\+glyph)
+\begin{DoxyCompactList}\small\item\em Print one glyph in Unifont hexdraw plain text style. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{unihangul-support_8c_a056fdfdb02eeccd48026c05ccb200435}{print\+\_\+glyph\+\_\+hex}} (FILE $\ast$fp, unsigned codept, unsigned $\ast$this\+\_\+glyph)
+\begin{DoxyCompactList}\small\item\em Print one glyph in Unifont hexdraw hexadecimal string style. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{unihangul-support_8c_a069b03f528213c0d14b78e5d4d61eccc}{one\+\_\+jamo}} (unsigned glyph\+\_\+table\mbox{[}MAX\+\_\+\+GLYPHS\mbox{]}\mbox{[}16\mbox{]}, unsigned jamo, unsigned $\ast$jamo\+\_\+glyph)
+\begin{DoxyCompactList}\small\item\em Convert Hangul Jamo choseong, jungseong, and jongseong into a glyph. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{unihangul-support_8c_a07b8c0163dd9e9b6f2560f09e0f3e570}{combined\+\_\+jamo}} (unsigned glyph\+\_\+table\mbox{[}MAX\+\_\+\+GLYPHS\mbox{]}\mbox{[}16\mbox{]}, unsigned cho, unsigned jung, unsigned jong, unsigned $\ast$combined\+\_\+glyph)
+\begin{DoxyCompactList}\small\item\em Convert Hangul Jamo choseong, jungseong, and jongseong into a glyph. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Functions for converting Hangul letters into syllables. 
+
+This file contains functions for reading in Hangul letters arranged in a Johab 6/3/1 pattern and composing syllables with them. One function maps an iniital letter (choseong), medial letter (jungseong), and final letter (jongseong) into the Hangul Syllables Unicode block, U+\+AC00..U+\+D7\+A3. Other functions allow formation of glyphs that include the ancient Hangul letters that Hanterm supported. More can be added if desired, with appropriate changes to start positions and lengths defined in \char`\"{}hangul.\+h\char`\"{}.
+
+\begin{DoxyAuthor}{Author}
+Paul Hardy
+\end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+Copyright © 2023 Paul Hardy 
+\end{DoxyCopyright}
+
+
+Definition in file \mbox{\hyperlink{unihangul-support_8c_source}{unihangul-\/support.\+c}}.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{unihangul-support_8c_ab795ff183c3e429e0eb9257a7737c57f}\label{unihangul-support_8c_ab795ff183c3e429e0eb9257a7737c57f}} 
+\index{unihangul-\/support.c@{unihangul-\/support.c}!cho\_variation@{cho\_variation}}
+\index{cho\_variation@{cho\_variation}!unihangul-\/support.c@{unihangul-\/support.c}}
+\doxysubsubsection{\texorpdfstring{cho\_variation()}{cho\_variation()}}
+{\footnotesize\ttfamily int cho\+\_\+variation (\begin{DoxyParamCaption}\item[{int}]{choseong,  }\item[{int}]{jungseong,  }\item[{int}]{jongseong }\end{DoxyParamCaption})}
+
+
+
+Return the Johab 6/3/1 choseong variation for a syllable. 
+
+This function takes the two or three (if jongseong is included) letters that comprise a syllable and determine the variation of the initial consonant (choseong).
+
+Each choseong has 6 variations\+:
+
+Variation Occurrence \DoxyHorRuler{0}
+ 0 Choseong with a vertical vowel such as \char`\"{}\+A\char`\"{}. 1 Choseong with a horizontal vowel such as \char`\"{}\+O\char`\"{}. 2 Choseong with a vertical and horizontal vowel such as \char`\"{}\+WA\char`\"{}. 3 Same as variation 0, but with jongseong (final consonant). 4 Same as variation 1, but with jongseong (final consonant). Also a horizontal vowel pointing down, such as U and YU. 5 Same as variation 2, but with jongseong (final consonant). Also a horizontal vowel pointing down with vertical element, such as WEO, WE, and WI.
+
+In addition, if the vowel is horizontal and a downward-\/pointing stroke as in the modern letters U, WEO, WE, WI, and YU, and in archaic letters YU-\/\+YEO, YU-\/\+YE, YU-\/I, araea, and araea-\/i, then 3 is added to the initial variation of 0 to 2, resulting in a choseong variation of 3 to 5, respectively.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em choseong} & The 1st letter in the syllable. \\
+\hline
+\mbox{\texttt{ in}}  & {\em jungseong} & The 2nd letter in the syllable. \\
+\hline
+\mbox{\texttt{ in}}  & {\em jongseong} & The 3rd letter in the syllable. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The choseong variation, 0 to 5. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{unihangul-support_8c_source_l00350}{350}} of file \mbox{\hyperlink{unihangul-support_8c_source}{unihangul-\/support.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00350\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00351\ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{unihangul-support_8c_ab795ff183c3e429e0eb9257a7737c57f}{cho\_variation}};\ \ \textcolor{comment}{/*\ Return\ value\ */}}
+\DoxyCodeLine{00352\ }
+\DoxyCodeLine{00353\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00354\ \textcolor{comment}{\ \ \ \ \ \ The\ Choseong\ cho\_var\ is\ determined\ by\ the}}
+\DoxyCodeLine{00355\ \textcolor{comment}{\ \ \ \ \ \ 21\ modern\ +\ 50\ ancient\ Jungseong,\ and\ whether}}
+\DoxyCodeLine{00356\ \textcolor{comment}{\ \ \ \ \ \ or\ not\ the\ syllable\ contains\ a\ final\ consonant}}
+\DoxyCodeLine{00357\ \textcolor{comment}{\ \ \ \ \ \ (Jongseong).}}
+\DoxyCodeLine{00358\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00359\ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ choseong\_var\ [TOTAL\_JUNG\ +\ 1]\ =\ \{}
+\DoxyCodeLine{00360\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00361\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ Modern\ Jungseong\ in\ positions\ 0..20.}}
+\DoxyCodeLine{00362\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00363\ \textcolor{comment}{/*\ Location\ Variations\ \ Unicode\ Range\ \ \ \ Vowel\ \#\ \ \ \ Vowel\ Names\ \ */}}
+\DoxyCodeLine{00364\ \textcolor{comment}{/*\ -\/-\/-\/-\/-\/-\/-\/-\/\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ \ \ -\/-\/-\/-\/-\/-\/-\/\ \ \ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ \ */}}
+\DoxyCodeLine{00365\ \textcolor{comment}{/*\ 0x2FB\ */}\ 0,\ 0,\ 0,\ \textcolor{comment}{//\ U+1161..U+1163-\/-\/>[\ 0..\ 2]\ \ A,\ \ \ AE,\ \ YA}}
+\DoxyCodeLine{00366\ \textcolor{comment}{/*\ 0x304\ */}\ 0,\ 0,\ 0,\ \textcolor{comment}{//\ U+1164..U+1166-\/-\/>[\ 3..\ 5]\ \ YAE,\ EO,\ \ E}}
+\DoxyCodeLine{00367\ \textcolor{comment}{/*\ 0x30D\ */}\ 0,\ 0,\ \ \ \ \textcolor{comment}{//\ U+1167..U+1168-\/-\/>[\ 6..\ 7]\ \ YEO,\ YE}}
+\DoxyCodeLine{00368\ \textcolor{comment}{/*\ 0x313\ */}\ 1,\ \ \ \ \ \ \ \textcolor{comment}{//\ U+1169\ \ \ \ \ \ \ \ -\/-\/>[\ 8]\ \ \ \ \ \ O}}
+\DoxyCodeLine{00369\ \textcolor{comment}{/*\ 0x316\ */}\ 2,\ 2,\ 2,\ \textcolor{comment}{//\ U+116A..U+116C-\/-\/>[\ 9..11]\ \ WA,\ \ WAE,\ WE}}
+\DoxyCodeLine{00370\ \textcolor{comment}{/*\ 0x31F\ */}\ 1,\ 4,\ \ \ \ \textcolor{comment}{//\ U+116D..U+116E-\/-\/>[12..13]\ \ YO,\ \ U}}
+\DoxyCodeLine{00371\ \textcolor{comment}{/*\ 0x325\ */}\ 5,\ 5,\ 5,\ \textcolor{comment}{//\ U+116F..U+1171-\/-\/>[14..16]\ \ WEO,\ WE,\ \ WI}}
+\DoxyCodeLine{00372\ \textcolor{comment}{/*\ 0x32E\ */}\ 4,\ 1,\ \ \ \ \textcolor{comment}{//\ U+1172..U+1173-\/-\/>[17..18]\ \ YU,\ \ EU}}
+\DoxyCodeLine{00373\ \textcolor{comment}{/*\ 0x334\ */}\ 2,\ \ \ \ \ \ \ \textcolor{comment}{//\ U+1174\ \ \ \ \ \ \ \ -\/-\/>[19]\ \ \ \ \ \ YI}}
+\DoxyCodeLine{00374\ \textcolor{comment}{/*\ 0x337\ */}\ 0,\ \ \ \ \ \ \ \textcolor{comment}{//\ U+1175\ \ \ \ \ \ \ \ -\/-\/>[20]\ \ \ \ \ \ I}}
+\DoxyCodeLine{00375\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00376\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ Ancient\ Jungseong\ in\ positions\ 21..70.}}
+\DoxyCodeLine{00377\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00378\ \textcolor{comment}{/*\ Location\ \ Variations\ \ Unicode\ Range\ \ \ \ Vowel\ \#\ \ \ \ \ \ \ Vowel\ Names\ \ */}}
+\DoxyCodeLine{00379\ \textcolor{comment}{/*\ -\/-\/-\/-\/-\/-\/-\/-\/\ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ \ \ -\/-\/-\/-\/-\/-\/-\/\ \ \ \ \ \ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ \ */}}
+\DoxyCodeLine{00380\ \textcolor{comment}{/*\ 0x33A:\ */}\ 2,\ 5,\ 2,\ \textcolor{comment}{//\ U+1176..U+1178-\/-\/>[21..23]\ \ \ A-\/O,\ \ \ \ A-\/U,\ \ \ YA-\/O}}
+\DoxyCodeLine{00381\ \textcolor{comment}{/*\ 0x343:\ */}\ 2,\ 2,\ 5,\ \textcolor{comment}{//\ U+1179..U+117B-\/-\/>[24..26]\ \ YA-\/YO,\ \ EO-\/O,\ \ \ EU-\/U}}
+\DoxyCodeLine{00382\ \textcolor{comment}{/*\ 0x34C:\ */}\ 2,\ 2,\ 5,\ \textcolor{comment}{//\ U+117C..U+117E-\/-\/>[27..29]\ \ EO-\/EU,\ YEO-\/O,\ \ YEO-\/U}}
+\DoxyCodeLine{00383\ \textcolor{comment}{/*\ 0x355:\ */}\ 2,\ 5,\ 5,\ \textcolor{comment}{//\ U+117F..U+1181-\/-\/>[30..32]\ \ \ O-\/EO,\ \ \ O-\/E,\ \ \ \ O-\/YE,}}
+\DoxyCodeLine{00384\ \textcolor{comment}{/*\ 0x35E:\ */}\ 4,\ 4,\ 2,\ \textcolor{comment}{//\ U+1182..U+1184-\/-\/>[33..35]\ \ \ O-\/O,\ \ \ \ O-\/U,\ \ \ YO-\/YA,}}
+\DoxyCodeLine{00385\ \textcolor{comment}{/*\ 0x367:\ */}\ 2,\ 2,\ 5,\ \textcolor{comment}{//\ U+1185..U+1187-\/-\/>[36..38]\ \ YO-\/YAE,\ YO-\/YEO,\ YO-\/O,}}
+\DoxyCodeLine{00386\ \textcolor{comment}{/*\ 0x370:\ */}\ 2,\ 5,\ 5,\ \textcolor{comment}{//\ U+1188..U+118A-\/-\/>[39..41]\ \ YO-\/I,\ \ \ \ U-\/A,\ \ \ \ U-\/AE,}}
+\DoxyCodeLine{00387\ \textcolor{comment}{/*\ 0x379:\ */}\ 5,\ 5,\ 5,\ \textcolor{comment}{//\ U+118B..U+118D-\/-\/>[42..44]\ U-\/EO-\/EU,\ \ U-\/YE,\ \ \ U-\/U,}}
+\DoxyCodeLine{00388\ \textcolor{comment}{/*\ 0x382:\ */}\ 5,\ 5,\ 5,\ \textcolor{comment}{//\ U+118E..U+1190-\/-\/>[45..47]\ \ YU-\/A,\ \ \ YU-\/EO,\ \ YU-\/E,}}
+\DoxyCodeLine{00389\ \textcolor{comment}{/*\ 0x38B:\ */}\ 5,\ 5,\ 2,\ \textcolor{comment}{//\ U+1191..U+1193-\/-\/>[48..50]\ \ YU-\/YEO,\ YU-\/YE,\ \ YU-\/U,}}
+\DoxyCodeLine{00390\ \textcolor{comment}{/*\ 0x394:\ */}\ 5,\ 2,\ 2,\ \textcolor{comment}{//\ U+1194..U+1196-\/-\/>[51..53]\ \ YU-\/I,\ \ \ EU-\/U,\ \ \ EU-\/EU,}}
+\DoxyCodeLine{00391\ \textcolor{comment}{/*\ 0x39D:\ */}\ 2,\ 0,\ 0,\ \textcolor{comment}{//\ U+1197..U+1199-\/-\/>[54..56]\ \ YI-\/U,\ \ \ \ I-\/A,\ \ \ \ I-\/YA,}}
+\DoxyCodeLine{00392\ \textcolor{comment}{/*\ 0x3A6:\ */}\ 2,\ 5,\ 2,\ \textcolor{comment}{//\ U+119A..U+119C-\/-\/>[57..59]\ \ \ I-\/O,\ \ \ \ I-\/U,\ \ \ \ I-\/EU,}}
+\DoxyCodeLine{00393\ \textcolor{comment}{/*\ 0x3AF:\ */}\ 0,\ 1,\ 2,\ \textcolor{comment}{//\ U+119D..U+119F-\/-\/>[60..62]\ I-\/ARAEA,\ ARAEA,\ ARAEA-\/EO,}}
+\DoxyCodeLine{00394\ \textcolor{comment}{/*\ 0x3B8:\ */}\ 1,\ 2,\ 1,\ \textcolor{comment}{//\ U+11A0..U+11A2-\/-\/>[63..65]\ ARAEA-\/U,\ ARAEA-\/I,SSANGARAEA,}}
+\DoxyCodeLine{00395\ \textcolor{comment}{/*\ 0x3C1:\ */}\ 2,\ 5,\ 0,\ \textcolor{comment}{//\ U+11A3..U+11A5-\/-\/>[66..68]\ \ \ A-\/EU,\ \ YA-\/U,\ \ YEO-\/YA,}}
+\DoxyCodeLine{00396\ \textcolor{comment}{/*\ 0x3CA:\ */}\ 2,\ 2,\ \ \ \ \textcolor{comment}{//\ U+11A6..U+11A7-\/-\/>[69..70]\ \ \ O-\/YA,\ \ \ O-\/YAE,}}
+\DoxyCodeLine{00397\ \textcolor{preprocessor}{\#ifdef\ EXTENDED\_HANGUL}}
+\DoxyCodeLine{00398\ \textcolor{comment}{/*\ 0x3D0:\ */}\ 2,\ 4,\ 5,\ \textcolor{comment}{//\ U+D7B0..U+D7B2-\/-\/>[71..73]\ \ \ O-\/YEO,\ \ O-\/O-\/I,\ YO-\/A,}}
+\DoxyCodeLine{00399\ \textcolor{comment}{/*\ 0x3D9:\ */}\ 5,\ 2,\ 5,\ \textcolor{comment}{//\ U+D7B3..U+D7B5-\/-\/>[74..76]\ \ YO-\/AE,\ \ YO-\/EO,\ \ \ U-\/YEO,}}
+\DoxyCodeLine{00400\ \textcolor{comment}{/*\ 0x3E2:\ */}\ 5,\ 5,\ 4,\ \textcolor{comment}{//\ U+D7B6..U+D7B8-\/-\/>[77..79]\ \ \ U-\/I-\/I,\ YU-\/AE,\ \ YU-\/O,}}
+\DoxyCodeLine{00401\ \textcolor{comment}{/*\ 0x3EB:\ */}\ 5,\ 2,\ 5,\ \textcolor{comment}{//\ U+D7B9..U+D7BB-\/-\/>[80..82]\ \ EU-\/A,\ \ \ EU-\/EO,\ \ EU-\/E,}}
+\DoxyCodeLine{00402\ \textcolor{comment}{/*\ 0x3F4:\ */}\ 4,\ 2,\ 3,\ \textcolor{comment}{//\ U+D7BC..U+D7BE-\/-\/>[83..85]\ \ EU-\/O,\ \ \ \ I-\/YA-\/O,\ I-\/YAE,}}
+\DoxyCodeLine{00403\ \textcolor{comment}{/*\ 0x3FD:\ */}\ 3,\ 3,\ 2,\ \textcolor{comment}{//\ U+D7BF..U+D7C1-\/-\/>[86..88]\ \ \ I-\/YEO,\ \ I-\/YE,\ \ \ I-\/O-\/I,}}
+\DoxyCodeLine{00404\ \textcolor{comment}{/*\ 0x406:\ */}\ 2,\ 2,\ 0,\ \textcolor{comment}{//\ U+D7C2..U+D7C4-\/-\/>[89..91]\ \ \ I-\/YO,\ \ \ I-\/YU,\ \ \ I-\/I,}}
+\DoxyCodeLine{00405\ \textcolor{comment}{/*\ 0x40F:\ */}\ 2,\ 2,\ \ \ \ \textcolor{comment}{//\ U+D7C5..U+D7C6-\/-\/>[92..93]\ ARAEA-\/A,\ ARAEA-\/E,}}
+\DoxyCodeLine{00406\ \textcolor{comment}{/*\ 0x415:\ */}\ -\/1\ \ \ \ \ \ \ \textcolor{comment}{//\ Mark\ end\ of\ list\ of\ vowels.\ }}
+\DoxyCodeLine{00407\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00408\ \textcolor{comment}{/*\ 0x310:\ */}\ -\/1\ \ \ \ \ \ \ \textcolor{comment}{//\ Mark\ end\ of\ list\ of\ vowels.}}
+\DoxyCodeLine{00409\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00410\ \ \ \ \};}
+\DoxyCodeLine{00411\ }
+\DoxyCodeLine{00412\ }
+\DoxyCodeLine{00413\ \ \ \ \textcolor{keywordflow}{if}\ (jungseong\ <\ 0\ ||\ jungseong\ >=\ TOTAL\_JUNG)\ \{}
+\DoxyCodeLine{00414\ \ \ \ \ \ \ \mbox{\hyperlink{unihangul-support_8c_ab795ff183c3e429e0eb9257a7737c57f}{cho\_variation}}\ =\ -\/1;}
+\DoxyCodeLine{00415\ \ \ \ \}}
+\DoxyCodeLine{00416\ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00417\ \ \ \ \ \ \ \mbox{\hyperlink{unihangul-support_8c_ab795ff183c3e429e0eb9257a7737c57f}{cho\_variation}}\ =\ choseong\_var\ [jungseong];}
+\DoxyCodeLine{00418\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (choseong\ >=\ 0\ \&\&\ jongseong\ >=\ 0\ \&\&\ \mbox{\hyperlink{unihangul-support_8c_ab795ff183c3e429e0eb9257a7737c57f}{cho\_variation}}\ <\ 3)}
+\DoxyCodeLine{00419\ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unihangul-support_8c_ab795ff183c3e429e0eb9257a7737c57f}{cho\_variation}}\ +=\ 3;}
+\DoxyCodeLine{00420\ \ \ \ \}}
+\DoxyCodeLine{00421\ }
+\DoxyCodeLine{00422\ }
+\DoxyCodeLine{00423\ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{unihangul-support_8c_ab795ff183c3e429e0eb9257a7737c57f}{cho\_variation}};}
+\DoxyCodeLine{00424\ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+% FIG 1
+Here is the caller graph for this function\+:
+% FIG 2
+\mbox{\Hypertarget{unihangul-support_8c_a9aacff561033067830249796de592258}\label{unihangul-support_8c_a9aacff561033067830249796de592258}} 
+\index{unihangul-\/support.c@{unihangul-\/support.c}!combine\_glyphs@{combine\_glyphs}}
+\index{combine\_glyphs@{combine\_glyphs}!unihangul-\/support.c@{unihangul-\/support.c}}
+\doxysubsubsection{\texorpdfstring{combine\_glyphs()}{combine\_glyphs()}}
+{\footnotesize\ttfamily void combine\+\_\+glyphs (\begin{DoxyParamCaption}\item[{unsigned $\ast$}]{glyph1,  }\item[{unsigned $\ast$}]{glyph2,  }\item[{unsigned $\ast$}]{combined\+\_\+glyph }\end{DoxyParamCaption})}
+
+
+
+Combine two glyphs into one glyph. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em glyph1} & The first glyph to overlap. \\
+\hline
+\mbox{\texttt{ in}}  & {\em glyph2} & The second glyph to overlap. \\
+\hline
+\mbox{\texttt{ out}}  & {\em combined\+\_\+glyph} & The returned combination glyph. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{unihangul-support_8c_source_l00637}{637}} of file \mbox{\hyperlink{unihangul-support_8c_source}{unihangul-\/support.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00638\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00639\ \ \ \ \textcolor{keywordtype}{int}\ i;}
+\DoxyCodeLine{00640\ }
+\DoxyCodeLine{00641\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 16;\ i++)}
+\DoxyCodeLine{00642\ \ \ \ \ \ \ combined\_glyph\ [i]\ =\ glyph1\ [i]\ |\ glyph2\ [i];}
+\DoxyCodeLine{00643\ }
+\DoxyCodeLine{00644\ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00645\ \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+% FIG 3
+\mbox{\Hypertarget{unihangul-support_8c_a07b8c0163dd9e9b6f2560f09e0f3e570}\label{unihangul-support_8c_a07b8c0163dd9e9b6f2560f09e0f3e570}} 
+\index{unihangul-\/support.c@{unihangul-\/support.c}!combined\_jamo@{combined\_jamo}}
+\index{combined\_jamo@{combined\_jamo}!unihangul-\/support.c@{unihangul-\/support.c}}
+\doxysubsubsection{\texorpdfstring{combined\_jamo()}{combined\_jamo()}}
+{\footnotesize\ttfamily void combined\+\_\+jamo (\begin{DoxyParamCaption}\item[{unsigned}]{glyph\+\_\+table\mbox{[}\+MAX\+\_\+\+GLYPHS\mbox{]}\mbox{[}16\mbox{]},  }\item[{unsigned}]{cho,  }\item[{unsigned}]{jung,  }\item[{unsigned}]{jong,  }\item[{unsigned $\ast$}]{combined\+\_\+glyph }\end{DoxyParamCaption})}
+
+
+
+Convert Hangul Jamo choseong, jungseong, and jongseong into a glyph. 
+
+This function converts input Hangul choseong, jungseong, and jongseong Unicode code triplets into a Hangul syllable. Any of those with an out of range code point are assigned a blank glyph for combining.
+
+This function performs the following steps\+: \begin{DoxyVerb} 1) Determine the sequence number of choseong, jungseong,
+    and jongseong, from 0 to the total number of choseong,
+    jungseong, or jongseong, respectively, minus one.  The
+    sequence for each is as follows:
+
+    a) Choseong: Unicode code points of U+1100..U+115E
+       and then U+A960..U+A97C.
+
+    b) Jungseong: Unicode code points of U+1161..U+11A7
+       and then U+D7B0..U+D7C6.
+
+    c) Jongseong: Unicode code points of U+11A8..U+11FF
+       and then U+D7CB..U+D7FB.
+
+ 2) From the choseong, jungseong, and jongseong sequence number,
+    determine the variation of choseong and jungseong (there is
+    only one jongseong variation, although it is shifted right
+    by one column for some vowels with a pair of long vertical
+    strokes on the right side).
+
+ 3) Convert the variation numbers for the three syllable
+    components to index locations in the glyph array.
+
+ 4) Combine the glyph array glyphs into a syllable.
+\end{DoxyVerb}
+ 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em glyph\+\_\+table} & The collection of all jamo glyphs. \\
+\hline
+\mbox{\texttt{ in}}  & {\em cho} & The choseong Unicode code point, 0 or 0x1100..0x115F. \\
+\hline
+\mbox{\texttt{ in}}  & {\em jung} & The jungseong Unicode code point, 0 or 0x1160..0x11\+A7. \\
+\hline
+\mbox{\texttt{ in}}  & {\em jong} & The jongseong Unicode code point, 0 or 0x11\+A8..0x11\+FF. \\
+\hline
+\mbox{\texttt{ out}}  & {\em combined\+\_\+glyph} & The output glyph, 16 columns in each of 16 rows. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{unihangul-support_8c_source_l00787}{787}} of file \mbox{\hyperlink{unihangul-support_8c_source}{unihangul-\/support.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00789\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00790\ }
+\DoxyCodeLine{00791\ \ \ \ \textcolor{keywordtype}{int}\ i;\ \ \textcolor{comment}{/*\ Loop\ variable.\ */}}
+\DoxyCodeLine{00792\ \ \ \ \textcolor{keywordtype}{int}\ cho\_num,\ \ \ jung\_num,\ \ \ jong\_num;}
+\DoxyCodeLine{00793\ \ \ \ \textcolor{keywordtype}{int}\ cho\_group,\ jung\_group,\ jong\_group;}
+\DoxyCodeLine{00794\ \ \ \ \textcolor{keywordtype}{int}\ cho\_index,\ jung\_index,\ jong\_index;}
+\DoxyCodeLine{00795\ }
+\DoxyCodeLine{00796\ \ \ \ \textcolor{keywordtype}{unsigned}\ tmp\_glyph[16];\ \textcolor{comment}{/*\ Hold\ shifted\ jongsung\ for\ wide\ vertical\ vowel.\ */}}
+\DoxyCodeLine{00797\ }
+\DoxyCodeLine{00798\ \ \ \ \textcolor{keywordtype}{int}\ \ \mbox{\hyperlink{unihangul-support_8c_ab795ff183c3e429e0eb9257a7737c57f}{cho\_variation}}\ (\textcolor{keywordtype}{int}\ choseong,\ \textcolor{keywordtype}{int}\ jungseong,\ \textcolor{keywordtype}{int}\ jongseong);}
+\DoxyCodeLine{00799\ }
+\DoxyCodeLine{00800\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{unihangul-support_8c_a9aacff561033067830249796de592258}{combine\_glyphs}}\ (\textcolor{keywordtype}{unsigned}\ *glyph1,\ \textcolor{keywordtype}{unsigned}\ *glyph2,}
+\DoxyCodeLine{00801\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ *combined\_glyph);}
+\DoxyCodeLine{00802\ }
+\DoxyCodeLine{00803\ }
+\DoxyCodeLine{00804\ \ \ \ \textcolor{comment}{/*\ Choose\ a\ blank\ glyph\ for\ each\ syllalbe\ by\ default.\ */}}
+\DoxyCodeLine{00805\ \ \ \ cho\_index\ =\ jung\_index\ =\ jong\_index\ =\ 0x000;}
+\DoxyCodeLine{00806\ }
+\DoxyCodeLine{00807\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00808\ \textcolor{comment}{\ \ \ \ \ \ Convert\ Unicode\ code\ points\ to\ jamo\ sequence\ number}}
+\DoxyCodeLine{00809\ \textcolor{comment}{\ \ \ \ \ \ of\ each\ letter,\ or\ -\/1\ if\ letter\ is\ not\ in\ valid\ range.}}
+\DoxyCodeLine{00810\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00811\ \ \ \ \textcolor{keywordflow}{if}\ (cho\ >=\ 0x1100\ \&\&\ cho\ <=\ 0x115E)}
+\DoxyCodeLine{00812\ \ \ \ \ \ \ cho\_num\ =\ cho\ -\/\ \mbox{\hyperlink{hangul_8h_a136faa4688a685967fd5d7924a0d1881}{CHO\_UNICODE\_START}};}
+\DoxyCodeLine{00813\ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (cho\ >=\ \mbox{\hyperlink{hangul_8h_a4153618c22f94f11eeb75834a5c0729d}{CHO\_EXTA\_UNICODE\_START}}\ \&\&}
+\DoxyCodeLine{00814\ \ \ \ \ \ \ \ \ \ \ \ \ cho\ <\ (\mbox{\hyperlink{hangul_8h_a4153618c22f94f11eeb75834a5c0729d}{CHO\_EXTA\_UNICODE\_START}}\ +\ \mbox{\hyperlink{hangul_8h_a0144f1668fd31e4caaa307236fdcd24a}{NCHO\_EXTA}}))}
+\DoxyCodeLine{00815\ \ \ \ \ \ \ cho\_num\ =\ cho\ -\/\ \mbox{\hyperlink{hangul_8h_a4153618c22f94f11eeb75834a5c0729d}{CHO\_EXTA\_UNICODE\_START}}\ +\ \mbox{\hyperlink{hangul_8h_a55301ca3af5a8fbb59185d6d6bd8bf28}{NCHO\_MODERN}}\ +\ \mbox{\hyperlink{hangul_8h_a90cff8fc50796395eeae423b2066c9f9}{NJONG\_ANCIENT}};}
+\DoxyCodeLine{00816\ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00817\ \ \ \ \ \ \ cho\_num\ =\ -\/1;}
+\DoxyCodeLine{00818\ }
+\DoxyCodeLine{00819\ \ \ \ \textcolor{keywordflow}{if}\ (jung\ >=\ 0x1161\ \&\&\ jung\ <=\ 0x11A7)}
+\DoxyCodeLine{00820\ \ \ \ \ \ \ jung\_num\ =\ jung\ -\/\ \mbox{\hyperlink{hangul_8h_a84565f505a6cf9584179d595c1dbd331}{JUNG\_UNICODE\_START}};}
+\DoxyCodeLine{00821\ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (jung\ >=\ \mbox{\hyperlink{hangul_8h_a204baf063de1c6418bcf31a3834fe16a}{JUNG\_EXTB\_UNICODE\_START}}\ \&\&}
+\DoxyCodeLine{00822\ \ \ \ \ \ \ \ \ \ \ \ \ jung\ <\ (\mbox{\hyperlink{hangul_8h_a204baf063de1c6418bcf31a3834fe16a}{JUNG\_EXTB\_UNICODE\_START}}\ +\ \mbox{\hyperlink{hangul_8h_ac0722300c0f6653ca96694d023d6c91b}{NJUNG\_EXTB}}))}
+\DoxyCodeLine{00823\ \ \ \ \ \ \ jung\_num\ =\ jung\ -\/\ \mbox{\hyperlink{hangul_8h_a204baf063de1c6418bcf31a3834fe16a}{JUNG\_EXTB\_UNICODE\_START}}\ +\ \mbox{\hyperlink{hangul_8h_a7a37b9570683b2dda6c47e093ab30467}{NJUNG\_MODERN}}\ +\ \mbox{\hyperlink{hangul_8h_aa4bc76a25d376acd2c97455e476ceb42}{NJUNG\_ANCIENT}};}
+\DoxyCodeLine{00824\ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00825\ \ \ \ \ \ \ jung\_num\ =\ -\/1;}
+\DoxyCodeLine{00826\ }
+\DoxyCodeLine{00827\ \ \ \ \textcolor{keywordflow}{if}\ (jong\ >=\ 0x11A8\ \&\&\ jong\ <=\ 0x11FF)}
+\DoxyCodeLine{00828\ \ \ \ \ \ \ jong\_num\ =\ jong\ -\/\ \mbox{\hyperlink{hangul_8h_a5c2ef68c3129eab97f29ac76d6061d9e}{JONG\_UNICODE\_START}};}
+\DoxyCodeLine{00829\ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (jong\ >=\ \mbox{\hyperlink{hangul_8h_abc5d018ac60a7dff7dd90ed98a738089}{JONG\_EXTB\_UNICODE\_START}}\ \&\&}
+\DoxyCodeLine{00830\ \ \ \ \ \ \ \ \ \ \ \ \ jong\ <\ (\mbox{\hyperlink{hangul_8h_abc5d018ac60a7dff7dd90ed98a738089}{JONG\_EXTB\_UNICODE\_START}}\ +\ \mbox{\hyperlink{hangul_8h_a00c77dd9a1bd92e8238ceb3fd9851d40}{NJONG\_EXTB}}))}
+\DoxyCodeLine{00831\ \ \ \ \ \ \ jong\_num\ =\ jong\ -\/\ \mbox{\hyperlink{hangul_8h_abc5d018ac60a7dff7dd90ed98a738089}{JONG\_EXTB\_UNICODE\_START}}\ +\ \mbox{\hyperlink{hangul_8h_a0f5e452bf9988d2ff966218c115ac8fc}{NJONG\_MODERN}}\ +\ \mbox{\hyperlink{hangul_8h_a90cff8fc50796395eeae423b2066c9f9}{NJONG\_ANCIENT}};}
+\DoxyCodeLine{00832\ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00833\ \ \ \ \ \ \ jong\_num\ =\ -\/1;}
+\DoxyCodeLine{00834\ }
+\DoxyCodeLine{00835\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00836\ \textcolor{comment}{\ \ \ \ \ \ Choose\ initial\ consonant\ (choseong)\ variation\ based\ upon}}
+\DoxyCodeLine{00837\ \textcolor{comment}{\ \ \ \ \ \ the\ vowel\ (jungseong)\ if\ both\ are\ specified.}}
+\DoxyCodeLine{00838\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00839\ \ \ \ \textcolor{keywordflow}{if}\ (cho\_num\ <\ 0)\ \{}
+\DoxyCodeLine{00840\ \ \ \ \ \ \ cho\_index\ =\ cho\_group\ =\ 0;\ \ \textcolor{comment}{/*\ Use\ blank\ glyph\ for\ choseong.\ */}}
+\DoxyCodeLine{00841\ \ \ \ \}}
+\DoxyCodeLine{00842\ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00843\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (jung\_num\ <\ 0\ \&\&\ jong\_num\ <\ 0)\ \{\ \ \textcolor{comment}{/*\ Choseong\ is\ by\ itself.\ */}}
+\DoxyCodeLine{00844\ \ \ \ \ \ \ \ \ \ cho\_group\ =\ 0;}
+\DoxyCodeLine{00845\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (cho\_index\ <\ (\mbox{\hyperlink{hangul_8h_a55301ca3af5a8fbb59185d6d6bd8bf28}{NCHO\_MODERN}}\ +\ \mbox{\hyperlink{hangul_8h_a38561903839667a7ce2fabdcd2b8f6cb}{NCHO\_ANCIENT}}))}
+\DoxyCodeLine{00846\ \ \ \ \ \ \ \ \ \ \ \ \ cho\_index\ =\ cho\_num\ +\ \mbox{\hyperlink{hangul_8h_a5c0a9fd787bd30260ef97abe55e295dc}{JAMO\_HEX}};}
+\DoxyCodeLine{00847\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \ \textcolor{comment}{/*\ Choseong\ is\ in\ Hangul\ Jamo\ Extended-\/A\ range.\ */}}
+\DoxyCodeLine{00848\ \ \ \ \ \ \ \ \ \ \ \ \ cho\_index\ =\ cho\_num\ -\/\ (\mbox{\hyperlink{hangul_8h_a55301ca3af5a8fbb59185d6d6bd8bf28}{NCHO\_MODERN}}\ +\ \mbox{\hyperlink{hangul_8h_a38561903839667a7ce2fabdcd2b8f6cb}{NCHO\_ANCIENT}})}
+\DoxyCodeLine{00849\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +\ \mbox{\hyperlink{hangul_8h_a1b60e6f04df1309e5ce72473acc4a634}{JAMO\_EXTA\_HEX}};}
+\DoxyCodeLine{00850\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00851\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00852\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (jung\_num\ >=\ 0)\ \{\ \ \textcolor{comment}{/*\ Valid\ jungseong\ with\ choseong.\ */}}
+\DoxyCodeLine{00853\ \ \ \ \ \ \ \ \ \ \ \ \ cho\_group\ =\ \mbox{\hyperlink{unihangul-support_8c_ab795ff183c3e429e0eb9257a7737c57f}{cho\_variation}}\ (cho\_num,\ jung\_num,\ jong\_num);}
+\DoxyCodeLine{00854\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00855\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{\ \ \textcolor{comment}{/*\ Invalid\ vowel;\ see\ if\ final\ consonant\ is\ valid.\ */}}
+\DoxyCodeLine{00856\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00857\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ If\ initial\ consonant\ and\ final\ consonant\ are\ specified,}}
+\DoxyCodeLine{00858\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\ cho\_group\ to\ 4,\ which\ is\ the\ group\ tha\ would\ apply}}
+\DoxyCodeLine{00859\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ to\ a\ horizontal-\/only\ vowel\ such\ as\ Hangul\ "{}O"{},\ so\ the}}
+\DoxyCodeLine{00860\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ consonant\ appears\ full-\/width.}}
+\DoxyCodeLine{00861\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00862\ \ \ \ \ \ \ \ \ \ \ \ \ cho\_group\ =\ 0;}
+\DoxyCodeLine{00863\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (jong\_num\ >=\ 0)\ \{}
+\DoxyCodeLine{00864\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cho\_group\ =\ 4;}
+\DoxyCodeLine{00865\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00866\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00867\ \ \ \ \ \ \ \ \ \ cho\_index\ =\ \mbox{\hyperlink{hangul_8h_ab1bb63330600aa31b5fba9ac58ce171e}{CHO\_HEX}}\ +\ \mbox{\hyperlink{hangul_8h_a0701ea8bfe17f2b3360397b3fa8dad05}{CHO\_VARIATIONS}}\ *\ cho\_num\ +}
+\DoxyCodeLine{00868\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cho\_group;}
+\DoxyCodeLine{00869\ \ \ \ \ \ \ \}\ \ \textcolor{comment}{/*\ Choseong\ combined\ with\ jungseong\ and/or\ jongseong.\ */}}
+\DoxyCodeLine{00870\ \ \ \ \}\ \ \textcolor{comment}{/*\ Valid\ choseong.\ */}}
+\DoxyCodeLine{00871\ }
+\DoxyCodeLine{00872\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00873\ \textcolor{comment}{\ \ \ \ \ \ Choose\ vowel\ (jungseong)\ variation\ based\ upon\ the\ choseong}}
+\DoxyCodeLine{00874\ \textcolor{comment}{\ \ \ \ \ \ and\ jungseong.}}
+\DoxyCodeLine{00875\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00876\ \ \ \ jung\_index\ =\ jung\_group\ =\ 0;\ \ \textcolor{comment}{/*\ Use\ blank\ glyph\ for\ jungseong.\ */}}
+\DoxyCodeLine{00877\ }
+\DoxyCodeLine{00878\ \ \ \ \textcolor{keywordflow}{if}\ (jung\_num\ >=\ 0)\ \{}
+\DoxyCodeLine{00879\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (cho\_num\ <\ 0\ \&\&\ jong\_num\ <\ 0)\ \{\ \ \textcolor{comment}{/*\ Jungseong\ is\ by\ itself.\ */}}
+\DoxyCodeLine{00880\ \ \ \ \ \ \ \ \ \ jung\_group\ =\ 0;}
+\DoxyCodeLine{00881\ \ \ \ \ \ \ \ \ \ jung\_index\ =\ jung\_num\ +\ \mbox{\hyperlink{hangul_8h_a84565f505a6cf9584179d595c1dbd331}{JUNG\_UNICODE\_START}};}
+\DoxyCodeLine{00882\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00883\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00884\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (jong\_num\ >=\ 0)\ \{\ \ \textcolor{comment}{/*\ If\ there\ is\ a\ final\ consonant.\ */}}
+\DoxyCodeLine{00885\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (jong\_num\ ==\ 3)\ \textcolor{comment}{/*\ Nieun;\ choose\ variation\ 3.\ */}}
+\DoxyCodeLine{00886\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ jung\_group\ =\ 2;}
+\DoxyCodeLine{00887\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00888\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ jung\_group\ =\ 1;}
+\DoxyCodeLine{00889\ \ \ \ \ \ \ \ \ \ \}\ \ \textcolor{comment}{/*\ Valid\ jongseong.\ */}}
+\DoxyCodeLine{00890\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ If\ valid\ choseong\ but\ no\ jongseong,\ choose\ jungseong\ variation\ 0.\ */}}
+\DoxyCodeLine{00891\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (cho\_num\ >=\ 0)}
+\DoxyCodeLine{00892\ \ \ \ \ \ \ \ \ \ \ \ \ jung\_group\ =\ 0;}
+\DoxyCodeLine{00893\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00894\ \ \ \ \ \ \ jung\_index\ =\ \mbox{\hyperlink{hangul_8h_a2603eab2f2cae3b60e0f8a76424be923}{JUNG\_HEX}}\ +\ \mbox{\hyperlink{hangul_8h_a8bcda08741a11636e3236f3d34372bcf}{JUNG\_VARIATIONS}}\ *\ jung\_num\ +\ jung\_group;}
+\DoxyCodeLine{00895\ \ \ \ \}}
+\DoxyCodeLine{00896\ }
+\DoxyCodeLine{00897\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00898\ \textcolor{comment}{\ \ \ \ \ \ Choose\ final\ consonant\ (jongseong)\ based\ upon\ whether\ choseong}}
+\DoxyCodeLine{00899\ \textcolor{comment}{\ \ \ \ \ \ and/or\ jungseong\ are\ present.}}
+\DoxyCodeLine{00900\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00901\ \ \ \ \textcolor{keywordflow}{if}\ (jong\_num\ <\ 0)\ \{}
+\DoxyCodeLine{00902\ \ \ \ \ \ \ jong\_index\ =\ jong\_group\ =\ 0;\ \ \textcolor{comment}{/*\ Use\ blank\ glyph\ for\ jongseong.\ */}}
+\DoxyCodeLine{00903\ \ \ \ \}}
+\DoxyCodeLine{00904\ \ \ \ \textcolor{keywordflow}{else}\ \{\ \ \textcolor{comment}{/*\ Valid\ jongseong.\ */}}
+\DoxyCodeLine{00905\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (cho\_num\ <\ 0\ \&\&\ jung\_num\ <\ 0)\ \{\ \ \textcolor{comment}{/*\ Jongseong\ is\ by\ itself.\ */}}
+\DoxyCodeLine{00906\ \ \ \ \ \ \ \ \ \ jong\_group\ =\ 0;}
+\DoxyCodeLine{00907\ \ \ \ \ \ \ \ \ \ jong\_index\ =\ jung\_num\ +\ 0x4A8;}
+\DoxyCodeLine{00908\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00909\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{\ \ \textcolor{comment}{/*\ There\ is\ only\ one\ jongseong\ variation\ if\ combined.\ */}}
+\DoxyCodeLine{00910\ \ \ \ \ \ \ \ \ \ jong\_group\ =\ 0;}
+\DoxyCodeLine{00911\ \ \ \ \ \ \ \ \ \ jong\_index\ =\ \mbox{\hyperlink{hangul_8h_ad4e7a6ac8160c8f5576487db53d67925}{JONG\_HEX}}\ +\ \mbox{\hyperlink{hangul_8h_a072e34c7730814b97335b6b59b69eb41}{JONG\_VARIATIONS}}\ *\ jong\_num\ +}
+\DoxyCodeLine{00912\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ jong\_group;}
+\DoxyCodeLine{00913\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00914\ \ \ \ \}}
+\DoxyCodeLine{00915\ }
+\DoxyCodeLine{00916\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00917\ \textcolor{comment}{\ \ \ \ \ \ Now\ that\ we\ know\ the\ index\ locations\ for\ choseong,\ jungseong,\ and}}
+\DoxyCodeLine{00918\ \textcolor{comment}{\ \ \ \ \ \ jongseong\ glyphs,\ combine\ them\ into\ one\ glyph.}}
+\DoxyCodeLine{00919\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00920\ \ \ \ \mbox{\hyperlink{unihangul-support_8c_a9aacff561033067830249796de592258}{combine\_glyphs}}\ (glyph\_table\ [cho\_index],\ glyph\_table\ [jung\_index],}
+\DoxyCodeLine{00921\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ combined\_glyph);}
+\DoxyCodeLine{00922\ }
+\DoxyCodeLine{00923\ \ \ \ \textcolor{keywordflow}{if}\ (jong\_index\ >\ 0)\ \{}
+\DoxyCodeLine{00924\ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00925\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ If\ the\ vowel\ has\ a\ vertical\ stroke\ that\ is\ one\ column}}
+\DoxyCodeLine{00926\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ away\ from\ the\ right\ border,\ shift\ this\ jongseung\ right}}
+\DoxyCodeLine{00927\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ by\ one\ column\ to\ line\ up\ with\ the\ rightmost\ vertical}}
+\DoxyCodeLine{00928\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ stroke\ in\ the\ vowel.}}
+\DoxyCodeLine{00929\ \textcolor{comment}{\ \ \ \ \ \ */}}
+\DoxyCodeLine{00930\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{unihangul-support_8c_a12a0a69a62e5beb75f723a0e35bb2b37}{is\_wide\_vowel}}\ (jung\_num))\ \{}
+\DoxyCodeLine{00931\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 16;\ i++)\ \{}
+\DoxyCodeLine{00932\ \ \ \ \ \ \ \ \ \ \ \ \ tmp\_glyph\ [i]\ =\ glyph\_table\ [jong\_index]\ [i]\ >>\ 1;}
+\DoxyCodeLine{00933\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00934\ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unihangul-support_8c_a9aacff561033067830249796de592258}{combine\_glyphs}}\ (combined\_glyph,\ tmp\_glyph,}
+\DoxyCodeLine{00935\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ combined\_glyph);}
+\DoxyCodeLine{00936\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00937\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00938\ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unihangul-support_8c_a9aacff561033067830249796de592258}{combine\_glyphs}}\ (combined\_glyph,\ glyph\_table\ [jong\_index],}
+\DoxyCodeLine{00939\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ combined\_glyph);}
+\DoxyCodeLine{00940\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00941\ \ \ \ \}}
+\DoxyCodeLine{00942\ }
+\DoxyCodeLine{00943\ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00944\ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+% FIG 4
+Here is the caller graph for this function\+:
+% FIG 5
+\mbox{\Hypertarget{unihangul-support_8c_a5683e04e68511d40e66dc8fe26a9a934}\label{unihangul-support_8c_a5683e04e68511d40e66dc8fe26a9a934}} 
+\index{unihangul-\/support.c@{unihangul-\/support.c}!glyph\_overlap@{glyph\_overlap}}
+\index{glyph\_overlap@{glyph\_overlap}!unihangul-\/support.c@{unihangul-\/support.c}}
+\doxysubsubsection{\texorpdfstring{glyph\_overlap()}{glyph\_overlap()}}
+{\footnotesize\ttfamily int glyph\+\_\+overlap (\begin{DoxyParamCaption}\item[{unsigned $\ast$}]{glyph1,  }\item[{unsigned $\ast$}]{glyph2 }\end{DoxyParamCaption})}
+
+
+
+See if two glyphs overlap. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em glyph1} & The first glyph, as a 16-\/row bitmap. \\
+\hline
+\mbox{\texttt{ in}}  & {\em glyph2} & The second glyph, as a 16-\/row bitmap. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if no overlaps between glyphs, 1 otherwise. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{unihangul-support_8c_source_l00613}{613}} of file \mbox{\hyperlink{unihangul-support_8c_source}{unihangul-\/support.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00613\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00614\ \ \ \ \textcolor{keywordtype}{int}\ overlaps;\ \ \textcolor{comment}{/*\ Return\ value;\ 0\ if\ no\ overlaps,\ -\/1\ if\ overlaps.\ */}}
+\DoxyCodeLine{00615\ \ \ \ \textcolor{keywordtype}{int}\ i;}
+\DoxyCodeLine{00616\ }
+\DoxyCodeLine{00617\ \ \ \ \textcolor{comment}{/*\ Check\ for\ overlaps\ between\ the\ two\ glyphs.\ */}}
+\DoxyCodeLine{00618\ }
+\DoxyCodeLine{00619\ \ \ \ i\ =\ 0;}
+\DoxyCodeLine{00620\ \ \ \ \textcolor{keywordflow}{do}\ \{}
+\DoxyCodeLine{00621\ \ \ \ \ \ \ overlaps\ =\ (glyph1[i]\ \&\ glyph2[i])\ !=\ 0;}
+\DoxyCodeLine{00622\ \ \ \ \ \ \ i++;}
+\DoxyCodeLine{00623\ \ \ \ \}\ \ \textcolor{keywordflow}{while}\ (i\ <\ 16\ \&\&\ overlaps\ ==\ 0);}
+\DoxyCodeLine{00624\ }
+\DoxyCodeLine{00625\ \ \ \ \textcolor{keywordflow}{return}\ overlaps;}
+\DoxyCodeLine{00626\ \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+% FIG 6
+\mbox{\Hypertarget{unihangul-support_8c_ae1787a61039977179f60e6f2cda16ac9}\label{unihangul-support_8c_ae1787a61039977179f60e6f2cda16ac9}} 
+\index{unihangul-\/support.c@{unihangul-\/support.c}!hangul\_compose@{hangul\_compose}}
+\index{hangul\_compose@{hangul\_compose}!unihangul-\/support.c@{unihangul-\/support.c}}
+\doxysubsubsection{\texorpdfstring{hangul\_compose()}{hangul\_compose()}}
+{\footnotesize\ttfamily unsigned hangul\+\_\+compose (\begin{DoxyParamCaption}\item[{int}]{initial,  }\item[{int}]{medial,  }\item[{int}]{final }\end{DoxyParamCaption})}
+
+
+
+Compose a Hangul syllable into a code point, or 0 if none exists. 
+
+This function takes three letters that can form a modern Hangul syllable and returns the corresponding Unicode Hangul Syllables code point in the range 0x\+AC00 to 0x\+D7\+A3.
+
+If a three-\/letter combination includes one or more archaic letters, it will not map into the Hangul Syllables range. In that case, the returned code point will be 0 to indicate that no valid Hangul Syllables code point exists.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em initial} & The first letter (choseong), 0 to 18. \\
+\hline
+\mbox{\texttt{ in}}  & {\em medial} & The second letter (jungseong), 0 to 20. \\
+\hline
+\mbox{\texttt{ in}}  & {\em final} & The third letter (jongseong), 0 to 26 or -\/1 if none. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The Unicode Hangul Syllables code point, 0x\+AC00 to 0x\+D7\+A3. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{unihangul-support_8c_source_l00201}{201}} of file \mbox{\hyperlink{unihangul-support_8c_source}{unihangul-\/support.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00202\ \ \ \ \textcolor{keywordtype}{unsigned}\ codept;}
+\DoxyCodeLine{00203\ }
+\DoxyCodeLine{00204\ }
+\DoxyCodeLine{00205\ \ \ \ \textcolor{keywordflow}{if}\ (initial\ >=\ 0\ \&\&\ initial\ <=\ 18\ \&\&}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ medial\ \ >=\ 0\ \&\&\ medial\ \ <=\ 20\ \&\&}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \textcolor{keyword}{final}\ \ \ >=\ 0\ \&\&\ \textcolor{keyword}{final}\ \ \ <=\ 26)\ \{}
+\DoxyCodeLine{00208\ }
+\DoxyCodeLine{00209\ \ \ \ \ \ \ codept\ \ =\ 0xAC00;}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ codept\ +=\ initial\ *\ 21\ *\ 28;}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ codept\ +=\ medial\ \ *\ 28;}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ codept\ +=\ \textcolor{keyword}{final}\ +\ 1;}
+\DoxyCodeLine{00213\ \ \ \ \}}
+\DoxyCodeLine{00214\ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ codept\ =\ 0;}
+\DoxyCodeLine{00216\ \ \ \ \}}
+\DoxyCodeLine{00217\ }
+\DoxyCodeLine{00218\ \ \ \ \textcolor{keywordflow}{return}\ codept;}
+\DoxyCodeLine{00219\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{unihangul-support_8c_a50a8e6626a7e76210784a560e8ac15b5}\label{unihangul-support_8c_a50a8e6626a7e76210784a560e8ac15b5}} 
+\index{unihangul-\/support.c@{unihangul-\/support.c}!hangul\_decompose@{hangul\_decompose}}
+\index{hangul\_decompose@{hangul\_decompose}!unihangul-\/support.c@{unihangul-\/support.c}}
+\doxysubsubsection{\texorpdfstring{hangul\_decompose()}{hangul\_decompose()}}
+{\footnotesize\ttfamily void hangul\+\_\+decompose (\begin{DoxyParamCaption}\item[{unsigned}]{codept,  }\item[{int $\ast$}]{initial,  }\item[{int $\ast$}]{medial,  }\item[{int $\ast$}]{final }\end{DoxyParamCaption})}
+
+
+
+Decompose a Hangul Syllables code point into three letters. 
+
+Decompose a Hangul Syllables code point (U+\+AC00..U+\+D7\+A3) into\+:
+
+
+\begin{DoxyItemize}
+\item Choseong 0-\/19
+\item Jungseong 0-\/20
+\item Jongseong 0-\/27 or -\/1 if no jongseong
+\end{DoxyItemize}
+
+All letter values are set to -\/1 if the letters do not form a syllable in the Hangul Syllables range. This function only handles modern Hangul, because that is all that is in the Hangul Syllables range.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em codept} & The Unicode code point to decode, from 0x\+AC00 to 0x\+D7\+A3. \\
+\hline
+\mbox{\texttt{ out}}  & {\em initial} & The 1st letter (choseong) in the syllable. \\
+\hline
+\mbox{\texttt{ out}}  & {\em initial} & The 2nd letter (jungseong) in the syllable. \\
+\hline
+\mbox{\texttt{ out}}  & {\em initial} & The 3rd letter (jongseong) in the syllable. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{unihangul-support_8c_source_l00167}{167}} of file \mbox{\hyperlink{unihangul-support_8c_source}{unihangul-\/support.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00168\ }
+\DoxyCodeLine{00169\ \ \ \ \textcolor{keywordflow}{if}\ (codept\ <\ 0xAC00\ ||\ codept\ >\ 0xD7A3)\ \{}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ *initial\ =\ *medial\ =\ *\textcolor{keyword}{final}\ =\ -\/1;}
+\DoxyCodeLine{00171\ \ \ \ \}}
+\DoxyCodeLine{00172\ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ codept\ \ -\/=\ 0xAC00;}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ *initial\ =\ \ codept\ /\ (28\ \ *\ 21);}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ *medial\ \ =\ (codept\ /\ \ 28)\ \%\ 21;}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ *\textcolor{keyword}{final}\ \ \ =\ \ codept\ \%\ \ 28\ -\/\ 1;}
+\DoxyCodeLine{00177\ \ \ \ \}}
+\DoxyCodeLine{00178\ \ \ \ }
+\DoxyCodeLine{00179\ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00180\ \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+% FIG 7
+\mbox{\Hypertarget{unihangul-support_8c_a2f88bf9b2f6d754350f996933a0a9a65}\label{unihangul-support_8c_a2f88bf9b2f6d754350f996933a0a9a65}} 
+\index{unihangul-\/support.c@{unihangul-\/support.c}!hangul\_hex\_indices@{hangul\_hex\_indices}}
+\index{hangul\_hex\_indices@{hangul\_hex\_indices}!unihangul-\/support.c@{unihangul-\/support.c}}
+\doxysubsubsection{\texorpdfstring{hangul\_hex\_indices()}{hangul\_hex\_indices()}}
+{\footnotesize\ttfamily void hangul\+\_\+hex\+\_\+indices (\begin{DoxyParamCaption}\item[{int}]{choseong,  }\item[{int}]{jungseong,  }\item[{int}]{jongseong,  }\item[{int $\ast$}]{cho\+\_\+index,  }\item[{int $\ast$}]{jung\+\_\+index,  }\item[{int $\ast$}]{jong\+\_\+index }\end{DoxyParamCaption})}
+
+
+
+Determine index values to the bitmaps for a syllable\textquotesingle{}s components. 
+
+This function reads these input values for modern and ancient Hangul letters\+:
+
+
+\begin{DoxyItemize}
+\item Choseong number (0 to the number of modern and archaic choseong -\/ 1.
+\item Jungseong number (0 to the number of modern and archaic jungseong -\/ 1.
+\item Jongseong number (0 to the number of modern and archaic jongseong -\/ 1, or -\/1 if none.
+\end{DoxyItemize}
+
+It then determines the variation of each letter given the combination with the other two letters (or just choseong and jungseong if the jongseong value is -\/1).
+
+These variations are then converted into index locations within the glyph array that was read in from the hangul-\/base.\+hex file. Those index locations can then be used to form a composite syllable.
+
+There is no restriction to only use the modern Hangul letters.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em choseong} & The 1st letter in the syllable. \\
+\hline
+\mbox{\texttt{ in}}  & {\em jungseong} & The 2nd letter in the syllable. \\
+\hline
+\mbox{\texttt{ in}}  & {\em jongseong} & The 3rd letter in the syllable, or -\/1 if none. \\
+\hline
+\mbox{\texttt{ out}}  & {\em cho\+\_\+index} & Index location to the 1st letter variation from the hangul-\/base.\+hex file. \\
+\hline
+\mbox{\texttt{ out}}  & {\em jung\+\_\+index} & Index location to the 2nd letter variation from the hangul-\/base.\+hex file. \\
+\hline
+\mbox{\texttt{ out}}  & {\em jong\+\_\+index} & Index location to the 3rd letter variation from the hangul-\/base.\+hex file. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{unihangul-support_8c_source_l00249}{249}} of file \mbox{\hyperlink{unihangul-support_8c_source}{unihangul-\/support.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00251\ }
+\DoxyCodeLine{00252\ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{unihangul-support_8c_ab795ff183c3e429e0eb9257a7737c57f}{cho\_variation}},\ \mbox{\hyperlink{unihangul-support_8c_abaed5273181b15b047e92b3b79f68a4d}{jung\_variation}},\ \mbox{\hyperlink{unihangul-support_8c_aaf73601bfe34292aa58b0d827feb01d8}{jong\_variation}};\ \ \textcolor{comment}{/*\ Letter\ variations\ */}}
+\DoxyCodeLine{00253\ }
+\DoxyCodeLine{00254\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{unihangul-support_8c_a7b8f3653d0dd30a1145be38529370def}{hangul\_variations}}\ (\textcolor{keywordtype}{int}\ choseong,\ \textcolor{keywordtype}{int}\ jungseong,\ \textcolor{keywordtype}{int}\ jongseong,}
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ *\mbox{\hyperlink{unihangul-support_8c_ab795ff183c3e429e0eb9257a7737c57f}{cho\_variation}},\ \textcolor{keywordtype}{int}\ *\mbox{\hyperlink{unihangul-support_8c_abaed5273181b15b047e92b3b79f68a4d}{jung\_variation}},\ \textcolor{keywordtype}{int}\ *\mbox{\hyperlink{unihangul-support_8c_aaf73601bfe34292aa58b0d827feb01d8}{jong\_variation}});}
+\DoxyCodeLine{00256\ }
+\DoxyCodeLine{00257\ }
+\DoxyCodeLine{00258\ \ \ \ \mbox{\hyperlink{unihangul-support_8c_a7b8f3653d0dd30a1145be38529370def}{hangul\_variations}}\ (choseong,\ jungseong,\ jongseong,}
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \&\mbox{\hyperlink{unihangul-support_8c_ab795ff183c3e429e0eb9257a7737c57f}{cho\_variation}},\ \&\mbox{\hyperlink{unihangul-support_8c_abaed5273181b15b047e92b3b79f68a4d}{jung\_variation}},\ \&\mbox{\hyperlink{unihangul-support_8c_aaf73601bfe34292aa58b0d827feb01d8}{jong\_variation}});}
+\DoxyCodeLine{00260\ }
+\DoxyCodeLine{00261\ \ \ \ \ *cho\_index\ =\ \mbox{\hyperlink{hangul_8h_ab1bb63330600aa31b5fba9ac58ce171e}{CHO\_HEX}}\ +\ \ choseong\ *\ \mbox{\hyperlink{hangul_8h_a0701ea8bfe17f2b3360397b3fa8dad05}{CHO\_VARIATIONS}}\ +\ \ \mbox{\hyperlink{unihangul-support_8c_ab795ff183c3e429e0eb9257a7737c57f}{cho\_variation}};}
+\DoxyCodeLine{00262\ \ \ \ *jung\_index\ =\ \mbox{\hyperlink{hangul_8h_a2603eab2f2cae3b60e0f8a76424be923}{JUNG\_HEX}}\ \ \ \ \ \ +\ jungseong\ *\ \mbox{\hyperlink{hangul_8h_a8bcda08741a11636e3236f3d34372bcf}{JUNG\_VARIATIONS}}\ \ \ \ \ \ +\ \mbox{\hyperlink{unihangul-support_8c_abaed5273181b15b047e92b3b79f68a4d}{jung\_variation}};;}
+\DoxyCodeLine{00263\ \ \ \ *jong\_index\ =\ jongseong\ <\ 0\ ?\ 0x0000\ :}
+\DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{hangul_8h_ad4e7a6ac8160c8f5576487db53d67925}{JONG\_HEX}}\ +\ jongseong\ *\ \mbox{\hyperlink{hangul_8h_a072e34c7730814b97335b6b59b69eb41}{JONG\_VARIATIONS}}\ +\ \mbox{\hyperlink{unihangul-support_8c_aaf73601bfe34292aa58b0d827feb01d8}{jong\_variation}};}
+\DoxyCodeLine{00265\ }
+\DoxyCodeLine{00266\ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00267\ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+% FIG 8
+Here is the caller graph for this function\+:
+% FIG 9
+\mbox{\Hypertarget{unihangul-support_8c_afd372e1a400e28d1b61410187f038eec}\label{unihangul-support_8c_afd372e1a400e28d1b61410187f038eec}} 
+\index{unihangul-\/support.c@{unihangul-\/support.c}!hangul\_read\_base16@{hangul\_read\_base16}}
+\index{hangul\_read\_base16@{hangul\_read\_base16}!unihangul-\/support.c@{unihangul-\/support.c}}
+\doxysubsubsection{\texorpdfstring{hangul\_read\_base16()}{hangul\_read\_base16()}}
+{\footnotesize\ttfamily unsigned hangul\+\_\+read\+\_\+base16 (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{infp,  }\item[{unsigned}]{base\mbox{[}$\,$\mbox{]}\mbox{[}16\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Read hangul-\/base.\+hex file into a unsigned array. 
+
+Read a Hangul base .hex file with separate choseong, jungseong, and jongseong glyphs for syllable formation. The order is\+:
+
+
+\begin{DoxyItemize}
+\item Empty glyph in 0x0000 position.
+\item Initial consonants (choseong).
+\item Medial vowels and dipthongs (jungseong).
+\item Final consonants (jongseong).
+\item Individual letter forms in isolation, not for syllable formation.
+\end{DoxyItemize}
+
+The letters are arranged with all variations for one letter before continuing to the next letter. In the current encoding, there are 6 variations of choseong, 3 of jungseong, and 1 of jongseong per letter.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em Input} & file pointer; can be stdin. \\
+\hline
+\mbox{\texttt{ out}}  & {\em Array} & of bit patterns, with 16 16-\/bit values per letter. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The maximum code point value read in the file. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{unihangul-support_8c_source_l00116}{116}} of file \mbox{\hyperlink{unihangul-support_8c_source}{unihangul-\/support.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00117\ \ \ \ \textcolor{keywordtype}{unsigned}\ codept;}
+\DoxyCodeLine{00118\ \ \ \ \textcolor{keywordtype}{unsigned}\ max\_codept;}
+\DoxyCodeLine{00119\ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ i,\ j;}
+\DoxyCodeLine{00120\ \ \ \ \textcolor{keywordtype}{char}\ \ \ \ \ instring[\mbox{\hyperlink{hangul_8h_a3e937c42922f7601edb17b747602c471}{MAXLINE}}];}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ \ \ \ max\_codept\ =\ 0;}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \ \ \ \textcolor{keywordflow}{while}\ (fgets\ (instring,\ \mbox{\hyperlink{hangul_8h_a3e937c42922f7601edb17b747602c471}{MAXLINE}},\ infp)\ !=\ NULL)\ \{}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ sscanf\ (instring,\ \textcolor{stringliteral}{"{}\%X"{}},\ \&codept);}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ codept\ -\/=\ PUA\_START;}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \textcolor{comment}{/*\ If\ code\ point\ is\ within\ range,\ add\ it\ */}}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (codept\ <\ MAX\_GLYPHS)\ \{}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Find\ the\ start\ of\ the\ glyph\ bitmap.\ */}}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 1;\ instring[i]\ !=\ \textcolor{charliteral}{'\(\backslash\)0'}\ \&\&\ instring[i]\ !=\ \textcolor{charliteral}{':'};\ i++);}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (instring[i]\ ==\ \textcolor{charliteral}{':'})\ \{}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ i++;\ \ \textcolor{comment}{/*\ Skip\ over\ ':'\ to\ get\ to\ start\ of\ bitmap.\ */}}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 16;\ j++)\ \{}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sscanf\ (\&instring[i],\ \textcolor{stringliteral}{"{}\%4X"{}},\ \&base[codept][j]);}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ i\ +=\ 4;}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (codept\ >\ max\_codept)\ max\_codept\ =\ codept;}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00141\ \ \ \ \}}
+\DoxyCodeLine{00142\ }
+\DoxyCodeLine{00143\ \ \ \ \textcolor{keywordflow}{return}\ max\_codept;}
+\DoxyCodeLine{00144\ \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+% FIG 10
+\mbox{\Hypertarget{unihangul-support_8c_a0c3abd429f2b52cfa38a22ba6a83eb78}\label{unihangul-support_8c_a0c3abd429f2b52cfa38a22ba6a83eb78}} 
+\index{unihangul-\/support.c@{unihangul-\/support.c}!hangul\_read\_base8@{hangul\_read\_base8}}
+\index{hangul\_read\_base8@{hangul\_read\_base8}!unihangul-\/support.c@{unihangul-\/support.c}}
+\doxysubsubsection{\texorpdfstring{hangul\_read\_base8()}{hangul\_read\_base8()}}
+{\footnotesize\ttfamily unsigned hangul\+\_\+read\+\_\+base8 (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{infp,  }\item[{unsigned char}]{base\mbox{[}$\,$\mbox{]}\mbox{[}32\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Read hangul-\/base.\+hex file into a unsigned char array. 
+
+Read a Hangul base .hex file with separate choseong, jungseong, and jongseong glyphs for syllable formation. The order is\+:
+
+
+\begin{DoxyItemize}
+\item Empty glyph in 0x0000 position.
+\item Initial consonants (choseong).
+\item Medial vowels and dipthongs (jungseong).
+\item Final consonants (jongseong).
+\item Individual letter forms in isolation, not for syllable formation.
+\end{DoxyItemize}
+
+The letters are arranged with all variations for one letter before continuing to the next letter. In the current encoding, there are 6 variations of choseong, 3 of jungseong, and 1 of jongseong per letter.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em Input} & file pointer; can be stdin. \\
+\hline
+\mbox{\texttt{ out}}  & {\em Array} & of bit patterns, with 32 8-\/bit values per letter. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The maximum code point value read in the file. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{unihangul-support_8c_source_l00063}{63}} of file \mbox{\hyperlink{unihangul-support_8c_source}{unihangul-\/support.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00064\ \ \ \ \textcolor{keywordtype}{unsigned}\ codept;}
+\DoxyCodeLine{00065\ \ \ \ \textcolor{keywordtype}{unsigned}\ max\_codept;}
+\DoxyCodeLine{00066\ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ i,\ j;}
+\DoxyCodeLine{00067\ \ \ \ \textcolor{keywordtype}{char}\ \ \ \ \ instring[\mbox{\hyperlink{hangul_8h_a3e937c42922f7601edb17b747602c471}{MAXLINE}}];}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \ max\_codept\ =\ 0;}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \ \ \ \textcolor{keywordflow}{while}\ (fgets\ (instring,\ \mbox{\hyperlink{hangul_8h_a3e937c42922f7601edb17b747602c471}{MAXLINE}},\ infp)\ !=\ NULL)\ \{}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ sscanf\ (instring,\ \textcolor{stringliteral}{"{}\%X"{}},\ \&codept);}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ codept\ -\/=\ PUA\_START;}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \textcolor{comment}{/*\ If\ code\ point\ is\ within\ range,\ add\ it\ */}}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (codept\ <\ MAX\_GLYPHS)\ \{}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Find\ the\ start\ of\ the\ glyph\ bitmap.\ */}}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 1;\ instring[i]\ !=\ \textcolor{charliteral}{'\(\backslash\)0'}\ \&\&\ instring[i]\ !=\ \textcolor{charliteral}{':'};\ i++);}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (instring[i]\ ==\ \textcolor{charliteral}{':'})\ \{}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ i++;\ \ \textcolor{comment}{/*\ Skip\ over\ ':'\ to\ get\ to\ start\ of\ bitmap.\ */}}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 32;\ j++)\ \{}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sscanf\ (\&instring[i],\ \textcolor{stringliteral}{"{}\%2hhX"{}},\ \&base[codept][j]);}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ i\ +=\ 2;}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (codept\ >\ max\_codept)\ max\_codept\ =\ codept;}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00088\ \ \ \ \}}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \ \ \ \textcolor{keywordflow}{return}\ max\_codept;}
+\DoxyCodeLine{00091\ \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+% FIG 11
+\mbox{\Hypertarget{unihangul-support_8c_abb373afe914554ff8443f05d83b69e8e}\label{unihangul-support_8c_abb373afe914554ff8443f05d83b69e8e}} 
+\index{unihangul-\/support.c@{unihangul-\/support.c}!hangul\_syllable@{hangul\_syllable}}
+\index{hangul\_syllable@{hangul\_syllable}!unihangul-\/support.c@{unihangul-\/support.c}}
+\doxysubsubsection{\texorpdfstring{hangul\_syllable()}{hangul\_syllable()}}
+{\footnotesize\ttfamily void hangul\+\_\+syllable (\begin{DoxyParamCaption}\item[{int}]{choseong,  }\item[{int}]{jungseong,  }\item[{int}]{jongseong,  }\item[{unsigned char}]{hangul\+\_\+base\mbox{[}$\,$\mbox{]}\mbox{[}32\mbox{]},  }\item[{unsigned char $\ast$}]{syllable }\end{DoxyParamCaption})}
+
+
+
+Given letters in a Hangul syllable, return a glyph. 
+
+This function returns a glyph bitmap comprising up to three Hangul letters that form a syllable. It reads the three component letters (choseong, jungseong, and jungseong), then calls a function that determines the appropriate variation of each letter, returning the letter bitmap locations in the glyph array. Then these letter bitmaps are combined with a logical OR operation to produce a final bitmap, which forms a 16 row by 16 column bitmap glyph.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em choseong} & The 1st letter in the composite glyph. \\
+\hline
+\mbox{\texttt{ in}}  & {\em jungseong} & The 2nd letter in the composite glyph. \\
+\hline
+\mbox{\texttt{ in}}  & {\em jongseong} & The 3rd letter in the composite glyph. \\
+\hline
+\mbox{\texttt{ in}}  & {\em hangul\+\_\+base} & The glyphs read from the \char`\"{}hangul\+\_\+base.\+hex\char`\"{} file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+syllable The composite syllable, as a 16 by 16 pixel bitmap. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{unihangul-support_8c_source_l00583}{583}} of file \mbox{\hyperlink{unihangul-support_8c_source}{unihangul-\/support.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00584\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00585\ }
+\DoxyCodeLine{00586\ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ i;\ \ \textcolor{comment}{/*\ loop\ variable\ */}}
+\DoxyCodeLine{00587\ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ cho\_hex,\ jung\_hex,\ jong\_hex;}
+\DoxyCodeLine{00588\ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ glyph\_byte;}
+\DoxyCodeLine{00589\ }
+\DoxyCodeLine{00590\ }
+\DoxyCodeLine{00591\ \ \ \ \mbox{\hyperlink{unihangul-support_8c_a2f88bf9b2f6d754350f996933a0a9a65}{hangul\_hex\_indices}}\ (choseong,\ jungseong,\ jongseong,}
+\DoxyCodeLine{00592\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \&cho\_hex,\ \&jung\_hex,\ \&jong\_hex);}
+\DoxyCodeLine{00593\ }
+\DoxyCodeLine{00594\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 32;\ i++)\ \{}
+\DoxyCodeLine{00595\ \ \ \ \ \ \ glyph\_byte\ \ =\ hangul\_base\ [cho\_hex][i];}
+\DoxyCodeLine{00596\ \ \ \ \ \ \ glyph\_byte\ |=\ hangul\_base\ [jung\_hex][i];}
+\DoxyCodeLine{00597\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (jong\_hex\ >=\ 0)\ glyph\_byte\ |=\ hangul\_base\ [jong\_hex][i];}
+\DoxyCodeLine{00598\ \ \ \ \ \ \ syllable[i]\ =\ glyph\_byte;}
+\DoxyCodeLine{00599\ \ \ \ \}}
+\DoxyCodeLine{00600\ }
+\DoxyCodeLine{00601\ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00602\ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+% FIG 12
+Here is the caller graph for this function\+:
+% FIG 13
+\mbox{\Hypertarget{unihangul-support_8c_a7b8f3653d0dd30a1145be38529370def}\label{unihangul-support_8c_a7b8f3653d0dd30a1145be38529370def}} 
+\index{unihangul-\/support.c@{unihangul-\/support.c}!hangul\_variations@{hangul\_variations}}
+\index{hangul\_variations@{hangul\_variations}!unihangul-\/support.c@{unihangul-\/support.c}}
+\doxysubsubsection{\texorpdfstring{hangul\_variations()}{hangul\_variations()}}
+{\footnotesize\ttfamily void hangul\+\_\+variations (\begin{DoxyParamCaption}\item[{int}]{choseong,  }\item[{int}]{jungseong,  }\item[{int}]{jongseong,  }\item[{int $\ast$}]{cho\+\_\+var,  }\item[{int $\ast$}]{jung\+\_\+var,  }\item[{int $\ast$}]{jong\+\_\+var }\end{DoxyParamCaption})}
+
+
+
+Determine the variations of each letter in a Hangul syllable. 
+
+Given the three letters that will form a syllable, return the variation of each letter used to form the composite glyph.
+
+This function can determine variations for both modern and archaic Hangul letters; it is not limited to only the letters combinations that comprise the Unicode Hangul Syllables range.
+
+This function reads these input values for modern and ancient Hangul letters\+:
+
+
+\begin{DoxyItemize}
+\item Choseong number (0 to the number of modern and archaic choseong -\/ 1.
+\item Jungseong number (0 to the number of modern and archaic jungseong -\/ 1.
+\item Jongseong number (0 to the number of modern and archaic jongseong -\/ 1, or -\/1 if none.
+\end{DoxyItemize}
+
+It then determines the variation of each letter given the combination with the other two letters (or just choseong and jungseong if the jongseong value is -\/1).
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em choseong} & The 1st letter in the syllable. \\
+\hline
+\mbox{\texttt{ in}}  & {\em jungseong} & The 2nd letter in the syllable. \\
+\hline
+\mbox{\texttt{ in}}  & {\em jongseong} & The 3rd letter in the syllable, or -\/1 if none. \\
+\hline
+\mbox{\texttt{ out}}  & {\em cho\+\_\+var} & Variation of the 1st letter from the hangul-\/base.\+hex file. \\
+\hline
+\mbox{\texttt{ out}}  & {\em jung\+\_\+var} & Variation of the 2nd letter from the hangul-\/base.\+hex file. \\
+\hline
+\mbox{\texttt{ out}}  & {\em jong\+\_\+var} & Variation of the 3rd letter from the hangul-\/base.\+hex file. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{unihangul-support_8c_source_l00298}{298}} of file \mbox{\hyperlink{unihangul-support_8c_source}{unihangul-\/support.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00300\ }
+\DoxyCodeLine{00301\ \ \ \ \textcolor{keywordtype}{int}\ \ \mbox{\hyperlink{unihangul-support_8c_ab795ff183c3e429e0eb9257a7737c57f}{cho\_variation}}\ (\textcolor{keywordtype}{int}\ choseong,\ \textcolor{keywordtype}{int}\ jungseong,\ \textcolor{keywordtype}{int}\ jongseong);}
+\DoxyCodeLine{00302\ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{unihangul-support_8c_abaed5273181b15b047e92b3b79f68a4d}{jung\_variation}}\ (\textcolor{keywordtype}{int}\ choseong,\ \textcolor{keywordtype}{int}\ jungseong,\ \textcolor{keywordtype}{int}\ jongseong);}
+\DoxyCodeLine{00303\ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{unihangul-support_8c_aaf73601bfe34292aa58b0d827feb01d8}{jong\_variation}}\ (\textcolor{keywordtype}{int}\ choseong,\ \textcolor{keywordtype}{int}\ jungseong,\ \textcolor{keywordtype}{int}\ jongseong);}
+\DoxyCodeLine{00304\ }
+\DoxyCodeLine{00305\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00306\ \textcolor{comment}{\ \ \ \ \ \ Find\ the\ variation\ for\ each\ letter\ component.}}
+\DoxyCodeLine{00307\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{00308\ \ \ \ \ *cho\_var\ =\ \ \mbox{\hyperlink{unihangul-support_8c_ab795ff183c3e429e0eb9257a7737c57f}{cho\_variation}}\ (choseong,\ jungseong,\ jongseong);}
+\DoxyCodeLine{00309\ \ \ \ *jung\_var\ =\ \mbox{\hyperlink{unihangul-support_8c_abaed5273181b15b047e92b3b79f68a4d}{jung\_variation}}\ (choseong,\ jungseong,\ jongseong);}
+\DoxyCodeLine{00310\ \ \ \ *jong\_var\ =\ \mbox{\hyperlink{unihangul-support_8c_aaf73601bfe34292aa58b0d827feb01d8}{jong\_variation}}\ (choseong,\ jungseong,\ jongseong);}
+\DoxyCodeLine{00311\ }
+\DoxyCodeLine{00312\ }
+\DoxyCodeLine{00313\ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00314\ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+% FIG 14
+Here is the caller graph for this function\+:
+% FIG 15
+\mbox{\Hypertarget{unihangul-support_8c_a12a0a69a62e5beb75f723a0e35bb2b37}\label{unihangul-support_8c_a12a0a69a62e5beb75f723a0e35bb2b37}} 
+\index{unihangul-\/support.c@{unihangul-\/support.c}!is\_wide\_vowel@{is\_wide\_vowel}}
+\index{is\_wide\_vowel@{is\_wide\_vowel}!unihangul-\/support.c@{unihangul-\/support.c}}
+\doxysubsubsection{\texorpdfstring{is\_wide\_vowel()}{is\_wide\_vowel()}}
+{\footnotesize\ttfamily int is\+\_\+wide\+\_\+vowel (\begin{DoxyParamCaption}\item[{int}]{vowel }\end{DoxyParamCaption})}
+
+
+
+Whether vowel has rightmost vertical stroke to the right. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em vowel} & Vowel number, from 0 to TOTAL\+\_\+\+JUNG -\/ 1. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if this vowel\textquotesingle{}s vertical stroke is wide on the right side; else 0. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{unihangul-support_8c_source_l00434}{434}} of file \mbox{\hyperlink{unihangul-support_8c_source}{unihangul-\/support.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00434\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00435\ \ \ \ \textcolor{keywordtype}{int}\ retval;\ \ \textcolor{comment}{/*\ Return\ value.\ */}}
+\DoxyCodeLine{00436\ }
+\DoxyCodeLine{00437\ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ wide\_vowel\ [TOTAL\_JUNG\ +\ 1]\ =\ \{}
+\DoxyCodeLine{00438\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00439\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ Modern\ Jungseong\ in\ positions\ 0..20.}}
+\DoxyCodeLine{00440\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00441\ \textcolor{comment}{/*\ Location\ Variations\ \ Unicode\ Range\ \ \ \ Vowel\ \#\ \ \ \ Vowel\ Names\ \ */}}
+\DoxyCodeLine{00442\ \textcolor{comment}{/*\ -\/-\/-\/-\/-\/-\/-\/-\/\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ \ \ -\/-\/-\/-\/-\/-\/-\/\ \ \ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ \ */}}
+\DoxyCodeLine{00443\ \textcolor{comment}{/*\ 0x2FB\ */}\ 0,\ 1,\ 0,\ \textcolor{comment}{//\ U+1161..U+1163-\/-\/>[\ 0..\ 2]\ \ A,\ \ \ AE,\ \ YA}}
+\DoxyCodeLine{00444\ \textcolor{comment}{/*\ 0x304\ */}\ 1,\ 0,\ 1,\ \textcolor{comment}{//\ U+1164..U+1166-\/-\/>[\ 3..\ 5]\ \ YAE,\ EO,\ \ E}}
+\DoxyCodeLine{00445\ \textcolor{comment}{/*\ 0x30D\ */}\ 0,\ 1,\ \ \ \ \textcolor{comment}{//\ U+1167..U+1168-\/-\/>[\ 6..\ 7]\ \ YEO,\ YE}}
+\DoxyCodeLine{00446\ \textcolor{comment}{/*\ 0x313\ */}\ 0,\ \ \ \ \ \ \ \textcolor{comment}{//\ U+1169\ \ \ \ \ \ \ \ -\/-\/>[\ 8]\ \ \ \ \ \ O}}
+\DoxyCodeLine{00447\ \textcolor{comment}{/*\ 0x316\ */}\ 0,\ 1,\ 0,\ \textcolor{comment}{//\ U+116A..U+116C-\/-\/>[\ 9..11]\ \ WA,\ \ WAE,\ WE}}
+\DoxyCodeLine{00448\ \textcolor{comment}{/*\ 0x31F\ */}\ 0,\ 0,\ \ \ \ \textcolor{comment}{//\ U+116D..U+116E-\/-\/>[12..13]\ \ YO,\ \ U}}
+\DoxyCodeLine{00449\ \textcolor{comment}{/*\ 0x325\ */}\ 0,\ 1,\ 0,\ \textcolor{comment}{//\ U+116F..U+1171-\/-\/>[14..16]\ \ WEO,\ WE,\ \ WI}}
+\DoxyCodeLine{00450\ \textcolor{comment}{/*\ 0x32E\ */}\ 0,\ 0,\ \ \ \ \textcolor{comment}{//\ U+1172..U+1173-\/-\/>[17..18]\ \ YU,\ \ EU}}
+\DoxyCodeLine{00451\ \textcolor{comment}{/*\ 0x334\ */}\ 0,\ \ \ \ \ \ \ \textcolor{comment}{//\ U+1174\ \ \ \ \ \ \ \ -\/-\/>[19]\ \ \ \ \ \ YI}}
+\DoxyCodeLine{00452\ \textcolor{comment}{/*\ 0x337\ */}\ 0,\ \ \ \ \ \ \ \textcolor{comment}{//\ U+1175\ \ \ \ \ \ \ \ -\/-\/>[20]\ \ \ \ \ \ I}}
+\DoxyCodeLine{00453\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00454\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ Ancient\ Jungseong\ in\ positions\ 21..70.}}
+\DoxyCodeLine{00455\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00456\ \textcolor{comment}{/*\ Location\ \ Variations\ \ Unicode\ Range\ \ \ \ Vowel\ \#\ \ \ \ \ \ \ Vowel\ Names\ \ */}}
+\DoxyCodeLine{00457\ \textcolor{comment}{/*\ -\/-\/-\/-\/-\/-\/-\/-\/\ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ \ \ -\/-\/-\/-\/-\/-\/-\/\ \ \ \ \ \ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ \ */}}
+\DoxyCodeLine{00458\ \textcolor{comment}{/*\ 0x33A:\ */}\ 0,\ 0,\ 0,\ \textcolor{comment}{//\ U+1176..U+1178-\/-\/>[21..23]\ \ \ A-\/O,\ \ \ \ A-\/U,\ \ \ YA-\/O}}
+\DoxyCodeLine{00459\ \textcolor{comment}{/*\ 0x343:\ */}\ 0,\ 0,\ 0,\ \textcolor{comment}{//\ U+1179..U+117B-\/-\/>[24..26]\ \ YA-\/YO,\ \ EO-\/O,\ \ \ EU-\/U}}
+\DoxyCodeLine{00460\ \textcolor{comment}{/*\ 0x34C:\ */}\ 0,\ 0,\ 0,\ \textcolor{comment}{//\ U+117C..U+117E-\/-\/>[27..29]\ \ EO-\/EU,\ YEO-\/O,\ \ YEO-\/U}}
+\DoxyCodeLine{00461\ \textcolor{comment}{/*\ 0x355:\ */}\ 0,\ 1,\ 1,\ \textcolor{comment}{//\ U+117F..U+1181-\/-\/>[30..32]\ \ \ O-\/EO,\ \ \ O-\/E,\ \ \ \ O-\/YE,}}
+\DoxyCodeLine{00462\ \textcolor{comment}{/*\ 0x35E:\ */}\ 0,\ 0,\ 0,\ \textcolor{comment}{//\ U+1182..U+1184-\/-\/>[33..35]\ \ \ O-\/O,\ \ \ \ O-\/U,\ \ \ YO-\/YA,}}
+\DoxyCodeLine{00463\ \textcolor{comment}{/*\ 0x367:\ */}\ 1,\ 0,\ 0,\ \textcolor{comment}{//\ U+1185..U+1187-\/-\/>[36..38]\ \ YO-\/YAE,\ YO-\/YEO,\ YO-\/O,}}
+\DoxyCodeLine{00464\ \textcolor{comment}{/*\ 0x370:\ */}\ 0,\ 0,\ 1,\ \textcolor{comment}{//\ U+1188..U+118A-\/-\/>[39..41]\ \ YO-\/I,\ \ \ \ U-\/A,\ \ \ \ U-\/AE,}}
+\DoxyCodeLine{00465\ \textcolor{comment}{/*\ 0x379:\ */}\ 0,\ 1,\ 0,\ \textcolor{comment}{//\ U+118B..U+118D-\/-\/>[42..44]\ U-\/EO-\/EU,\ \ U-\/YE,\ \ \ U-\/U,}}
+\DoxyCodeLine{00466\ \textcolor{comment}{/*\ 0x382:\ */}\ 0,\ 0,\ 1,\ \textcolor{comment}{//\ U+118E..U+1190-\/-\/>[45..47]\ \ YU-\/A,\ \ \ YU-\/EO,\ \ YU-\/E,}}
+\DoxyCodeLine{00467\ \textcolor{comment}{/*\ 0x38B:\ */}\ 0,\ 1,\ 0,\ \textcolor{comment}{//\ U+1191..U+1193-\/-\/>[48..50]\ \ YU-\/YEO,\ YU-\/YE,\ \ YU-\/U,}}
+\DoxyCodeLine{00468\ \textcolor{comment}{/*\ 0x394:\ */}\ 0,\ 0,\ 0,\ \textcolor{comment}{//\ U+1194..U+1196-\/-\/>[51..53]\ \ YU-\/I,\ \ \ EU-\/U,\ \ \ EU-\/EU,}}
+\DoxyCodeLine{00469\ \textcolor{comment}{/*\ 0x39D:\ */}\ 0,\ 0,\ 0,\ \textcolor{comment}{//\ U+1197..U+1199-\/-\/>[54..56]\ \ YI-\/U,\ \ \ \ I-\/A,\ \ \ \ I-\/YA,}}
+\DoxyCodeLine{00470\ \textcolor{comment}{/*\ 0x3A6:\ */}\ 0,\ 0,\ 0,\ \textcolor{comment}{//\ U+119A..U+119C-\/-\/>[57..59]\ \ \ I-\/O,\ \ \ \ I-\/U,\ \ \ \ I-\/EU,}}
+\DoxyCodeLine{00471\ \textcolor{comment}{/*\ 0x3AF:\ */}\ 0,\ 0,\ 0,\ \textcolor{comment}{//\ U+119D..U+119F-\/-\/>[60..62]\ I-\/ARAEA,\ ARAEA,\ ARAEA-\/EO,}}
+\DoxyCodeLine{00472\ \textcolor{comment}{/*\ 0x3B8:\ */}\ 0,\ 0,\ 0,\ \textcolor{comment}{//\ U+11A0..U+11A2-\/-\/>[63..65]\ ARAEA-\/U,\ ARAEA-\/I,SSANGARAEA,}}
+\DoxyCodeLine{00473\ \textcolor{comment}{/*\ 0x3C1:\ */}\ 0,\ 0,\ 0,\ \textcolor{comment}{//\ U+11A3..U+11A5-\/-\/>[66..68]\ \ \ A-\/EU,\ \ YA-\/U,\ \ YEO-\/YA,}}
+\DoxyCodeLine{00474\ \textcolor{comment}{/*\ 0x3CA:\ */}\ 0,\ 1,\ \ \ \ \textcolor{comment}{//\ U+11A6..U+11A7-\/-\/>[69..70]\ \ \ O-\/YA,\ \ \ O-\/YAE}}
+\DoxyCodeLine{00475\ \textcolor{preprocessor}{\#ifdef\ EXTENDED\_HANGUL}}
+\DoxyCodeLine{00476\ \textcolor{comment}{/*\ 0x3D0:\ */}\ 0,\ 0,\ 0,\ \textcolor{comment}{//\ U+D7B0..U+D7B2-\/-\/>[71..73]\ \ \ O-\/YEO,\ \ O-\/O-\/I,\ YO-\/A,}}
+\DoxyCodeLine{00477\ \textcolor{comment}{/*\ 0x3D9:\ */}\ 1,\ 0,\ 0,\ \textcolor{comment}{//\ U+D7B3..U+D7B5-\/-\/>[74..76]\ \ YO-\/AE,\ \ YO-\/EO,\ \ \ U-\/YEO,}}
+\DoxyCodeLine{00478\ \textcolor{comment}{/*\ 0x3E2:\ */}\ 1,\ 1,\ 0,\ \textcolor{comment}{//\ U+D7B6..U+D7B8-\/-\/>[77..79]\ \ \ U-\/I-\/I,\ YU-\/AE,\ \ YU-\/O,}}
+\DoxyCodeLine{00479\ \textcolor{comment}{/*\ 0x3EB:\ */}\ 0,\ 0,\ 1,\ \textcolor{comment}{//\ U+D7B9..U+D7BB-\/-\/>[80..82]\ \ EU-\/A,\ \ \ EU-\/EO,\ \ EU-\/E,}}
+\DoxyCodeLine{00480\ \textcolor{comment}{/*\ 0x3F4:\ */}\ 0,\ 0,\ 1,\ \textcolor{comment}{//\ U+D7BC..U+D7BE-\/-\/>[83..85]\ \ EU-\/O,\ \ \ \ I-\/YA-\/O,\ I-\/YAE,}}
+\DoxyCodeLine{00481\ \textcolor{comment}{/*\ 0x3FD:\ */}\ 0,\ 1,\ 0,\ \textcolor{comment}{//\ U+D7BF..U+D7C1-\/-\/>[86..88]\ \ \ I-\/YEO,\ \ I-\/YE,\ \ \ I-\/O-\/I,}}
+\DoxyCodeLine{00482\ \textcolor{comment}{/*\ 0x406:\ */}\ 0,\ 0,\ 1,\ \textcolor{comment}{//\ U+D7C2..U+D7C4-\/-\/>[89..91]\ \ \ I-\/YO,\ \ \ I-\/YU,\ \ \ I-\/I,}}
+\DoxyCodeLine{00483\ \textcolor{comment}{/*\ 0x40F:\ */}\ 0,\ 1,\ \ \ \ \textcolor{comment}{//\ U+D7C5..U+D7C6-\/-\/>[92..93]\ ARAEA-\/A,\ ARAEA-\/E,}}
+\DoxyCodeLine{00484\ \textcolor{comment}{/*\ 0x415:\ */}\ -\/1\ \ \ \ \ \ \ \textcolor{comment}{//\ Mark\ end\ of\ list\ of\ vowels.}}
+\DoxyCodeLine{00485\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00486\ \textcolor{comment}{/*\ 0x310:\ */}\ -\/1\ \ \ \ \ \ \ \textcolor{comment}{//\ Mark\ end\ of\ list\ of\ vowels.}}
+\DoxyCodeLine{00487\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00488\ \ \ \ \};}
+\DoxyCodeLine{00489\ }
+\DoxyCodeLine{00490\ }
+\DoxyCodeLine{00491\ \ \ \ \textcolor{keywordflow}{if}\ (vowel\ >=\ 0\ \&\&\ vowel\ <\ TOTAL\_JUNG)\ \{}
+\DoxyCodeLine{00492\ \ \ \ \ \ \ retval\ =\ wide\_vowel\ [vowel];}
+\DoxyCodeLine{00493\ \ \ \ \}}
+\DoxyCodeLine{00494\ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00495\ \ \ \ \ \ \ retval\ =\ 0;}
+\DoxyCodeLine{00496\ \ \ \ \}}
+\DoxyCodeLine{00497\ }
+\DoxyCodeLine{00498\ }
+\DoxyCodeLine{00499\ \ \ \ \textcolor{keywordflow}{return}\ retval;}
+\DoxyCodeLine{00500\ \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+% FIG 16
+\mbox{\Hypertarget{unihangul-support_8c_aaf73601bfe34292aa58b0d827feb01d8}\label{unihangul-support_8c_aaf73601bfe34292aa58b0d827feb01d8}} 
+\index{unihangul-\/support.c@{unihangul-\/support.c}!jong\_variation@{jong\_variation}}
+\index{jong\_variation@{jong\_variation}!unihangul-\/support.c@{unihangul-\/support.c}}
+\doxysubsubsection{\texorpdfstring{jong\_variation()}{jong\_variation()}}
+{\footnotesize\ttfamily int jong\+\_\+variation (\begin{DoxyParamCaption}\item[{int}]{choseong,  }\item[{int}]{jungseong,  }\item[{int}]{jongseong }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Return the Johab 6/3/1 jongseong variation. 
+
+There is only one jongseong variation, so this function always returns 0. It is a placeholder function for possible future adaptation to other johab encodings.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em choseong} & The 1st letter in the syllable. \\
+\hline
+\mbox{\texttt{ in}}  & {\em jungseong} & The 2nd letter in the syllable. \\
+\hline
+\mbox{\texttt{ in}}  & {\em jongseong} & The 3rd letter in the syllable. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The jongseong variation, always 0. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{unihangul-support_8c_source_l00558}{558}} of file \mbox{\hyperlink{unihangul-support_8c_source}{unihangul-\/support.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00558\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00559\ }
+\DoxyCodeLine{00560\ \ \ \ \textcolor{keywordflow}{return}\ 0;\ \ \textcolor{comment}{/*\ There\ is\ only\ one\ Jongseong\ variation.\ */}}
+\DoxyCodeLine{00561\ \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+% FIG 17
+\mbox{\Hypertarget{unihangul-support_8c_abaed5273181b15b047e92b3b79f68a4d}\label{unihangul-support_8c_abaed5273181b15b047e92b3b79f68a4d}} 
+\index{unihangul-\/support.c@{unihangul-\/support.c}!jung\_variation@{jung\_variation}}
+\index{jung\_variation@{jung\_variation}!unihangul-\/support.c@{unihangul-\/support.c}}
+\doxysubsubsection{\texorpdfstring{jung\_variation()}{jung\_variation()}}
+{\footnotesize\ttfamily int jung\+\_\+variation (\begin{DoxyParamCaption}\item[{int}]{choseong,  }\item[{int}]{jungseong,  }\item[{int}]{jongseong }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Return the Johab 6/3/1 jungseong variation. 
+
+This function takes the two or three (if jongseong is included) letters that comprise a syllable and determine the variation of the vowel (jungseong).
+
+Each jungseong has 3 variations\+:
+
+Variation Occurrence \DoxyHorRuler{0}
+ 0 Jungseong with only chungseong (no jungseong). 1 Jungseong with chungseong and jungseong (except nieun). 2 Jungseong with chungseong and jungseong nieun.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em choseong} & The 1st letter in the syllable. \\
+\hline
+\mbox{\texttt{ in}}  & {\em jungseong} & The 2nd letter in the syllable. \\
+\hline
+\mbox{\texttt{ in}}  & {\em jongseong} & The 3rd letter in the syllable. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The jungseong variation, 0 to 2. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{unihangul-support_8c_source_l00524}{524}} of file \mbox{\hyperlink{unihangul-support_8c_source}{unihangul-\/support.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00524\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00525\ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{unihangul-support_8c_abaed5273181b15b047e92b3b79f68a4d}{jung\_variation}};\ \ \textcolor{comment}{/*\ Return\ value\ */}}
+\DoxyCodeLine{00526\ }
+\DoxyCodeLine{00527\ \ \ \ \textcolor{keywordflow}{if}\ (jungseong\ <\ 0)\ \{}
+\DoxyCodeLine{00528\ \ \ \ \ \ \ \mbox{\hyperlink{unihangul-support_8c_abaed5273181b15b047e92b3b79f68a4d}{jung\_variation}}\ =\ -\/1;}
+\DoxyCodeLine{00529\ \ \ \ \}}
+\DoxyCodeLine{00530\ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00531\ \ \ \ \ \ \ \mbox{\hyperlink{unihangul-support_8c_abaed5273181b15b047e92b3b79f68a4d}{jung\_variation}}\ =\ 0;}
+\DoxyCodeLine{00532\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (jongseong\ >=\ 0)\ \{}
+\DoxyCodeLine{00533\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (jongseong\ ==\ 3)}
+\DoxyCodeLine{00534\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unihangul-support_8c_abaed5273181b15b047e92b3b79f68a4d}{jung\_variation}}\ =\ 2;\ \ \textcolor{comment}{/*\ Vowel\ for\ final\ Nieun.\ */}}
+\DoxyCodeLine{00535\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00536\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unihangul-support_8c_abaed5273181b15b047e92b3b79f68a4d}{jung\_variation}}\ =\ 1;}
+\DoxyCodeLine{00537\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00538\ \ \ \ \}}
+\DoxyCodeLine{00539\ }
+\DoxyCodeLine{00540\ }
+\DoxyCodeLine{00541\ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{unihangul-support_8c_abaed5273181b15b047e92b3b79f68a4d}{jung\_variation}};}
+\DoxyCodeLine{00542\ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+% FIG 18
+Here is the caller graph for this function\+:
+% FIG 19
+\mbox{\Hypertarget{unihangul-support_8c_a069b03f528213c0d14b78e5d4d61eccc}\label{unihangul-support_8c_a069b03f528213c0d14b78e5d4d61eccc}} 
+\index{unihangul-\/support.c@{unihangul-\/support.c}!one\_jamo@{one\_jamo}}
+\index{one\_jamo@{one\_jamo}!unihangul-\/support.c@{unihangul-\/support.c}}
+\doxysubsubsection{\texorpdfstring{one\_jamo()}{one\_jamo()}}
+{\footnotesize\ttfamily void one\+\_\+jamo (\begin{DoxyParamCaption}\item[{unsigned}]{glyph\+\_\+table\mbox{[}\+MAX\+\_\+\+GLYPHS\mbox{]}\mbox{[}16\mbox{]},  }\item[{unsigned}]{jamo,  }\item[{unsigned $\ast$}]{jamo\+\_\+glyph }\end{DoxyParamCaption})}
+
+
+
+Convert Hangul Jamo choseong, jungseong, and jongseong into a glyph. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em glyph\+\_\+table} & The collection of all jamo glyphs. \\
+\hline
+\mbox{\texttt{ in}}  & {\em jamo} & The Unicode code point, 0 or 0x1100..0x115F. \\
+\hline
+\mbox{\texttt{ out}}  & {\em jamo\+\_\+glyph} & The output glyph, 16 columns in each of 16 rows. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{unihangul-support_8c_source_l00717}{717}} of file \mbox{\hyperlink{unihangul-support_8c_source}{unihangul-\/support.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00718\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00719\ }
+\DoxyCodeLine{00720\ \ \ \ \textcolor{keywordtype}{int}\ i;\ \ \textcolor{comment}{/*\ Loop\ variable\ */}}
+\DoxyCodeLine{00721\ \ \ \ \textcolor{keywordtype}{int}\ glyph\_index;\ \ \textcolor{comment}{/*\ Location\ of\ glyph\ in\ "{}hangul-\/base.hex"{}\ array\ */}}
+\DoxyCodeLine{00722\ }
+\DoxyCodeLine{00723\ }
+\DoxyCodeLine{00724\ \ \ \ \textcolor{comment}{/*\ If\ jamo\ is\ invalid\ range,\ use\ blank\ glyph,\ */}}
+\DoxyCodeLine{00725\ \ \ \ \textcolor{keywordflow}{if}\ (jamo\ >=\ 0x1100\ \&\&\ jamo\ <=\ 0x11FF)\ \{}
+\DoxyCodeLine{00726\ \ \ \ \ \ \ glyph\_index\ =\ jamo\ -\/\ 0x1100\ +\ \mbox{\hyperlink{hangul_8h_a5c0a9fd787bd30260ef97abe55e295dc}{JAMO\_HEX}};}
+\DoxyCodeLine{00727\ \ \ \ \}}
+\DoxyCodeLine{00728\ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (jamo\ >=\ 0xA960\ \&\&\ jamo\ <=\ 0xA97F)\ \{}
+\DoxyCodeLine{00729\ \ \ \ \ \ \ glyph\_index\ =\ jamo\ -\/\ 0xA960\ +\ \mbox{\hyperlink{hangul_8h_a1b60e6f04df1309e5ce72473acc4a634}{JAMO\_EXTA\_HEX}};}
+\DoxyCodeLine{00730\ \ \ \ \}}
+\DoxyCodeLine{00731\ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (jamo\ >=\ 0xD7B0\ \&\&\ jamo\ <=\ 0xD7FF)\ \{}
+\DoxyCodeLine{00732\ \ \ \ \ \ \ glyph\_index\ =\ jamo\ -\/\ 0x1100\ +\ \mbox{\hyperlink{hangul_8h_a125dae990f98e245a98c0df6b158ce69}{JAMO\_EXTB\_HEX}};}
+\DoxyCodeLine{00733\ \ \ \ \}}
+\DoxyCodeLine{00734\ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00735\ \ \ \ \ \ \ glyph\_index\ =\ 0;}
+\DoxyCodeLine{00736\ \ \ \ \}}
+\DoxyCodeLine{00737\ }
+\DoxyCodeLine{00738\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 16;\ i++)\ \{}
+\DoxyCodeLine{00739\ \ \ \ \ \ \ jamo\_glyph\ [i]\ =\ glyph\_table\ [glyph\_index]\ [i];}
+\DoxyCodeLine{00740\ \ \ \ \}}
+\DoxyCodeLine{00741\ }
+\DoxyCodeLine{00742\ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00743\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{unihangul-support_8c_a056fdfdb02eeccd48026c05ccb200435}\label{unihangul-support_8c_a056fdfdb02eeccd48026c05ccb200435}} 
+\index{unihangul-\/support.c@{unihangul-\/support.c}!print\_glyph\_hex@{print\_glyph\_hex}}
+\index{print\_glyph\_hex@{print\_glyph\_hex}!unihangul-\/support.c@{unihangul-\/support.c}}
+\doxysubsubsection{\texorpdfstring{print\_glyph\_hex()}{print\_glyph\_hex()}}
+{\footnotesize\ttfamily void print\+\_\+glyph\+\_\+hex (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{fp,  }\item[{unsigned}]{codept,  }\item[{unsigned $\ast$}]{this\+\_\+glyph }\end{DoxyParamCaption})}
+
+
+
+Print one glyph in Unifont hexdraw hexadecimal string style. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em fp} & The file pointer for output. \\
+\hline
+\mbox{\texttt{ in}}  & {\em codept} & The Unicode code point to print with the glyph. \\
+\hline
+\mbox{\texttt{ in}}  & {\em this\+\_\+glyph} & The 16-\/row by 16-\/column glyph to print. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{unihangul-support_8c_source_l00692}{692}} of file \mbox{\hyperlink{unihangul-support_8c_source}{unihangul-\/support.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00692\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00693\ }
+\DoxyCodeLine{00694\ \ \ \ \textcolor{keywordtype}{int}\ i;}
+\DoxyCodeLine{00695\ }
+\DoxyCodeLine{00696\ }
+\DoxyCodeLine{00697\ \ \ \ fprintf\ (fp,\ \textcolor{stringliteral}{"{}\%04X:"{}},\ codept);}
+\DoxyCodeLine{00698\ }
+\DoxyCodeLine{00699\ \ \ \ \textcolor{comment}{/*\ for\ each\ this\_glyph\ row\ */}}
+\DoxyCodeLine{00700\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 16;\ i++)\ \{}
+\DoxyCodeLine{00701\ \ \ \ \ \ \ fprintf\ (fp,\ \textcolor{stringliteral}{"{}\%04X"{}},\ this\_glyph[i]);}
+\DoxyCodeLine{00702\ \ \ \ \}}
+\DoxyCodeLine{00703\ \ \ \ fputc\ (\textcolor{charliteral}{'\(\backslash\)n'},\ fp);}
+\DoxyCodeLine{00704\ \ \ \ }
+\DoxyCodeLine{00705\ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00706\ \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+% FIG 20
+\mbox{\Hypertarget{unihangul-support_8c_a0b8d4a416ad7bb42a332332c7ba86da8}\label{unihangul-support_8c_a0b8d4a416ad7bb42a332332c7ba86da8}} 
+\index{unihangul-\/support.c@{unihangul-\/support.c}!print\_glyph\_txt@{print\_glyph\_txt}}
+\index{print\_glyph\_txt@{print\_glyph\_txt}!unihangul-\/support.c@{unihangul-\/support.c}}
+\doxysubsubsection{\texorpdfstring{print\_glyph\_txt()}{print\_glyph\_txt()}}
+{\footnotesize\ttfamily void print\+\_\+glyph\+\_\+txt (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{fp,  }\item[{unsigned}]{codept,  }\item[{unsigned $\ast$}]{this\+\_\+glyph }\end{DoxyParamCaption})}
+
+
+
+Print one glyph in Unifont hexdraw plain text style. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em fp} & The file pointer for output. \\
+\hline
+\mbox{\texttt{ in}}  & {\em codept} & The Unicode code point to print with the glyph. \\
+\hline
+\mbox{\texttt{ in}}  & {\em this\+\_\+glyph} & The 16-\/row by 16-\/column glyph to print. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{unihangul-support_8c_source_l00656}{656}} of file \mbox{\hyperlink{unihangul-support_8c_source}{unihangul-\/support.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00656\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00657\ \ \ \ \textcolor{keywordtype}{int}\ i;}
+\DoxyCodeLine{00658\ \ \ \ \textcolor{keywordtype}{unsigned}\ mask;}
+\DoxyCodeLine{00659\ }
+\DoxyCodeLine{00660\ }
+\DoxyCodeLine{00661\ \ \ \ fprintf\ (fp,\ \textcolor{stringliteral}{"{}\%04X:"{}},\ codept);}
+\DoxyCodeLine{00662\ }
+\DoxyCodeLine{00663\ \ \ \ \textcolor{comment}{/*\ for\ each\ this\_glyph\ row\ */}}
+\DoxyCodeLine{00664\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 16;\ i++)\ \{}
+\DoxyCodeLine{00665\ \ \ \ \ \ \ mask\ =\ 0x8000;}
+\DoxyCodeLine{00666\ \ \ \ \ \ \ fputc\ (\textcolor{charliteral}{'\(\backslash\)t'},\ fp);}
+\DoxyCodeLine{00667\ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (mask\ !=\ 0x0000)\ \{}
+\DoxyCodeLine{00668\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mask\ \&\ this\_glyph\ [i])\ \{}
+\DoxyCodeLine{00669\ \ \ \ \ \ \ \ \ \ \ \ \ fputc\ (\textcolor{charliteral}{'\#'},\ fp);}
+\DoxyCodeLine{00670\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00671\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00672\ \ \ \ \ \ \ \ \ \ \ \ \ fputc\ (\textcolor{charliteral}{'-\/'},\ fp);}
+\DoxyCodeLine{00673\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00674\ \ \ \ \ \ \ \ \ \ mask\ >>=\ 1;\ \ \textcolor{comment}{/*\ shift\ to\ next\ bit\ in\ this\_glyph\ row\ */}}
+\DoxyCodeLine{00675\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00676\ \ \ \ \ \ \ fputc\ (\textcolor{charliteral}{'\(\backslash\)n'},\ fp);}
+\DoxyCodeLine{00677\ \ \ \ \}}
+\DoxyCodeLine{00678\ \ \ \ fputc\ (\textcolor{charliteral}{'\(\backslash\)n'},\ fp);}
+\DoxyCodeLine{00679\ \ \ \ }
+\DoxyCodeLine{00680\ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00681\ \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+% FIG 21

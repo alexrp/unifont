@@ -1,0 +1,380 @@
+\hypertarget{unifont-support_8c}{}\doxysection{src/unifont-\/support.c File Reference}
+\label{unifont-support_8c}\index{src/unifont-\/support.c@{src/unifont-\/support.c}}
+
+
+\+: Support functions for Unifont .hex files.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+Include dependency graph for unifont-\/support.c\+:
+% FIG 0
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{unifont-support_8c_ac9dc2e18133dd52df3d7a09122f63c5f}{parse\+\_\+hex}} (char $\ast$hexstring, int $\ast$width, unsigned $\ast$codept, unsigned char glyph\mbox{[}16\mbox{]}\mbox{[}2\mbox{]})
+\begin{DoxyCompactList}\small\item\em Decode a Unifont .hex file into Uniocde code point and glyph. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{unifont-support_8c_a2eeb053259792aa3fb7ff53813f7d7e4}{glyph2bits}} (int width, unsigned char glyph\mbox{[}16\mbox{]}\mbox{[}2\mbox{]}, unsigned char glyphbits\mbox{[}16\mbox{]}\mbox{[}16\mbox{]})
+\begin{DoxyCompactList}\small\item\em Convert a Unifont binary glyph into a binary glyph array of bits. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{unifont-support_8c_a0156000204eb606b3288854b0a38acf0}{hexpose}} (int width, unsigned char glyphbits\mbox{[}16\mbox{]}\mbox{[}16\mbox{]}, unsigned char transpose\mbox{[}2\mbox{]}\mbox{[}16\mbox{]})
+\begin{DoxyCompactList}\small\item\em Transpose a Unifont .hex format glyph into 2 column-\/major sub-\/arrays. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{unifont-support_8c_ad5e42b72976f20fc70b2a837d3f2d654}{glyph2string}} (int width, unsigned codept, unsigned char glyph\mbox{[}16\mbox{]}\mbox{[}2\mbox{]}, char $\ast$outstring)
+\begin{DoxyCompactList}\small\item\em Convert a glyph code point and byte array into a Unifont .hex string. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{unifont-support_8c_a9292d6df99f93635cc891baaf8f66346}{xglyph2string}} (int width, unsigned codept, unsigned char transpose\mbox{[}2\mbox{]}\mbox{[}16\mbox{]}, char $\ast$outstring)
+\begin{DoxyCompactList}\small\item\em Convert a code point and transposed glyph into a Unifont .hex string. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\+: Support functions for Unifont .hex files. 
+
+\begin{DoxyAuthor}{Author}
+Paul Hardy
+\end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+Copyright © 2023 Paul Hardy 
+\end{DoxyCopyright}
+
+
+Definition in file \mbox{\hyperlink{unifont-support_8c_source}{unifont-\/support.\+c}}.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{unifont-support_8c_a2eeb053259792aa3fb7ff53813f7d7e4}\label{unifont-support_8c_a2eeb053259792aa3fb7ff53813f7d7e4}} 
+\index{unifont-\/support.c@{unifont-\/support.c}!glyph2bits@{glyph2bits}}
+\index{glyph2bits@{glyph2bits}!unifont-\/support.c@{unifont-\/support.c}}
+\doxysubsubsection{\texorpdfstring{glyph2bits()}{glyph2bits()}}
+{\footnotesize\ttfamily void glyph2bits (\begin{DoxyParamCaption}\item[{int}]{width,  }\item[{unsigned char}]{glyph\mbox{[}16\mbox{]}\mbox{[}2\mbox{]},  }\item[{unsigned char}]{glyphbits\mbox{[}16\mbox{]}\mbox{[}16\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Convert a Unifont binary glyph into a binary glyph array of bits. 
+
+This function takes a Unifont 16-\/row by 1-\/ or 2-\/byte wide binary glyph and returns an array of 16 rows by 16 columns. For each output array element, a 1 indicates the corresponding bit was set in the binary glyph, and a 0 indicates the corresponding bit was not set.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em width} & The number of columns in the glyph. \\
+\hline
+\mbox{\texttt{ in}}  & {\em glyph} & The binary glyph, as a 16-\/row by 2-\/byte array. \\
+\hline
+\mbox{\texttt{ out}}  & {\em glyphbits} & The converted glyph, as a 16-\/row, 16-\/column array. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{unifont-support_8c_source_l00091}{91}} of file \mbox{\hyperlink{unifont-support_8c_source}{unifont-\/support.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ tmp\_byte;}
+\DoxyCodeLine{00096\ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ mask;}
+\DoxyCodeLine{00097\ \ \ \ \textcolor{keywordtype}{int}\ row,\ column;}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \ \ \ \textcolor{keywordflow}{for}\ (row\ =\ 0;\ row\ <\ 16;\ row++)\ \{}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ tmp\_byte\ =\ glyph\ [row][0];}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ mask\ =\ 0x80;}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (column\ =\ 0;\ column\ <\ 8;\ column++)\ \{}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ glyphbits\ [row][column]\ =\ tmp\_byte\ \&\ mask\ ?\ 1\ :\ 0;}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ mask\ >>=\ 1;}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (width\ >\ 8)}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ tmp\_byte\ =\ glyph\ [row][1];}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ tmp\_byte\ =\ 0x00;}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ \ \ \ \ \ \ mask\ =\ 0x80;}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (column\ =\ 8;\ column\ <\ 16;\ column++)\ \{}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ glyphbits\ [row][column]\ =\ tmp\_byte\ \&\ mask\ ?\ 1\ :\ 0;}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ mask\ >>=\ 1;}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00117\ \ \ \ \}}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00121\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{unifont-support_8c_ad5e42b72976f20fc70b2a837d3f2d654}\label{unifont-support_8c_ad5e42b72976f20fc70b2a837d3f2d654}} 
+\index{unifont-\/support.c@{unifont-\/support.c}!glyph2string@{glyph2string}}
+\index{glyph2string@{glyph2string}!unifont-\/support.c@{unifont-\/support.c}}
+\doxysubsubsection{\texorpdfstring{glyph2string()}{glyph2string()}}
+{\footnotesize\ttfamily void glyph2string (\begin{DoxyParamCaption}\item[{int}]{width,  }\item[{unsigned}]{codept,  }\item[{unsigned char}]{glyph\mbox{[}16\mbox{]}\mbox{[}2\mbox{]},  }\item[{char $\ast$}]{outstring }\end{DoxyParamCaption})}
+
+
+
+Convert a glyph code point and byte array into a Unifont .hex string. 
+
+This function takes a code point and a 16-\/row by 1-\/ or 2-\/byte binary glyph, and converts it into a Unifont .hex format character array.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em width} & The number of columns in the glyph. \\
+\hline
+\mbox{\texttt{ in}}  & {\em codept} & The code point to appear in the output .hex string. \\
+\hline
+\mbox{\texttt{ in}}  & {\em glyph} & The glyph, with each of 16 rows 1 or 2 bytes wide. \\
+\hline
+\mbox{\texttt{ out}}  & {\em outstring} & The output string, in Unifont .hex format. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{unifont-support_8c_source_l00221}{221}} of file \mbox{\hyperlink{unifont-support_8c_source}{unifont-\/support.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00224\ }
+\DoxyCodeLine{00225\ \ \ \ \textcolor{keywordtype}{int}\ i;\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ index\ into\ outstring\ array\ */}}
+\DoxyCodeLine{00226\ \ \ \ \textcolor{keywordtype}{int}\ row;}
+\DoxyCodeLine{00227\ }
+\DoxyCodeLine{00228\ \ \ \ \textcolor{keywordflow}{if}\ (codept\ <=\ 0xFFFF)\ \{}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ sprintf\ (outstring,\ \textcolor{stringliteral}{"{}\%04X:"{}},\ codept);}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ i\ =\ 5;}
+\DoxyCodeLine{00231\ \ \ \ \}}
+\DoxyCodeLine{00232\ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ sprintf\ (outstring,\ \textcolor{stringliteral}{"{}\%06X:"{}},\ codept);}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ i\ =\ 7;}
+\DoxyCodeLine{00235\ \ \ \ \}}
+\DoxyCodeLine{00236\ }
+\DoxyCodeLine{00237\ \ \ \ \textcolor{keywordflow}{for}\ (row\ =\ 0;\ row\ <\ 16;\ row++)\ \{}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ sprintf\ (\&outstring[i],\ \textcolor{stringliteral}{"{}\%02X"{}},\ glyph\ [row][0]);}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ i\ +=\ 2;}
+\DoxyCodeLine{00240\ }
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (width\ >\ 8)\ \{}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \ sprintf\ (\&outstring[i],\ \textcolor{stringliteral}{"{}\%02X"{}},\ glyph\ [row][1]);}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \ i\ +=\ 2;}
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00245\ \ \ \ \}}
+\DoxyCodeLine{00246\ }
+\DoxyCodeLine{00247\ \ \ \ outstring[i]\ =\ \textcolor{charliteral}{'\(\backslash\)0'};\ \ \textcolor{comment}{/*\ terminate\ output\ string\ */}}
+\DoxyCodeLine{00248\ \ \ }
+\DoxyCodeLine{00249\ }
+\DoxyCodeLine{00250\ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00251\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{unifont-support_8c_a0156000204eb606b3288854b0a38acf0}\label{unifont-support_8c_a0156000204eb606b3288854b0a38acf0}} 
+\index{unifont-\/support.c@{unifont-\/support.c}!hexpose@{hexpose}}
+\index{hexpose@{hexpose}!unifont-\/support.c@{unifont-\/support.c}}
+\doxysubsubsection{\texorpdfstring{hexpose()}{hexpose()}}
+{\footnotesize\ttfamily void hexpose (\begin{DoxyParamCaption}\item[{int}]{width,  }\item[{unsigned char}]{glyphbits\mbox{[}16\mbox{]}\mbox{[}16\mbox{]},  }\item[{unsigned char}]{transpose\mbox{[}2\mbox{]}\mbox{[}16\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Transpose a Unifont .hex format glyph into 2 column-\/major sub-\/arrays. 
+
+This function takes a 16-\/by-\/16 cell bit array made from a Unifont glyph (as created by the glyph2bits function) and outputs a transposed array of 2 sets of 8 or 16 columns, depending on the glyph width. This format simplifies outputting these bit patterns on a graphics display with a controller chip designed to output a column of 8 pixels at a time.
+
+For a line of text with Unifont output, first all glyphs can have their first 8 rows of pixels displayed on a line. Then the second 8 rows of all glyphs on the line can be displayed. This simplifies code for such controller chips that are designed to automatically increment input bytes of column data by one column at a time for each successive byte.
+
+The glyphbits array contains a \textquotesingle{}1\textquotesingle{} in each cell where the corresponding non-\/transposed glyph has a pixel set, and 0 in each cell where a pixel is not set.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em width} & The number of columns in the glyph. \\
+\hline
+\mbox{\texttt{ in}}  & {\em glyphbits} & The 16-\/by-\/16 pixel glyph bits. \\
+\hline
+\mbox{\texttt{ out}}  & {\em transpose} & The array of 2 sets of 8 ot 16 columns of 8 pixels. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{unifont-support_8c_source_l00150}{150}} of file \mbox{\hyperlink{unifont-support_8c_source}{unifont-\/support.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00154\ \ \ \ \textcolor{keywordtype}{int}\ column;}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00156\ }
+\DoxyCodeLine{00157\ \ \ \ \textcolor{keywordflow}{for}\ (column\ =\ 0;\ column\ <\ 8;\ column++)\ \{}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ transpose\ [0][column]\ =}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (glyphbits\ [\ 0][column]\ <<\ 7)\ |}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (glyphbits\ [\ 1][column]\ <<\ 6)\ |}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (glyphbits\ [\ 2][column]\ <<\ 5)\ |}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (glyphbits\ [\ 3][column]\ <<\ 4)\ |}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (glyphbits\ [\ 4][column]\ <<\ 3)\ |}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (glyphbits\ [\ 5][column]\ <<\ 2)\ |}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (glyphbits\ [\ 6][column]\ <<\ 1)\ |}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (glyphbits\ [\ 7][column]\ \ \ \ \ );}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ transpose\ [1][column]\ =}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (glyphbits\ [\ 8][column]\ <<\ 7)\ |}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (glyphbits\ [\ 9][column]\ <<\ 6)\ |}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (glyphbits\ [10][column]\ <<\ 5)\ |}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (glyphbits\ [11][column]\ <<\ 4)\ |}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (glyphbits\ [12][column]\ <<\ 3)\ |}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (glyphbits\ [13][column]\ <<\ 2)\ |}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (glyphbits\ [14][column]\ <<\ 1)\ |}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (glyphbits\ [15][column]\ \ \ \ \ );}
+\DoxyCodeLine{00176\ \ \ \ \}}
+\DoxyCodeLine{00177\ \ \ \ \textcolor{keywordflow}{if}\ (width\ >\ 8)\ \{}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (column\ =\ 8;\ column\ <\ width;\ column++)\ \{}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ transpose\ [0][column]\ =}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (glyphbits\ [0][column]\ <<\ 7)\ |}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (glyphbits\ [1][column]\ <<\ 6)\ |}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (glyphbits\ [2][column]\ <<\ 5)\ |}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (glyphbits\ [3][column]\ <<\ 4)\ |}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (glyphbits\ [4][column]\ <<\ 3)\ |}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (glyphbits\ [5][column]\ <<\ 2)\ |}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (glyphbits\ [6][column]\ <<\ 1)\ |}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (glyphbits\ [7][column]\ \ \ \ \ );}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \ transpose\ [1][column]\ =}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (glyphbits\ [\ 8][column]\ <<\ 7)\ |}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (glyphbits\ [\ 9][column]\ <<\ 6)\ |}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (glyphbits\ [10][column]\ <<\ 5)\ |}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (glyphbits\ [11][column]\ <<\ 4)\ |}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (glyphbits\ [12][column]\ <<\ 3)\ |}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (glyphbits\ [13][column]\ <<\ 2)\ |}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (glyphbits\ [14][column]\ <<\ 1)\ |}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (glyphbits\ [15][column]\ \ \ \ \ );}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00198\ \ \ \ \}}
+\DoxyCodeLine{00199\ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (column\ =\ 8;\ column\ <\ width;\ column++)}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \ transpose\ [0][column]\ =\ transpose\ [1][column]\ =\ 0x00;}
+\DoxyCodeLine{00202\ \ \ \ \}}
+\DoxyCodeLine{00203\ }
+\DoxyCodeLine{00204\ }
+\DoxyCodeLine{00205\ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00206\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{unifont-support_8c_ac9dc2e18133dd52df3d7a09122f63c5f}\label{unifont-support_8c_ac9dc2e18133dd52df3d7a09122f63c5f}} 
+\index{unifont-\/support.c@{unifont-\/support.c}!parse\_hex@{parse\_hex}}
+\index{parse\_hex@{parse\_hex}!unifont-\/support.c@{unifont-\/support.c}}
+\doxysubsubsection{\texorpdfstring{parse\_hex()}{parse\_hex()}}
+{\footnotesize\ttfamily void parse\+\_\+hex (\begin{DoxyParamCaption}\item[{char $\ast$}]{hexstring,  }\item[{int $\ast$}]{width,  }\item[{unsigned $\ast$}]{codept,  }\item[{unsigned char}]{glyph\mbox{[}16\mbox{]}\mbox{[}2\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Decode a Unifont .hex file into Uniocde code point and glyph. 
+
+This function takes one line from a Unifont .hex file and decodes it into a code point followed by a 16-\/row glyph array. The glyph array can be one byte (8 columns) or two bytes (16 columns).
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em hexstring} & The Unicode .hex string for one code point. \\
+\hline
+\mbox{\texttt{ out}}  & {\em width} & The number of columns in a glyph with 16 rows. \\
+\hline
+\mbox{\texttt{ out}}  & {\em codept} & The code point, contained in the first .hex file field. \\
+\hline
+\mbox{\texttt{ out}}  & {\em glyph} & The Unifont glyph, as 16 rows by 1 or 2 bytes wide. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{unifont-support_8c_source_l00044}{44}} of file \mbox{\hyperlink{unifont-support_8c_source}{unifont-\/support.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \textcolor{keywordtype}{int}\ i;}
+\DoxyCodeLine{00050\ \ \ \ \textcolor{keywordtype}{int}\ row;}
+\DoxyCodeLine{00051\ \ \ \ \textcolor{keywordtype}{int}\ length;}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \ sscanf\ (hexstring,\ \textcolor{stringliteral}{"{}\%X"{}},\ codept);}
+\DoxyCodeLine{00054\ \ \ \ length\ =\ strlen\ (hexstring);}
+\DoxyCodeLine{00055\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ length\ -\/\ 1;\ i\ >\ 0\ \&\&\ hexstring[i]\ !=\ \textcolor{charliteral}{'\(\backslash\)n'};\ i-\/-\/);}
+\DoxyCodeLine{00056\ \ \ \ hexstring[i]\ =\ \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{00057\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 9\ \&\&\ hexstring[i]\ !=\ \textcolor{charliteral}{':'};\ i++);}
+\DoxyCodeLine{00058\ \ \ \ i++;\ \ \textcolor{comment}{/*\ Skip\ over\ ':'\ */}}
+\DoxyCodeLine{00059\ \ \ \ *width\ =\ (length\ -\/\ i)\ *\ 4\ /\ 16;\ \ \textcolor{comment}{/*\ 16\ rows\ per\ glyphbits\ */}}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \ \ \ \textcolor{keywordflow}{for}\ (row\ =\ 0;\ row\ <\ 16;\ row++)\ \{}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ sscanf\ (\&hexstring[i],\ \textcolor{stringliteral}{"{}\%2hhX"{}},\ \&glyph\ [row][0]);}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ i\ +=\ 2;}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (*width\ >\ 8)\ \{}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ sscanf\ (\&hexstring[i],\ \textcolor{stringliteral}{"{}\%2hhX"{}},\ \&glyph\ [row][1]);}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ i\ +=\ 2;}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ glyph\ [row][1]\ =\ 0x00;}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00071\ \ \ \ \}}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00075\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{unifont-support_8c_a9292d6df99f93635cc891baaf8f66346}\label{unifont-support_8c_a9292d6df99f93635cc891baaf8f66346}} 
+\index{unifont-\/support.c@{unifont-\/support.c}!xglyph2string@{xglyph2string}}
+\index{xglyph2string@{xglyph2string}!unifont-\/support.c@{unifont-\/support.c}}
+\doxysubsubsection{\texorpdfstring{xglyph2string()}{xglyph2string()}}
+{\footnotesize\ttfamily void xglyph2string (\begin{DoxyParamCaption}\item[{int}]{width,  }\item[{unsigned}]{codept,  }\item[{unsigned char}]{transpose\mbox{[}2\mbox{]}\mbox{[}16\mbox{]},  }\item[{char $\ast$}]{outstring }\end{DoxyParamCaption})}
+
+
+
+Convert a code point and transposed glyph into a Unifont .hex string. 
+
+This function takes a code point and a transposed Unifont glyph of 2 rows of 8 pixels in a column, and converts it into a Unifont .hex format character array.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em width} & The number of columns in the glyph. \\
+\hline
+\mbox{\texttt{ in}}  & {\em codept} & The code point to appear in the output .hex string. \\
+\hline
+\mbox{\texttt{ in}}  & {\em transpose} & The transposed glyph, with 2 sets of 8-\/row data. \\
+\hline
+\mbox{\texttt{ out}}  & {\em outstring} & The output string, in Unifont .hex format. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{unifont-support_8c_source_l00267}{267}} of file \mbox{\hyperlink{unifont-support_8c_source}{unifont-\/support.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00270\ }
+\DoxyCodeLine{00271\ \ \ \ \textcolor{keywordtype}{int}\ i;\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ index\ into\ outstring\ array\ */}}
+\DoxyCodeLine{00272\ \ \ \ \textcolor{keywordtype}{int}\ \ column;}
+\DoxyCodeLine{00273\ }
+\DoxyCodeLine{00274\ \ \ \ \textcolor{keywordflow}{if}\ (codept\ <=\ 0xFFFF)\ \{}
+\DoxyCodeLine{00275\ \ \ \ \ \ \ sprintf\ (outstring,\ \textcolor{stringliteral}{"{}\%04X:"{}},\ codept);}
+\DoxyCodeLine{00276\ \ \ \ \ \ \ i\ =\ 5;}
+\DoxyCodeLine{00277\ \ \ \ \}}
+\DoxyCodeLine{00278\ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00279\ \ \ \ \ \ \ sprintf\ (outstring,\ \textcolor{stringliteral}{"{}\%06X:"{}},\ codept);}
+\DoxyCodeLine{00280\ \ \ \ \ \ \ i\ =\ 7;}
+\DoxyCodeLine{00281\ \ \ \ \}}
+\DoxyCodeLine{00282\ }
+\DoxyCodeLine{00283\ \ \ \ \textcolor{keywordflow}{for}\ (column\ =\ 0;\ column\ <\ 8;\ column++)\ \{}
+\DoxyCodeLine{00284\ \ \ \ \ \ \ sprintf\ (\&outstring[i],\ \textcolor{stringliteral}{"{}\%02X"{}},\ transpose\ [0][column]);}
+\DoxyCodeLine{00285\ \ \ \ \ \ \ i\ +=\ 2;}
+\DoxyCodeLine{00286\ \ \ \ \}}
+\DoxyCodeLine{00287\ \ \ \ \textcolor{keywordflow}{if}\ (width\ >\ 8)\ \{}
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (column\ =\ 8;\ column\ <\ 16;\ column++)\ \{}
+\DoxyCodeLine{00289\ \ \ \ \ \ \ \ \ \ sprintf\ (\&outstring[i],\ \textcolor{stringliteral}{"{}\%02X"{}},\ transpose\ [0][column]);}
+\DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ \ i\ +=\ 2;}
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00292\ \ \ \ \}}
+\DoxyCodeLine{00293\ \ \ \ \textcolor{keywordflow}{for}\ (column\ =\ 0;\ column\ <\ 8;\ column++)\ \{}
+\DoxyCodeLine{00294\ \ \ \ \ \ \ sprintf\ (\&outstring[i],\ \textcolor{stringliteral}{"{}\%02X"{}},\ transpose\ [1][column]);}
+\DoxyCodeLine{00295\ \ \ \ \ \ \ i\ +=\ 2;}
+\DoxyCodeLine{00296\ \ \ \ \}}
+\DoxyCodeLine{00297\ \ \ \ \textcolor{keywordflow}{if}\ (width\ >\ 8)\ \{}
+\DoxyCodeLine{00298\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (column\ =\ 8;\ column\ <\ 16;\ column++)\ \{}
+\DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ \ sprintf\ (\&outstring[i],\ \textcolor{stringliteral}{"{}\%02X"{}},\ transpose\ [1][column]);}
+\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ \ i\ +=\ 2;}
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00302\ \ \ \ \}}
+\DoxyCodeLine{00303\ }
+\DoxyCodeLine{00304\ \ \ \ outstring[i]\ =\ \textcolor{charliteral}{'\(\backslash\)0'};\ \ \textcolor{comment}{/*\ terminate\ output\ string\ */}}
+\DoxyCodeLine{00305\ \ \ }
+\DoxyCodeLine{00306\ }
+\DoxyCodeLine{00307\ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00308\ \}}
+
+\end{DoxyCode}

@@ -1,0 +1,213 @@
+\hypertarget{unifontpic_8h_source}{}\doxysection{unifontpic.\+h}
+\label{unifontpic_8h_source}\index{src/unifontpic.h@{src/unifontpic.h}}
+\mbox{\hyperlink{unifontpic_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00001}00001\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00002}00002\ \textcolor{comment}{\ \ \ @file\ unifontpic.h}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00003}00003\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00004}00004\ \textcolor{comment}{\ \ \ @brief\ unifontpic.h\ -\/\ Header\ file\ for\ unifontpic.c}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00005}00005\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00006}00006\ \textcolor{comment}{\ \ \ @author\ Paul\ Hardy,\ July\ 2017}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00007}00007\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00008}00008\ \textcolor{comment}{\ \ \ @copyright\ Copyright\ (C)\ 2017\ Paul\ Hardy}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00009}00009\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00010}00010\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00011}00011\ \textcolor{comment}{\ \ \ LICENSE:}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00012}00012\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00013}00013\ \textcolor{comment}{\ \ \ \ \ \ This\ program\ is\ free\ software:\ you\ can\ redistribute\ it\ and/or\ modify}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00014}00014\ \textcolor{comment}{\ \ \ \ \ \ it\ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00015}00015\ \textcolor{comment}{\ \ \ \ \ \ the\ Free\ Software\ Foundation,\ either\ version\ 2\ of\ the\ License,\ or}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00016}00016\ \textcolor{comment}{\ \ \ \ \ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00017}00017\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00018}00018\ \textcolor{comment}{\ \ \ \ \ \ This\ program\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00019}00019\ \textcolor{comment}{\ \ \ \ \ \ but\ WITHOUT\ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00020}00020\ \textcolor{comment}{\ \ \ \ \ \ MERCHANTABILITY\ or\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00021}00021\ \textcolor{comment}{\ \ \ \ \ \ GNU\ General\ Public\ License\ for\ more\ details.}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00022}00022\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00023}00023\ \textcolor{comment}{\ \ \ \ \ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00024}00024\ \textcolor{comment}{\ \ \ \ \ \ along\ with\ this\ program.\ \ If\ not,\ see\ <http://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00025}00025\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00027}00027\ \textcolor{preprocessor}{\#ifndef\ \_UNIFONTPIC\_H\_}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00028}00028\ \textcolor{preprocessor}{\#define\ \_UNIFONTPIC\_H\_}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00030}\mbox{\hyperlink{unifontpic_8h_a2ff420a6c6a2d1effc47a81e37327985}{00030}}\ \textcolor{preprocessor}{\#define\ MAXSTRING\ 256\ \ }\textcolor{comment}{///<\ Maximum\ input\ string\ allowed.}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00032}\mbox{\hyperlink{unifontpic_8h_a418ed439fafbc678a74cb266ef2919d4}{00032}}\ \textcolor{preprocessor}{\#define\ HEADER\_STRING\ "{}GNU\ Unifont\ 15.1.05"{}}\ \textcolor{comment}{///<\ To\ be\ printed\ as\ chart\ title.}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00033}00033\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00034}00034\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00035}00035\ \textcolor{comment}{\ \ \ @brief\ Array\ of\ Unifont\ ASCII\ glyphs\ for\ chart\ row\ \&\ column\ headings.}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00036}00036\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00037}00037\ \textcolor{comment}{\ \ \ Define\ the\ array\ of\ Unifont\ ASCII\ glyphs,\ code\ points\ 0\ through\ 127.}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00038}00038\ \textcolor{comment}{\ \ \ This\ allows\ using\ unifontpic\ to\ print\ charts\ of\ glyphs\ above\ Unicode}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00039}00039\ \textcolor{comment}{\ \ \ Plane\ 0.\ \ These\ were\ copied\ from\ font/plane00/unifont-\/base.hex,\ plus}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00040}00040\ \textcolor{comment}{\ \ \ U+0020\ (ASCII\ space\ character).}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00041}00041\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00042}\mbox{\hyperlink{unifontpic_8h_ad38c3dd5832ced1dc64c3093f359afcf}{00042}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{unifontpic_8h_ad38c3dd5832ced1dc64c3093f359afcf}{ascii\_hex}}\ [128]\ =\ \{}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00043}00043\ \ \ \ \textcolor{stringliteral}{"{}0000:AAAA00018000000180004A51EA505A51C99E0001800000018000000180005555"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00044}00044\ \ \ \ \textcolor{stringliteral}{"{}0001:AAAA00018000000180003993C252325F8A527193800000018000000180005555"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00045}00045\ \ \ \ \textcolor{stringliteral}{"{}0002:AAAA00018000000180003BA5C124311989247125800000018000000180005555"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00046}00046\ \ \ \ \textcolor{stringliteral}{"{}0003:AAAA00018000000180007BA5C1247919C1247925800000018000000180005555"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00047}00047\ \ \ \ \textcolor{stringliteral}{"{}0004:AAAA000180000001800079BFC2487A49C2487989800000018000000180005555"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00048}00048\ \ \ \ \textcolor{stringliteral}{"{}0005:AAAA00018000000180007A4DC2527B53C2D67A4F800000018000000180005555"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00049}00049\ \ \ \ \textcolor{stringliteral}{"{}0006:AAAA000180000001800031A5CA287A31CA2849A5800000018000000180005555"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00050}00050\ \ \ \ \textcolor{stringliteral}{"{}0007:AAAA000180000001800073D1CA1073D1CA1073DF800000018000000180005555"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00051}00051\ \ \ \ \textcolor{stringliteral}{"{}0008:AAAA00018000000180001E3991401E3191081E71800000018000000180005555"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00052}00052\ \ \ \ \textcolor{stringliteral}{"{}0009:AAAA000180000001800022F9A2203E21A2202221800000018000000180005555"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00053}00053\ \ \ \ \textcolor{stringliteral}{"{}000A:AAAA000180000001800020F9A08020F9A0803E81800000018000000180005555"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00054}00054\ \ \ \ \textcolor{stringliteral}{"{}000B:AAAA000180000001800022F9A220222194200821800000018000000180005555"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00055}00055\ \ \ \ \textcolor{stringliteral}{"{}000C:AAAA00018000000180003EF9A0803EF9A0802081800000018000000180005555"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00056}00056\ \ \ \ \textcolor{stringliteral}{"{}000D:AAAA00018000000180001EF1A08820F1A0901E89800000018000000180005555"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00057}00057\ \ \ \ \textcolor{stringliteral}{"{}000E:AAAA00018000000180001E71A0881C8982883C71800000018000000180005555"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00058}00058\ \ \ \ \textcolor{stringliteral}{"{}000F:AAAA00018000000180001EF9A0201C2182203CF9800000018000000180005555"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00059}00059\ \ \ \ \textcolor{stringliteral}{"{}0010:AAAA0001800000018000391DA510251DA51039DD800000018000000180005555"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00060}00060\ \ \ \ \textcolor{stringliteral}{"{}0011:AAAA00018000000180007189CA184A09CA08719D800000018000000180005555"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00061}00061\ \ \ \ \textcolor{stringliteral}{"{}0012:AAAA00018000000180007199CA044A09CA10719D800000018000000180005555"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00062}00062\ \ \ \ \textcolor{stringliteral}{"{}0013:AAAA00018000000180007199CA044A19CA047199800000018000000180005555"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00063}00063\ \ \ \ \textcolor{stringliteral}{"{}0014:AAAA00018000000180007185CA0C4A15CA1C7185800000018000000180005555"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00064}00064\ \ \ \ \textcolor{stringliteral}{"{}0015:AAAA00018000000180004993EA546A59DBD44A53800000018000000180005555"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00065}00065\ \ \ \ \textcolor{stringliteral}{"{}0016:AAAA00018000000180003453C29A311789127113800000018000000180005555"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00066}00066\ \ \ \ \textcolor{stringliteral}{"{}0017:AAAA00018000000180007BB9C1247939C1247939800000018000000180005555"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00067}00067\ \ \ \ \textcolor{stringliteral}{"{}0018:AAAA00018000000180003325C4B447ADC4A434A5800000018000000180005555"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00068}00068\ \ \ \ \textcolor{stringliteral}{"{}0019:AAAA00018000000180003E89A0D83EA9A0883E89800000018000000180005555"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00069}00069\ \ \ \ \textcolor{stringliteral}{"{}001A:AAAA00018000000180003A5DC252325D8A52719D800000018000000180005555"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00070}00070\ \ \ \ \textcolor{stringliteral}{"{}001B:AAAA000180000001800079CFC2107991C0507B8F800000018000000180005555"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00071}00071\ \ \ \ \textcolor{stringliteral}{"{}001C:AAAA00018000000180001E7190801E61901010E1800000018000000180005555"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00072}00072\ \ \ \ \textcolor{stringliteral}{"{}001D:AAAA00018000000180000E719080166192100EE1800000018000000180005555"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00073}00073\ \ \ \ \textcolor{stringliteral}{"{}001E:AAAA00018000000180001C7192801C61941012E1800000018000000180005555"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00074}00074\ \ \ \ \textcolor{stringliteral}{"{}001F:AAAA000180000001800012719280126192100CE1800000018000000180005555"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00075}00075\ \ \ \ \textcolor{stringliteral}{"{}0020:00000000000000000000000000000000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00076}00076\ \ \ \ \textcolor{stringliteral}{"{}0021:00000000080808080808080008080000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00077}00077\ \ \ \ \textcolor{stringliteral}{"{}0022:00002222222200000000000000000000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00078}00078\ \ \ \ \textcolor{stringliteral}{"{}0023:000000001212127E24247E4848480000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00079}00079\ \ \ \ \textcolor{stringliteral}{"{}0024:00000000083E4948380E09493E080000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00080}00080\ \ \ \ \textcolor{stringliteral}{"{}0025:00000000314A4A340808162929460000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00081}00081\ \ \ \ \textcolor{stringliteral}{"{}0026:000000001C2222141829454246390000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00082}00082\ \ \ \ \textcolor{stringliteral}{"{}0027:00000808080800000000000000000000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00083}00083\ \ \ \ \textcolor{stringliteral}{"{}0028:00000004080810101010101008080400"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00084}00084\ \ \ \ \textcolor{stringliteral}{"{}0029:00000020101008080808080810102000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00085}00085\ \ \ \ \textcolor{stringliteral}{"{}002A:00000000000008492A1C2A4908000000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00086}00086\ \ \ \ \textcolor{stringliteral}{"{}002B:0000000000000808087F080808000000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00087}00087\ \ \ \ \textcolor{stringliteral}{"{}002C:00000000000000000000000018080810"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00088}00088\ \ \ \ \textcolor{stringliteral}{"{}002D:0000000000000000003C000000000000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00089}00089\ \ \ \ \textcolor{stringliteral}{"{}002E:00000000000000000000000018180000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00090}00090\ \ \ \ \textcolor{stringliteral}{"{}002F:00000000020204080810102040400000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00091}00091\ \ \ \ \textcolor{stringliteral}{"{}0030:00000000182442464A52624224180000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00092}00092\ \ \ \ \textcolor{stringliteral}{"{}0031:000000000818280808080808083E0000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00093}00093\ \ \ \ \textcolor{stringliteral}{"{}0032:000000003C4242020C102040407E0000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00094}00094\ \ \ \ \textcolor{stringliteral}{"{}0033:000000003C4242021C020242423C0000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00095}00095\ \ \ \ \textcolor{stringliteral}{"{}0034:00000000040C142444447E0404040000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00096}00096\ \ \ \ \textcolor{stringliteral}{"{}0035:000000007E4040407C020202423C0000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00097}00097\ \ \ \ \textcolor{stringliteral}{"{}0036:000000001C2040407C424242423C0000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00098}00098\ \ \ \ \textcolor{stringliteral}{"{}0037:000000007E0202040404080808080000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00099}00099\ \ \ \ \textcolor{stringliteral}{"{}0038:000000003C4242423C424242423C0000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00100}00100\ \ \ \ \textcolor{stringliteral}{"{}0039:000000003C4242423E02020204380000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00101}00101\ \ \ \ \textcolor{stringliteral}{"{}003A:00000000000018180000001818000000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00102}00102\ \ \ \ \textcolor{stringliteral}{"{}003B:00000000000018180000001808081000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00103}00103\ \ \ \ \textcolor{stringliteral}{"{}003C:00000000000204081020100804020000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00104}00104\ \ \ \ \textcolor{stringliteral}{"{}003D:000000000000007E0000007E00000000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00105}00105\ \ \ \ \textcolor{stringliteral}{"{}003E:00000000004020100804081020400000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00106}00106\ \ \ \ \textcolor{stringliteral}{"{}003F:000000003C4242020408080008080000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00107}00107\ \ \ \ \textcolor{stringliteral}{"{}0040:000000001C224A565252524E201E0000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00108}00108\ \ \ \ \textcolor{stringliteral}{"{}0041:0000000018242442427E424242420000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00109}00109\ \ \ \ \textcolor{stringliteral}{"{}0042:000000007C4242427C424242427C0000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00110}00110\ \ \ \ \textcolor{stringliteral}{"{}0043:000000003C42424040404042423C0000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00111}00111\ \ \ \ \textcolor{stringliteral}{"{}0044:00000000784442424242424244780000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00112}00112\ \ \ \ \textcolor{stringliteral}{"{}0045:000000007E4040407C404040407E0000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00113}00113\ \ \ \ \textcolor{stringliteral}{"{}0046:000000007E4040407C40404040400000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00114}00114\ \ \ \ \textcolor{stringliteral}{"{}0047:000000003C424240404E4242463A0000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00115}00115\ \ \ \ \textcolor{stringliteral}{"{}0048:00000000424242427E42424242420000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00116}00116\ \ \ \ \textcolor{stringliteral}{"{}0049:000000003E08080808080808083E0000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00117}00117\ \ \ \ \textcolor{stringliteral}{"{}004A:000000001F0404040404044444380000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00118}00118\ \ \ \ \textcolor{stringliteral}{"{}004B:00000000424448506060504844420000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00119}00119\ \ \ \ \textcolor{stringliteral}{"{}004C:000000004040404040404040407E0000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00120}00120\ \ \ \ \textcolor{stringliteral}{"{}004D:00000000424266665A5A424242420000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00121}00121\ \ \ \ \textcolor{stringliteral}{"{}004E:0000000042626252524A4A4646420000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00122}00122\ \ \ \ \textcolor{stringliteral}{"{}004F:000000003C42424242424242423C0000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00123}00123\ \ \ \ \textcolor{stringliteral}{"{}0050:000000007C4242427C40404040400000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00124}00124\ \ \ \ \textcolor{stringliteral}{"{}0051:000000003C4242424242425A663C0300"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00125}00125\ \ \ \ \textcolor{stringliteral}{"{}0052:000000007C4242427C48444442420000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00126}00126\ \ \ \ \textcolor{stringliteral}{"{}0053:000000003C424240300C0242423C0000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00127}00127\ \ \ \ \textcolor{stringliteral}{"{}0054:000000007F0808080808080808080000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00128}00128\ \ \ \ \textcolor{stringliteral}{"{}0055:000000004242424242424242423C0000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00129}00129\ \ \ \ \textcolor{stringliteral}{"{}0056:00000000414141222222141408080000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00130}00130\ \ \ \ \textcolor{stringliteral}{"{}0057:00000000424242425A5A666642420000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00131}00131\ \ \ \ \textcolor{stringliteral}{"{}0058:00000000424224241818242442420000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00132}00132\ \ \ \ \textcolor{stringliteral}{"{}0059:00000000414122221408080808080000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00133}00133\ \ \ \ \textcolor{stringliteral}{"{}005A:000000007E02020408102040407E0000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00134}00134\ \ \ \ \textcolor{stringliteral}{"{}005B:0000000E080808080808080808080E00"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00135}00135\ \ \ \ \textcolor{stringliteral}{"{}005C:00000000404020101008080402020000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00136}00136\ \ \ \ \textcolor{stringliteral}{"{}005D:00000070101010101010101010107000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00137}00137\ \ \ \ \textcolor{stringliteral}{"{}005E:00001824420000000000000000000000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00138}00138\ \ \ \ \textcolor{stringliteral}{"{}005F:00000000000000000000000000007F00"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00139}00139\ \ \ \ \textcolor{stringliteral}{"{}0060:00201008000000000000000000000000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00140}00140\ \ \ \ \textcolor{stringliteral}{"{}0061:0000000000003C42023E4242463A0000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00141}00141\ \ \ \ \textcolor{stringliteral}{"{}0062:0000004040405C6242424242625C0000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00142}00142\ \ \ \ \textcolor{stringliteral}{"{}0063:0000000000003C4240404040423C0000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00143}00143\ \ \ \ \textcolor{stringliteral}{"{}0064:0000000202023A4642424242463A0000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00144}00144\ \ \ \ \textcolor{stringliteral}{"{}0065:0000000000003C42427E4040423C0000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00145}00145\ \ \ \ \textcolor{stringliteral}{"{}0066:0000000C1010107C1010101010100000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00146}00146\ \ \ \ \textcolor{stringliteral}{"{}0067:0000000000023A44444438203C42423C"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00147}00147\ \ \ \ \textcolor{stringliteral}{"{}0068:0000004040405C624242424242420000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00148}00148\ \ \ \ \textcolor{stringliteral}{"{}0069:000000080800180808080808083E0000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00149}00149\ \ \ \ \textcolor{stringliteral}{"{}006A:0000000404000C040404040404044830"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00150}00150\ \ \ \ \textcolor{stringliteral}{"{}006B:00000040404044485060504844420000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00151}00151\ \ \ \ \textcolor{stringliteral}{"{}006C:000000180808080808080808083E0000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00152}00152\ \ \ \ \textcolor{stringliteral}{"{}006D:00000000000076494949494949490000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00153}00153\ \ \ \ \textcolor{stringliteral}{"{}006E:0000000000005C624242424242420000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00154}00154\ \ \ \ \textcolor{stringliteral}{"{}006F:0000000000003C4242424242423C0000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00155}00155\ \ \ \ \textcolor{stringliteral}{"{}0070:0000000000005C6242424242625C4040"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00156}00156\ \ \ \ \textcolor{stringliteral}{"{}0071:0000000000003A4642424242463A0202"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00157}00157\ \ \ \ \textcolor{stringliteral}{"{}0072:0000000000005C624240404040400000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00158}00158\ \ \ \ \textcolor{stringliteral}{"{}0073:0000000000003C4240300C02423C0000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00159}00159\ \ \ \ \textcolor{stringliteral}{"{}0074:000000001010107C10101010100C0000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00160}00160\ \ \ \ \textcolor{stringliteral}{"{}0075:000000000000424242424242463A0000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00161}00161\ \ \ \ \textcolor{stringliteral}{"{}0076:00000000000042424224242418180000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00162}00162\ \ \ \ \textcolor{stringliteral}{"{}0077:00000000000041494949494949360000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00163}00163\ \ \ \ \textcolor{stringliteral}{"{}0078:00000000000042422418182442420000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00164}00164\ \ \ \ \textcolor{stringliteral}{"{}0079:0000000000004242424242261A02023C"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00165}00165\ \ \ \ \textcolor{stringliteral}{"{}007A:0000000000007E0204081020407E0000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00166}00166\ \ \ \ \textcolor{stringliteral}{"{}007B:0000000C10100808102010080810100C"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00167}00167\ \ \ \ \textcolor{stringliteral}{"{}007C:00000808080808080808080808080808"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00168}00168\ \ \ \ \textcolor{stringliteral}{"{}007D:00000030080810100804081010080830"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00169}00169\ \ \ \ \textcolor{stringliteral}{"{}007E:00000031494600000000000000000000"{}},}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00170}00170\ \ \ \ \textcolor{stringliteral}{"{}007F:AAAA000180000001800073D1CA104BD1CA1073DF800000018000000180005555"{}}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00171}00171\ \};}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00172}00172\ }
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00173}00173\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00174}00174\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00175}00175\ \textcolor{comment}{\ \ \ @brief\ Array\ to\ hold\ ASCII\ bitmaps\ for\ chart\ title.}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00176}00176\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00177}00177\ \textcolor{comment}{\ \ \ This\ array\ will\ be\ created\ from\ the\ strings\ in\ ascii\_hex[]\ above.}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00178}00178\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00179}\mbox{\hyperlink{unifontpic_8h_a593ebc374e9f30c90743f0fd48cc91df}{00179}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{unifontpic_8h_a593ebc374e9f30c90743f0fd48cc91df}{ascii\_bits}}[128][16];}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00180}00180\ }
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00181}00181\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00182}00182\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00183}00183\ \textcolor{comment}{\ \ \ @brief\ Array\ of\ 4x5\ hexadecimal\ digits\ for\ legend.}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00184}00184\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00185}00185\ \textcolor{comment}{\ \ \ hexdigit\ contains\ 4x5\ pixel\ arrays\ of\ tiny\ digits\ for\ the\ legend.}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00186}00186\ \textcolor{comment}{\ \ \ See\ unihexgen.c\ for\ a\ more\ detailed\ description\ in\ the\ comments.}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00187}00187\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00188}\mbox{\hyperlink{unifontpic_8h_af6ebead7b0a2d2e67e8de1e35d55a866}{00188}}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{unifontpic_8h_af6ebead7b0a2d2e67e8de1e35d55a866}{hexdigit}}[16][5]\ =\ \{}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00189}00189\ \ \ \ \{0x6,0x9,0x9,0x9,0x6\},\ \ \textcolor{comment}{/*\ 0x0\ */}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00190}00190\ \ \ \ \{0x2,0x6,0x2,0x2,0x7\},\ \ \textcolor{comment}{/*\ 0x1\ */}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00191}00191\ \ \ \ \{0xF,0x1,0xF,0x8,0xF\},\ \ \textcolor{comment}{/*\ 0x2\ */}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00192}00192\ \ \ \ \{0xE,0x1,0x7,0x1,0xE\},\ \ \textcolor{comment}{/*\ 0x3\ */}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00193}00193\ \ \ \ \{0x9,0x9,0xF,0x1,0x1\},\ \ \textcolor{comment}{/*\ 0x4\ */}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00194}00194\ \ \ \ \{0xF,0x8,0xF,0x1,0xF\},\ \ \textcolor{comment}{/*\ 0x5\ */}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00195}00195\ \ \ \ \{0x6,0x8,0xE,0x9,0x6\},\ \ \textcolor{comment}{/*\ 0x6\ */}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00196}00196\ \ \ \ \{0xF,0x1,0x2,0x4,0x4\},\ \ \textcolor{comment}{/*\ 0x7\ */}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00197}00197\ \ \ \ \{0x6,0x9,0x6,0x9,0x6\},\ \ \textcolor{comment}{/*\ 0x8\ */}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00198}00198\ \ \ \ \{0x6,0x9,0x7,0x1,0x6\},\ \ \textcolor{comment}{/*\ 0x9\ */}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00199}00199\ \ \ \ \{0xF,0x9,0xF,0x9,0x9\},\ \ \textcolor{comment}{/*\ 0xA\ */}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00200}00200\ \ \ \ \{0xE,0x9,0xE,0x9,0xE\},\ \ \textcolor{comment}{/*\ 0xB\ */}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00201}00201\ \ \ \ \{0x7,0x8,0x8,0x8,0x7\},\ \ \textcolor{comment}{/*\ 0xC\ */}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00202}00202\ \ \ \ \{0xE,0x9,0x9,0x9,0xE\},\ \ \textcolor{comment}{/*\ 0xD\ */}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00203}00203\ \ \ \ \{0xF,0x8,0xE,0x8,0xF\},\ \ \textcolor{comment}{/*\ 0xE\ */}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00204}00204\ \ \ \ \{0xF,0x8,0xE,0x8,0x8\}\ \ \ \textcolor{comment}{/*\ 0xF\ */}}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00205}00205\ \};}
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00206}00206\ }
+\DoxyCodeLine{\Hypertarget{unifontpic_8h_source_l00207}00207\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

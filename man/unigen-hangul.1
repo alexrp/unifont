@@ -1,0 +1,205 @@
+.TH UNIGEN-HANGUL 1 "30 July 2023"
+.SH NAME
+unigen-hangul \- Generate Hangul syllables from a Johab 6/3/1 Unifont hex file
+.SH SYNOPSIS
+\fBunigen-hangul \-i\fP \fIhangul-base.hex \fP
+\fB\-o\fP \fIhangul-syllables.hex\fP
+.SH DESCRIPTION
+.B unigen-hangul
+generates Hangul syllables from an input Unifont .hex file encoded
+in Johab 6/3/1 format.  By default, the output is the Unicode Hangul
+Syllables range, U+AC00..U+D7A3.  Options allow the user to specify
+a starting code point for the output Unifont .hex file, and ranges
+in hexadecimal of the starting and ending Hangul Jamo code points:
+.RS
+.IP \fBRange\fP 15
+\fBHangul\fP
+.TP
+.BR 1100\-115E
+Hangul Jamo initial consonants (choseong)
+.TP
+.BR A960\-A97C
+Hangul Jamo Extended-A initial consonants (choseong)
+.TP
+.BR 1161\-11A7
+Hangul Jamo medial vowels and diphthongs (jungseong)
+.TP
+.BR D7B0\-D7C6
+Hangul Jamo Extended-B medial vowels and diphthongs (jungseong)
+.TP
+.BR 11A8\-11FF
+Hangul Jamo final consonants (jongseong).
+.TP
+.BR D7CB\-D7FB
+Hangul Jamo Extended-B final consonants (jongseong).
+.RE
+.PP
+A single code point or 0 to omit can be specified instead of a range.
+A starting code point of one position before a valid starting range
+for a Hangul jamo series (choseong, jungseong, and/or jongseong) will
+first use a blank glyph for that jamo, and then cycle through remaining
+valid code points for the respective choseong, jungseong, or jongseong.
+A range can span modern and ancient, and even Hangul Jamo Extended-A
+and Hangul Jamo Extended-B ranges.
+.PP
+For example,
+.PP
+.RS
+.TP
+-j3 11A7\-D7FB
+.RE
+.PP
+Will first use no jongseong (because U+11A7 is one before the start of
+Hangul Jamo jongseong code points), then loop through jongseong in the
+Hangul Jamo range of U+11A8 through U+11FF, and then loop through
+jongseong in the Hangul Jamo Extended-B range of U+D7CB through U+D7FB.
+.SH OPTIONS
+.RS
+.IP \fBOption\fP 15
+\fBFunction\fP
+.TP
+\fB\-h, \-\-help\fP
+Print a help message and exit.
+.TP
+.BR \-all
+Generate all Hangul syllables, using all modern and
+ancient Hangul in the Unicode range U+1100..U+11FF, assigned
+code points in the Extended-A range of U+A960..U+A97C, and
+assigned code points in the Extended-B range of U+D7B0..U+D7FF.
+\fBWARNING:\fP this will generate over 1,600,000 syllables
+in a 115 megabyte Unifont .hex format file.  The default
+is to only output the 11,172 modern Hangul syllables.
+.TP
+\fB-c\fP \fIcode_point\fP
+Starting code point in hexadecimal for output file.
+.TP
+\fB\-j1\fP \fIstart-end\fP
+Choseong (jamo 1) start-end range in hexadecimal.
+.TP
+\fB\-j2\fP \fIstart-end\fP
+Jungseong (jamo 2) start-end range in hexadecimal.
+.TP
+\fB\-j3\fP \fIstart-end\fP
+Jongseong (jamo 3) start-end range in hexadecimal.
+.TP
+\fB\-i\fP \fIinput_file\fP
+Unifont hangul-base.hex formatted input file.
+.TP
+\fB\-o\fP \fIoutput_file\fP
+Unifont .hex format output file.
+.RE
+.SH EXAMPLES
+.TP 5
+.RS
+unigen-hangul -c 1 -j3 11AB-11AB \\
+.PP
+      -i hangul-base.hex -o nieun-only.hex
+.RE
+.PP
+This command generates Hangul syllables using all modern choseong
+and jungseong, and only the jongseong nieun (Unicode code point U+11AB).
+The output Unifont .hex file will contain code points starting at 1.
+Instead of specifying "-j3 11AB-11AB", simply using "-j3 11AB" will
+also suffice.
+.PP
+This next example is a series of syllable sets suggested by Ho-Seok Ee
+for preliminary syllable alignment checking of modern Hangul.
+.PP
+.RS
+.TP 2
+\(bu
+The first command generates all modern syllables containing no
+jongseong (final consonant), starting at Unifont hexadecimal glyph
+location 0x1000; selecting a jongseong value that is out of range
+(U+1160 in this case) will use a blank filler in place of the jongseong.
+.TP
+\(bu
+The second command generates all modern syllables containing jongseong
+Kiyeok (U+11AB), which has a horizontal line extending across the lower
+portion of a syllable, starting at Unifont hexadecimal glyph location 0x2000.
+.TP
+\(bu
+The third command generates all modern Hangul syllables containing
+jongseong Rieul (U+11AF), starting at Unifont hexadecimal glyph location
+0x3000.
+.TP
+\(bu
+The fourth command generates all modern Hangul syllables containing
+choseong (initial consonant) Rieul (U+1105), starting at Unifont hexadecimal
+glyph location 0x4000.
+.RE 
+.PP
+Here is the command sequence:
+.PP
+.RS
+unigen-hangul -c 1000 -j1 1100-1112 -j2 1161-1175 -j3 1160 \\
+.PP
+      -i hangul-base.hex  >  hangul-prep.hex
+.PP
+unigen-hangul -c 2000 -j1 1100-1112 -j2 1161-1175 -j3 11AB \\
+.PP
+      -i hangul-base.hex  >> hangul-prep.hex
+.PP
+unigen-hangul -c 3000 -j1 1100-1112 -j2 1161-1175 -j3 11AF \\
+.PP
+      -i hangul-base.hex  >> hangul-prep.hex
+.PP
+unigen-hangul -c 4000 -j1 1105 -j2 1161-1175 -j3 11A8-11C2 \\
+.PP
+      -i hangul-base.hex  >> hangul-prep.hex
+.RE
+.PP
+The resulting .hex file can then be examined with hexdraw,
+unihex2bmp, \fIetc.\fP
+.SH FILES
+Unifont .hex files in Johab 6/3/1 encoding.  See
+.BR unifont-johab631 (5)
+for a description of the input file structure.  This program
+uses functions contained in the file unihangul-support.c.
+.SH SEE ALSO
+.BR bdfimplode (1),
+.BR hex2bdf (1),
+.BR hex2otf (1),
+.BR hex2sfd (1),
+.BR hexbraille (1),
+.BR hexdraw (1),
+.BR hexkinya (1),
+.BR hexmerge (1),
+.BR johab2syllables (1),
+.BR johab2ucs2 (1),
+.BR unibdf2hex (1),
+.BR unibmp2hex (1),
+.BR unibmpbump (1),
+.BR unicoverage (1),
+.BR unidup (1),
+.BR unifont (5),
+.BR unifont-johab631 (5),
+.BR unifont-viewer (1),
+.BR unifont1per (1),
+.BR unifontchojung (1),
+.BR unifontksx (1),
+.BR unifontpic (1),
+.BR unigencircles (1),
+.BR unigenwidth (1),
+.BR unihex2bmp (1),
+.BR unihex2png (1),
+.BR unihexfill (1),
+.BR unihexgen (1),
+.BR unihexpose (1),
+.BR unihexrotate (1),
+.BR unijohab2html (1),
+.BR unipagecount (1),
+.BR unipng2hex (1)
+.SH AUTHOR
+.B unigen-hangul
+was written by Paul Hardy.
+.SH LICENSE
+.B unigen-hangul
+is Copyright \(co 2023 Paul Hardy.
+.PP
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+.SH BUGS
+No known bugs exist.

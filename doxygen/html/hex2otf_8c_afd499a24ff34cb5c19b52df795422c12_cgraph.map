@@ -1,0 +1,12 @@
+<map id="fillBitmap" name="fillBitmap">
+<area shape="rect" id="node1" title="Fill OpenType bitmap data and location tables." alt="" coords="5,153,91,179"/>
+<area shape="rect" id="node2" href="$hex2otf_8c.html#a1fab24bb2d2b38b68a38ec871afc3f9c" title="Add a TrueType or OpenType table to the font." alt="" coords="147,5,227,31"/>
+<area shape="rect" id="node3" href="$hex2otf_8c.html#a927c31a7e187d15a70667ce6b0ef296a" title="Append a string of bytes to a buffer." alt="" coords="139,55,236,80"/>
+<area shape="rect" id="node6" href="$hex2otf_8c.html#a07b29528c561e5852a228c98391225f7" title="Append two unsigned bytes to the end of a byte array." alt="" coords="144,104,231,129"/>
+<area shape="rect" id="node7" href="$hex2otf_8c.html#a051a88b0ac4eb063945b84e2242408ea" title="Append four unsigned bytes to the end of a byte array." alt="" coords="144,153,231,179"/>
+<area shape="rect" id="node8" href="$hex2otf_8c.html#a84d7310553d31f4ec587dc001f472834" title="Append one unsigned byte to the end of a byte array." alt="" coords="148,203,227,228"/>
+<area shape="rect" id="node9" href="$hex2otf_8c.html#ac928f7761fc187ff86f33805309bec21" title="Free the memory previously allocated for a buffer." alt="" coords="144,252,231,277"/>
+<area shape="rect" id="node10" href="$hex2otf_8c.html#ae8310060f5a9b7cefb84d0bb1b459b64" title="Create a new buffer." alt="" coords="293,204,381,229"/>
+<area shape="rect" id="node4" href="$hex2otf_8c.html#ae32c0f82cbb6a4d8ece0559f1c7b74f4" title="Ensure that the buffer has at least the specified minimum size." alt="" coords="284,105,389,131"/>
+<area shape="rect" id="node5" href="$hex2otf_8c.html#a2f5976201b1e630a94045f04a0348572" title="Print an error message on stderr, then exit." alt="" coords="437,180,480,205"/>
+</map>

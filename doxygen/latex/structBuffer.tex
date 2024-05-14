@@ -1,0 +1,75 @@
+\hypertarget{structBuffer}{}\doxysection{Buffer Struct Reference}
+\label{structBuffer}\index{Buffer@{Buffer}}
+
+
+Generic data structure for a linked list of buffer elements.  
+
+
+\doxysubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+size\+\_\+t \mbox{\hyperlink{structBuffer_ad171af15d71eb35459abbac35f25fb43}{capacity}}
+\item 
+\mbox{\hyperlink{hex2otf_8c_a0c8186d9b9b7880309c27230bbb5e69d}{byte}} $\ast$ \mbox{\hyperlink{structBuffer_a1c5273d0d075e46f3c62001ea0dbca1c}{begin}}
+\item 
+\mbox{\hyperlink{hex2otf_8c_a0c8186d9b9b7880309c27230bbb5e69d}{byte}} $\ast$ \mbox{\hyperlink{structBuffer_a4128cf37f06823878c1113f181ace10d}{next}}
+\item 
+\mbox{\hyperlink{hex2otf_8c_a0c8186d9b9b7880309c27230bbb5e69d}{byte}} $\ast$ \mbox{\hyperlink{structBuffer_ae20ac39ee196051dfcf580f5ab32688a}{end}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Generic data structure for a linked list of buffer elements. 
+
+A buffer can act as a vector (when filled with \textquotesingle{}store$\ast$\textquotesingle{} functions), or a temporary output area (when filled with \textquotesingle{}cache$\ast$\textquotesingle{} functions). The \textquotesingle{}store$\ast$\textquotesingle{} functions use native endian. The \textquotesingle{}cache$\ast$\textquotesingle{} functions use big endian or other formats in Open\+Type. Beware of memory alignment. 
+
+Definition at line \mbox{\hyperlink{hex2otf_8c_source_l00133}{133}} of file \mbox{\hyperlink{hex2otf_8c_source}{hex2otf.\+c}}.
+
+
+
+\doxysubsection{Field Documentation}
+\mbox{\Hypertarget{structBuffer_a1c5273d0d075e46f3c62001ea0dbca1c}\label{structBuffer_a1c5273d0d075e46f3c62001ea0dbca1c}} 
+\index{Buffer@{Buffer}!begin@{begin}}
+\index{begin@{begin}!Buffer@{Buffer}}
+\doxysubsubsection{\texorpdfstring{begin}{begin}}
+{\footnotesize\ttfamily \mbox{\hyperlink{hex2otf_8c_a0c8186d9b9b7880309c27230bbb5e69d}{byte}}$\ast$ Buffer\+::begin}
+
+
+
+Definition at line \mbox{\hyperlink{hex2otf_8c_source_l00136}{136}} of file \mbox{\hyperlink{hex2otf_8c_source}{hex2otf.\+c}}.
+
+\mbox{\Hypertarget{structBuffer_ad171af15d71eb35459abbac35f25fb43}\label{structBuffer_ad171af15d71eb35459abbac35f25fb43}} 
+\index{Buffer@{Buffer}!capacity@{capacity}}
+\index{capacity@{capacity}!Buffer@{Buffer}}
+\doxysubsubsection{\texorpdfstring{capacity}{capacity}}
+{\footnotesize\ttfamily size\+\_\+t Buffer\+::capacity}
+
+
+
+Definition at line \mbox{\hyperlink{hex2otf_8c_source_l00135}{135}} of file \mbox{\hyperlink{hex2otf_8c_source}{hex2otf.\+c}}.
+
+\mbox{\Hypertarget{structBuffer_ae20ac39ee196051dfcf580f5ab32688a}\label{structBuffer_ae20ac39ee196051dfcf580f5ab32688a}} 
+\index{Buffer@{Buffer}!end@{end}}
+\index{end@{end}!Buffer@{Buffer}}
+\doxysubsubsection{\texorpdfstring{end}{end}}
+{\footnotesize\ttfamily \mbox{\hyperlink{hex2otf_8c_a0c8186d9b9b7880309c27230bbb5e69d}{byte}} $\ast$ Buffer\+::end}
+
+
+
+Definition at line \mbox{\hyperlink{hex2otf_8c_source_l00136}{136}} of file \mbox{\hyperlink{hex2otf_8c_source}{hex2otf.\+c}}.
+
+\mbox{\Hypertarget{structBuffer_a4128cf37f06823878c1113f181ace10d}\label{structBuffer_a4128cf37f06823878c1113f181ace10d}} 
+\index{Buffer@{Buffer}!next@{next}}
+\index{next@{next}!Buffer@{Buffer}}
+\doxysubsubsection{\texorpdfstring{next}{next}}
+{\footnotesize\ttfamily \mbox{\hyperlink{hex2otf_8c_a0c8186d9b9b7880309c27230bbb5e69d}{byte}} $\ast$ Buffer\+::next}
+
+
+
+Definition at line \mbox{\hyperlink{hex2otf_8c_source_l00136}{136}} of file \mbox{\hyperlink{hex2otf_8c_source}{hex2otf.\+c}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\mbox{\hyperlink{hex2otf_8c}{hex2otf.\+c}}\end{DoxyCompactItemize}

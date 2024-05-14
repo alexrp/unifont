@@ -1,0 +1,17 @@
+digraph "hangul_variations"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node1 [label="hangul_variations",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Determine the variations of each letter in a Hangul syllable."];
+  Node1 -> Node2 [color="steelblue1",style="solid"];
+  Node2 [label="cho_variation",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$unihangul-support_8c.html#ab795ff183c3e429e0eb9257a7737c57f",tooltip="Return the Johab 6/3/1 choseong variation for a syllable."];
+  Node2 -> Node2 [color="steelblue1",style="solid"];
+  Node1 -> Node3 [color="steelblue1",style="solid"];
+  Node3 [label="jong_variation",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$unihangul-support_8c.html#aaf73601bfe34292aa58b0d827feb01d8",tooltip="Return the Johab 6/3/1 jongseong variation."];
+  Node1 -> Node4 [color="steelblue1",style="solid"];
+  Node4 [label="jung_variation",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$unihangul-support_8c.html#abaed5273181b15b047e92b3b79f68a4d",tooltip="Return the Johab 6/3/1 jungseong variation."];
+  Node4 -> Node4 [color="steelblue1",style="solid"];
+}

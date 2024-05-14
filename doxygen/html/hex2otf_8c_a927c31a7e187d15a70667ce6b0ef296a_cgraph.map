@@ -1,0 +1,5 @@
+<map id="cacheBytes" name="cacheBytes">
+<area shape="rect" id="node1" title="Append a string of bytes to a buffer." alt="" coords="5,5,103,31"/>
+<area shape="rect" id="node2" href="$hex2otf_8c.html#ae32c0f82cbb6a4d8ece0559f1c7b74f4" title="Ensure that the buffer has at least the specified minimum size." alt="" coords="151,5,256,31"/>
+<area shape="rect" id="node3" href="$hex2otf_8c.html#a2f5976201b1e630a94045f04a0348572" title="Print an error message on stderr, then exit." alt="" coords="304,5,347,31"/>
+</map>

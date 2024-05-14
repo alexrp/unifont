@@ -1,0 +1,7 @@
+<map id="parseOptions" name="parseOptions">
+<area shape="rect" id="node1" title="Parse command line options." alt="" coords="5,80,113,105"/>
+<area shape="rect" id="node2" href="$hex2otf_8c.html#a2f5976201b1e630a94045f04a0348572" title="Print an error message on stderr, then exit." alt="" coords="190,5,233,31"/>
+<area shape="rect" id="node3" href="$hex2otf_8c.html#af1d113ec0d790035476f2743cbf2696f" title="Match a command line option with its key for enabling." alt="" coords="161,55,261,80"/>
+<area shape="rect" id="node4" href="$hex2otf_8c.html#a0d20b69b0ad703df78459e1033d5c1d4" title="Print help message to stdout and then exit." alt="" coords="170,104,253,129"/>
+<area shape="rect" id="node5" href="$hex2otf_8c.html#a9c4b081f1e1ad60def15811c71a936f2" title="Print program version string on stdout." alt="" coords="161,153,261,179"/>
+</map>

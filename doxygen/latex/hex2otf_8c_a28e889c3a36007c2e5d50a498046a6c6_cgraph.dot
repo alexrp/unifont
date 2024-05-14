@@ -1,0 +1,17 @@
+digraph "fillHheaTable"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node1 [label="fillHheaTable",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Fill a \"hhea\" font table."];
+  Node1 -> Node2 [color="steelblue1",style="solid"];
+  Node2 [label="addTable",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$hex2otf_8c.html#a1fab24bb2d2b38b68a38ec871afc3f9c",tooltip="Add a TrueType or OpenType table to the font."];
+  Node1 -> Node3 [color="steelblue1",style="solid"];
+  Node3 [label="cacheU16",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$hex2otf_8c.html#a07b29528c561e5852a228c98391225f7",tooltip="Append two unsigned bytes to the end of a byte array."];
+  Node1 -> Node4 [color="steelblue1",style="solid"];
+  Node4 [label="newBuffer",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$hex2otf_8c.html#ae8310060f5a9b7cefb84d0bb1b459b64",tooltip="Create a new buffer."];
+  Node4 -> Node5 [color="steelblue1",style="solid"];
+  Node5 [label="fail",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$hex2otf_8c.html#a2f5976201b1e630a94045f04a0348572",tooltip="Print an error message on stderr, then exit."];
+}

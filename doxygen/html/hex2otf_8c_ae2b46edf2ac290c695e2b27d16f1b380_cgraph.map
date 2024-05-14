@@ -1,0 +1,4 @@
+<map id="writeBytes" name="writeBytes">
+<area shape="rect" id="node1" title="Write an array of bytes to an output file." alt="" coords="5,5,97,31"/>
+<area shape="rect" id="node2" href="$hex2otf_8c.html#a2f5976201b1e630a94045f04a0348572" title="Print an error message on stderr, then exit." alt="" coords="145,5,188,31"/>
+</map>

@@ -1,0 +1,113 @@
+\hypertarget{hex2otf_8h_source}{}\doxysection{hex2otf.\+h}
+\label{hex2otf_8h_source}\index{src/hex2otf.h@{src/hex2otf.h}}
+\mbox{\hyperlink{hex2otf_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00001}00001\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00002}00002\ \textcolor{comment}{\ \ \ \ @file\ hex2otf.h}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00003}00003\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00004}00004\ \textcolor{comment}{\ \ \ \ @brief\ hex2otf.h\ -\/\ Header\ file\ for\ hex2otf.c}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00005}00005\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00006}00006\ \textcolor{comment}{\ \ \ \ @copyright\ Copyright\ ©\ 2022\ 何志翔\ (He\ Zhixiang)}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00007}00007\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00008}00008\ \textcolor{comment}{\ \ \ \ @author\ 何志翔\ (He\ Zhixiang)}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00009}00009\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00011}00011\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00012}00012\ \textcolor{comment}{\ \ \ \ LICENSE:}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00013}00013\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00014}00014\ \textcolor{comment}{\ \ \ \ This\ program\ is\ free\ software;\ you\ can\ redistribute\ it\ and/or}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00015}00015\ \textcolor{comment}{\ \ \ \ modify\ it\ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00016}00016\ \textcolor{comment}{\ \ \ \ as\ published\ by\ the\ Free\ Software\ Foundation;\ either\ version\ 2}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00017}00017\ \textcolor{comment}{\ \ \ \ of\ the\ License,\ or\ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00018}00018\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00019}00019\ \textcolor{comment}{\ \ \ \ This\ program\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00020}00020\ \textcolor{comment}{\ \ \ \ but\ WITHOUT\ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00021}00021\ \textcolor{comment}{\ \ \ \ MERCHANTABILITY\ or\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00022}00022\ \textcolor{comment}{\ \ \ \ GNU\ General\ Public\ License\ for\ more\ details.}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00023}00023\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00024}00024\ \textcolor{comment}{\ \ \ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00025}00025\ \textcolor{comment}{\ \ \ \ along\ with\ this\ program;\ if\ not,\ write\ to\ the\ Free\ Software}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00026}00026\ \textcolor{comment}{\ \ \ \ Foundation,\ Inc.,\ 51\ Franklin\ Street,\ Fifth\ Floor,\ Boston,\ MA}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00027}00027\ \textcolor{comment}{\ \ \ \ 02110-\/1301,\ USA.}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00028}00028\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00029}00029\ \textcolor{comment}{\ \ \ \ NOTE:\ It\ is\ a\ violation\ of\ the\ license\ terms\ of\ this\ software}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00030}00030\ \textcolor{comment}{\ \ \ \ to\ delete\ license\ and\ copyright\ information\ below\ if\ creating}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00031}00031\ \textcolor{comment}{\ \ \ \ a\ font\ derived\ from\ Unifont\ glyphs.}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00032}00032\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00033}00033\ \textcolor{preprocessor}{\#ifndef\ \_HEX2OTF\_H\_}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00034}00034\ \textcolor{preprocessor}{\#define\ \_HEX2OTF\_H\_}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00036}\mbox{\hyperlink{hex2otf_8h_a62e32863ba84411a48a0049151e68a00}{00036}}\ \textcolor{preprocessor}{\#define\ UNIFONT\_VERSION\ "{}15.1.05"{}}\ \ \ \textcolor{comment}{///<\ Current\ Unifont\ version.}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00037}00037\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00038}00038\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00039}00039\ \textcolor{comment}{\ \ \ \ Define\ default\ strings\ for\ some\ TrueType\ font\ NameID\ strings.}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00040}00040\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00041}00041\ \textcolor{comment}{\ \ \ \ \ \ \ \ NameID\ \ \ Description}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00042}00042\ \textcolor{comment}{\ \ \ \ \ \ \ \ -\/-\/-\/-\/-\/-\/\ \ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00043}00043\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ 0\ \ \ \ \ Copyright\ Notice}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00044}00044\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ 1\ \ \ \ \ Font\ Family}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00045}00045\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ 2\ \ \ \ \ Font\ Subfamily}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00046}00046\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ 5\ \ \ \ \ Version\ of\ the\ Name\ Table}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00047}00047\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ 11\ \ \ \ \ URL\ of\ the\ Font\ Vendor}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00048}00048\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ 13\ \ \ \ \ License\ Description}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00049}00049\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ 14\ \ \ \ \ License\ Information\ URL}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00050}00050\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00051}00051\ \textcolor{comment}{\ \ \ \ Default\ NameID\ 0\ string\ (Copyright\ Notice)}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00052}00052\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00053}\mbox{\hyperlink{hex2otf_8h_a59ba14cafe02ba112aa260cb17affc45}{00053}}\ \textcolor{preprocessor}{\#define\ DEFAULT\_ID0\ "{}Copyright\ ©\ 1998-\/2022\ Roman\ Czyborra,\ Paul\ Hardy,\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00054}00054\ \textcolor{preprocessor}{Qianqian\ Fang,\ Andrew\ Miller,\ Johnnie\ Weaver,\ David\ Corbett,\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00055}00055\ \textcolor{preprocessor}{Nils\ Moskopp,\ Rebecca\ Bettencourt,\ et\ al."{}}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00057}\mbox{\hyperlink{hex2otf_8h_a80457952fba9de3914d0f44305236ef2}{00057}}\ \textcolor{preprocessor}{\#define\ DEFAULT\_ID1\ "{}Unifont"{}}\ \ \ \textcolor{comment}{///<\ Default\ NameID\ 1\ string\ (Font\ Family)}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00058}\mbox{\hyperlink{hex2otf_8h_a02993e3b8886c3fc79e0a862582e5fd3}{00058}}\ \textcolor{preprocessor}{\#define\ DEFAULT\_ID2\ "{}Regular"{}}\ \ \ \textcolor{comment}{///<\ Default\ NameID\ 2\ string\ (Font\ Subfamily)}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00059}00059\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00060}00060\ \textcolor{comment}{///\ Default\ NameID\ 5\ string\ (Version\ of\ the\ Name\ Table)}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00061}\mbox{\hyperlink{hex2otf_8h_adb78d0325526094d79149d20028f82d0}{00061}}\ \textcolor{comment}{}\textcolor{preprocessor}{\#define\ DEFAULT\_ID5\ "{}Version\ "{}}UNIFONT\_VERSION}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00062}00062\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00063}00063\ \textcolor{comment}{///\ Default\ NameID\ 11\ string\ (Font\ Vendor\ URL)}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00064}\mbox{\hyperlink{hex2otf_8h_af3ad95ac6274edc8333dcbd3706aa603}{00064}}\ \textcolor{comment}{}\textcolor{preprocessor}{\#define\ DEFAULT\_ID11\ "{}https://unifoundry.com/unifont/"{}}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00065}00065\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00066}00066\ \textcolor{comment}{///\ Default\ NameID\ 13\ string\ (License\ Description)}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00067}\mbox{\hyperlink{hex2otf_8h_a91c55841985cdffac3f8d7d6252749dc}{00067}}\ \textcolor{comment}{}\textcolor{preprocessor}{\#define\ DEFAULT\_ID13\ "{}Dual\ license:\ SIL\ Open\ Font\ License\ version\ 1.1,\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00068}00068\ \textcolor{preprocessor}{and\ GNU\ GPL\ version\ 2\ or\ later\ with\ the\ GNU\ Font\ Embedding\ Exception."{}}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00069}00069\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00070}00070\ \textcolor{comment}{///\ Default\ NameID\ 14\ string\ (License\ Information\ URLs)}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00071}\mbox{\hyperlink{hex2otf_8h_a3a8d3619901c1776556d259d0295c6ef}{00071}}\ \textcolor{comment}{}\textcolor{preprocessor}{\#define\ DEFAULT\_ID14\ "{}http://unifoundry.com/LICENSE.txt,\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00072}00072\ \textcolor{preprocessor}{https://scripts.sil.org/OFL"{}}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00073}00073\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00074}00074\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00075}00075\ \textcolor{comment}{\ \ \ \ @brief\ Data\ structure\ for\ a\ font\ ID\ number\ and\ name\ character\ string.}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00076}00076\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00077}\mbox{\hyperlink{structNamePair}{00077}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structNamePair}{NamePair}}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00078}00078\ \{}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00079}00079\ \ \ \ \ \textcolor{keywordtype}{int}\ id;}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00080}00080\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *str;}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00081}\mbox{\hyperlink{hex2otf_8h_af57a7327559d80dc41d283c61c6e7063}{00081}}\ \}\ \mbox{\hyperlink{structNamePair}{NamePair}};}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00082}00082\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00083}00083\ \textcolor{comment}{///\ Macro\ to\ initialize\ name\ identifier\ codes\ to\ default\ values\ defined\ above.}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00084}\mbox{\hyperlink{hex2otf_8h_aafa9d4317a3af734d88d6b977de27de9}{00084}}\ \textcolor{comment}{}\textcolor{preprocessor}{\#define\ NAMEPAIR(n)\ \{(n),\ DEFAULT\_ID\#\#n\}}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00085}00085\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00086}00086\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00087}00087\ \textcolor{comment}{\ \ \ \ @brief\ Allocate\ array\ of\ NameID\ codes\ with\ default\ values.}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00088}00088\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00089}00089\ \textcolor{comment}{\ \ \ \ This\ array\ contains\ the\ default\ values\ for\ several\ TrueType\ NameID}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00090}00090\ \textcolor{comment}{\ \ \ \ strings,\ as\ defined\ above\ in\ this\ file.\ \ Strings\ are\ assigned\ using}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00091}00091\ \textcolor{comment}{\ \ \ \ the\ NAMEPAIR\ macro\ defined\ above.}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00092}00092\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00093}\mbox{\hyperlink{hex2otf_8h_a7932112a8cd522740aa941c15b79bd16}{00093}}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structNamePair}{NamePair}}\ \mbox{\hyperlink{hex2otf_8h_a7932112a8cd522740aa941c15b79bd16}{defaultNames}}[]\ =}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00094}00094\ \{}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00095}00095\ \ \ \ \ \mbox{\hyperlink{hex2otf_8h_aafa9d4317a3af734d88d6b977de27de9}{NAMEPAIR}}\ (0),\ \ \textcolor{comment}{//\ Copyright\ notice;\ required\ (used\ in\ CFF)}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00096}00096\ \ \ \ \ \mbox{\hyperlink{hex2otf_8h_aafa9d4317a3af734d88d6b977de27de9}{NAMEPAIR}}\ (1),\ \ \textcolor{comment}{//\ Font\ family;\ required\ (used\ in\ CFF)}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00097}00097\ \ \ \ \ \mbox{\hyperlink{hex2otf_8h_aafa9d4317a3af734d88d6b977de27de9}{NAMEPAIR}}\ (2),\ \ \textcolor{comment}{//\ Font\ subfamily}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00098}00098\ \ \ \ \ \mbox{\hyperlink{hex2otf_8h_aafa9d4317a3af734d88d6b977de27de9}{NAMEPAIR}}\ (5),\ \ \textcolor{comment}{//\ Version\ of\ the\ name\ table}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00099}00099\ \ \ \ \ \mbox{\hyperlink{hex2otf_8h_aafa9d4317a3af734d88d6b977de27de9}{NAMEPAIR}}\ (11),\ \textcolor{comment}{//\ URL\ of\ font\ vendor}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00100}00100\ \ \ \ \ \mbox{\hyperlink{hex2otf_8h_aafa9d4317a3af734d88d6b977de27de9}{NAMEPAIR}}\ (13),\ \textcolor{comment}{//\ License\ description}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00101}00101\ \ \ \ \ \mbox{\hyperlink{hex2otf_8h_aafa9d4317a3af734d88d6b977de27de9}{NAMEPAIR}}\ (14),\ \textcolor{comment}{//\ License\ information\ URL}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00102}00102\ \ \ \ \ \{0,\ NULL\}\ \ \ \ \ \ \textcolor{comment}{//\ Sentinel}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00103}00103\ \};}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00104}00104\ }
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00105}00105\ \textcolor{preprocessor}{\#undef\ NAMEPAIR}}
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00106}00106\ }
+\DoxyCodeLine{\Hypertarget{hex2otf_8h_source_l00107}00107\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

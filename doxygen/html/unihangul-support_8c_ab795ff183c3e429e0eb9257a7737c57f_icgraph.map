@@ -1,0 +1,10 @@
+<map id="cho_variation" name="cho_variation">
+<area shape="rect" id="node1" title="Return the Johab 6/3/1 choseong variation for a syllable." alt="" coords="665,81,776,107"/>
+<area shape="rect" id="node2" href="$unihangul-support_8c.html#a07b8c0163dd9e9b6f2560f09e0f3e570" title="Convert Hangul Jamo choseong, jungseong, and jongseong into a glyph." alt="" coords="485,5,611,31"/>
+<area shape="rect" id="node4" href="$unihangul-support_8c.html#a2f88bf9b2f6d754350f996933a0a9a65" title="Determine index values to the bitmaps for a syllable&#39;s components." alt="" coords="280,81,431,107"/>
+<area shape="rect" id="node7" href="$unihangul-support_8c.html#a7b8f3653d0dd30a1145be38529370def" title="Determine the variations of each letter in a Hangul syllable." alt="" coords="479,107,617,132"/>
+<area shape="rect" id="node8" href="$unijohab2html_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="The main function." alt="" coords="521,156,575,181"/>
+<area shape="rect" id="node3" href="$unigen-hangul_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="Program entry point." alt="" coords="328,5,383,31"/>
+<area shape="rect" id="node5" href="$unihangul-support_8c.html#abb373afe914554ff8443f05d83b69e8e" title="Given letters in a Hangul syllable, return a glyph." alt="" coords="108,81,232,107"/>
+<area shape="rect" id="node6" href="$johab2syllables_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="The main function." alt="" coords="5,81,60,107"/>
+</map>

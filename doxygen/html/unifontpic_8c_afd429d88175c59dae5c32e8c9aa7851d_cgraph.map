@@ -1,0 +1,5 @@
+<map id="genlongbmp" name="genlongbmp">
+<area shape="rect" id="node1" title="Generate the BMP output file in long format." alt="" coords="5,31,108,56"/>
+<area shape="rect" id="node2" href="$unifontpic_8c.html#af1fbb002e4787785de92e073ec46b787" title="Output a 2&#45;byte integer in little&#45;endian order." alt="" coords="156,5,228,31"/>
+<area shape="rect" id="node3" href="$unifontpic_8c.html#ac186155c351c9c3fb9c43acffcbab710" title="Output a 4&#45;byte integer in little&#45;endian order." alt="" coords="156,55,228,80"/>
+</map>

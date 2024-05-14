@@ -1,0 +1,5 @@
+<map id="sortGlyphs" name="sortGlyphs">
+<area shape="rect" id="node1" title="Sort the glyphs in a font by Unicode code point." alt="" coords="5,31,97,56"/>
+<area shape="rect" id="node2" href="$hex2otf_8c.html#a0d187cc87528ef35478afd7a68309f08" title="Compare two Unicode code points to determine which is greater." alt="" coords="145,5,249,31"/>
+<area shape="rect" id="node3" href="$hex2otf_8c.html#a2f5976201b1e630a94045f04a0348572" title="Print an error message on stderr, then exit." alt="" coords="176,55,219,80"/>
+</map>

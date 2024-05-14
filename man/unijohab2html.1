@@ -1,0 +1,116 @@
+.TH UNIJOHAB2HTML 1 "30 July 2023"
+.SH NAME
+unijohab2html \- Show combined Hangul syllable jamo juxtaposition as a web page
+.SH SYNOPSIS
+\fBunijohab2html \-i\fP \fIhangul-base.hex \fP
+\fB\-o\fP \fIhangul-syllables.hex\fP
+.SH DESCRIPTION
+.B unijohab2html
+reads glyphs in a Unifont .hex file organized in a Johab 6/3/1 format
+(6 choseong variations, 3 jungseong variations, and 1 jongseung variation).
+It then produces an HTML output file showing all Hangul letters in a
+color-coded output in 16-by-16 cell grids: blue cells show where choseong
+glyphs appear; green for jungseong; and red for jongseong.
+.PP
+Any overlaps are shown with a combination of the colors.   For example,
+where one or more choseong (blue) letters overlap jungseong (green),
+the associated cell will be blue + green = cyan.  Likewise, jungseong (green)
+and jongseong (red) overlaps will appear as green + red = yellow, etc.
+There is a color key at the beginning of the HTML table.
+.PP
+If any overlaps of choseong and jungseong exist, these will then be
+output in the HTML file identifying the overlapping letters in a
+combined Unifont .txt file format.  From these overlaps, a Hangul
+font creator can decide whether the overlap is acceptable or should
+be modified.
+.PP
+If an overlap is with an ancient vowel or diphthong
+.RI ( i.e.,
+U+1176, HANGUL JUNGSEONG A-O through U+11A7, HANGUL JUNGSEONG O-YAE),
+it is marked as an "Ancient Vowel" in this ending list of overlaps.
+If a choseong is ancient
+.RI ( i.e.,
+U+11C3, HANGUL JONGSEONG KIYEOK-RIEUL, through U+11FF,
+HANGUL JONGSEONG SSANGNIEUN), it is marked as "Ancient Choseong"
+in the output.  Overlapping choseong and jungseong in the Hangul
+Jamo Extended-A and Extended-B ranges are listed as "Extended Ancient".
+This identification of ancient and extended ancient versus modern
+Hangul will allow a font designer to optimize modern Hangul when
+weighing design tradeoffs.
+.SH OPTIONS
+.RS
+.IP \fBOption\fP 15
+\fBFunction\fP
+.TP
+\fB\-h, \-\-help\fP
+Print a help message and exit.
+.TP
+\fB\-i\fP \fIinput_file\fP
+Unifont hangul-base.hex formatted input file.
+.TP
+\fB\-m, \-\-modern\fP
+Only examine modern Hangul letters.
+.TP
+\fB\-o\fP \fIoutput_file\fP
+HTML output file, viewable in a web browser.
+.RE
+.SH EXAMPLES
+.TP 5
+.RS
+unijohab2html -i hangul-base.hex -o hangul-overlaps.html
+.PP
+unijohab2html < hangul-base.hex > hangul-overlaps.html
+.RE
+.SH FILES
+Unifont .hex files in Johab 6/3/1 encoding.  See
+.BR unifont-johab631 (5)
+for a description of the input file structure.  This program
+uses functions contained in the file unihangul-support.c.
+.SH SEE ALSO
+.BR bdfimplode (1),
+.BR hex2bdf (1),
+.BR hex2otf (1),
+.BR hex2sfd (1),
+.BR hexbraille (1),
+.BR hexdraw (1),
+.BR hexkinya (1),
+.BR hexmerge (1),
+.BR johab2syllables (1),
+.BR johab2ucs2 (1),
+.BR unibdf2hex (1),
+.BR unibmp2hex (1),
+.BR unibmpbump (1),
+.BR unicoverage (1),
+.BR unidup (1),
+.BR unifont (5),
+.BR unifont-johab631 (5),
+.BR unifont-viewer (1),
+.BR unifont1per (1),
+.BR unifontchojung (1),
+.BR unifontksx (1),
+.BR unifontpic (1),
+.BR unigen-hangul (1),
+.BR unigencircles (1),
+.BR unigenwidth (1),
+.BR unihex2bmp (1),
+.BR unihex2png (1),
+.BR unihexfill (1),
+.BR unihexgen (1),
+.BR unihexpose (1),
+.BR unihexrotate (1),
+.BR unijohab2html (1),
+.BR unipagecount (1),
+.BR unipng2hex (1)
+.SH AUTHOR
+.B unijohab2html
+was written by Paul Hardy.
+.SH LICENSE
+.B unijohab2html
+is Copyright \(co 2023 Paul Hardy.
+.PP
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+.SH BUGS
+No known bugs exist.

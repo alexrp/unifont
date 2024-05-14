@@ -1,0 +1,597 @@
+\hypertarget{unibmpbump_8c_source}{}\doxysection{unibmpbump.\+c}
+\label{unibmpbump_8c_source}\index{src/unibmpbump.c@{src/unibmpbump.c}}
+\mbox{\hyperlink{unibmpbump_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00001}00001\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00002}00002\ \textcolor{comment}{\ \ \ @file\ unibmpbump.c}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00003}00003\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00004}00004\ \textcolor{comment}{\ \ \ @brief\ unibmpbump\ -\/\ Adjust\ a\ Microsoft\ bitmap\ (.bmp)\ file\ that}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00005}00005\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ was\ created\ by\ unihex2png\ but\ converted\ to\ .bmp}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00006}00006\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00007}00007\ \textcolor{comment}{\ \ \ @author\ Paul\ Hardy,\ unifoundry\ <at>\ unifoundry.com}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00008}00008\ \textcolor{comment}{\ \ \ }}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00009}00009\ \textcolor{comment}{\ \ \ @copyright\ Copyright\ (C)\ 2019\ Paul\ Hardy}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00010}00010\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00011}00011\ \textcolor{comment}{\ \ \ This\ program\ shifts\ the\ glyphs\ in\ a\ bitmap\ file\ to\ adjust\ an}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00012}00012\ \textcolor{comment}{\ \ \ original\ PNG\ file\ that\ was\ saved\ in\ BMP\ format.\ \ This\ is\ so\ the}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00013}00013\ \textcolor{comment}{\ \ \ result\ matches\ the\ format\ of\ a\ unihex2bmp\ image.\ \ This\ conversion}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00014}00014\ \textcolor{comment}{\ \ \ then\ lets\ unibmp2hex\ decode\ the\ result.}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00015}00015\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00016}00016\ \textcolor{comment}{\ \ \ Synopsis:\ unibmpbump\ [-\/iin\_file.bmp]\ [-\/oout\_file.bmp]}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00017}00017\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00018}00018\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00019}00019\ \textcolor{comment}{\ \ \ LICENSE:}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00020}00020\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00021}00021\ \textcolor{comment}{\ \ \ \ \ \ This\ program\ is\ free\ software:\ you\ can\ redistribute\ it\ and/or\ modify}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00022}00022\ \textcolor{comment}{\ \ \ \ \ \ it\ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00023}00023\ \textcolor{comment}{\ \ \ \ \ \ the\ Free\ Software\ Foundation,\ either\ version\ 2\ of\ the\ License,\ or}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00024}00024\ \textcolor{comment}{\ \ \ \ \ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00025}00025\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00026}00026\ \textcolor{comment}{\ \ \ \ \ \ This\ program\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00027}00027\ \textcolor{comment}{\ \ \ \ \ \ but\ WITHOUT\ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00028}00028\ \textcolor{comment}{\ \ \ \ \ \ MERCHANTABILITY\ or\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00029}00029\ \textcolor{comment}{\ \ \ \ \ \ GNU\ General\ Public\ License\ for\ more\ details.}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00030}00030\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00031}00031\ \textcolor{comment}{\ \ \ \ \ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00032}00032\ \textcolor{comment}{\ \ \ \ \ \ along\ with\ this\ program.\ \ If\ not,\ see\ <http://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00033}00033\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00034}00034\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00035}00035\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00036}00036\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00038}\mbox{\hyperlink{unibmpbump_8c_a1c6d5de492ac61ad29aec7aa9a436bbf}{00038}}\ \textcolor{preprocessor}{\#define\ VERSION\ "{}1.0"{}}\ \ \ \textcolor{comment}{///<\ Version\ of\ this\ program}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00040}\mbox{\hyperlink{unibmpbump_8c_aadfd205e5b62832a2ef6266260cb55f1}{00040}}\ \textcolor{preprocessor}{\#define\ MAX\_COMPRESSION\_METHOD\ 13\ \ \ }\textcolor{comment}{///<\ Maximum\ supported\ compression\ method}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00042}00042\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00043}00043\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00044}00044\ \textcolor{comment}{\ \ \ @brief\ The\ main\ function.}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00045}00045\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00046}00046\ \textcolor{comment}{\ \ \ @param[in]\ argc\ The\ count\ of\ command\ line\ arguments.}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00047}00047\ \textcolor{comment}{\ \ \ @param[in]\ argv\ Pointer\ to\ array\ of\ command\ line\ arguments.}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00048}00048\ \textcolor{comment}{\ \ \ @return\ This\ program\ exits\ with\ status\ EXIT\_SUCCESS.}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00049}00049\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00050}\mbox{\hyperlink{unibmpbump_8c_a0ddf1224851353fc92bfbff6f499fa97}{00050}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{unibdf2hex_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}}\ (\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}\ *argv[])\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00052}00052\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00053}00053\ \textcolor{comment}{\ \ \ \ \ \ Values\ preserved\ from\ file\ header\ (first\ 14\ bytes).}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00054}00054\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00055}00055\ \ \ \ \textcolor{keywordtype}{char}\ file\_format[3];\ \ \ \ \ \ \ \textcolor{comment}{/*\ "{}BM"{}\ for\ original\ Windows\ format\ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00056}00056\ \ \ \ \textcolor{keywordtype}{unsigned}\ filesize;\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ size\ of\ file\ in\ bytes\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00057}00057\ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ rsvd\_hdr[4];\ \textcolor{comment}{/*\ 4\ reserved\ bytes\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00058}00058\ \ \ \ \textcolor{keywordtype}{unsigned}\ image\_start;\ \ \ \ \ \ \textcolor{comment}{/*\ byte\ offset\ of\ image\ in\ file\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00060}00060\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00061}00061\ \textcolor{comment}{\ \ \ \ \ \ Values\ preserved\ from\ Device\ Independent\ Bitmap\ (DIB)\ Header.}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00062}00062\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00063}00063\ \textcolor{comment}{\ \ \ \ \ \ The\ DIB\ fields\ below\ are\ in\ the\ standard\ 40-\/byte\ header.\ \ Version}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00064}00064\ \textcolor{comment}{\ \ \ \ \ \ 4\ and\ version\ 5\ headers\ have\ more\ information,\ mainly\ for\ color}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00065}00065\ \textcolor{comment}{\ \ \ \ \ \ information.\ \ That\ is\ skipped\ over,\ because\ a\ valid\ glyph\ image}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00066}00066\ \textcolor{comment}{\ \ \ \ \ \ is\ just\ monochrome.}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00067}00067\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00068}00068\ \ \ \ \textcolor{keywordtype}{int}\ dib\_length;\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ in\ bytes,\ for\ parsing\ by\ header\ version\ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00069}00069\ \ \ \ \textcolor{keywordtype}{int}\ image\_width\ =\ 0;\ \ \ \ \ \ \ \textcolor{comment}{/*\ Signed\ image\ width\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00070}00070\ \ \ \ \textcolor{keywordtype}{int}\ image\_height\ =\ 0;\ \ \ \ \ \ \textcolor{comment}{/*\ Signed\ image\ height\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00071}00071\ \ \ \ \textcolor{keywordtype}{int}\ num\_planes\ =\ 0;\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ number\ of\ planes;\ must\ be\ 1\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00072}00072\ \ \ \ \textcolor{keywordtype}{int}\ bits\_per\_pixel\ =\ 0;\ \ \ \ \textcolor{comment}{/*\ for\ palletized\ color\ maps\ (<\ 2\string^16\ colors)\ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00073}00073\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00074}00074\ \textcolor{comment}{\ \ \ \ \ \ The\ following\ fields\ are\ not\ in\ the\ original\ spec,\ so\ initialize}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00075}00075\ \textcolor{comment}{\ \ \ \ \ \ them\ to\ 0\ so\ we\ can\ correctly\ parse\ an\ original\ file\ format.}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00076}00076\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00077}00077\ \ \ \ \textcolor{keywordtype}{int}\ compression\_method=0;\ \ \textcolor{comment}{/*\ 0\ -\/-\/>\ uncompressed\ RGB/monochrome\ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00078}00078\ \ \ \ \textcolor{keywordtype}{int}\ image\_size\ =\ 0;\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 0\ is\ a\ valid\ size\ if\ no\ compression\ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00079}00079\ \ \ \ \textcolor{keywordtype}{int}\ hres\ =\ 0;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ image\ horizontal\ resolution\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00080}00080\ \ \ \ \textcolor{keywordtype}{int}\ vres\ =\ 0;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ image\ vertical\ resolution\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00081}00081\ \ \ \ \textcolor{keywordtype}{int}\ num\_colors\ =\ 0;\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Number\ of\ colors\ for\ pallettized\ images\ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00082}00082\ \ \ \ \textcolor{keywordtype}{int}\ important\_colors\ =\ 0;\ \ \textcolor{comment}{/*\ Number\ of\ significant\ colors\ (0\ or\ 2)\ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00083}00083\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00084}00084\ \ \ \ \textcolor{keywordtype}{int}\ true\_colors\ =\ 0;\ \ \ \ \ \ \ \textcolor{comment}{/*\ interpret\ num\_colors,\ which\ can\ equal\ 0\ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00086}00086\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00087}00087\ \textcolor{comment}{\ \ \ \ \ \ Color\ map.\ \ This\ should\ be\ a\ monochrome\ file,\ so\ only\ two}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00088}00088\ \textcolor{comment}{\ \ \ \ \ \ colors\ are\ stored.}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00089}00089\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00090}00090\ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ color\_map[2][4];\ \textcolor{comment}{/*\ two\ of\ R,\ G,\ B,\ and\ possibly\ alpha\ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00091}00091\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00092}00092\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00093}00093\ \textcolor{comment}{\ \ \ \ \ \ The\ monochrome\ image\ bitmap,\ stored\ as\ a\ vector\ 544\ rows\ by}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00094}00094\ \textcolor{comment}{\ \ \ \ \ \ 72*8\ columns.}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00095}00095\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00096}00096\ \ \ \ \textcolor{keywordtype}{unsigned}\ image\_bytes[544*72];}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00097}00097\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00098}00098\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00099}00099\ \textcolor{comment}{\ \ \ \ \ \ Flags\ for\ conversion\ \&\ I/O.}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00100}00100\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00101}00101\ \ \ \ \textcolor{keywordtype}{int}\ verbose\ \ \ \ \ \ =\ 0;\ \ \ \ \ \ \textcolor{comment}{/*\ Whether\ to\ print\ file\ info\ on\ stderr\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00102}00102\ \ \ \ \textcolor{keywordtype}{unsigned}\ image\_xor\ =\ 0x00;\ \textcolor{comment}{/*\ Invert\ (=\ 0xFF)\ if\ color\ 0\ is\ not\ black\ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00103}00103\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00104}00104\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00105}00105\ \textcolor{comment}{\ \ \ \ \ \ Temporary\ variables.}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00106}00106\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00107}00107\ \ \ \ \textcolor{keywordtype}{int}\ i,\ j,\ k;\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ loop\ variables\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00108}00108\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00109}00109\ \ \ \ \textcolor{comment}{/*\ Compression\ type,\ for\ parsing\ file\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00110}00110\ \ \ \ \textcolor{keywordtype}{char}\ *compression\_type[\mbox{\hyperlink{unibmpbump_8c_aadfd205e5b62832a2ef6266260cb55f1}{MAX\_COMPRESSION\_METHOD}}\ +\ 1]\ =\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00111}00111\ \ \ \ \ \ \ \textcolor{stringliteral}{"{}BI\_RGB"{}},\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ \ 0\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00112}00112\ \ \ \ \ \ \ \textcolor{stringliteral}{"{}BI\_RLE8"{}},\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ \ 1\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00113}00113\ \ \ \ \ \ \ \textcolor{stringliteral}{"{}BI\_RLE4"{}},\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ \ 2\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00114}00114\ \ \ \ \ \ \ \textcolor{stringliteral}{"{}BI\_BITFIELDS"{}},\ \ \ \ \ \ \textcolor{comment}{/*\ \ 3\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00115}00115\ \ \ \ \ \ \ \textcolor{stringliteral}{"{}BI\_JPEG"{}},\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ \ 4\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00116}00116\ \ \ \ \ \ \ \textcolor{stringliteral}{"{}BI\_PNG"{}},\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ \ 5\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00117}00117\ \ \ \ \ \ \ \textcolor{stringliteral}{"{}BI\_ALPHABITFIELDS"{}},\ \textcolor{comment}{/*\ \ 6\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00118}00118\ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}},\ \textcolor{stringliteral}{"{}"{}},\ \textcolor{stringliteral}{"{}"{}},\ \textcolor{stringliteral}{"{}"{}},\ \ \ \ \ \ \textcolor{comment}{/*\ \ 7\ -\/\ 10\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00119}00119\ \ \ \ \ \ \ \textcolor{stringliteral}{"{}BI\_CMYK"{}},\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 11\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00120}00120\ \ \ \ \ \ \ \textcolor{stringliteral}{"{}BI\_CMYKRLE8"{}},\ \ \ \ \ \ \ \textcolor{comment}{/*\ 12\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00121}00121\ \ \ \ \ \ \ \textcolor{stringliteral}{"{}BI\_CMYKRLE4"{}},\ \ \ \ \ \ \ \textcolor{comment}{/*\ 13\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00122}00122\ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00123}00123\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00124}00124\ \ \ \ \textcolor{comment}{/*\ Standard\ unihex2bmp.c\ header\ for\ BMP\ image\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00125}00125\ \ \ \ \textcolor{keywordtype}{unsigned}\ standard\_header\ [62]\ =\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00126}00126\ \ \ \ \ \ \ \textcolor{comment}{/*\ \ 0\ */}\ 0x42,\ 0x4d,\ 0x3e,\ 0x99,\ 0x00,\ 0x00,\ 0x00,\ 0x00,}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00127}00127\ \ \ \ \ \ \ \textcolor{comment}{/*\ \ 8\ */}\ 0x00,\ 0x00,\ 0x3e,\ 0x00,\ 0x00,\ 0x00,\ 0x28,\ 0x00,}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00128}00128\ \ \ \ \ \ \ \textcolor{comment}{/*\ 16\ */}\ 0x00,\ 0x00,\ 0x40,\ 0x02,\ 0x00,\ 0x00,\ 0x20,\ 0x02,}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00129}00129\ \ \ \ \ \ \ \textcolor{comment}{/*\ 24\ */}\ 0x00,\ 0x00,\ 0x01,\ 0x00,\ 0x01,\ 0x00,\ 0x00,\ 0x00,}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00130}00130\ \ \ \ \ \ \ \textcolor{comment}{/*\ 32\ */}\ 0x00,\ 0x00,\ 0x00,\ 0x99,\ 0x00,\ 0x00,\ 0xc4,\ 0x0e,}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00131}00131\ \ \ \ \ \ \ \textcolor{comment}{/*\ 40\ */}\ 0x00,\ 0x00,\ 0xc4,\ 0x0e,\ 0x00,\ 0x00,\ 0x00,\ 0x00,}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00132}00132\ \ \ \ \ \ \ \textcolor{comment}{/*\ 48\ */}\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x00,}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00133}00133\ \ \ \ \ \ \ \textcolor{comment}{/*\ 56\ */}\ 0x00,\ 0x00,\ 0xff,\ 0xff,\ 0xff,\ 0x00}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00134}00134\ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00135}00135\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00136}00136\ \ \ \ \textcolor{keywordtype}{unsigned}\ \mbox{\hyperlink{unibmpbump_8c_ace9584f7b69b95621366833332b30465}{get\_bytes}}\ (FILE\ *,\ \textcolor{keywordtype}{int});}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00137}00137\ \ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \mbox{\hyperlink{unibmpbump_8c_a58f734bf43b58f0f2c28fd4a0582c0f4}{regrid}}\ \ \ \ (\textcolor{keywordtype}{unsigned}\ *);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00138}00138\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00139}00139\ \ \ \ \textcolor{keywordtype}{char}\ *infile=\textcolor{stringliteral}{"{}"{}},\ *outfile=\textcolor{stringliteral}{"{}"{}};\ \ \textcolor{comment}{/*\ names\ of\ input\ and\ output\ files\ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00140}00140\ \ \ \ FILE\ *infp,\ *outfp;\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ file\ pointers\ of\ input\ and\ output\ files\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00141}00141\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00142}00142\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00143}00143\ \textcolor{comment}{\ \ \ \ \ \ Process\ command\ line\ arguments.}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00144}00144\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00145}00145\ \ \ \ \textcolor{keywordflow}{if}\ (argc\ >\ 1)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00146}00146\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 1;\ i\ <\ argc;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (argv[i][0]\ ==\ \textcolor{charliteral}{'-\/'})\ \{\ \ \textcolor{comment}{/*\ this\ is\ an\ option\ argument\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (argv[i][1])\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'i'}:\ \ \textcolor{comment}{/*\ name\ of\ input\ file\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ infile\ =\ \&argv[i][2];}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'o'}:\ \ \textcolor{comment}{/*\ name\ of\ output\ file\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outfile\ =\ \&argv[i][2];}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'v'}:\ \ \textcolor{comment}{/*\ verbose\ output\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ verbose\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'V'}:\ \ \textcolor{comment}{/*\ print\ version\ \&\ quit\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}unibmpbump\ version\ \%s\(\backslash\)n\(\backslash\)n"{}},\ \mbox{\hyperlink{unibmpbump_8c_a1c6d5de492ac61ad29aec7aa9a436bbf}{VERSION}});}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ exit\ (EXIT\_SUCCESS);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'-\/'}:\ \ \textcolor{comment}{/*\ see\ if\ "{}-\/-\/verbose"{}\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (strcmp\ (argv[i],\ \textcolor{stringliteral}{"{}-\/-\/verbose"{}})\ ==\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ verbose\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (strcmp\ (argv[i],\ \textcolor{stringliteral}{"{}-\/-\/version"{}})\ ==\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}unibmpbump\ version\ \%s\(\backslash\)n\(\backslash\)n"{}},\ \mbox{\hyperlink{unibmpbump_8c_a1c6d5de492ac61ad29aec7aa9a436bbf}{VERSION}});}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ exit\ (EXIT\_SUCCESS);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:\ \ \ \textcolor{comment}{/*\ if\ unrecognized\ option,\ print\ list\ and\ exit\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)nSyntax:\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\ \ \ unibmpbump\ "{}});}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}-\/i<Input\_File>\ -\/o<Output\_File>\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}-\/v\ or\ -\/-\/verbose\ gives\ verbose\ output"{}});}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\ on\ stderr\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}-\/V\ or\ -\/-\/version\ prints\ version"{}});}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\ on\ stderr\ and\ exits\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)nExample:\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\ \ \ unibmpbump\ -\/iuni0101.bmp"{}});}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\ -\/onew-\/uni0101.bmp\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ exit\ (EXIT\_SUCCESS);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00185}00185\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00186}00186\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00187}00187\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00188}00188\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00189}00189\ \textcolor{comment}{\ \ \ \ \ \ Make\ sure\ we\ can\ open\ any\ I/O\ files\ that\ were\ specified\ before}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00190}00190\ \textcolor{comment}{\ \ \ \ \ \ doing\ anything\ else.}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00191}00191\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00192}00192\ \ \ \ \textcolor{keywordflow}{if}\ (strlen\ (infile)\ >\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00193}00193\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((infp\ =\ fopen\ (infile,\ \textcolor{stringliteral}{"{}r"{}}))\ ==\ NULL)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00194}00194\ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}Error:\ can't\ open\ \%s\ for\ input.\(\backslash\)n"{}},\ infile);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00195}00195\ \ \ \ \ \ \ \ \ \ exit\ (EXIT\_FAILURE);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00196}00196\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00197}00197\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00198}00198\ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00199}00199\ \ \ \ \ \ \ infp\ =\ stdin;}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00200}00200\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00201}00201\ \ \ \ \textcolor{keywordflow}{if}\ (strlen\ (outfile)\ >\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00202}00202\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((outfp\ =\ fopen\ (outfile,\ \textcolor{stringliteral}{"{}w"{}}))\ ==\ NULL)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00203}00203\ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}Error:\ can't\ open\ \%s\ for\ output.\(\backslash\)n"{}},\ outfile);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00204}00204\ \ \ \ \ \ \ \ \ \ exit\ (EXIT\_FAILURE);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00205}00205\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00206}00206\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00207}00207\ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00208}00208\ \ \ \ \ \ \ outfp\ =\ stdout;}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00209}00209\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00210}00210\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00211}00211\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00212}00212\ \ \ \ \textcolor{comment}{/*\ Read\ bitmap\ file\ header\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00213}00213\ \ \ \ file\_format[0]\ =\ \mbox{\hyperlink{unibmpbump_8c_ace9584f7b69b95621366833332b30465}{get\_bytes}}\ (infp,\ 1);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00214}00214\ \ \ \ file\_format[1]\ =\ \mbox{\hyperlink{unibmpbump_8c_ace9584f7b69b95621366833332b30465}{get\_bytes}}\ (infp,\ 1);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00215}00215\ \ \ \ file\_format[2]\ =\ \textcolor{charliteral}{'\(\backslash\)0'};\ \ \textcolor{comment}{/*\ Terminate\ string\ with\ null\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00216}00216\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00217}00217\ \ \ \ \textcolor{comment}{/*\ Read\ file\ size\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00218}00218\ \ \ \ filesize\ =\ \mbox{\hyperlink{unibmpbump_8c_ace9584f7b69b95621366833332b30465}{get\_bytes}}\ (infp,\ 4);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00219}00219\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00220}00220\ \ \ \ \textcolor{comment}{/*\ Read\ Reserved\ bytes\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00221}00221\ \ \ \ rsvd\_hdr[0]\ =\ \mbox{\hyperlink{unibmpbump_8c_ace9584f7b69b95621366833332b30465}{get\_bytes}}\ (infp,\ 1);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00222}00222\ \ \ \ rsvd\_hdr[1]\ =\ \mbox{\hyperlink{unibmpbump_8c_ace9584f7b69b95621366833332b30465}{get\_bytes}}\ (infp,\ 1);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00223}00223\ \ \ \ rsvd\_hdr[2]\ =\ \mbox{\hyperlink{unibmpbump_8c_ace9584f7b69b95621366833332b30465}{get\_bytes}}\ (infp,\ 1);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00224}00224\ \ \ \ rsvd\_hdr[3]\ =\ \mbox{\hyperlink{unibmpbump_8c_ace9584f7b69b95621366833332b30465}{get\_bytes}}\ (infp,\ 1);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00225}00225\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00226}00226\ \ \ \ \textcolor{comment}{/*\ Read\ Image\ Offset\ Address\ within\ file\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00227}00227\ \ \ \ image\_start\ =\ \mbox{\hyperlink{unibmpbump_8c_ace9584f7b69b95621366833332b30465}{get\_bytes}}\ (infp,\ 4);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00228}00228\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00229}00229\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00230}00230\ \textcolor{comment}{\ \ \ \ \ \ See\ if\ this\ looks\ like\ a\ valid\ image\ file\ based\ on}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00231}00231\ \textcolor{comment}{\ \ \ \ \ \ the\ file\ header\ first\ two\ bytes.}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00232}00232\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00233}00233\ \ \ \ \textcolor{keywordflow}{if}\ (strncmp\ (file\_format,\ \textcolor{stringliteral}{"{}BM"{}},\ 2)\ !=\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00234}00234\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)nInvalid\ file\ format:\ not\ file\ type\ \(\backslash\)"{}BM\(\backslash\)"{}.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00235}00235\ \ \ \ \ \ \ exit\ (EXIT\_FAILURE);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00236}00236\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00237}00237\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00238}00238\ \ \ \ \textcolor{keywordflow}{if}\ (verbose)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00239}00239\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)nFile\ Header:\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00240}00240\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\ \ \ File\ Type:\ \ \ \(\backslash\)"{}\%s\(\backslash\)"{}\(\backslash\)n"{}},\ file\_format);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00241}00241\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\ \ \ File\ Size:\ \ \ \%d\ bytes\(\backslash\)n"{}},\ filesize);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00242}00242\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\ \ \ Reserved:\ \ \ "{}});}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00243}00243\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 4;\ i++)\ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\ 0x\%02X"{}},\ rsvd\_hdr[i]);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00244}00244\ \ \ \ \ \ \ fputc\ (\textcolor{charliteral}{'\(\backslash\)n'},\ stderr);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00245}00245\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\ \ \ Image\ Start:\ \%d.\ =\ 0x\%02X\ =\ 0\%05o\(\backslash\)n\(\backslash\)n"{}},}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ image\_start,\ image\_start,\ image\_start);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00247}00247\ \ \ \ \}\ \ \textcolor{comment}{/*\ if\ (verbose)\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00248}00248\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00249}00249\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00250}00250\ \textcolor{comment}{\ \ \ \ \ \ Device\ Independent\ Bitmap\ (DIB)\ Header:\ bitmap\ information\ header}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00251}00251\ \textcolor{comment}{\ \ \ \ \ \ ("{}BM"{}\ format\ file\ DIB\ Header\ is\ 12\ bytes\ long).}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00252}00252\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00253}00253\ \ \ \ dib\_length\ =\ \mbox{\hyperlink{unibmpbump_8c_ace9584f7b69b95621366833332b30465}{get\_bytes}}\ (infp,\ 4);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00254}00254\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00255}00255\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00256}00256\ \textcolor{comment}{\ \ \ \ \ \ Parse\ one\ of\ three\ versions\ of\ Device\ Independent\ Bitmap\ (DIB)\ format:}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00257}00257\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00258}00258\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ Length\ \ Format}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00259}00259\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ -\/-\/-\/-\/-\/-\/\ \ -\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00260}00260\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ 12\ \ \ BITMAPCOREHEADER}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00261}00261\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ 40\ \ \ BITMAPINFOHEADER}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00262}00262\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ 108\ \ \ BITMAPV4HEADER}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00263}00263\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ 124\ \ \ BITMAPV5HEADER}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00264}00264\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00265}00265\ \ \ \ \textcolor{keywordflow}{if}\ (dib\_length\ ==\ 12)\ \{\ \textcolor{comment}{/*\ BITMAPCOREHEADER\ format\ -\/-\/\ UNTESTED\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00266}00266\ \ \ \ \ \ \ image\_width\ \ \ \ =\ \mbox{\hyperlink{unibmpbump_8c_ace9584f7b69b95621366833332b30465}{get\_bytes}}\ (infp,\ 2);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00267}00267\ \ \ \ \ \ \ image\_height\ \ \ =\ \mbox{\hyperlink{unibmpbump_8c_ace9584f7b69b95621366833332b30465}{get\_bytes}}\ (infp,\ 2);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00268}00268\ \ \ \ \ \ \ num\_planes\ \ \ \ \ =\ \mbox{\hyperlink{unibmpbump_8c_ace9584f7b69b95621366833332b30465}{get\_bytes}}\ (infp,\ 2);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00269}00269\ \ \ \ \ \ \ bits\_per\_pixel\ =\ \mbox{\hyperlink{unibmpbump_8c_ace9584f7b69b95621366833332b30465}{get\_bytes}}\ (infp,\ 2);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00270}00270\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00271}00271\ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (dib\_length\ >=\ 40)\ \{\ \textcolor{comment}{/*\ BITMAPINFOHEADER\ format\ or\ later\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00272}00272\ \ \ \ \ \ \ image\_width\ =\ \mbox{\hyperlink{unibmpbump_8c_ace9584f7b69b95621366833332b30465}{get\_bytes}}\ (infp,\ 4);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00273}00273\ \ \ \ \ \ \ image\_height\ \ \ \ \ \ \ =\ \mbox{\hyperlink{unibmpbump_8c_ace9584f7b69b95621366833332b30465}{get\_bytes}}\ (infp,\ 4);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00274}00274\ \ \ \ \ \ \ num\_planes\ \ \ \ \ \ \ \ \ =\ \mbox{\hyperlink{unibmpbump_8c_ace9584f7b69b95621366833332b30465}{get\_bytes}}\ (infp,\ 2);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00275}00275\ \ \ \ \ \ \ bits\_per\_pixel\ \ \ \ \ =\ \mbox{\hyperlink{unibmpbump_8c_ace9584f7b69b95621366833332b30465}{get\_bytes}}\ (infp,\ 2);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00276}00276\ \ \ \ \ \ \ compression\_method\ =\ \mbox{\hyperlink{unibmpbump_8c_ace9584f7b69b95621366833332b30465}{get\_bytes}}\ (infp,\ 4);\ \ \textcolor{comment}{/*\ BI\_BITFIELDS\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00277}00277\ \ \ \ \ \ \ image\_size\ \ \ \ \ \ \ \ \ =\ \mbox{\hyperlink{unibmpbump_8c_ace9584f7b69b95621366833332b30465}{get\_bytes}}\ (infp,\ 4);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00278}00278\ \ \ \ \ \ \ hres\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \mbox{\hyperlink{unibmpbump_8c_ace9584f7b69b95621366833332b30465}{get\_bytes}}\ (infp,\ 4);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00279}00279\ \ \ \ \ \ \ vres\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \mbox{\hyperlink{unibmpbump_8c_ace9584f7b69b95621366833332b30465}{get\_bytes}}\ (infp,\ 4);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00280}00280\ \ \ \ \ \ \ num\_colors\ \ \ \ \ \ \ \ \ =\ \mbox{\hyperlink{unibmpbump_8c_ace9584f7b69b95621366833332b30465}{get\_bytes}}\ (infp,\ 4);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00281}00281\ \ \ \ \ \ \ important\_colors\ \ \ =\ \mbox{\hyperlink{unibmpbump_8c_ace9584f7b69b95621366833332b30465}{get\_bytes}}\ (infp,\ 4);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00282}00282\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00283}00283\ \ \ \ \ \ \ \textcolor{comment}{/*\ true\_colors\ is\ true\ number\ of\ colors\ in\ image\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00284}00284\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (num\_colors\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00285}00285\ \ \ \ \ \ \ \ \ \ true\_colors\ =\ 1\ <<\ bits\_per\_pixel;}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00286}00286\ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00287}00287\ \ \ \ \ \ \ \ \ \ true\_colors\ =\ num\_colors;}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00288}00288\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00289}00289\ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00290}00290\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ If\ dib\_length\ >\ 40,\ the\ format\ is\ BITMAPV4HEADER\ or}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00291}00291\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ BITMAPV5HEADER.\ \ As\ this\ program\ is\ only\ designed}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00292}00292\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ to\ handle\ a\ monochrome\ image,\ we\ can\ ignore\ the\ rest}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00293}00293\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ of\ the\ header\ but\ must\ read\ past\ the\ remaining\ bytes.}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00294}00294\ \textcolor{comment}{\ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00295}00295\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 40;\ i\ <\ dib\_length;\ i++)\ (\textcolor{keywordtype}{void})\mbox{\hyperlink{unibmpbump_8c_ace9584f7b69b95621366833332b30465}{get\_bytes}}\ (infp,\ 1);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00296}00296\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00297}00297\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00298}00298\ \ \ \ \textcolor{keywordflow}{if}\ (verbose)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00299}00299\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}Device\ Independent\ Bitmap\ (DIB)\ Header:\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00300}00300\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\ \ \ DIB\ Length:\ \ \%9d\ bytes\ (version\ =\ "{}},\ dib\_length);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00301}00301\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00302}00302\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \ \ \ \ \ (dib\_length\ ==\ \ 12)\ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)"{}BITMAPCOREHEADER\(\backslash\)"{})\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00303}00303\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (dib\_length\ ==\ \ 40)\ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)"{}BITMAPINFOHEADER\(\backslash\)"{})\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00304}00304\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (dib\_length\ ==\ 108)\ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)"{}BITMAPV4HEADER\(\backslash\)"{})\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00305}00305\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (dib\_length\ ==\ 124)\ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)"{}BITMAPV5HEADER\(\backslash\)"{})\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00306}00306\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}unknown)"{}});}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00307}00307\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\ \ \ Bitmap\ Width:\ \ \ \%6d\ pixels\(\backslash\)n"{}},\ image\_width);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00308}00308\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\ \ \ Bitmap\ Height:\ \ \%6d\ pixels\(\backslash\)n"{}},\ image\_height);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00309}00309\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\ \ \ Color\ Planes:\ \ \ \%6d\(\backslash\)n"{}},\ \ \ \ \ \ \ \ num\_planes);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00310}00310\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\ \ \ Bits\ per\ Pixel:\ \%6d\(\backslash\)n"{}},\ \ \ \ \ \ \ \ bits\_per\_pixel);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00311}00311\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\ \ \ Compression\ Method:\ \%2d\ -\/-\/>\ "{}},\ compression\_method);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00312}00312\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (compression\_method\ <=\ \mbox{\hyperlink{unibmpbump_8c_aadfd205e5b62832a2ef6266260cb55f1}{MAX\_COMPRESSION\_METHOD}})\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00313}00313\ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\%s"{}},\ compression\_type\ [compression\_method]);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00314}00314\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00315}00315\ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00316}00316\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ Supported\ compression\ method\ values:}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00317}00317\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ 0\ -\/-\/>\ uncompressed\ RGB}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00318}00318\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ 11\ -\/-\/>\ uncompressed\ CMYK}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00319}00319\ \textcolor{comment}{\ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00320}00320\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (compression\_method\ ==\ 0\ ||\ compression\_method\ ==\ 11)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00321}00321\ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\ (no\ compression)"{}});}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00322}00322\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00323}00323\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00324}00324\ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}Image\ uses\ compression;\ this\ is\ unsupported.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00325}00325\ \ \ \ \ \ \ \ \ \ exit\ (EXIT\_FAILURE);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00326}00326\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00327}00327\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00328}00328\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\ \ \ Image\ Size:\ \ \ \ \ \ \ \ \ \ \ \ \%5d\ bytes\(\backslash\)n"{}},\ image\_size);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00329}00329\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\ \ \ Horizontal\ Resolution:\ \%5d\ pixels/meter\(\backslash\)n"{}},\ hres);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00330}00330\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\ \ \ Vertical\ Resolution:\ \ \ \%5d\ pixels/meter\(\backslash\)n"{}},\ vres);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00331}00331\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\ \ \ Number\ of\ Colors:\ \ \ \ \ \ \%5d"{}},\ num\_colors);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00332}00332\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (num\_colors\ !=\ true\_colors)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00333}00333\ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\ -\/-\/>\ \%d"{}},\ true\_colors);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00334}00334\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00335}00335\ \ \ \ \ \ \ fputc\ (\textcolor{charliteral}{'\(\backslash\)n'},\ stderr);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00336}00336\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\ \ \ Important\ Colors:\ \ \ \ \ \ \%5d"{}},\ important\_colors);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00337}00337\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (important\_colors\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00338}00338\ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\ (all\ colors\ are\ important)"{}});}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00339}00339\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00340}00340\ \ \ \ \}\ \ \textcolor{comment}{/*\ if\ (verbose)\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00341}00341\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00342}00342\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00343}00343\ \textcolor{comment}{\ \ \ \ \ \ Print\ Color\ Table\ information\ for\ images\ with\ pallettized\ colors.}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00344}00344\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00345}00345\ \ \ \ \textcolor{keywordflow}{if}\ (bits\_per\_pixel\ <=\ 8)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00346}00346\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 2;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00347}00347\ \ \ \ \ \ \ \ \ \ color\_map\ [i][0]\ =\ \mbox{\hyperlink{unibmpbump_8c_ace9584f7b69b95621366833332b30465}{get\_bytes}}\ (infp,\ 1);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00348}00348\ \ \ \ \ \ \ \ \ \ color\_map\ [i][1]\ =\ \mbox{\hyperlink{unibmpbump_8c_ace9584f7b69b95621366833332b30465}{get\_bytes}}\ (infp,\ 1);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00349}00349\ \ \ \ \ \ \ \ \ \ color\_map\ [i][2]\ =\ \mbox{\hyperlink{unibmpbump_8c_ace9584f7b69b95621366833332b30465}{get\_bytes}}\ (infp,\ 1);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00350}00350\ \ \ \ \ \ \ \ \ \ color\_map\ [i][3]\ =\ \mbox{\hyperlink{unibmpbump_8c_ace9584f7b69b95621366833332b30465}{get\_bytes}}\ (infp,\ 1);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00351}00351\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00352}00352\ \ \ \ \ \ \ \textcolor{comment}{/*\ Skip\ remaining\ color\ table\ entries\ if\ more\ than\ 2\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00353}00353\ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (i\ <\ true\_colors)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00354}00354\ \ \ \ \ \ \ \ \ \ (void)\ \mbox{\hyperlink{unibmpbump_8c_ace9584f7b69b95621366833332b30465}{get\_bytes}}\ (infp,\ 4);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00355}00355\ \ \ \ \ \ \ \ \ \ i++;}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00356}00356\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00357}00357\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00358}00358\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (color\_map\ [0][0]\ >=\ 128)\ image\_xor\ =\ 0xFF;\ \ \textcolor{comment}{/*\ Invert\ colors\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00359}00359\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00360}00360\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00361}00361\ \ \ \ \textcolor{keywordflow}{if}\ (verbose)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00362}00362\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}Color\ Palette\ [R,\ G,\ B,\ \%s]\ Values:\(\backslash\)n"{}},}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00363}00363\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (dib\_length\ <=\ 40)\ ?\ \textcolor{stringliteral}{"{}reserved"{}}\ :\ \textcolor{stringliteral}{"{}Alpha"{}});}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00364}00364\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 2;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00365}00365\ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\%7d:\ ["{}},\ i);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00366}00366\ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\%3d,"{}},\ \ \ color\_map\ [i][0]\ \&\ 0xFF);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00367}00367\ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\%3d,"{}},\ \ \ color\_map\ [i][1]\ \&\ 0xFF);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00368}00368\ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\%3d,"{}},\ \ \ color\_map\ [i][2]\ \&\ 0xFF);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00369}00369\ \ \ \ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\%3d]\(\backslash\)n"{}},\ color\_map\ [i][3]\ \&\ 0xFF);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00370}00370\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00371}00371\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (image\_xor\ ==\ 0xFF)\ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}Will\ Invert\ Colors.\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00372}00372\ \ \ \ \ \ \ fputc\ (\textcolor{charliteral}{'\(\backslash\)n'},\ stderr);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00373}00373\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00374}00374\ \ \ \ \}\ \ \textcolor{comment}{/*\ if\ (verbose)\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00375}00375\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00376}00376\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00377}00377\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00378}00378\ \textcolor{comment}{\ \ \ \ \ \ Check\ format\ before\ writing\ output\ file.}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00379}00379\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00380}00380\ \ \ \ \textcolor{keywordflow}{if}\ (image\_width\ !=\ 560\ \&\&\ image\_width\ !=\ 576)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00381}00381\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)nUnsupported\ image\ width:\ \%d\(\backslash\)n"{}},\ image\_width);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00382}00382\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}Width\ should\ be\ 560\ or\ 576\ pixels.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00383}00383\ \ \ \ \ \ \ exit\ (EXIT\_FAILURE);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00384}00384\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00385}00385\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00386}00386\ \ \ \ \textcolor{keywordflow}{if}\ (image\_height\ !=\ 544)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00387}00387\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)nUnsupported\ image\ height:\ \%d\(\backslash\)n"{}},\ image\_height);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00388}00388\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}Height\ should\ be\ 544\ pixels.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00389}00389\ \ \ \ \ \ \ exit\ (EXIT\_FAILURE);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00390}00390\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00391}00391\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00392}00392\ \ \ \ \textcolor{keywordflow}{if}\ (num\_planes\ !=\ 1)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00393}00393\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)nUnsupported\ number\ of\ planes:\ \%d\(\backslash\)n"{}},\ num\_planes);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00394}00394\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}Number\ of\ planes\ should\ be\ 1.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00395}00395\ \ \ \ \ \ \ exit\ (EXIT\_FAILURE);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00396}00396\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00397}00397\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00398}00398\ \ \ \ \textcolor{keywordflow}{if}\ (bits\_per\_pixel\ !=\ 1)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00399}00399\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)nUnsupported\ number\ of\ bits\ per\ pixel:\ \%d\(\backslash\)n"{}},}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00400}00400\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bits\_per\_pixel);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00401}00401\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}Bits\ per\ pixel\ should\ be\ 1.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00402}00402\ \ \ \ \ \ \ exit\ (EXIT\_FAILURE);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00403}00403\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00404}00404\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00405}00405\ \ \ \ \textcolor{keywordflow}{if}\ (compression\_method\ !=\ 0\ \&\&\ compression\_method\ !=\ 11)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00406}00406\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)nUnsupported\ compression\ method:\ \%d\(\backslash\)n"{}},}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00407}00407\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ compression\_method);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00408}00408\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}Compression\ method\ should\ be\ 1\ or\ 11.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00409}00409\ \ \ \ \ \ \ exit\ (EXIT\_FAILURE);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00410}00410\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00411}00411\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00412}00412\ \ \ \ \textcolor{keywordflow}{if}\ (true\_colors\ !=\ 2)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00413}00413\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)nUnsupported\ number\ of\ colors:\ \%d\(\backslash\)n"{}},\ true\_colors);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00414}00414\ \ \ \ \ \ \ fprintf\ (stderr,\ \textcolor{stringliteral}{"{}Number\ of\ colors\ should\ be\ 2.\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00415}00415\ \ \ \ \ \ \ exit\ (EXIT\_FAILURE);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00416}00416\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00417}00417\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00418}00418\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00419}00419\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00420}00420\ \textcolor{comment}{\ \ \ \ \ \ If\ we\ made\ it\ this\ far,\ things\ look\ okay,\ so\ write\ out}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00421}00421\ \textcolor{comment}{\ \ \ \ \ \ the\ standard\ header\ for\ image\ conversion.}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00422}00422\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00423}00423\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 62;\ i++)\ fputc\ (standard\_header[i],\ outfp);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00424}00424\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00425}00425\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00426}00426\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00427}00427\ \textcolor{comment}{\ \ \ \ \ \ Image\ Data.\ \ Each\ row\ must\ be\ a\ multiple\ of\ 4\ bytes,\ with}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00428}00428\ \textcolor{comment}{\ \ \ \ \ \ padding\ at\ the\ end\ of\ each\ row\ if\ necessary.}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00429}00429\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00430}00430\ \ \ \ k\ =\ 0;\ \ \textcolor{comment}{/*\ byte\ number\ within\ the\ binary\ image\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00431}00431\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 544;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00432}00432\ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00433}00433\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ If\ original\ image\ is\ 560\ pixels\ wide\ (not\ 576),\ add}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00434}00434\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ 2\ white\ bytes\ at\ beginning\ of\ row.}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00435}00435\ \textcolor{comment}{\ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00436}00436\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (image\_width\ ==\ 560)\ \{\ \ \textcolor{comment}{/*\ Insert\ 2\ white\ bytes\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00437}00437\ \ \ \ \ \ \ \ \ \ image\_bytes[k++]\ =\ 0xFF;}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00438}00438\ \ \ \ \ \ \ \ \ \ image\_bytes[k++]\ =\ 0xFF;}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00439}00439\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00440}00440\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 70;\ j++)\ \{\ \ \textcolor{comment}{/*\ Copy\ next\ 70\ bytes\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00441}00441\ \ \ \ \ \ \ \ \ \ image\_bytes[k++]\ =\ (\mbox{\hyperlink{unibmpbump_8c_ace9584f7b69b95621366833332b30465}{get\_bytes}}\ (infp,\ 1)\ \&\ 0xFF)\ \string^\ image\_xor;}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00442}00442\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00443}00443\ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00444}00444\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ If\ original\ image\ is\ 560\ pixels\ wide\ (not\ 576),\ skip}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00445}00445\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ 2\ padding\ bytes\ at\ end\ of\ row\ in\ file\ because\ we\ inserted}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00446}00446\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ 2\ white\ bytes\ at\ the\ beginning\ of\ the\ row.}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00447}00447\ \textcolor{comment}{\ \ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00448}00448\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (image\_width\ ==\ 560)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00449}00449\ \ \ \ \ \ \ \ \ \ (void)\ \mbox{\hyperlink{unibmpbump_8c_ace9584f7b69b95621366833332b30465}{get\_bytes}}\ (infp,\ 2);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00450}00450\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00451}00451\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{\ \ \textcolor{comment}{/*\ otherwise,\ next\ 2\ bytes\ are\ part\ of\ the\ image\ so\ copy\ them\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00452}00452\ \ \ \ \ \ \ \ \ \ image\_bytes[k++]\ =\ (\mbox{\hyperlink{unibmpbump_8c_ace9584f7b69b95621366833332b30465}{get\_bytes}}\ (infp,\ 1)\ \&\ 0xFF)\ \string^\ image\_xor;}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00453}00453\ \ \ \ \ \ \ \ \ \ image\_bytes[k++]\ =\ (\mbox{\hyperlink{unibmpbump_8c_ace9584f7b69b95621366833332b30465}{get\_bytes}}\ (infp,\ 1)\ \&\ 0xFF)\ \string^\ image\_xor;}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00454}00454\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00455}00455\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00456}00456\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00457}00457\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00458}00458\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00459}00459\ \textcolor{comment}{\ \ \ \ \ \ Change\ the\ image\ to\ match\ the\ unihex2bmp.c\ format\ if\ original\ wasn't}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00460}00460\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00461}00461\ \ \ \ \textcolor{keywordflow}{if}\ (image\_width\ ==\ 560)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00462}00462\ \ \ \ \ \ \ \mbox{\hyperlink{unibmpbump_8c_a58f734bf43b58f0f2c28fd4a0582c0f4}{regrid}}\ (image\_bytes);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00463}00463\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00464}00464\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00465}00465\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 544\ *\ 576\ /\ 8;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00466}00466\ \ \ \ \ \ \ fputc\ (image\_bytes[i],\ outfp);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00467}00467\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00468}00468\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00469}00469\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00470}00470\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00471}00471\ \textcolor{comment}{\ \ \ \ \ \ Wrap\ up.}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00472}00472\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00473}00473\ \ \ \ fclose\ (infp);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00474}00474\ \ \ \ fclose\ (outfp);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00475}00475\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00476}00476\ \ \ \ exit\ (EXIT\_SUCCESS);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00477}00477\ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00478}00478\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00479}00479\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00480}00480\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00481}00481\ \textcolor{comment}{\ \ \ @brief\ Get\ from\ 1\ to\ 4\ bytes,\ inclusive,\ from\ input\ file.}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00482}00482\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00483}00483\ \textcolor{comment}{\ \ \ @param[in]\ infp\ Pointer\ to\ input\ file.}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00484}00484\ \textcolor{comment}{\ \ \ @param[in]\ nbytes\ Number\ of\ bytes\ to\ read,\ from\ 1\ to\ 4,\ inclusive.}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00485}00485\ \textcolor{comment}{\ \ \ @return\ The\ unsigned\ 1\ to\ 4\ bytes\ in\ machine\ native\ endian\ format.}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00486}00486\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00487}\mbox{\hyperlink{unibmpbump_8c_ace9584f7b69b95621366833332b30465}{00487}}\ \textcolor{keywordtype}{unsigned}\ \mbox{\hyperlink{unibmpbump_8c_ace9584f7b69b95621366833332b30465}{get\_bytes}}\ (FILE\ *infp,\ \textcolor{keywordtype}{int}\ nbytes)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00488}00488\ \ \ \ \textcolor{keywordtype}{int}\ i;}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00489}00489\ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ inchar[4];}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00490}00490\ \ \ \ \textcolor{keywordtype}{unsigned}\ inword;}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00491}00491\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00492}00492\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ nbytes;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00493}00493\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fread\ (\&inchar[i],\ 1,\ 1,\ infp)\ !=\ 1)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00494}00494\ \ \ \ \ \ \ \ \ \ inchar[i]\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00495}00495\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00496}00496\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00497}00497\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ nbytes;\ i\ <\ 4;\ i++)\ inchar[i]\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00498}00498\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00499}00499\ \ \ \ inword\ =\ ((inchar[3]\ \&\ 0xFF)\ <<\ 24)\ |\ ((inchar[2]\ \&\ 0xFF)\ <<\ 16)\ |}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00500}00500\ \ \ \ \ \ \ \ \ \ \ \ \ ((inchar[1]\ \&\ 0xFF)\ <<\ \ 8)\ |\ \ (inchar[0]\ \&\ 0xFF);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00501}00501\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00502}00502\ \ \ \ \textcolor{keywordflow}{return}\ inword;}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00503}00503\ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00504}00504\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00505}00505\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00506}00506\ \textcolor{comment}{/**}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00507}00507\ \textcolor{comment}{\ \ \ @brief\ After\ reading\ in\ the\ image,\ shift\ it.}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00508}00508\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00509}00509\ \textcolor{comment}{\ \ \ This\ function\ adjusts\ the\ input\ image\ from\ an\ original\ PNG\ file}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00510}00510\ \textcolor{comment}{\ \ \ to\ match\ unihex2bmp.c\ format.}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00511}00511\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00512}00512\ \textcolor{comment}{\ \ \ @param[in,out]\ image\_bytes\ The\ pixels\ in\ an\ image.}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00513}00513\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00514}\mbox{\hyperlink{unibmpbump_8c_a58f734bf43b58f0f2c28fd4a0582c0f4}{00514}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{unibmpbump_8c_a58f734bf43b58f0f2c28fd4a0582c0f4}{regrid}}\ (\textcolor{keywordtype}{unsigned}\ *image\_bytes)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00515}00515\ \ \ \ \textcolor{keywordtype}{int}\ i,\ j,\ k;\ \ \textcolor{comment}{/*\ loop\ variables\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00516}00516\ \ \ \ \textcolor{keywordtype}{int}\ offset;}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00517}00517\ \ \ \ \textcolor{keywordtype}{unsigned}\ glyph\_row;\ \textcolor{comment}{/*\ one\ grid\ row\ of\ 32\ pixels\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00518}00518\ \ \ \ \textcolor{keywordtype}{unsigned}\ last\_pixel;\ \textcolor{comment}{/*\ last\ pixel\ in\ a\ byte,\ to\ preserve\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00519}00519\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00520}00520\ \ \ \ \textcolor{comment}{/*\ To\ insert\ "{}00"{}\ after\ "{}U+"{}\ at\ top\ of\ image\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00521}00521\ \ \ \ \textcolor{keywordtype}{char}\ zero\_pattern[16]\ =\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00522}00522\ \ \ \ \ \ \ \ 0x00,\ 0x00,\ 0x00,\ 0x00,\ 0x18,\ 0x24,\ 0x42,\ 0x42,}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00523}00523\ \ \ \ \ \ \ \ 0x42,\ 0x42,\ 0x42,\ 0x42,\ 0x24,\ 0x18,\ 0x00,\ 0x00}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00524}00524\ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00525}00525\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00526}00526\ \ \ \ \textcolor{comment}{/*\ This\ is\ the\ horizontal\ grid\ pattern\ on\ glyph\ boundaries\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00527}00527\ \ \ \ \textcolor{keywordtype}{unsigned}\ hgrid[72]\ =\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00528}00528\ \ \ \ \ \ \ \textcolor{comment}{/*\ \ 0\ */}\ 0xff,\ 0xff,\ 0xff,\ 0xff,\ 0xff,\ 0xff,\ 0xff,\ 0xfe,}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00529}00529\ \ \ \ \ \ \ \textcolor{comment}{/*\ \ 8\ */}\ 0x00,\ 0x81,\ 0x81,\ 0x00,\ 0x00,\ 0x81,\ 0x81,\ 0x00,}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00530}00530\ \ \ \ \ \ \ \textcolor{comment}{/*\ 16\ */}\ 0x00,\ 0x81,\ 0x81,\ 0x00,\ 0x00,\ 0x81,\ 0x81,\ 0x00,}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00531}00531\ \ \ \ \ \ \ \textcolor{comment}{/*\ 24\ */}\ 0x00,\ 0x81,\ 0x81,\ 0x00,\ 0x00,\ 0x81,\ 0x81,\ 0x00,}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00532}00532\ \ \ \ \ \ \ \textcolor{comment}{/*\ 32\ */}\ 0x00,\ 0x81,\ 0x81,\ 0x00,\ 0x00,\ 0x81,\ 0x81,\ 0x00,}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00533}00533\ \ \ \ \ \ \ \textcolor{comment}{/*\ 40\ */}\ 0x00,\ 0x81,\ 0x81,\ 0x00,\ 0x00,\ 0x81,\ 0x81,\ 0x00,}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00534}00534\ \ \ \ \ \ \ \textcolor{comment}{/*\ 48\ */}\ 0x00,\ 0x81,\ 0x81,\ 0x00,\ 0x00,\ 0x81,\ 0x81,\ 0x00,}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00535}00535\ \ \ \ \ \ \ \textcolor{comment}{/*\ 56\ */}\ 0x00,\ 0x81,\ 0x81,\ 0x00,\ 0x00,\ 0x81,\ 0x81,\ 0x00,}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00536}00536\ \ \ \ \ \ \ \textcolor{comment}{/*\ 64\ */}\ 0x00,\ 0x81,\ 0x81,\ 0x00,\ 0x00,\ 0x81,\ 0x81,\ 0x00}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00537}00537\ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00538}00538\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00539}00539\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00540}00540\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00541}00541\ \textcolor{comment}{\ \ \ \ \ \ First\ move\ "{}U+"{}\ left\ and\ insert\ "{}00"{}\ after\ it.}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00542}00542\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00543}00543\ \ \ \ j\ =\ 15;\ \textcolor{comment}{/*\ rows\ are\ written\ bottom\ to\ top,\ so\ we'll\ decrement\ j\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00544}00544\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 543\ -\/\ 8;\ i\ >\ 544\ -\/\ 24;\ i-\/-\/)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00545}00545\ \ \ \ \ \ \ offset\ =\ 72\ *\ i;}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00546}00546\ \ \ \ \ \ \ image\_bytes\ [offset\ +\ 0]\ =\ image\_bytes\ [offset\ +\ 2];}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00547}00547\ \ \ \ \ \ \ image\_bytes\ [offset\ +\ 1]\ =\ image\_bytes\ [offset\ +\ 3];}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00548}00548\ \ \ \ \ \ \ image\_bytes\ [offset\ +\ 2]\ =\ image\_bytes\ [offset\ +\ 4];}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00549}00549\ \ \ \ \ \ \ image\_bytes\ [offset\ +\ 3]\ =\ image\_bytes\ [offset\ +\ 4]\ =}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00550}00550\ \ \ \ \ \ \ \ \ \ \string~zero\_pattern[15\ -\/\ j-\/-\/]\ \&\ 0xFF;}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00551}00551\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00552}00552\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00553}00553\ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00554}00554\ \textcolor{comment}{\ \ \ \ \ \ Now\ move\ glyph\ bitmaps\ to\ the\ right\ by\ 8\ pixels.}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00555}00555\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00556}00556\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ 16;\ i++)\ \{\ \textcolor{comment}{/*\ for\ each\ glyph\ row\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00557}00557\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 16;\ j++)\ \{\ \textcolor{comment}{/*\ for\ each\ glyph\ column\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00558}00558\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ set\ offset\ to\ lower\ left-\/hand\ byte\ of\ next\ glyph\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00559}00559\ \ \ \ \ \ \ \ \ \ offset\ =\ (32\ *\ 72\ *\ i)\ +\ (9\ *\ 72)\ +\ (4\ *\ j)\ +\ 8;}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00560}00560\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (k\ =\ 0;\ k\ <\ 16;\ k++)\ \{\ \textcolor{comment}{/*\ for\ each\ glyph\ row\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00561}00561\ \ \ \ \ \ \ \ \ \ \ \ \ glyph\_row\ =\ (image\_bytes\ [offset\ +\ 0]\ <<\ 24)\ |}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00562}00562\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (image\_bytes\ [offset\ +\ 1]\ <<\ 16)\ |}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00563}00563\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (image\_bytes\ [offset\ +\ 2]\ <<\ \ 8)\ |}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00564}00564\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (image\_bytes\ [offset\ +\ 3]);}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00565}00565\ \ \ \ \ \ \ \ \ \ \ \ \ last\_pixel\ =\ glyph\_row\ \&\ 1;\ \ \textcolor{comment}{/*\ preserve\ border\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00566}00566\ \ \ \ \ \ \ \ \ \ \ \ \ glyph\_row\ >>=\ 4;}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00567}00567\ \ \ \ \ \ \ \ \ \ \ \ \ glyph\_row\ \&=\ \ 0x0FFFFFFE;}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00568}00568\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Set\ left\ 4\ pixels\ to\ white\ and\ preserve\ last\ pixel\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00569}00569\ \ \ \ \ \ \ \ \ \ \ \ \ glyph\_row\ |=\ \ 0xF0000000\ |\ last\_pixel;}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00570}00570\ \ \ \ \ \ \ \ \ \ \ \ \ image\_bytes\ [offset\ +\ 3]\ =\ glyph\_row\ \&\ 0xFF;}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00571}00571\ \ \ \ \ \ \ \ \ \ \ \ \ glyph\_row\ >>=\ 8;}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00572}00572\ \ \ \ \ \ \ \ \ \ \ \ \ image\_bytes\ [offset\ +\ 2]\ =\ glyph\_row\ \&\ 0xFF;}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00573}00573\ \ \ \ \ \ \ \ \ \ \ \ \ glyph\_row\ >>=\ 8;}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00574}00574\ \ \ \ \ \ \ \ \ \ \ \ \ image\_bytes\ [offset\ +\ 1]\ =\ glyph\_row\ \&\ 0xFF;}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00575}00575\ \ \ \ \ \ \ \ \ \ \ \ \ glyph\_row\ >>=\ 8;}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00576}00576\ \ \ \ \ \ \ \ \ \ \ \ \ image\_bytes\ [offset\ +\ 0]\ =\ glyph\_row\ \&\ 0xFF;}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00577}00577\ \ \ \ \ \ \ \ \ \ \ \ \ offset\ +=\ 72;\ \ \textcolor{comment}{/*\ move\ up\ to\ next\ row\ in\ current\ glyph\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00578}00578\ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00579}00579\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00580}00580\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00581}00581\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00582}00582\ \ \ \ \textcolor{comment}{/*\ Replace\ horizontal\ grid\ with\ unihex2bmp.c\ grid\ */}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00583}00583\ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <=\ 16;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00584}00584\ \ \ \ \ \ \ offset\ =\ 32\ *\ 72\ *\ i;}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00585}00585\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ 72;\ j++)\ \{}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00586}00586\ \ \ \ \ \ \ \ \ \ image\_bytes\ [offset\ +\ j]\ =\ hgrid\ [j];}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00587}00587\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00588}00588\ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00589}00589\ }
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00590}00590\ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{unibmpbump_8c_source_l00591}00591\ \}}
+
+\end{DoxyCode}
